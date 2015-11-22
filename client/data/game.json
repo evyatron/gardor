@@ -1,0 +1,56 @@
+{
+  "tileSize": 64,
+  "startingMap": "main-map",
+  "lerpAlpha": 0.07,
+  "followPlayer": true,
+  "clickTexture": {
+    "src": "/img/hud/click.png",
+    "timeToShow": 0.3
+  },
+  "tiles": [
+    {
+      "id": "grass",
+      "isBlocking": false,
+      "texture": {
+        "src": "/img/tiles/grass.png",
+        "origin": [0, 0]
+      }
+    },
+    {
+      "id": "water",
+      "isBlocking": true,
+      "texture": {
+        "src": "/img/tiles/water.png",
+        "origin": [0, 0]
+      }
+    },
+    {
+      "id": "floor",
+      "isBlocking": false,
+      "texture": {
+        "src": "/img/tiles/floor.png",
+        "origin": [0, 0]
+      }
+    },
+    {
+      "id": "path",
+      "isBlocking": false,
+      "texture": {
+        "src": "/img/tiles/path.png",
+        "origin": [0, 0]
+      }
+    }
+  ],
+  "modules": [
+    {
+      "id": "webpage",
+      "className": "ModuleWebPage",
+      "hasInput": true,
+      "config": {
+        "url": "string",
+        "isInFrame": "boolean",
+        "useOffset": "object"
+      }
+    }
+  ]
+}

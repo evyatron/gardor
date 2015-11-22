@@ -1,0 +1,350 @@
+{
+  "id": "main-map",
+  "name": "Main Map",
+  "playerActor": "player",
+  "width": 1088,
+  "height": 704,
+  "grid": [
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "water", "water", "water", "grass", "grass", "grass", "grass", "path", "grass", "water", "water", "water", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"]
+  ],
+  "actors": [
+    {
+      "id": "github",
+      "name": "GitHub",
+      "tooltip": "GitHub",
+      "isBlocking": true,
+      "texture": {
+        "src": "/img/actors/github.png",
+        "origin": [0.5, 0.7]
+      },
+      "textureOver": {
+        "src": "/img/actors/github-over.png",
+        "origin": [0.5, 0.7]
+      },
+      "tile": {
+        "y": 6,
+        "x": 6
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://github.com/evyatron",
+          "isInFrame": false,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "tooltip": "LinkedIn",
+      "isBlocking": true,
+      "texture": {
+        "src": "/img/actors/linkedin.png",
+        "origin": [0.5, 0.7]
+      },
+      "textureOver": {
+        "src": "/img/actors/linkedin-over.png",
+        "origin": [0.5, 0.7]
+      },
+      "tile": {
+        "y": 6,
+        "x": 8
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "https://www.linkedin.com/in/evyataramitay",
+          "isInFrame": false,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        }
+      ]
+    },
+    
+    {
+      "id": "room-tl",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [32, 16],
+        "width": 32,
+        "height": 32,
+        "origin": [0, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 5,
+        "x": 5
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-t1",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [64, 16],
+        "width": 32,
+        "height": 32,
+        "scale": 2
+      },
+      "tile": {
+        "y": 5,
+        "x": 6
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-t2",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [64, 16],
+        "width": 32,
+        "height": 32,
+        "scale": 2
+      },
+      "tile": {
+        "y": 5,
+        "x": 7
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-t3",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [64, 16],
+        "width": 32,
+        "height": 32,
+        "scale": 2
+      },
+      "tile": {
+        "y": 5,
+        "x": 8
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-tr",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [96, 16],
+        "width": 32,
+        "height": 32,
+        "origin": [1, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 5,
+        "x": 9
+      },
+      "isBlocking": true
+    },
+    
+    {
+      "id": "room-l1",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [32, 48],
+        "width": 32,
+        "height": 32,
+        "origin": [0, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 6,
+        "x": 5
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-l2",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [32, 48],
+        "width": 32,
+        "height": 32,
+        "origin": [0, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 7,
+        "x": 5
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-l3",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [32, 48],
+        "width": 32,
+        "height": 32,
+        "origin": [0, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 8,
+        "x": 5
+      },
+      "isBlocking": true
+    },
+    
+    {
+      "id": "room-r1",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [96, 48],
+        "width": 32,
+        "height": 32,
+        "origin": [1, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 6,
+        "x": 9
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-r2",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [96, 48],
+        "width": 32,
+        "height": 32,
+        "origin": [1, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 7,
+        "x": 9
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-r3",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [96, 48],
+        "width": 32,
+        "height": 32,
+        "origin": [1, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 8,
+        "x": 9
+      },
+      "isBlocking": true
+    },
+    
+    {
+      "id": "room-bl",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [32, 80],
+        "width": 32,
+        "height": 32,
+        "origin": [0, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 9,
+        "x": 5
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-b1",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [64, 80],
+        "width": 32,
+        "height": 32,
+        "scale": 2
+      },
+      "tile": {
+        "y": 9,
+        "x": 6
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-b2",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [64, 80],
+        "width": 32,
+        "height": 32,
+        "scale": 2
+      },
+      "tile": {
+        "y": 9,
+        "x": 8
+      },
+      "isBlocking": true
+    },
+    {
+      "id": "room-br",
+      "texture": {
+        "src": "/img/actors/rtp-objects.png",
+        "clip": [96, 80],
+        "width": 32,
+        "height": 32,
+        "origin": [1, 0.5],
+        "scale": 2
+      },
+      "tile": {
+        "y": 9,
+        "x": 9
+      },
+      "isBlocking": true
+    },
+    
+    {
+      "id": "player",
+      "name": "Player",
+      "texture": {
+        "src": "/img/characters/player.png",
+        "clip": [0, 0],
+        "width": 32,
+        "height": 32,
+        "scale": 1.7
+      },
+      "textureDirClips": {
+        "bottom": [0, 0],
+        "top": [0, 96],
+        "right": [0, 64],
+        "left": [0, 32]
+      },
+      "tile": {
+        "y": 12,
+        "x": 11
+      },
+      "isBlocking": false,
+      "speed": 200
+    }
+  ],
+  "dialogs": {
+    
+  }
+}
