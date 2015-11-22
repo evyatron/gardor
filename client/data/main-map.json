@@ -2,8 +2,7 @@
   "id": "main-map",
   "name": "Main Map",
   "playerActor": "player",
-  "width": 1088,
-  "height": 704,
+  "padding": 20,
   "grid": [
     ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
     ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
@@ -18,13 +17,12 @@
     ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
     ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
     ["water", "water", "water", "water", "water", "water", "water", "grass", "grass", "grass", "grass", "path", "grass", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"]
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "grass", "path", "grass", "water", "water", "water", "water", "water", "water", "water"],
+    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "grass", "path", "grass", "water", "water", "water", "water", "water", "water", "water"]
   ],
   "actors": [
     {
       "id": "github",
-      "name": "GitHub",
       "tooltip": "GitHub",
       "isBlocking": true,
       "texture": {
@@ -53,7 +51,6 @@
     },
     {
       "id": "linkedin",
-      "name": "LinkedIn",
       "tooltip": "LinkedIn",
       "isBlocking": true,
       "texture": {
@@ -76,6 +73,34 @@
           "useOffset": {
             "x": 0,
             "y": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "frametest",
+      "tooltip": "Frame Test",
+      "isBlocking": true,
+      "texture": {
+        "src": "/img/actors/linkedin.png",
+        "origin": [0.5, 0.7]
+      },
+      "textureOver": {
+        "src": "/img/actors/linkedin-over.png",
+        "origin": [0.5, 0.7]
+      },
+      "tile": {
+        "y": 7,
+        "x": 10
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
           }
         }
       ]
@@ -301,7 +326,17 @@
         "y": 9,
         "x": 8
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "dialog",
+          "dialogId": "test",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        }
+      ]
     },
     {
       "id": "room-br",
@@ -321,8 +356,72 @@
     },
     
     {
+      "id": "sign-about",
+      "tooltip": "Welcome Centre",
+      "texture": {
+        "src": "/img/actors/signs.png",
+        "clip": [0, 0],
+        "width": 32,
+        "height": 32,
+        "origin": [0.5, 1.25]
+      },
+      "tile": {
+        "y": 8,
+        "x": 12
+      },
+      "isBlocking": false
+    },
+    {
+      "id": "sign-contact",
+      "tooltip": "Post Office",
+      "texture": {
+        "src": "/img/actors/signs.png",
+        "clip": [0, 0],
+        "width": 32,
+        "height": 32,
+        "origin": [0.5, 1.25]
+      },
+      "tile": {
+        "y": 8,
+        "x": 13
+      },
+      "isBlocking": false
+    },
+    {
+      "id": "sign-games",
+      "tooltip": "Video Game Arcade",
+      "texture": {
+        "src": "/img/actors/signs.png",
+        "clip": [0, 0],
+        "width": 32,
+        "height": 32,
+        "origin": [0.5, 1.25]
+      },
+      "tile": {
+        "y": 8,
+        "x": 14
+      },
+      "isBlocking": false
+    },
+    {
+      "id": "sign-experiments",
+      "tooltip": "JavaScript Laboratory",
+      "texture": {
+        "src": "/img/actors/signs.png",
+        "clip": [0, 0],
+        "width": 32,
+        "height": 32,
+        "origin": [0.5, 1.25]
+      },
+      "tile": {
+        "y": 8,
+        "x": 15
+      },
+      "isBlocking": false
+    },
+    
+    {
       "id": "player",
-      "name": "Player",
       "texture": {
         "src": "/img/characters/player.png",
         "clip": [0, 0],
@@ -345,6 +444,8 @@
     }
   ],
   "dialogs": {
-    
+    "test": {
+      
+    }
   }
 }

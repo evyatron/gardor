@@ -12,7 +12,11 @@
       "id": "grass",
       "isBlocking": false,
       "texture": {
-        "src": "/img/tiles/grass.png",
+        "src": "/img/tiles/rtp-tiles.png",
+        "clip": [80, 240],
+        "width": 32,
+        "height": 32,
+        "scale": 2,
         "origin": [0, 0]
       }
     },
@@ -36,7 +40,11 @@
       "id": "path",
       "isBlocking": false,
       "texture": {
-        "src": "/img/tiles/path.png",
+        "src": "/img/tiles/rtp-tiles.png",
+        "clip": [208, 144],
+        "width": 32,
+        "height": 32,
+        "scale": 2,
         "origin": [0, 0]
       }
     }
@@ -45,10 +53,19 @@
     {
       "id": "webpage",
       "className": "ModuleWebPage",
-      "hasInput": true,
       "config": {
         "url": "string",
         "isInFrame": "boolean",
+        "scale": "number",
+        "useOffset": "object"
+      }
+    },
+    {
+      "id": "dialog",
+      "className": "ModuleDialog",
+      "config": {
+        "url": "string",
+        "dialogId": "string",
         "useOffset": "object"
       }
     }

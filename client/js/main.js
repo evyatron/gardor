@@ -219,8 +219,6 @@ var Game = (function Game() {
     this.mapWidth = map.grid[0].length * this.config.tileSize;
     this.mapHeight = map.grid.length * this.config.tileSize;
 
-    this.el.style.width = map.width? map.width + 'px' : '';
-    this.el.style.height = map.height? map.height + 'px' : '';
     this.onResize();
 
     for (var id in this.layers) {
@@ -240,6 +238,8 @@ var Game = (function Game() {
     }
     
     this.navMesh.update();
+
+    this.onResize();
     
     this.dispatch('mapCreated', this);
     
@@ -444,9 +444,30 @@ var Game = (function Game() {
   
   Game.prototype.onResize = function onResize() {
     var bounds = this.el.getBoundingClientRect();
+    var elParent = this.el.parentNode;
+    var padding = this.currentMap && this.currentMap.padding || 0;
     
-    this.width = bounds.width;
-    this.height = bounds.height;
+    if (this.currentMap && this.currentMap.width && this.currentMap.height) {
+      this.width = Math.min(this.currentMap.width, elParent.offsetWidth - padding);
+      this.height = Math.min(this.currentMap.height, elParent.offsetHeight - padding);
+    } else {
+      this.width = elParent.offsetWidth - padding;
+      this.height = elParent.offsetHeight - padding;
+    }
+    
+    this.width = Math.min(this.width, this.mapWidth);
+    this.height = Math.min(this.height, this.mapHeight);
+    
+    if (this.width % 2 === 1) {
+      this.width--;
+    }
+    if (this.height % 2 === 1) {
+      this.height--;
+    }
+    
+    this.el.style.width = this.width + 'px';
+    this.el.style.height = this.height + 'px';
+    
     this.offset = {
       'x': bounds.left,
       'y': bounds.top
@@ -458,6 +479,15 @@ var Game = (function Game() {
     
     this.bleed.x = this.mapWidth - this.width;
     this.bleed.y = this.mapHeight - this.height;
+    
+    if (this.bleed.x < 0) {
+      this.bleed.x = this.bleed.x / 2;
+    }
+    if (this.bleed.y < 0) {
+      this.bleed.y = this.bleed.y / 2;
+    }
+    
+    this.camera.onResize();
   };
   
   Game.prototype.request = function request(url, callback) {
@@ -627,6 +657,11 @@ var TilesetLayer = (function TilesetLayer() {
 
     for (i = startRow; i < numberOfRows; i++) {
       columns = rows[i];
+      
+      if (!columns) {
+        continue;
+      }
+      
       for (j = startCol; j < numberOfCols; j++) {
         cell = columns[j];
         tile = tilesMap[cell];
@@ -890,12 +925,19 @@ var Camera = (function Camera() {
   
   Camera.prototype.setActorToFollow = function setActorToFollow(actor) {
     this.actorToFollow = actor;
-    
-    if (actor) {
-      var position = actor.position;
+    this.focusOnActor();
+  };
+  
+  Camera.prototype.focusOnActor = function focusOnActor() {
+    if (this.actorToFollow) {
+      var position = this.actorToFollow.position;
       this.x = utils.clamp(-game.width / 2 + position.x, 0, game.bleed.x);
       this.y = utils.clamp(-game.height / 2 + position.y, 0, game.bleed.y);
     }
+  };
+  
+  Camera.prototype.onResize = function onResize() {
+    this.focusOnActor();
   };
   
   Camera.prototype.update = function update(dt) {
@@ -925,6 +967,9 @@ var Camera = (function Camera() {
       }
     }
     
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    
     game.log('camera: ' + this.x + ',' + this.y);
   };
   
@@ -941,7 +986,6 @@ var Camera = (function Camera() {
 var Actor = (function Actor() {
   function Actor(options) {
     this.id = '';
-    this.name = '';
     this.tooltip = '';
     this.direction = '';
     this.isBlocking = false;
@@ -978,7 +1022,6 @@ var Actor = (function Actor() {
     !options && (options = {});
     
     this.id = options.id || 'actor_' + Date.now() + '_' + Math.random();
-    this.name = options.name || this.id;
     this.tooltip = options.tooltip || '';
     this.layer = options.layer;
     this.game = this.layer.game;
@@ -1082,6 +1125,7 @@ var Actor = (function Actor() {
     this.pathToWalk = path;
     
     if (path && path.length > 0) {
+      this.targetTile = path[0];
       this.targetPosition = this.game.getCoordsFromTile(path[0]);
     } else {
       this.pathToWalk = null;
@@ -1102,13 +1146,13 @@ var Actor = (function Actor() {
       var speed = this.speed * dt;
       
       if (game.distance(this.targetPosition, this.position) <= speed) {
+        this.position = this.targetPosition;
+        this.tile = this.targetTile;
+        
         if (this.pathToWalk.length > 0) {
-          this.tile = this.game.getTileFromCoords(this.position);
           this.targetTile = this.pathToWalk.splice(0, 1)[0];
           this.targetPosition = this.game.getCoordsFromTile(this.targetTile);
         } else {
-          this.position = this.targetPosition;
-          this.tile = this.targetTile;
           this.targetTile = null;
           this.targetPosition = null;
           this.pathToWalk = null;
@@ -1366,12 +1410,30 @@ var ModuleInteractable = (function ModuleInteractable() {
 
 /* Interactable - NPC you can talk to */
 var ModuleDialog = (function ModuleDialog() {
-  function ModuleDialog() {
+  function ModuleDialog(options) {
+    this.dialogId = '';
+    this.dialog = null;
     
+    ModuleInteractable.call(this, options);
   }
   
-  ModuleDialog.prototype = Object.create(ActorModule.prototype);
+  ModuleDialog.prototype = Object.create(ModuleInteractable.prototype);
   ModuleDialog.prototype.constructor = ModuleDialog;
+  
+  ModuleDialog.prototype.init = function init(options) {
+    ModuleInteractable.prototype.init.apply(this, arguments);
+    
+    this.dialogId = options.dialogId;
+    this.dialog = this.actor.game.currentMap.dialogs[this.dialogId];
+    
+    if (!this.dialog) {
+      console.warn('Cant find requested dialog', this);
+    }
+  };
+  
+  ModuleDialog.prototype.activate = function activate(e) {
+    console.warn(this.dialog);
+  };
   
   return ModuleDialog;
 }());
@@ -1381,6 +1443,7 @@ var ModuleWebPage = (function ModuleWebPage() {
   function ModuleWebPage(options) {
     this.url = '';
     this.isInFrame = false;
+    this.scale = 1;
     
     ModuleInteractable.call(this, options);
   }
@@ -1393,11 +1456,24 @@ var ModuleWebPage = (function ModuleWebPage() {
     
     this.url = options.url || '';
     this.isInFrame = options.hasOwnProperty('isInFrame')? options.isInFrame : false;
+    this.scale = options.scale || 0.9;
   };
   
   ModuleWebPage.prototype.activate = function activate(e) {
     if (this.isInFrame) {
+      var actor = this.actor;
+      var parentEl = actor.game.el;
+      var width = parentEl.offsetWidth * this.scale;
+      var height = parentEl.offsetHeight * this.scale;
       
+      this.frame = document.createElement('iframe');
+      this.frame.className = 'game-webpage-frame';
+      this.frame.style.width = width + 'px';
+      this.frame.style.height = height + 'px';
+      
+      parentEl.appendChild(this.frame);
+      
+      this.frame.src = this.url;
     } else {
       window.open(this.url, '_blank');
     }
@@ -1462,9 +1538,7 @@ var PlayerController = (function PlayerController() {
     }
     
     if (DEBUG) {
-      var pointerTile = game.getPointerTile();
       game.log('pointer: ' + this.pointer.x + ',' + this.pointer.y);
-      game.log('pointer tile [x: ' + pointerTile.x + ', y: ' + pointerTile.y + ']');
     }
   };
   
