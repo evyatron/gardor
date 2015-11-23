@@ -147,9 +147,8 @@ var Game = (function Game() {
       'game': this
     });
     
-    InputManager.bindAction('interact', InputManager.KEYS.LEFT_MOUSE_BUTTON);
-    
-    InputManager.on('pressed', 'interact', this.onPointerClick.bind(this));
+    InputManager.bindAction('moveTo', InputManager.KEYS.LEFT_MOUSE_BUTTON);
+    InputManager.on('pressed', 'moveTo', this.onPointerClick.bind(this));
     
     
     window.addEventListener('resize', this.onResize.bind(this));
@@ -301,8 +300,14 @@ var Game = (function Game() {
   Game.prototype.draw = function draw() {
     this.startBenchmark('global', 'draw');
     
-    for (var id in this.layers) {
-      this.layers[id].draw();
+    var layers = this.layers;
+    var id;
+    
+    for (id in layers) {
+      layers[id].clear();
+    }
+    for (id in layers) {
+      layers[id].draw();
     }
     
     this.stats.draw = this.endBenchmark('global', 'draw');
@@ -376,6 +381,10 @@ var Game = (function Game() {
     };
   };
 
+  Game.prototype.getHUD = function getHUD() {
+    return this.layers.hud;
+  };
+  
   Game.prototype.distance = function distance(from, to) {
     var distX = to.x - from.x;
     var distY = to.y - from.y;
@@ -581,16 +590,17 @@ var Layer = (function Layer() {
     return true;
   };
   
+  Layer.prototype.clear = function clear() {
+    var game = this.game;
+    this.context.clearRect(0, 0, game.width, game.height);
+  };
+  
   Layer.prototype.draw = function draw() {
     if (!this.isDirty) {
       return false;
     }
     
     var actors = this.actors;
-    var game = this.game;
-    
-    this.context.clearRect(0, 0, game.width, game.height);
-    
     for (var i = 0, len = actors.length; i < len; i++) {
       actors[i].draw(this);
     }
@@ -847,8 +857,6 @@ var HUDLayer = (function HUDLayer() {
     
     game.startBenchmark('draw', 'hud');
     
-    context.clearRect(0, 0, game.width, game.height);
-    
     // Click Indiactor
     if (this.timeShownClickTexture < this.timeToShowClickTexture) {
       var position = this.game.getOffsetPosition(this.clickPosition);
@@ -999,9 +1007,6 @@ var Camera = (function Camera() {
       }
     }
     
-    this.x = Math.floor(this.x);
-    this.y = Math.floor(this.y);
-    
     game.log('camera: ' + this.x + ',' + this.y);
   };
   
@@ -1040,6 +1045,7 @@ var Actor = (function Actor() {
     };
     this.pathToWalk = null;
     
+    this.textureModule = {};
     this.modules = [];
     
     this.isReady = false;
@@ -1098,9 +1104,19 @@ var Actor = (function Actor() {
       
       var module = new window[moduleConfig.className](moduleData);
       this.modules.push(module);
+      
+      if (moduleData.type === 'texture') {
+        this.textureModule = module;
+      }
     }
     
     return true;
+  };
+  
+  Actor.prototype.getTexture = function getTexture() {
+    if (this.textureModule) {
+      return this.textureModule.texture;
+    }
   };
   
   Actor.prototype.onClick = function onClick(e) {
@@ -1161,6 +1177,8 @@ var Actor = (function Actor() {
       if (game.distance(this.targetPosition, this.position) <= speed) {
         this.position = this.targetPosition;
         this.tile = this.targetTile;
+        
+        game.navMesh.update();
         
         if (this.pathToWalk.length > 0) {
           this.targetTile = this.pathToWalk.splice(0, 1)[0];
@@ -1303,15 +1321,19 @@ var Texture = (function Texture() {
   
   Texture.prototype.setImage = function setImage(image) {
     this.src = Date.now() + '_' + Math.random();
-    this.image = image;
-    this.image.isReady = true;
-    Texture.prototype.textures[this.src] = this.image;
+    var image = image;
+    image.isReady = true;
+    Texture.prototype.textures[this.src] = image;
     
     this.onLoad();
   };
   
   Texture.prototype.setClip = function setClip(clip) {
     this.clip = clip || [0, 0];
+  };
+  
+  Texture.prototype.getImage = function getImage() {
+    return Texture.prototype.textures[this.src];
   };
   
   Texture.prototype.draw = function draw(context, x, y, gameBounds) {
@@ -1328,15 +1350,15 @@ var Texture = (function Texture() {
     
     var origin = this.drawOrigin;
     var clip = this.clip;
-    var width = Math.floor(this.width);
-    var height = Math.floor(this.height);
+    var width = this.width;
+    var height = this.height;
     var scale = this.scale;
-    var drawWidth = Math.floor(width * scale);
-    var drawHeight = Math.floor(height * scale);
+    var drawWidth = width * scale;
+    var drawHeight = height * scale;
     var shouldDraw = true;
 
-    x = Math.floor((x || 0) - origin[0] * scale);
-    y = Math.floor((y || 0) - origin[1] * scale);
+    x = (x || 0) - origin[0] * scale;
+    y = (y || 0) - origin[1] * scale;
     
     if (gameBounds) {
       if (x + drawWidth < 0 || x > gameBounds.width ||
@@ -1348,8 +1370,8 @@ var Texture = (function Texture() {
     if (shouldDraw) {
       context.drawImage(image,
                         // Draw this
-                        Math.floor(clip[0]),
-                        Math.floor(clip[1]),
+                        clip[0],
+                        clip[1],
                         width,
                         height,
                         // Here
@@ -1510,6 +1532,17 @@ var ModuleDialog = (function ModuleDialog() {
   function ModuleDialog(options) {
     this.dialogId = '';
     this.dialog = null;
+    this.lines = [];
+    this.startingLineId = '';
+    this.currentLineIndex = 0;
+    this.texture = null;
+    
+    this.isActive = false;
+    
+    this.width = 400;
+    this.height = 200;
+    this.padding = 12;
+    this.actorImageSize = 64;
     
     ModuleInteractable.call(this, options);
   }
@@ -1522,20 +1555,141 @@ var ModuleDialog = (function ModuleDialog() {
     
     this.dialogId = options.dialogId;
     this.dialog = this.actor.game.currentMap.dialogs[this.dialogId];
+    this.texture = new Texture({
+      'origin': [0, 0]
+    });
     
-    if (!this.dialog) {
+    if (this.dialog) {
+      this.lines = this.dialog.lines;
+      this.startingLineId = this.dialog.startingLine || this.lines[0].id;
+    } else {
       console.warn('Cant find requested dialog', this);
     }
-    
-    this.lines = this.dialog.lines;
   };
   
   ModuleDialog.prototype.activate = function activate(e) {
     ModuleInteractable.prototype.activate.apply(this, arguments);
     
-    for (var i = 0, len = this.lines.length; i < len; i++) {
-      console.warn(this.lines[i].text, this.getLineActor(this.lines[i]));
+    console.log('[Dialog] Activate', this.currentLine, this);
+    
+    this.currentLineIndex = -1;
+    this.nextLine();
+    this.isActive = true;
+    this.update = this.updateMethod;
+    this.draw = this.drawMethod;
+  };
+  
+  ModuleDialog.prototype.finish = function finish(e) {
+    this.update = null;
+    this.draw = null;
+    this.currentLineIndex = -1;
+    this.currentLine = null;
+    this.currentActor = null;
+    this.isActive = false;
+  };
+  
+  ModuleDialog.prototype.nextLine = function nextLine() {
+    if (this.currentLineIndex === -1) {
+      this.currentLineIndex = this.getLineIndexById(this.startingLineId);
+    } else {
+      var line = this.lines[this.currentLineIndex];
+      if ('nextLine' in line) {
+        this.currentLineIndex = this.getLineIndexById(line.nextLine);
+      } else {
+        this.currentLineIndex = this.currentLineIndex + 1;
+      }
     }
+    
+    this.currentLine = this.lines[this.currentLineIndex];
+    this.currentActor = this.getLineActor(this.currentLine);
+    
+    this.createTexture();
+  };
+  
+  ModuleDialog.prototype.createTexture = function createTexture() {
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var x = 0;
+    var y = 0;
+    var padding = this.padding;
+    var imageSize = this.actorImageSize;
+    
+    canvas.width = this.width;
+    canvas.height = this.height;
+
+    context.font = '12pt monospace';
+    context.textBaseline = 'top';
+    
+    // background
+    context.fillStyle = 'rgba(30, 30, 30, 1)';
+    context.fillRect(x, y, this.width, this.height);
+    
+    if (this.currentActor) {
+      var texture = this.currentActor.getTexture();
+      if (texture) {
+        var avatarImage = texture.getImage();
+        
+        // avatar frame
+        context.fillStyle = 'rgba(255, 255, 255, .15)';
+        context.strokeStyle = 'rgba(255, 255, 255, .2)';
+        context.fillRect(x + padding, y + padding, imageSize, imageSize);
+        context.strokeRect(x + padding, y + padding, imageSize, imageSize);
+        
+        // avatar
+        var textureWidth = Math.min(texture.width, imageSize);
+        var textureHeight = Math.min(texture.height, imageSize);
+        context.drawImage(avatarImage,
+                          
+                          texture.clip[0],
+                          texture.clip[1],
+                          texture.width,
+                          texture.height,
+                          
+                          x + padding + (imageSize - textureWidth) / 2,
+                          y + padding + (imageSize - textureHeight) / 2,
+                          textureWidth,
+                          textureHeight);
+      }
+    }
+    
+    context.fillStyle = 'rgba(255, 255, 255, 1)';
+    context.fillText(this.currentLine.text, x + padding * 2 + imageSize, y + padding);
+    // Create an image from the canvas and assign it to the texture
+    var image = new Image();
+    image.addEventListener('load', function onLoad(image) {
+      this.texture.setImage(image);
+    }.bind(this, image));
+    image.src = canvas.toDataURL();
+    
+    console.log('[Dialog] Create texture', this.currentLine);
+  };
+  
+  ModuleDialog.prototype.updateMethod = function updateMethod(dt) {
+    
+  };
+  
+  ModuleDialog.prototype.drawMethod = function drawMethod() {
+    var game = this.actor.game;
+    var hud = game.getHUD();
+    var context = hud.context;
+    var x = (game.width - this.width) / 2;
+    var y = game.height - this.height;
+    
+    this.texture.draw(context, x, y);
+  };
+  
+  ModuleDialog.prototype.getLineIndexById = function getLineIndexById(id) {
+    var lines = this.lines;
+    var index = -1;
+    
+    for (var i = 0, len = lines.length; i < len; i++) {
+      if (lines[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    
+    return index;
   };
   
   ModuleDialog.prototype.getLineActor = function getLineActor(line) {
@@ -1547,7 +1701,7 @@ var ModuleDialog = (function ModuleDialog() {
     } else if (actorId === 'NPC') {
       actor = this.actor;
     } else {
-      
+      actor = this.actor.game.getActor(actorId);
     }
     
     return actor;
@@ -1616,7 +1770,9 @@ var PlayerController = (function PlayerController() {
     };
     
     this.pathToWalk = null;
-    this.timeoutMove = null;
+    this.timeoutMove = null
+    
+    this.isActive = true;
     
     this.init(options);
   }
@@ -1627,6 +1783,8 @@ var PlayerController = (function PlayerController() {
     this.boundToGame = typeof options.boundToGame === 'boolean'? options.boundToGame : true;
     
     InputManager.listenTo(this.game.el);
+    
+    this.enable();
   };
   
   PlayerController.prototype.setControlledActor = function setControlledActor(actor) {
@@ -1635,6 +1793,14 @@ var PlayerController = (function PlayerController() {
   
   PlayerController.prototype.getActor = function getActor() {
     return this.controlledActor;
+  };
+  
+  PlayerController.prototype.enable = function enable() {
+    this.isActive = true;
+  };
+  
+  PlayerController.prototype.disable = function disable() {
+    this.isActive = false;
   };
   
   PlayerController.prototype.moveTo = function moveTo(position, onReach) {
@@ -1754,8 +1920,6 @@ var NavMesh = (function NavMesh() {
     }
     
     this.pathFinding.setGrid(this.mesh);
-    
-    console.info('Generated mesh', this.mesh);
   };
 
   return NavMesh;
@@ -1943,6 +2107,24 @@ var InputManager = (function InputManager() {
     }
 
     this.listeners[event][actionName].push(callback);
+  };
+  
+  InputManager.prototype.off = function off(event, actionName, callback) {
+    if (!this.listeners[event]) {
+      return;
+    }
+    
+    if (!this.listeners[event][actionName]) {
+      return;
+    }
+
+    var listeners = this.listeners[event][actionName];
+    for (var i = 0, len = listeners.length; i < len; i++) {
+      if (listeners[i] === callback) {
+        listeners.splice(i, 1);
+        break;
+      }
+    }
   };
 
   InputManager.prototype.onMouseMove = function onMouseMove(e) {

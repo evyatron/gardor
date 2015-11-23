@@ -478,7 +478,7 @@
         "y": 12,
         "x": 11
       },
-      "isBlocking": false,
+      "isBlocking": true,
       "speed": 200,
       "modules": [
         {
@@ -499,16 +499,20 @@
   ],
   "dialogs": {
     "test": {
+      "startingLine": "first",
       "lines": [
         {
+          "id": "first",
           "actor": "NPC",
           "text": "Welcome all..."
         },
         {
+          "id": "second",
           "actor": "PC",
           "text": "huh. I wonder what's inside. Only one way to find out!"
         },
         {
+          "id": "third",
           "actor": "PC",
           "text": "Well, two, had I had some omnipotent device that showed me information about anything I looked at"
         }
