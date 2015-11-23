@@ -42,6 +42,7 @@
           "type": "webpage",
           "url": "http://github.com/evyatron",
           "isInFrame": false,
+          "useDir": "top",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -70,6 +71,7 @@
           "type": "webpage",
           "url": "https://www.linkedin.com/in/evyataramitay",
           "isInFrame": false,
+          "useDir": "top",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -326,17 +328,7 @@
         "y": 9,
         "x": 8
       },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "dialog",
-          "dialogId": "test",
-          "useOffset": {
-            "x": 0,
-            "y": 1
-          }
-        }
-      ]
+      "isBlocking": true
     },
     {
       "id": "room-br",
@@ -369,7 +361,14 @@
         "y": 8,
         "x": 12
       },
-      "isBlocking": false
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "dialog",
+          "dialogId": "test",
+          "useDir": "top"
+        }
+      ]
     },
     {
       "id": "sign-contact",
@@ -445,7 +444,20 @@
   ],
   "dialogs": {
     "test": {
-      
+      "lines": [
+        {
+          "actor": "NPC",
+          "text": "Welcome all..."
+        },
+        {
+          "actor": "PC",
+          "text": "huh. I wonder what's inside. Only one way to find out!"
+        },
+        {
+          "actor": "PC",
+          "text": "Well, two, if I had some omnipotent device that showed me information about anything I looked at"
+        }
+      ]
     }
   }
 }

@@ -1366,6 +1366,7 @@ var ActorModule = (function ActorModule() {
 /* Interactable - NPC you can talk to */
 var ModuleInteractable = (function ModuleInteractable() {
   function ModuleInteractable(options) {
+    this.useDir = '';
     this.useOffset = {
       'x': 0,
       'y': 0
@@ -1382,6 +1383,7 @@ var ModuleInteractable = (function ModuleInteractable() {
     
     !options && (options = {});
 
+    this.useDir = options.useDir || '';
     this.useOffset = options.useOffset || {
       'x': 0,
       'y': 0
@@ -1402,7 +1404,12 @@ var ModuleInteractable = (function ModuleInteractable() {
   };
   
   ModuleInteractable.prototype.activate = function activate() {
-    console.warn('activate module', this)
+    if (this.useDir) {
+      var player = this.actor.game.playerController.controlledActor;
+      if (player) {
+        player.setDirection(this.useDir);
+      }
+    }
   };
   
   return ModuleInteractable;
@@ -1432,6 +1439,8 @@ var ModuleDialog = (function ModuleDialog() {
   };
   
   ModuleDialog.prototype.activate = function activate(e) {
+    ModuleInteractable.prototype.activate.apply(this, arguments);
+    
     console.warn(this.dialog);
   };
   
@@ -1460,6 +1469,8 @@ var ModuleWebPage = (function ModuleWebPage() {
   };
   
   ModuleWebPage.prototype.activate = function activate(e) {
+    ModuleInteractable.prototype.activate.apply(this, arguments);
+    
     if (this.isInFrame) {
       var actor = this.actor;
       var parentEl = actor.game.el;
