@@ -51,6 +51,17 @@
   ],
   "modules": [
     {
+      "id": "texture",
+      "className": "TextureModule",
+      "config": {
+        "src": "string",
+        "clip": "array",
+        "width": "number",
+        "height": "number",
+        "scale": "number"
+      }
+    },
+    {
       "id": "webpage",
       "className": "ModuleWebPage",
       "config": {

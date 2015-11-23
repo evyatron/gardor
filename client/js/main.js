@@ -371,8 +371,8 @@ var Game = (function Game() {
     var size = this.config.tileSize;
     
     return {
-      'x': (tile.x * size) + size / 2,
-      'y': (tile.y * size) + size / 2
+      'x': Math.floor((tile.x * size) + size / 2),
+      'y': Math.floor((tile.y * size) + size / 2)
     };
   };
 
@@ -612,6 +612,7 @@ var Layer = (function Layer() {
 var TilesetLayer = (function TilesetLayer() {
   function TilesetLayer(options) {
     this.grid = [];
+    this.texture = null;
     
     Layer.call(this, options);
   }
@@ -619,30 +620,57 @@ var TilesetLayer = (function TilesetLayer() {
   TilesetLayer.prototype = Object.create(Layer.prototype);
   TilesetLayer.prototype.constructor = TilesetLayer;
   
+  TilesetLayer.prototype.init = function init(options) {
+    Layer.prototype.init.apply(this, arguments);
+    
+    this.texture = new Texture({
+      'origin': [0, 0]
+    });
+  };
+  
   TilesetLayer.prototype.setMap = function setMap(map) {
     console.log('Set Tiles: ', map);
     
     this.grid = map.grid;
+    this.isDirty = true;
   };
   
   TilesetLayer.prototype.update = function update(dt) {
-    this.game.startBenchmark('update', 'grid');
-    
-    this.isDirty = true;
-    
-    this.game.endBenchmark('update', 'grid');
+    // Do nothing, but override so the default Layer update function won't run
   };
   
   TilesetLayer.prototype.draw = function draw() {
-    if (!this.isDirty) {
-      //return false;
+    if (this.isDirty) {
+      this.createTexture();
     }
     
     this.game.startBenchmark('draw', 'grid');
     
+    // move the Clip point according to the camera offset and draw the texture
+    var camera = this.game.camera;
+    this.texture.clip = [camera.x, camera.y];
+    this.texture.draw(this.context);
+  
+    if (DEBUG) {
+      var pointerTile = this.game.getPointerTile();
+      if (pointerTile) {
+        var size = this.game.config.tileSize;
+        
+        this.context.fillStyle = 'rgba(255, 255, 255, .4)';
+        this.context.beginPath();
+        this.context.fillRect(Math.floor(pointerTile.x * size - camera.x),
+                              Math.floor(pointerTile.y * size - camera.y),
+                              size, size);
+      }
+    }
+    
+    this.game.endBenchmark('draw', 'grid');
+
+    return true;
+  };
+
+  TilesetLayer.prototype.createTexture = function createTexture() {
     var game = this.game;
-    var camera = game.camera;
-    var context = this.context;
     var tilesMap = this.game.tiles;
     var size = this.game.config.tileSize;
     var rows = this.grid;
@@ -651,35 +679,27 @@ var TilesetLayer = (function TilesetLayer() {
       return;
     }
     
-    var numberOfRows = rows.length - Math.floor((game.bleed.y - camera.y) / size);
-    var numberOfCols = rows[0].length - Math.floor((game.bleed.x - camera.x) / size);
-    var startRow = Math.floor(camera.y / size);
-    var startCol = Math.floor(camera.x / size);
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var cell, tile, columns;
     var tilesDrawn = 0;
-    var cell, tile, i, j, columns, x, y;
     
-    context.clearRect(0, 0, game.width, game.height);
+    canvas.width = game.mapWidth;
+    canvas.height = game.mapHeight;
 
-    for (i = startRow; i < numberOfRows; i++) {
+    for (var i = 0, numberOfRows = rows.length; i < numberOfRows; i++) {
       columns = rows[i];
-      
-      if (!columns) {
-        continue;
-      }
-      
-      for (j = startCol; j < numberOfCols; j++) {
+      for (var j = 0, numberOfCols = columns.length; j < numberOfCols; j++) {
         cell = columns[j];
         tile = tilesMap[cell];
         
         if (tile) {
-          x = j * size - camera.x;
-          y = i * size - camera.y;
+          var x = j * size;
+          var y = i * size;
           
           tile.texture.draw(context, x, y);
-          
           tilesDrawn++;
           
-          // Show tile bounds and indexes
           if (DEBUG) {
             var thisTile = {
               'x': j,
@@ -692,17 +712,10 @@ var TilesetLayer = (function TilesetLayer() {
               } else {
                 context.fillStyle = 'rgba(0, 255, 0, .5)';
               }
+              
               context.fillRect(x + 3, y + 3, size - 6, size - 6);
             }
-            
-            var pointerTile = game.getPointerTile();
-            if (utils.tilesEqual(thisTile, pointerTile)) {
-              context.fillStyle = 'rgba(255, 255, 255, 1)';
-              context.beginPath();
-              context.arc(x + size / 2, y + size / 2, 6, 0, Math.PI * 2);
-              context.fill();
-            }
-            
+      
             context.strokeStyle = 'rgba(255, 0, 0, .2)';
             context.strokeRect(x, y, size, size);
             
@@ -713,15 +726,29 @@ var TilesetLayer = (function TilesetLayer() {
       }
     }
     
-    game.log('tiles: ' + tilesDrawn);
+    // Create an image from the canvas and assign it to the texture
+    var image = new Image();
+    image.addEventListener('load', function onLoad(image) {
+      this.texture.setImage(image);
+    }.bind(this, image));
+    image.src = canvas.toDataURL();
     
-    this.isDirty = false;
+    console.info('Create texture with tiles: ' + tilesDrawn);
     
-    game.endBenchmark('draw', 'grid');
-    
-    return true;
-  };
+    this.game.log('create tileset: ' + tilesDrawn + ' tiles');
 
+    this.isDirty = false;
+  };
+  
+  TilesetLayer.prototype.onResize = function onResize() {
+    Layer.prototype.onResize.apply(this, arguments);
+    
+    if (this.texture) {
+      this.texture.width = this.game.width;
+      this.texture.height = this.game.height;
+    }
+  };
+  
   return TilesetLayer;
 }());
 
@@ -802,7 +829,7 @@ var HUDLayer = (function HUDLayer() {
       
       var offsetPosition = this.game.getOffsetPosition(actorUnderPointer.position);
       tooltip.x = offsetPosition.x;
-      tooltip.y = offsetPosition.y + actorUnderPointer.texture.height / 2;
+      tooltip.y = offsetPosition.y + game.config.tileSize / 2;
     }
     
     game.endBenchmark('update', 'hud');
@@ -972,8 +999,8 @@ var Camera = (function Camera() {
       }
     }
     
-    this.x = Math.round(this.x);
-    this.y = Math.round(this.y);
+    this.x = Math.floor(this.x);
+    this.y = Math.floor(this.y);
     
     game.log('camera: ' + this.x + ',' + this.y);
   };
@@ -995,9 +1022,6 @@ var Actor = (function Actor() {
     this.direction = '';
     this.isBlocking = false;
     
-    this.texture = null;
-    this.textureOver = null;
-    this.textureDirClips = null;
     this.speed = 0;
     
     this.targetTile = null;
@@ -1032,7 +1056,7 @@ var Actor = (function Actor() {
     this.game = this.layer.game;
     this.speed = options.speed || 0;
     this.isBlocking = 'isBlocking' in options? options.isBlocking : false;
-    this.textureDirClips = options.textureDirClips || null;
+    this.direction = options.direction || 'top';
     this.tile = options.tile || {
       'x': 0,
       'y': 0
@@ -1041,32 +1065,16 @@ var Actor = (function Actor() {
     this.position = this.game.getCoordsFromTile(this.tile);
 
     this.initModules(options.modules || []);
-
-    this.texture = new Texture(options.texture);
-    
-    if (options.textureOver) {
-      this.textureOver = new Texture(options.textureOver);
-    }
-    
-    this.setDirection(options.direction || 'top');
     
     console.log('[Actor] create', this);
   };
   
   Actor.prototype.setDirection = function setDirection(direction) {
     if (this.direction === direction) {
-      return;
+      return false;
     }
 
     this.direction = direction;
-    
-    var clips = this.textureDirClips;
-    if (clips) {
-      var dirClip = clips[direction];
-      if (dirClip) {
-        this.texture.clip = dirClip;
-      }
-    }
     
     return true;
   };
@@ -1191,7 +1199,7 @@ var Actor = (function Actor() {
         }
       }
     }
-
+    
     var modules = this.modules;
     for (var i = 0, len = modules.length; i < len; i++) {
       var module = modules[i];
@@ -1203,23 +1211,15 @@ var Actor = (function Actor() {
     return true;
   };
   
-  Actor.prototype.draw = function draw(layer) {
+  Actor.prototype.draw = function draw() {
     var game = this.game;
-    var context = this.layer.context;
-    var drawPosition = game.getOffsetPosition(this.position);
-    var texture = this.isPointerOver && this.textureOver? this.textureOver : this.texture;
-    var x = drawPosition.x;
-    var y = drawPosition.y;
-    
-    // Don't draw out of bounds actors
-    if (x > game.width || x + this.width < 0 ||
-        y > game.height || y + this.height < 0) {
-      return true;
-    }
-    
+
     game.startBenchmark('draw', this.id);
 
     if (DEBUG) {
+      var context = this.layer.context;
+      var drawPosition = game.getOffsetPosition(this.position);
+      
       context.beginPath();
       context.fillStyle = 'rgba(255, 0, 0, .6)';
       context.strokeStyle = 'rgba(255, 0, 0, .6)';
@@ -1244,7 +1244,11 @@ var Actor = (function Actor() {
       }
     }
 
-    texture.draw(context, x, y);
+    var modules = this.modules;
+    for (var i = 0, len = modules.length; i < len; i++) {
+      var module = modules[i];
+      module.draw && module.draw();
+    }
     
     game.endBenchmark('draw', this.id);
     
@@ -1259,7 +1263,7 @@ var Texture = (function Texture() {
     this.src = '';
     this.origin = [0.5, 0.5];
     this.drawOrigin = [0.5, 0.5];
-    this.clip = null;
+    this.clip = [0, 0];
     
     this.width = 0;
     this.height = 0;
@@ -1278,27 +1282,45 @@ var Texture = (function Texture() {
     this.clip = options.clip || [0, 0];
     this.scale = options.scale || 1;
     
-    var image = Texture.prototype.textures[this.src];
-    if (image) {
-      if (image.isReady) {
-        this.onLoad();
+    if (this.src) {
+      var image = Texture.prototype.textures[this.src];
+      if (image) {
+        if (image.isReady) {
+          this.onLoad();
+        } else {
+          image.addEventListener('load', this.onLoad.bind(this));
+        }
       } else {
+        image = new Image();
         image.addEventListener('load', this.onLoad.bind(this));
+        image.addEventListener('error', this.onError.bind(this));
+        image.src = this.src;
+        
+        Texture.prototype.textures[this.src] = image;
       }
-    } else {
-      image = new Image();
-      image.addEventListener('load', this.onLoad.bind(this));
-      image.addEventListener('error', this.onError.bind(this));
-      image.src = this.src;
-      
-      Texture.prototype.textures[this.src] = image;
     }
-    
-    console.log('[Texture] create', this);
   };
   
-  Texture.prototype.draw = function draw(context, x, y) {
-    var image = Texture.prototype.textures[this.src];
+  Texture.prototype.setImage = function setImage(image) {
+    this.src = Date.now() + '_' + Math.random();
+    this.image = image;
+    this.image.isReady = true;
+    Texture.prototype.textures[this.src] = this.image;
+    
+    this.onLoad();
+  };
+  
+  Texture.prototype.setClip = function setClip(clip) {
+    this.clip = clip || [0, 0];
+  };
+  
+  Texture.prototype.draw = function draw(context, x, y, gameBounds) {
+    var src = this.src;
+    if (!src) {
+      return false;
+    }
+    
+    var image = Texture.prototype.textures[src];
     
     if (!image.isReady) {
       return false;
@@ -1306,23 +1328,39 @@ var Texture = (function Texture() {
     
     var origin = this.drawOrigin;
     var clip = this.clip;
-    var width = this.width;
-    var height = this.height;
+    var width = Math.floor(this.width);
+    var height = Math.floor(this.height);
     var scale = this.scale;
+    var drawWidth = Math.floor(width * scale);
+    var drawHeight = Math.floor(height * scale);
+    var shouldDraw = true;
+
+    x = Math.floor((x || 0) - origin[0] * scale);
+    y = Math.floor((y || 0) - origin[1] * scale);
     
-    x -= origin[0] * scale;
-    y -= origin[1] * scale;
+    if (gameBounds) {
+      if (x + drawWidth < 0 || x > gameBounds.width ||
+          y + drawWidth < 0 || y > gameBounds.height) {
+        shouldDraw = false;
+      }
+    }
     
-    context.drawImage(image,
-                      // Draw this
-                      clip[0], clip[1],
-                      width, height,
-                      // Here
-                      x, y,
-                      width * scale, height * scale);
-    
-    if (DEBUG) {
-      game.stats.textures++;
+    if (shouldDraw) {
+      context.drawImage(image,
+                        // Draw this
+                        Math.floor(clip[0]),
+                        Math.floor(clip[1]),
+                        width,
+                        height,
+                        // Here
+                        x,
+                        y,
+                        drawWidth,
+                        drawHeight);
+      
+      if (DEBUG) {
+        game.stats.textures++;
+      }
     }
     
     return true;
@@ -1366,6 +1404,53 @@ var ActorModule = (function ActorModule() {
   };
 
   return ActorModule;
+}());
+
+/*
+  Basic Texture module to draw the actor's texture
+  Since this is a module it's possible to use everal textures for each actor
+*/
+var TextureModule = (function TextureModule() {
+  function TextureModule(options) {
+    this.texture = null;
+    this.dirClips = {};
+    this.actorDirection = '';
+    
+    this.init(options);
+  }
+  
+  TextureModule.prototype = Object.create(ActorModule.prototype);
+  TextureModule.prototype.constructor = TextureModule;
+  
+  TextureModule.prototype.init = function init(options) {
+    ActorModule.prototype.init.apply(this, arguments);
+    
+    this.dirClips = options.dirClips || {};
+    this.texture = new Texture(options);
+  };
+  
+  TextureModule.prototype.draw = function draw() {
+    var actor = this.actor;
+    var game = actor.game;
+    var drawPosition = game.getOffsetPosition(actor.position);
+    
+    if (actor.direction !== this.actorDirection) {
+      this.actorDirection = actor.direction;
+      
+      var clip = this.dirClips[this.actorDirection];
+      if (clip) {
+        this.texture.setClip(clip);
+      }
+    }
+    
+    this.texture.draw(actor.layer.context,
+                      drawPosition.x, drawPosition.y,
+                      game);
+  
+    //var texture = actor.isPointerOver && actor.textureOver? actor.textureOver : this.texture;
+  };
+
+  return TextureModule;
 }());
 
 /* Interactable - NPC you can talk to */

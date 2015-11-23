@@ -25,14 +25,6 @@
       "id": "github",
       "tooltip": "GitHub",
       "isBlocking": true,
-      "texture": {
-        "src": "/img/actors/github.png",
-        "origin": [0.5, 0.7]
-      },
-      "textureOver": {
-        "src": "/img/actors/github-over.png",
-        "origin": [0.5, 0.7]
-      },
       "tile": {
         "y": 6,
         "x": 6
@@ -47,6 +39,12 @@
             "x": 0,
             "y": 1
           }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/github.png",
+          "src-hover": "/img/actors/github-over.png",
+          "origin": [0.5, 0.7]
         }
       ]
     },
@@ -54,14 +52,6 @@
       "id": "linkedin",
       "tooltip": "LinkedIn",
       "isBlocking": true,
-      "texture": {
-        "src": "/img/actors/linkedin.png",
-        "origin": [0.5, 0.7]
-      },
-      "textureOver": {
-        "src": "/img/actors/linkedin-over.png",
-        "origin": [0.5, 0.7]
-      },
       "tile": {
         "y": 6,
         "x": 8
@@ -76,6 +66,12 @@
             "x": 0,
             "y": 1
           }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/linkedin.png",
+          "src-hover": "/img/actors/linkedin-over.png",
+          "origin": [0.5, 0.7]
         }
       ]
     },
@@ -83,14 +79,12 @@
       "id": "frametest",
       "tooltip": "Frame Test",
       "isBlocking": true,
-      "texture": {
-        "src": "/img/actors/linkedin.png",
-        "origin": [0.5, 0.7]
-      },
+      
       "textureOver": {
         "src": "/img/actors/linkedin-over.png",
         "origin": [0.5, 0.7]
       },
+      
       "tile": {
         "y": 7,
         "x": 10
@@ -104,259 +98,302 @@
             "x": 1,
             "y": 0
           }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/linkedin.png",
+          "origin": [0.5, 0.7]
         }
       ]
     },
     
     {
       "id": "room-tl",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [32, 16],
-        "width": 32,
-        "height": 32,
-        "origin": [0, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 5,
         "x": 5
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [32, 16],
+          "width": 32,
+          "height": 32,
+          "origin": [0, 0.5],
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-t1",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [64, 16],
-        "width": 32,
-        "height": 32,
-        "scale": 2
-      },
       "tile": {
         "y": 5,
         "x": 6
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [64, 16],
+          "width": 32,
+          "height": 32,
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-t2",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [64, 16],
-        "width": 32,
-        "height": 32,
-        "scale": 2
-      },
       "tile": {
         "y": 5,
         "x": 7
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [64, 16],
+          "width": 32,
+          "height": 32,
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-t3",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [64, 16],
-        "width": 32,
-        "height": 32,
-        "scale": 2
-      },
       "tile": {
         "y": 5,
         "x": 8
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [64, 16],
+          "width": 32,
+          "height": 32,
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-tr",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [96, 16],
-        "width": 32,
-        "height": 32,
-        "origin": [1, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 5,
         "x": 9
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [96, 16],
+          "width": 32,
+          "height": 32,
+          "origin": [1, 0.5],
+          "scale": 2
+        }
+      ]
     },
     
     {
       "id": "room-l1",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [32, 48],
-        "width": 32,
-        "height": 32,
-        "origin": [0, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 6,
         "x": 5
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [32, 48],
+          "width": 32,
+          "height": 32,
+          "origin": [0, 0.5],
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-l2",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [32, 48],
-        "width": 32,
-        "height": 32,
-        "origin": [0, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 7,
         "x": 5
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [32, 48],
+          "width": 32,
+          "height": 32,
+          "origin": [0, 0.5],
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-l3",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [32, 48],
-        "width": 32,
-        "height": 32,
-        "origin": [0, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 8,
         "x": 5
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [32, 48],
+          "width": 32,
+          "height": 32,
+          "origin": [0, 0.5],
+          "scale": 2
+        }
+      ]
     },
     
     {
       "id": "room-r1",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [96, 48],
-        "width": 32,
-        "height": 32,
-        "origin": [1, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 6,
         "x": 9
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [96, 48],
+          "width": 32,
+          "height": 32,
+          "origin": [1, 0.5],
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-r2",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [96, 48],
-        "width": 32,
-        "height": 32,
-        "origin": [1, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 7,
         "x": 9
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [96, 48],
+          "width": 32,
+          "height": 32,
+          "origin": [1, 0.5],
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-r3",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [96, 48],
-        "width": 32,
-        "height": 32,
-        "origin": [1, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 8,
         "x": 9
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [96, 48],
+          "width": 32,
+          "height": 32,
+          "origin": [1, 0.5],
+          "scale": 2
+        }
+      ]
     },
     
     {
       "id": "room-bl",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [32, 80],
-        "width": 32,
-        "height": 32,
-        "origin": [0, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 9,
         "x": 5
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [32, 80],
+          "width": 32,
+          "height": 32,
+          "origin": [0, 0.5],
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-b1",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [64, 80],
-        "width": 32,
-        "height": 32,
-        "scale": 2
-      },
       "tile": {
         "y": 9,
         "x": 6
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [64, 80],
+          "width": 32,
+          "height": 32,
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-b2",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [64, 80],
-        "width": 32,
-        "height": 32,
-        "scale": 2
-      },
       "tile": {
         "y": 9,
         "x": 8
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [64, 80],
+          "width": 32,
+          "height": 32,
+          "scale": 2
+        }
+      ]
     },
     {
       "id": "room-br",
-      "texture": {
-        "src": "/img/actors/rtp-objects.png",
-        "clip": [96, 80],
-        "width": 32,
-        "height": 32,
-        "origin": [1, 0.5],
-        "scale": 2
-      },
       "tile": {
         "y": 9,
         "x": 9
       },
-      "isBlocking": true
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [96, 80],
+          "width": 32,
+          "height": 32,
+          "origin": [1, 0.5],
+          "scale": 2
+        }
+      ]
     },
     
     {
       "id": "sign-about",
       "tooltip": "Welcome Centre",
-      "texture": {
-        "src": "/img/actors/signs.png",
-        "clip": [0, 0],
-        "width": 32,
-        "height": 32,
-        "origin": [0.5, 1.25]
-      },
       "tile": {
         "y": 10,
         "x": 12
@@ -367,79 +404,97 @@
           "type": "dialog",
           "dialogId": "test",
           "useDir": "top"
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/signs.png",
+          "clip": [0, 0],
+          "width": 32,
+          "height": 32,
+          "origin": [0.5, 1.25]
         }
       ]
     },
     {
       "id": "sign-contact",
       "tooltip": "Post Office",
-      "texture": {
-        "src": "/img/actors/signs.png",
-        "clip": [0, 0],
-        "width": 32,
-        "height": 32,
-        "origin": [0.5, 1.25]
-      },
       "tile": {
         "y": 10,
         "x": 13
       },
-      "isBlocking": false
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/signs.png",
+          "clip": [0, 0],
+          "width": 32,
+          "height": 32,
+          "origin": [0.5, 1.25]
+        }
+      ]
     },
     {
       "id": "sign-games",
       "tooltip": "Video Game Arcade",
-      "texture": {
-        "src": "/img/actors/signs.png",
-        "clip": [0, 0],
-        "width": 32,
-        "height": 32,
-        "origin": [0.5, 1.25]
-      },
       "tile": {
         "y": 10,
         "x": 14
       },
-      "isBlocking": false
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/signs.png",
+          "clip": [0, 0],
+          "width": 32,
+          "height": 32,
+          "origin": [0.5, 1.25]
+        }
+      ]
     },
     {
       "id": "sign-experiments",
       "tooltip": "JavaScript Laboratory",
-      "texture": {
-        "src": "/img/actors/signs.png",
-        "clip": [0, 0],
-        "width": 32,
-        "height": 32,
-        "origin": [0.5, 1.25]
-      },
       "tile": {
         "y": 10,
         "x": 15
       },
-      "isBlocking": false
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/actors/signs.png",
+          "width": 32,
+          "height": 32,
+          "origin": [0.5, 1.25]
+        }
+      ]
     },
     
     {
       "id": "player",
-      "texture": {
-        "src": "/img/characters/player.png",
-        "clip": [0, 0],
-        "width": 32,
-        "height": 32,
-        "scale": 1.7
-      },
-      "textureDirClips": {
-        "bottom": [0, 0],
-        "top": [0, 96],
-        "right": [0, 64],
-        "left": [0, 32]
-      },
       "tile": {
         "y": 12,
         "x": 11
       },
       "isBlocking": false,
-      "speed": 200
+      "speed": 200,
+      "modules": [
+        {
+          "type": "texture",
+          "src": "/img/characters/player.png",
+          "width": 32,
+          "height": 32,
+          "scale": 1.7,
+          "dirClips": {
+            "bottom": [0, 0],
+            "top": [0, 96],
+            "right": [0, 64],
+            "left": [0, 32]
+          }
+        }
+      ]
     }
   ],
   "dialogs": {
