@@ -358,7 +358,7 @@
         "origin": [0.5, 1.25]
       },
       "tile": {
-        "y": 8,
+        "y": 10,
         "x": 12
       },
       "isBlocking": false,
@@ -381,7 +381,7 @@
         "origin": [0.5, 1.25]
       },
       "tile": {
-        "y": 8,
+        "y": 10,
         "x": 13
       },
       "isBlocking": false
@@ -397,7 +397,7 @@
         "origin": [0.5, 1.25]
       },
       "tile": {
-        "y": 8,
+        "y": 10,
         "x": 14
       },
       "isBlocking": false
@@ -413,7 +413,7 @@
         "origin": [0.5, 1.25]
       },
       "tile": {
-        "y": 8,
+        "y": 10,
         "x": 15
       },
       "isBlocking": false
@@ -455,7 +455,7 @@
         },
         {
           "actor": "PC",
-          "text": "Well, two, if I had some omnipotent device that showed me information about anything I looked at"
+          "text": "Well, two, had I had some omnipotent device that showed me information about anything I looked at"
         }
       ]
     }

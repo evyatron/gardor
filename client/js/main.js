@@ -328,8 +328,13 @@ var Game = (function Game() {
     }
   };
   
+  Game.prototype.getActor = function getActor(actorId) {
+    var actors = (this.layers.actors || {}).actorsMap;
+    return actors[actorId] || null;
+  };
+  
   Game.prototype.getActorsOnTile = function getActorsOnTile(tile) {
-    var actors = this.layers.actors.actors;
+    var actors = this.layers.actors.actorsMap;
     var actorsOnTile = [];
     
     for (var id in actors) {
@@ -338,7 +343,7 @@ var Game = (function Game() {
         actorsOnTile.push(actors[id]);
       }
     }
-    
+
     return actorsOnTile;
   };
   
@@ -1115,7 +1120,7 @@ var Actor = (function Actor() {
       this.onReachTarget = onReach;
       this.game.navMesh.findPath(this.tile, targetTile, this.onGotPath.bind(this));
       
-      console.log(this.id, 'move actor to', this.targetTile, this.targetPosition);
+      console.log(this.id, 'move actor to', targetTile);
     }
     
     return true;
@@ -1436,12 +1441,31 @@ var ModuleDialog = (function ModuleDialog() {
     if (!this.dialog) {
       console.warn('Cant find requested dialog', this);
     }
+    
+    this.lines = this.dialog.lines;
   };
   
   ModuleDialog.prototype.activate = function activate(e) {
     ModuleInteractable.prototype.activate.apply(this, arguments);
     
-    console.warn(this.dialog);
+    for (var i = 0, len = this.lines.length; i < len; i++) {
+      console.warn(this.lines[i].text, this.getLineActor(this.lines[i]));
+    }
+  };
+  
+  ModuleDialog.prototype.getLineActor = function getLineActor(line) {
+    var actorId = line.actor;
+    var actor = null;
+    
+    if (actorId === 'PC') {
+      actor = this.actor.game.playerController.controlledActor;
+    } else if (actorId === 'NPC') {
+      actor = this.actor;
+    } else {
+      
+    }
+    
+    return actor;
   };
   
   return ModuleDialog;
@@ -1539,8 +1563,8 @@ var PlayerController = (function PlayerController() {
     var game = this.game;
     var camera = this.game.camera;
     
-    this.pointer.x = InputManager.mousePosition.x + camera.x - game.offset.x;
-    this.pointer.y = InputManager.mousePosition.y + camera.y - game.offset.y;
+    this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
+    this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
 
     if (this.boundToGame) {
       var tileSize = game.config.tileSize;
@@ -1662,7 +1686,7 @@ var InputManager = (function InputManager() {
     this.isLeftMouseButtonDown = false;
     this.isMiddleMouseButtonDown = false;
     this.isRightMouseButtonDown = false;
-    this.mousePosition = {
+    this.pointerPosition = {
       'x': 0,
       'y': 0
     };
@@ -1837,11 +1861,14 @@ var InputManager = (function InputManager() {
   };
 
   InputManager.prototype.onMouseMove = function onMouseMove(e) {
-    this.mousePosition.x = e.pageX;
-    this.mousePosition.y = e.pageY;
+    this.pointerPosition.x = e.pageX;
+    this.pointerPosition.y = e.pageY;
   };
 
   InputManager.prototype.onMouseDown = function onMouseDown(e) {
+    this.pointerPosition.x = e.pageX;
+    this.pointerPosition.y = e.pageY;
+    
     var key = this.mouseButtonKeys[e.button];
     if (typeof key === 'number') {
       this.setKeyStatus(key, true);
