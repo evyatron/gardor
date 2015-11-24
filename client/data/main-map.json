@@ -22,9 +22,10 @@
   ],
   "actors": [
     {
-      "id": "github",
+      "id": "social-github",
       "tooltip": "GitHub",
       "isBlocking": true,
+      "zIndex": 1,
       "tile": {
         "y": 6,
         "x": 6
@@ -34,7 +35,6 @@
           "type": "webpage",
           "url": "http://github.com/evyatron",
           "isInFrame": false,
-          "useDir": "top",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -49,19 +49,19 @@
       ]
     },
     {
-      "id": "linkedin",
+      "id": "social-linkedin",
       "tooltip": "LinkedIn",
       "isBlocking": true,
+      "zIndex": 1,
       "tile": {
         "y": 6,
-        "x": 8
+        "x": 7
       },
       "modules": [
         {
           "type": "webpage",
           "url": "https://www.linkedin.com/in/evyataramitay",
           "isInFrame": false,
-          "useDir": "top",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -75,37 +75,487 @@
         }
       ]
     },
+    
+    
     {
-      "id": "frametest",
-      "tooltip": "Frame Test",
+      "id": "game-darkbounds",
+      "tooltip": "Dark Bounds\nTop-down spaceship multiplayer game\nCSS, JavaScript, WebSockets, Node.JS",
       "isBlocking": true,
-      
-      "textureOver": {
-        "src": "/img/actors/linkedin-over.png",
-        "origin": [0.5, 0.7]
-      },
-      
       "tile": {
-        "y": 7,
-        "x": 10
+        "y": 8,
+        "x": 12
       },
       "modules": [
         {
           "type": "webpage",
-          "url": "/",
+          "url": "http://darkbounds.com/",
           "isInFrame": true,
           "useOffset": {
-            "x": 1,
-            "y": 0
+            "x": 0,
+            "y": 1
           }
         },
         {
           "type": "texture",
-          "src": "/img/actors/linkedin.png",
-          "origin": [0.5, 0.7]
+          "src": "/img/actors/trees.png",
+          "clip": [0, 0],
+          "width": 62,
+          "height": 64,
+          "origin": [0.3, 0.8]
         }
       ]
     },
+    {
+      "id": "game-nanocraft",
+      "tooltip": "Nanocraft\nIsometric RTS/CookieClicker mashup\nCSS, JavaScript, Firebase as backend",
+      "isBlocking": true,
+      "tile": {
+        "y": 8,
+        "x": 13
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://nanocraft.amitay.me/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [62, 0],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "game-alice",
+      "tooltip": "[ALICE].\nSide scroller with changing gravity\nCSS and JavaScript",
+      "isBlocking": true,
+      "tile": {
+        "y": 8,
+        "x": 14
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/alice/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 0],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "game-simon",
+      "tooltip": "Simon\nRecreation of the classic Simon game\nHTML5, WebAudioAPI and Responsive Design",
+      "isBlocking": true,
+      "tile": {
+        "y": 8,
+        "x": 15
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/simon/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [186, 0],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "game-supermoneyo",
+      "tooltip": "SuperMoney-O\nA political-satiric mario-clone game\nCSS and JavaScript",
+      "isBlocking": true,
+      "tile": {
+        "y": 7,
+        "x": 12
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/supermoneyo/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [0, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "game-candickrush",
+      "tooltip": "Can Dick Rush\nMaze-navigation, created following a certain copyright story\nCSS and JavaScript",
+      "isBlocking": true,
+      "tile": {
+        "y": 7,
+        "x": 13
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/candickrush/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [62, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+
+    
+    {
+      "id": "js-fantasia",
+      "tooltip": "Fantasia 2013\nA CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
+      "isBlocking": true,
+      "tile": {
+        "y": 11,
+        "x": 4
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/tasia/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-timeforcoffee",
+      "tooltip": "Is It Time For Coffee?\nA webpage to let you know if it's time for coffee",
+      "isBlocking": true,
+      "tile": {
+        "y": 11,
+        "x": 5
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://www.isittimeforcoffee.com/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-wobbly",
+      "tooltip": "Wibbly Wobbly\nCSS Animations and wobbly movement using only CSS3's advanced selectors (for both the animation and the settings)",
+      "isBlocking": true,
+      "tile": {
+        "y": 11,
+        "x": 6
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/wobbly/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-conjunctions",
+      "tooltip": "Conjunctions\nExploration of CSS3 transformation and transformation origins.",
+      "isBlocking": true,
+      "tile": {
+        "y": 11,
+        "x": 7
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/conj/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-circular",
+      "tooltip": "Circular Movements\nExploration of circular movement in CSS3",
+      "isBlocking": true,
+      "tile": {
+        "y": 11,
+        "x": 8
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/circular/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-p280",
+      "tooltip": "PC Case Designer\nA page that lets you design a 3D PC case (Antec P280 specifically) using JavaScript and 3D CSS3",
+      "isBlocking": true,
+      "tile": {
+        "y": 11,
+        "x": 9
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/p280/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-bounce",
+      "tooltip": "3D Bounce\nExperiments with 3D CSS3 and animations",
+      "isBlocking": true,
+      "tile": {
+        "y": 10,
+        "x": 4
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/3dbounce/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-404",
+      "tooltip": "404 Page\nMy 404 page, messing around with Canvas - control with Keyboard Arrows and mouse",
+      "isBlocking": true,
+      "tile": {
+        "y": 10,
+        "x": 5
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/404.html",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-dott",
+      "tooltip": "Day of the Tentacle\nCSS3 representation of Purple from Day of the Tentacle",
+      "isBlocking": true,
+      "tile": {
+        "y": 10,
+        "x": 6
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/dott/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-inverter",
+      "tooltip": "Image Inverter\nA simple utility page for inverting images without Server Side code (using HTML5 File API)",
+      "isBlocking": true,
+      "tile": {
+        "y": 10,
+        "x": 7
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/inverter/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "js-d3api",
+      "tooltip": "Diablo 3 API Client Library\nAn API Client Library for Diablo 3 built in JavaScript",
+      "isBlocking": true,
+      "tile": {
+        "y": 10,
+        "x": 8
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/d3api/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    
     
     {
       "id": "room-tl",
@@ -199,7 +649,6 @@
         }
       ]
     },
-    
     {
       "id": "room-l1",
       "tile": {
@@ -239,26 +688,6 @@
       ]
     },
     {
-      "id": "room-l3",
-      "tile": {
-        "y": 8,
-        "x": 5
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "texture",
-          "src": "/img/actors/rtp-objects.png",
-          "clip": [32, 48],
-          "width": 32,
-          "height": 32,
-          "origin": [0, 0.5],
-          "scale": 2
-        }
-      ]
-    },
-    
-    {
       "id": "room-r1",
       "tile": {
         "y": 6,
@@ -297,29 +726,9 @@
       ]
     },
     {
-      "id": "room-r3",
-      "tile": {
-        "y": 8,
-        "x": 9
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "texture",
-          "src": "/img/actors/rtp-objects.png",
-          "clip": [96, 48],
-          "width": 32,
-          "height": 32,
-          "origin": [1, 0.5],
-          "scale": 2
-        }
-      ]
-    },
-    
-    {
       "id": "room-bl",
       "tile": {
-        "y": 9,
+        "y": 8,
         "x": 5
       },
       "isBlocking": true,
@@ -338,7 +747,7 @@
     {
       "id": "room-b1",
       "tile": {
-        "y": 9,
+        "y": 8,
         "x": 6
       },
       "isBlocking": true,
@@ -356,7 +765,7 @@
     {
       "id": "room-b2",
       "tile": {
-        "y": 9,
+        "y": 8,
         "x": 8
       },
       "isBlocking": true,
@@ -374,7 +783,7 @@
     {
       "id": "room-br",
       "tile": {
-        "y": 9,
+        "y": 8,
         "x": 9
       },
       "isBlocking": true,
@@ -391,6 +800,7 @@
       ]
     },
     
+    
     {
       "id": "sign-about",
       "tooltip": "Welcome Centre",
@@ -402,8 +812,7 @@
       "modules": [
         {
           "type": "dialog",
-          "dialogId": "test",
-          "useDir": "top"
+          "dialogId": "page-about"
         },
         {
           "type": "texture",
@@ -425,6 +834,10 @@
       "isBlocking": false,
       "modules": [
         {
+          "type": "dialog",
+          "dialogId": "page-contact"
+        },
+        {
           "type": "texture",
           "src": "/img/actors/signs.png",
           "clip": [0, 0],
@@ -444,6 +857,10 @@
       "isBlocking": false,
       "modules": [
         {
+          "type": "dialog",
+          "dialogId": "page-games"
+        },
+        {
           "type": "texture",
           "src": "/img/actors/signs.png",
           "clip": [0, 0],
@@ -454,7 +871,7 @@
       ]
     },
     {
-      "id": "sign-experiments",
+      "id": "sign-playground",
       "tooltip": "JavaScript Laboratory",
       "tile": {
         "y": 10,
@@ -463,11 +880,70 @@
       "isBlocking": false,
       "modules": [
         {
+          "type": "dialog",
+          "dialogId": "page-playground"
+        },
+        {
           "type": "texture",
           "src": "/img/actors/signs.png",
           "width": 32,
           "height": 32,
           "origin": [0.5, 1.25]
+        }
+      ]
+    },
+
+    {
+      "id": "page-about",
+      "tooltip": "About Me",
+      "tile": {
+        "y": 9,
+        "x": 12
+      },
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "htmlElement",
+          "selector": ".game-module-about",
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [256, 162],
+          "width": 32,
+          "height": 64,
+          "origin": [0.5, 0.8]
+        }
+      ]
+    },
+    {
+      "id": "page-contact",
+      "tooltip": "Contact Me",
+      "tile": {
+        "y": 9,
+        "x": 10
+      },
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "htmlElement",
+          "selector": ".game-module-contact",
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "clip": [288, 162],
+          "width": 32,
+          "height": 64,
+          "origin": [0.5, 0.8]
         }
       ]
     },
@@ -480,6 +956,7 @@
       },
       "isBlocking": true,
       "speed": 200,
+      "zIndex": 1,
       "modules": [
         {
           "type": "texture",
@@ -487,6 +964,7 @@
           "width": 32,
           "height": 32,
           "scale": 1.7,
+          "defaultClip": [0, 0],
           "dirClips": {
             "bottom": [0, 0],
             "top": [0, 96],
@@ -498,23 +976,45 @@
     }
   ],
   "dialogs": {
-    "test": {
-      "startingLine": "first",
+    "page-about": {
+      "startingLine": "welcome",
       "lines": [
         {
-          "id": "first",
+          "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome all..."
+          "text": "Welcome to the Welcome Centre\nWhere welcoming's our job!"
         },
         {
-          "id": "second",
+          "id": "answer",
           "actor": "PC",
-          "text": "huh. I wonder what's inside. Only one way to find out!"
-        },
+          "text": ""
+        }
+      ]
+    },
+    "page-contact": {
+      "lines": [
         {
-          "id": "third",
-          "actor": "PC",
-          "text": "Well, two, had I had some omnipotent device that showed me information about anything I looked at"
+          "id": "welcome",
+          "actor": "NPC",
+          "text": "Welcome to the Post Office\nContact me for YOUR chance of a reply!"
+        }
+      ]
+    },
+    "page-games": {
+      "lines": [
+        {
+          "id": "welcome",
+          "actor": "NPC",
+          "text": "Welcome to the Video Game Arcade\nGLHF"
+        }
+      ]
+    },
+    "page-playground": {
+      "lines": [
+        {
+          "id": "welcome",
+          "actor": "NPC",
+          "text": "Welcome to the Laboratory\nPlease don't feed the experiments"
         }
       ]
     }

@@ -147,10 +147,6 @@ var Game = (function Game() {
       'game': this
     });
     
-    InputManager.bindAction('moveTo', InputManager.KEYS.LEFT_MOUSE_BUTTON);
-    InputManager.on('pressed', 'moveTo', this.onPointerClick.bind(this));
-    
-    
     window.addEventListener('resize', this.onResize.bind(this));
     this.onResize();
     
@@ -313,7 +309,7 @@ var Game = (function Game() {
     this.stats.draw = this.endBenchmark('global', 'draw');
   };
   
-  Game.prototype.onPointerClick = function onPointerClick(e) {
+  Game.prototype.handleClick = function handleClick(e) {
     var clickedTile = this.getPointerTile();
     var actors = this.getActorsOnTile(clickedTile);
     var wasClickHandled = false;
@@ -392,6 +388,60 @@ var Game = (function Game() {
     return Math.sqrt(distX * distX + distY * distY);
   };
   
+  Game.prototype.drawText = function drawText(context, text, x, y, font, lineSpacing) {
+    context.font = font || this.config.defaultFont;
+
+    var textLines = text.split("\n");
+    var lineHeight = parseInt(context.font, 10) + (lineSpacing || 0);
+    
+    //var fillStyle = context.fillStyle;
+    //var highlightFillStyle = this.config.tooltips.highlightColor;
+    
+    for (var i = 0, len = textLines.length; i < len; i++) {
+      var formattedText = textLines[i];
+      /*
+      var formattedTextParts = [];
+      
+      formattedText = formattedText.replace(/<b>[^\<]*<\/b>/g, function(whole, match) {
+        console.warn(arguments);
+        formattedTextParts.push({
+          'text': match,
+          'isHighlighted': true
+        });
+        return match;
+      });
+      
+      console.warn(formattedTextParts)
+      */
+
+      context.fillText(formattedText, x, y + lineHeight * i);
+    }
+  };
+  
+  Game.prototype.measureText = function measureText(context, text, lineSpacing) {
+    var height = 0;
+    var width = 0;
+    var textLines = text.split("\n");
+    
+    if (!lineSpacing) {
+      lineSpacing = 0;
+    }
+    
+    var fontHeight = parseInt(context.font, 10);
+    
+    height = textLines.length * fontHeight +
+            (textLines.length - 1) * lineSpacing;
+    
+    for (var i = 0, len = textLines.length; i < len; i++) {
+      width = Math.max(width, context.measureText(textLines[i]).width);
+    }
+    
+    return {
+      'height': height,
+      'width': width
+    };
+  };
+  
   Game.prototype.loadMap = function loadMap(mapId, callback) {
     console.log('Get Map:', mapId);
     
@@ -453,7 +503,7 @@ var Game = (function Game() {
       return;
     }
     
-    this.layers.hud.writeLine(message);
+    this.layers.hud.writeDebugLine(message);
   };
   
   Game.prototype.onResize = function onResize() {
@@ -564,15 +614,19 @@ var Layer = (function Layer() {
       this.actorsMap[actor.id] = actor;
     }
     
+    this.sortActors();
+    
+    return true;
+  };
+  
+  Layer.prototype.sortActors = function sortActors() {
     this.actors.sort(function actorSorter(a, b) {
       return a.tile.y > b.tile.y? 1 :
              a.tile.y < b.tile.y? -1 :
-             a.tile.x > b.tile.x? 1 :
-             a.tile.x < b.tile.x? -1 :
+             a.zIndex > b.zIndex? 1 :
+             a.zIndex < b.zIndex? -1 :
              0;
     });
-    
-    return true;
   };
   
   Layer.prototype.update = function update(dt) {
@@ -771,7 +825,6 @@ var HUDLayer = (function HUDLayer() {
       'width': 0,
       'height': 0,
       'text': '',
-      'padding': [10, 5],
       'isVisible': false
     };
     
@@ -802,8 +855,9 @@ var HUDLayer = (function HUDLayer() {
   };
   
   HUDLayer.prototype.onClick = function onClick(map) {
-    this.timeShownClickTexture = 0;
     var pointer = this.game.playerController.pointer;
+    
+    this.timeShownClickTexture = 0;
     this.clickPosition.x = pointer.x;
     this.clickPosition.y = pointer.y;
   };
@@ -818,10 +872,12 @@ var HUDLayer = (function HUDLayer() {
     }
 
     var actorUnderPointer = null;
-    for (var id in game.actorsUnderPointer) {
-      if (game.actorsUnderPointer[id].tooltip) {
-        actorUnderPointer = game.actorsUnderPointer[id];
-        break;
+    if (game.playerController.isActive) {
+      for (var id in game.actorsUnderPointer) {
+        if (game.actorsUnderPointer[id].tooltip) {
+          actorUnderPointer = game.actorsUnderPointer[id];
+          break;
+        }
       }
     }
     
@@ -834,7 +890,6 @@ var HUDLayer = (function HUDLayer() {
         tooltip.actorId = actorUnderPointer.id;
         tooltip.text = actorUnderPointer.tooltip;
         tooltip.isVisible = true;
-        tooltip.height = 13;
       }
       
       var offsetPosition = this.game.getOffsetPosition(actorUnderPointer.position);
@@ -847,7 +902,7 @@ var HUDLayer = (function HUDLayer() {
     return true;
   };
   
-  HUDLayer.prototype.writeLine = function writeLine(text) {
+  HUDLayer.prototype.writeDebugLine = function writeDebugLine(text) {
     this.debugLines.push(text);
   };
   
@@ -859,31 +914,46 @@ var HUDLayer = (function HUDLayer() {
     
     // Click Indiactor
     if (this.timeShownClickTexture < this.timeToShowClickTexture) {
-      var position = this.game.getOffsetPosition(this.clickPosition);
+      var position = game.getOffsetPosition(this.clickPosition);
       this.clickTexture.draw(context, position.x, position.y);
     }
     
     // Tooltip
     var tooltip = this.tooltip;
     if (tooltip.isVisible) {
-      tooltip.width = this.context.measureText(tooltip.text).width;
+      var tooltipConfig = game.config.tooltips || {};
+      var paddingX = (tooltipConfig.padding || [0, 0])[0];
+      var paddingY = (tooltipConfig.padding || [0, 0])[1];
+      var textSize = game.measureText(context, tooltip.text, tooltipConfig.lineSpacing); 
+
+      tooltip.width = textSize.width;
+      tooltip.height = textSize.height;
       
+      context.textBaseline = 'middle';
       context.textAlign = 'center';
       context.fillStyle = 'rgba(0, 0, 0, .75)';
       context.strokeStyle = 'rgba(0, 0, 0, 1)';
+      if (tooltipConfig.font) {
+        context.font = tooltipConfig.font;
+      }
       
-      context.fillRect(tooltip.x - tooltip.padding[0] - tooltip.width / 2,
-                       tooltip.y - tooltip.padding[1],
-                       tooltip.width + tooltip.padding[0] * 2,
-                       tooltip.height + tooltip.padding[1] * 2);
+      context.fillRect(tooltip.x - paddingX - tooltip.width / 2,
+                       tooltip.y - paddingY,
+                       tooltip.width + paddingX * 2,
+                       tooltip.height + paddingY * 2);
                        
-      context.strokeRect(tooltip.x - tooltip.padding[0] - tooltip.width / 2,
-                       tooltip.y - tooltip.padding[1],
-                       tooltip.width + tooltip.padding[0] * 2,
-                       tooltip.height + tooltip.padding[1] * 2);
+      context.strokeRect(tooltip.x - paddingX - tooltip.width / 2,
+                       tooltip.y - paddingY,
+                       tooltip.width + paddingX * 2,
+                       tooltip.height + paddingY * 2);
 
       context.fillStyle = 'rgba(255, 255, 255, 1)';
-      context.fillText(tooltip.text, tooltip.x, tooltip.y);
+      game.drawText(context,
+                    tooltip.text,
+                    tooltip.x,
+                    tooltip.y + paddingY,
+                    context.font,
+                    tooltipConfig.lineSpacing);
     }
     
     game.endBenchmark('draw', 'hud');
@@ -891,6 +961,7 @@ var HUDLayer = (function HUDLayer() {
     if (DEBUG) {
       context.fillStyle = 'rgba(255, 255, 255, 1)';
       context.textAlign = 'left';
+      context.textBaseline = 'top';
       this.textOffset = 0;
       for (var i = 0, len = this.debugLines.length; i < len; i++) {
         this.context.fillText(this.debugLines[i], 5, 5 + this.textOffset);
@@ -904,13 +975,17 @@ var HUDLayer = (function HUDLayer() {
 
   HUDLayer.prototype.onResize = function onResize() {
     Layer.prototype.onResize.apply(this, arguments);
+    var font = (this.game.config.tooltips || {}).font;
     
     var context = this.context;
     context.textBaseline = 'top';
     context.textAlign = 'center';
-    context.font = 'normal 8pt monospace';
     context.shadowColor = 'rgba(0, 0, 0, 1)';
     context.shadowBlur = 1;
+    
+    if (font) {
+      context.font = font;
+    }
   };
   return HUDLayer;
 }());
@@ -1026,6 +1101,7 @@ var Actor = (function Actor() {
     this.tooltip = '';
     this.direction = '';
     this.isBlocking = false;
+    this.zIndex = 0;
     
     this.speed = 0;
     
@@ -1061,6 +1137,7 @@ var Actor = (function Actor() {
     this.layer = options.layer;
     this.game = this.layer.game;
     this.speed = options.speed || 0;
+    this.zIndex = options.zIndex || 0;
     this.isBlocking = 'isBlocking' in options? options.isBlocking : false;
     this.direction = options.direction || 'top';
     this.tile = options.tile || {
@@ -1101,6 +1178,13 @@ var Actor = (function Actor() {
       }
       
       moduleData.actor = this;
+      if (!moduleData.hasOwnProperty('activation')) {
+        moduleData.activation = moduleConfig.activation;
+      }
+      if (!moduleData.hasOwnProperty('disableControllerWhenActive')) {
+        moduleData.disableControllerWhenActive = moduleConfig.disableControllerWhenActive;
+      }
+      
       
       var module = new window[moduleConfig.className](moduleData);
       this.modules.push(module);
@@ -1164,6 +1248,13 @@ var Actor = (function Actor() {
     }
   };
   
+  Actor.prototype.updateTile = function updateTile(tile) {
+    if (!utils.tilesEqual(tile, this.tile)) {
+      this.tile = tile;
+      this.layer.sortActors();
+    }
+  };
+  
   Actor.prototype.update = function update(dt) {
     var game = this.game;
     
@@ -1176,13 +1267,13 @@ var Actor = (function Actor() {
       
       if (game.distance(this.targetPosition, this.position) <= speed) {
         this.position = this.targetPosition;
-        this.tile = this.targetTile;
+        this.updateTile(this.targetTile);
         
         game.navMesh.update();
         
         if (this.pathToWalk.length > 0) {
           this.targetTile = this.pathToWalk.splice(0, 1)[0];
-          this.targetPosition = this.game.getCoordsFromTile(this.targetTile);
+          this.targetPosition = game.getCoordsFromTile(this.targetTile);
         } else {
           this.targetTile = null;
           this.targetPosition = null;
@@ -1215,6 +1306,8 @@ var Actor = (function Actor() {
             this.position.y += speed;
           }
         }
+        
+        this.updateTile(game.getTileFromCoords(this.position));
       }
     }
     
@@ -1282,6 +1375,7 @@ var Texture = (function Texture() {
     this.origin = [0.5, 0.5];
     this.drawOrigin = [0.5, 0.5];
     this.clip = [0, 0];
+    this.defaultClip = null;
     
     this.width = 0;
     this.height = 0;
@@ -1290,6 +1384,7 @@ var Texture = (function Texture() {
     this.init(options, onLoad);
   }
   
+  // Save a map of src=>image, to not load same image multiple times
   Texture.prototype.textures = {};
   
   Texture.prototype.init = function init(options) {
@@ -1298,6 +1393,7 @@ var Texture = (function Texture() {
     this.width = options.width || 0;
     this.height = options.height || 0;
     this.clip = options.clip || [0, 0];
+    this.defaultClip = options.defaultClip || null;
     this.scale = options.scale || 1;
     
     if (this.src) {
@@ -1320,12 +1416,15 @@ var Texture = (function Texture() {
   };
   
   Texture.prototype.setImage = function setImage(image) {
-    this.src = Date.now() + '_' + Math.random();
-    var image = image;
-    image.isReady = true;
-    Texture.prototype.textures[this.src] = image;
-    
-    this.onLoad();
+    if (image) {
+      this.src = Date.now() + '_' + Math.random();
+      image.isReady = true;
+      Texture.prototype.textures[this.src] = image;
+      
+      this.onLoad();
+    } else {
+      this.src = '';
+    }
   };
   
   Texture.prototype.setClip = function setClip(clip) {
@@ -1416,6 +1515,14 @@ var ActorModule = (function ActorModule() {
   function ActorModule(options) {
     this.type = '';
     this.actor = null;
+    this.isActive = false;
+    this.disableControllerWhenActive = false;
+    this.activation = '';
+    this.useDir = '';
+    this.useOffset = {
+      'x': 0,
+      'y': 0
+    };
     
     this.init(options);
   }
@@ -1423,6 +1530,87 @@ var ActorModule = (function ActorModule() {
   ActorModule.prototype.init = function init(options) {
     this.type = options.type;
     this.actor = options.actor;
+    this.activation = options.activation;
+    this.disableControllerWhenActive = Boolean(options.disableControllerWhenActive);
+    this.useDir = options.useDir || '';
+    this.useOffset = options.useOffset || {
+      'x': 0,
+      'y': 0
+    };
+    
+    if (!this.useDir) {
+      if (this.useOffset.x < 0) {
+        this.useDir = 'right';
+      } else if (this.useOffset.x > 0) {
+        this.useDir = 'left';
+      } else if (this.useOffset.y < 0) {
+        this.useDir = 'bottom';
+      } else if (this.useOffset.y > 0) {
+        this.useDir = 'top';
+      }
+    }
+    
+    if (this.activation === 'auto') {
+      this.activate();
+    } else if (this.activation === 'interact') {
+      this.onClick = this.onClick_inactive;
+    } else if (this.activation === 'manual') {
+      
+    } else if (this.activation === 'proximity') {
+      
+    }
+  };
+  
+  ActorModule.prototype.onClick_inactive = function onClick(e) {
+    var game = this.actor.game;
+    var goToTile = {
+      'x': this.actor.tile.x + this.useOffset.x,
+      'y': this.actor.tile.y + this.useOffset.y
+    };
+    
+    game.playerController.moveTo(goToTile, this.activate.bind(this));
+    
+    return true;
+  };
+  
+  ActorModule.prototype.stop = function stop() {
+    this.isActive = false;
+    
+    if (this.disableControllerWhenActive) {
+      this.actor.game.playerController.enable();
+    }
+    
+    if (this.draw) {
+      this.drawMethod = this.draw;
+      delete this.draw;
+    }
+    
+    if (this.update) {
+      this.updateMethod = this.update;
+      delete this.update;
+    }
+  };
+  
+  ActorModule.prototype.activate = function activate() {
+    this.isActive = true;
+    
+    if (this.disableControllerWhenActive) {
+      this.actor.game.playerController.disable();
+    }
+    
+    if (this.drawMethod) {
+      this.draw = this.drawMethod;
+    }
+    if (this.updateMethod) {
+      this.update = this.updateMethod;
+    }
+    
+    if (this.useDir) {
+      var player = this.actor.game.playerController.controlledActor;
+      if (player) {
+        player.setDirection(this.useDir);
+      }
+    }
   };
 
   return ActorModule;
@@ -1451,7 +1639,7 @@ var TextureModule = (function TextureModule() {
     this.texture = new Texture(options);
   };
   
-  TextureModule.prototype.draw = function draw() {
+  TextureModule.prototype.drawMethod = function draw() {
     var actor = this.actor;
     var game = actor.game;
     var drawPosition = game.getOffsetPosition(actor.position);
@@ -1466,68 +1654,14 @@ var TextureModule = (function TextureModule() {
     }
     
     this.texture.draw(actor.layer.context,
-                      drawPosition.x, drawPosition.y,
+                      drawPosition.x,
+                      drawPosition.y,
                       game);
-  
-    //var texture = actor.isPointerOver && actor.textureOver? actor.textureOver : this.texture;
   };
 
   return TextureModule;
 }());
 
-/* Interactable - NPC you can talk to */
-var ModuleInteractable = (function ModuleInteractable() {
-  function ModuleInteractable(options) {
-    this.useDir = '';
-    this.useOffset = {
-      'x': 0,
-      'y': 0
-    };
-    
-    ActorModule.call(this, options);
-  }
-  
-  ModuleInteractable.prototype = Object.create(ActorModule.prototype);
-  ModuleInteractable.prototype.constructor = ModuleInteractable;
-  
-  ModuleInteractable.prototype.init = function init(options) {
-    ActorModule.prototype.init.apply(this, arguments);
-    
-    !options && (options = {});
-
-    this.useDir = options.useDir || '';
-    this.useOffset = options.useOffset || {
-      'x': 0,
-      'y': 0
-    };
-  };
-  
-  ModuleInteractable.prototype.onClick = function onClick(e) {
-    var game = this.actor.game;
-    
-    var goToTile = {
-      'x': this.actor.tile.x + this.useOffset.x,
-      'y': this.actor.tile.y + this.useOffset.y
-    };
-    
-    game.playerController.moveTo(goToTile, this.activate.bind(this));
-    
-    return true;
-  };
-  
-  ModuleInteractable.prototype.activate = function activate() {
-    if (this.useDir) {
-      var player = this.actor.game.playerController.controlledActor;
-      if (player) {
-        player.setDirection(this.useDir);
-      }
-    }
-  };
-  
-  return ModuleInteractable;
-}());
-
-/* Interactable - NPC you can talk to */
 var ModuleDialog = (function ModuleDialog() {
   function ModuleDialog(options) {
     this.dialogId = '';
@@ -1536,28 +1670,40 @@ var ModuleDialog = (function ModuleDialog() {
     this.startingLineId = '';
     this.currentLineIndex = 0;
     this.texture = null;
+    this.nextLine_bound = null;
     
-    this.isActive = false;
-    
-    this.width = 400;
-    this.height = 200;
-    this.padding = 12;
-    this.actorImageSize = 64;
-    
-    ModuleInteractable.call(this, options);
+    this.font = '';
+    this.width = 0;
+    this.height = 0;
+    this.padding = 0;
+    this.actorImageSize = 0;
+    this.lineSpacing = 0;
+
+    ActorModule.call(this, options);
   }
   
-  ModuleDialog.prototype = Object.create(ModuleInteractable.prototype);
+  ModuleDialog.prototype = Object.create(ActorModule.prototype);
   ModuleDialog.prototype.constructor = ModuleDialog;
   
   ModuleDialog.prototype.init = function init(options) {
-    ModuleInteractable.prototype.init.apply(this, arguments);
+    ActorModule.prototype.init.apply(this, arguments);
     
     this.dialogId = options.dialogId;
     this.dialog = this.actor.game.currentMap.dialogs[this.dialogId];
+    
     this.texture = new Texture({
       'origin': [0, 0]
     });
+    
+    var defaultDialogSettings = this.actor.game.config.dialogs;
+    this.font = this.dialog.font || defaultDialogSettings.font;
+    this.width = this.dialog.width || defaultDialogSettings.width;
+    this.height = this.dialog.height || defaultDialogSettings.height;
+    this.padding = this.dialog.padding || defaultDialogSettings.padding;
+    this.actorImageSize = this.dialog.actorImageSize || defaultDialogSettings.actorImageSize;
+    this.lineSpacing = this.dialog.lineSpacing || defaultDialogSettings.lineSpacing;
+    
+    this.nextLine_bound = this.nextLine.bind(this);
     
     if (this.dialog) {
       this.lines = this.dialog.lines;
@@ -1568,42 +1714,49 @@ var ModuleDialog = (function ModuleDialog() {
   };
   
   ModuleDialog.prototype.activate = function activate(e) {
-    ModuleInteractable.prototype.activate.apply(this, arguments);
+    ActorModule.prototype.activate.apply(this, arguments);
     
-    console.log('[Dialog] Activate', this.currentLine, this);
+    console.log('[Dialog] Activate', this);
     
     this.currentLineIndex = -1;
+    this.texture.setImage(null);
     this.nextLine();
-    this.isActive = true;
-    this.update = this.updateMethod;
-    this.draw = this.drawMethod;
+    
+    InputManager.on('pressed', 'activate', this.nextLine_bound);
+    InputManager.on('pressed', 'moveTo', this.nextLine_bound);
   };
   
-  ModuleDialog.prototype.finish = function finish(e) {
-    this.update = null;
-    this.draw = null;
+  ModuleDialog.prototype.stop = function stop(e) {
+    ActorModule.prototype.stop.apply(this, arguments);
+    
     this.currentLineIndex = -1;
     this.currentLine = null;
     this.currentActor = null;
-    this.isActive = false;
+    
+    InputManager.off('pressed', 'activate', this.nextLine_bound);
+    InputManager.off('pressed', 'moveTo', this.nextLine_bound);
   };
   
   ModuleDialog.prototype.nextLine = function nextLine() {
-    if (this.currentLineIndex === -1) {
-      this.currentLineIndex = this.getLineIndexById(this.startingLineId);
+    var newIndex = this.currentLineIndex + 1;
+    if (newIndex === 0) {
+      newIndex = this.getLineIndexById(this.startingLineId);
     } else {
       var line = this.lines[this.currentLineIndex];
       if ('nextLine' in line) {
-        this.currentLineIndex = this.getLineIndexById(line.nextLine);
-      } else {
-        this.currentLineIndex = this.currentLineIndex + 1;
+        newIndex = this.getLineIndexById(line.nextLine);
       }
     }
     
-    this.currentLine = this.lines[this.currentLineIndex];
-    this.currentActor = this.getLineActor(this.currentLine);
     
-    this.createTexture();
+    if (newIndex < this.lines.length) {
+      this.currentLineIndex = newIndex;
+      this.currentLine = this.lines[this.currentLineIndex];
+      this.currentActor = this.getLineActor(this.currentLine);
+      this.createTexture();
+    } else {
+      this.stop();
+    }
   };
   
   ModuleDialog.prototype.createTexture = function createTexture() {
@@ -1617,7 +1770,7 @@ var ModuleDialog = (function ModuleDialog() {
     canvas.width = this.width;
     canvas.height = this.height;
 
-    context.font = '12pt monospace';
+    context.font = this.font;
     context.textBaseline = 'top';
     
     // background
@@ -1638,10 +1791,12 @@ var ModuleDialog = (function ModuleDialog() {
         // avatar
         var textureWidth = Math.min(texture.width, imageSize);
         var textureHeight = Math.min(texture.height, imageSize);
+        var clip = texture.defaultClip || texture.clip;
+        
         context.drawImage(avatarImage,
                           
-                          texture.clip[0],
-                          texture.clip[1],
+                          clip[0],
+                          clip[1],
                           texture.width,
                           texture.height,
                           
@@ -1653,7 +1808,14 @@ var ModuleDialog = (function ModuleDialog() {
     }
     
     context.fillStyle = 'rgba(255, 255, 255, 1)';
-    context.fillText(this.currentLine.text, x + padding * 2 + imageSize, y + padding);
+    
+    this.actor.game.drawText(context,
+                              this.currentLine.text,
+                              x + padding * 2 + imageSize,
+                              y + padding,
+                              this.font,
+                              this.lineSpacing);
+    
     // Create an image from the canvas and assign it to the texture
     var image = new Image();
     image.addEventListener('load', function onLoad(image) {
@@ -1661,13 +1823,9 @@ var ModuleDialog = (function ModuleDialog() {
     }.bind(this, image));
     image.src = canvas.toDataURL();
     
-    console.log('[Dialog] Create texture', this.currentLine);
+    console.log('[Dialog] Create dialog texture', this.currentLine);
   };
-  
-  ModuleDialog.prototype.updateMethod = function updateMethod(dt) {
-    
-  };
-  
+
   ModuleDialog.prototype.drawMethod = function drawMethod() {
     var game = this.actor.game;
     var hud = game.getHUD();
@@ -1710,29 +1868,28 @@ var ModuleDialog = (function ModuleDialog() {
   return ModuleDialog;
 }());
 
-/* Interactable - Web Page you can open */
 var ModuleWebPage = (function ModuleWebPage() {
   function ModuleWebPage(options) {
     this.url = '';
     this.isInFrame = false;
     this.scale = 1;
     
-    ModuleInteractable.call(this, options);
+    ActorModule.call(this, options);
   }
   
-  ModuleWebPage.prototype = Object.create(ModuleInteractable.prototype);
+  ModuleWebPage.prototype = Object.create(ActorModule.prototype);
   ModuleWebPage.prototype.constructor = ModuleWebPage;
   
   ModuleWebPage.prototype.init = function init(options) {
-    ModuleInteractable.prototype.init.apply(this, arguments);
+    ActorModule.prototype.init.apply(this, arguments);
     
     this.url = options.url || '';
     this.isInFrame = options.hasOwnProperty('isInFrame')? options.isInFrame : false;
-    this.scale = options.scale || 0.9;
+    this.scale = options.scale || 0.95;
   };
   
   ModuleWebPage.prototype.activate = function activate(e) {
-    ModuleInteractable.prototype.activate.apply(this, arguments);
+    ActorModule.prototype.activate.apply(this, arguments);
     
     if (this.isInFrame) {
       var actor = this.actor;
@@ -1756,6 +1913,70 @@ var ModuleWebPage = (function ModuleWebPage() {
   return ModuleWebPage;
 }());
 
+var ModuleHTMLElement = (function ModuleHTMLElement() {
+  function ModuleHTMLElement(options) {
+    this.selector = '';
+    this.el = null;
+    
+    ActorModule.call(this, options);
+  }
+  
+  ModuleHTMLElement.prototype = Object.create(ActorModule.prototype);
+  ModuleHTMLElement.prototype.constructor = ModuleHTMLElement;
+  
+  ModuleHTMLElement.prototype.init = function init(options) {
+    ActorModule.prototype.init.apply(this, arguments);
+    
+    this.selector = options.selector;
+    this.el = document.querySelector(this.selector);
+    
+    if (this.isActive) {
+      this.activate();
+    } else {
+      this.stop();
+    }
+  };
+  
+  ModuleHTMLElement.prototype.activate = function activate(e) {
+    ActorModule.prototype.activate.apply(this, arguments);
+    
+    if (this.el) {
+      this.el.classList.add('visible');
+    }
+  };
+  
+  ModuleHTMLElement.prototype.stop = function stop(e) {
+    ActorModule.prototype.stop.apply(this, arguments);
+    
+    if (this.el) {
+      this.el.classList.remove('visible');
+    }
+  };
+  
+  return ModuleHTMLElement;
+}());
+
+var ModuleContact = (function ModuleContact() {
+  function ModuleContact(options) {
+    ActorModule.call(this, options);
+  }
+  
+  ModuleContact.prototype = Object.create(ActorModule.prototype);
+  ModuleContact.prototype.constructor = ModuleContact;
+  
+  ModuleContact.prototype.init = function init(options) {
+    ActorModule.prototype.init.apply(this, arguments);
+    
+  };
+  
+  ModuleContact.prototype.activate = function activate(e) {
+    ActorModule.prototype.activate.apply(this, arguments);
+    
+  };
+  
+  return ModuleContact;
+}());
+
 /* Controls a given Actor */
 var PlayerController = (function PlayerController() {
   function PlayerController(options) {
@@ -1769,8 +1990,10 @@ var PlayerController = (function PlayerController() {
       'y': 0
     };
     
+    this.justPressed = {};
+    
     this.pathToWalk = null;
-    this.timeoutMove = null
+    this.timeoutMove = null;
     
     this.isActive = true;
     
@@ -1781,7 +2004,12 @@ var PlayerController = (function PlayerController() {
     this.game = options.game;
     
     this.boundToGame = typeof options.boundToGame === 'boolean'? options.boundToGame : true;
+
+    InputManager.bindAction('activate', InputManager.KEYS.SPACE);
+    InputManager.bindAction('moveTo', InputManager.KEYS.LEFT_MOUSE_BUTTON);
     
+    InputManager.on('pressed', 'moveTo', this.onPointerClick.bind(this));
+
     InputManager.listenTo(this.game.el);
     
     this.enable();
@@ -1789,6 +2017,12 @@ var PlayerController = (function PlayerController() {
   
   PlayerController.prototype.setControlledActor = function setControlledActor(actor) {
     this.controlledActor = actor;
+  };
+  
+  PlayerController.prototype.onPointerClick = function onPointerClick(e) {
+    if (this.isActive) {
+      this.game.handleClick(e);
+    }
   };
   
   PlayerController.prototype.getActor = function getActor() {
@@ -1810,17 +2044,26 @@ var PlayerController = (function PlayerController() {
     }
   };
   
+  PlayerController.prototype.wasJustPressed = function wasJustPressed(key) {
+    return !!this.justPressed[key];
+  };
+  
   PlayerController.prototype.update = function update(dt) {
     var game = this.game;
     var camera = this.game.camera;
     
-    this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
-    this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
-
-    if (this.boundToGame) {
-      var tileSize = game.config.tileSize;
-      this.pointer.x = utils.clamp(this.pointer.x, 0, game.width + game.bleed.x - tileSize);
-      this.pointer.y = utils.clamp(this.pointer.y, 0, game.height + game.bleed.y - tileSize);
+    this.justPressed = InputManager.justPressed;
+    InputManager.justPressed = {};
+    
+    if (this.isActive) {
+      this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
+      this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
+  
+      if (this.boundToGame) {
+        var tileSize = game.config.tileSize;
+        this.pointer.x = utils.clamp(this.pointer.x, 0, game.width + game.bleed.x - tileSize);
+        this.pointer.y = utils.clamp(this.pointer.y, 0, game.height + game.bleed.y - tileSize);
+      }
     }
     
     if (DEBUG) {
@@ -1854,8 +2097,6 @@ var NavMesh = (function NavMesh() {
       console.warn('Trying to find path without callback', arguments);
       return false;
     }
-    
-    console.log('Find path from', from, 'to', to);
     
     this.pathFinding.findPath(from.x, from.y, to.x, to.y, function onCalculated(path) {
       if (path === null) {
@@ -1945,6 +2186,7 @@ var InputManager = (function InputManager() {
     this.actionsActive = {};
 
     this.KEYS_DOWN = {};
+    this.justPressed = {};
 
     this.CODE_TO_KEY = {};
 
@@ -2173,7 +2415,12 @@ var InputManager = (function InputManager() {
     this.KEYS_DOWN[key] = isDown;
     this[this.CODE_TO_KEY[key]] = isDown;
     
+    
     if (actionName) {
+      if (isFirstPress) {
+        this.justPressed[key] = true;
+      }
+      
       this.actionsActive[actionName] = isDown;
 
       if (isFirstPress || !isDown) {

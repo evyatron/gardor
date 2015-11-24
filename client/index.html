@@ -4,6 +4,7 @@
     <title>Gardor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
     
     <style>
     </style>
@@ -12,9 +13,75 @@
   </head>
   <body>
     <div id="game"></div>
+    <div class="game-module game-module-about">
+      <h2>Hi!</h2>
+      <p>
+        I'm <strong>Evyatar</strong>, a <strong>Front End / Game Developer</strong> based in <strong>London, UK</strong>.
+      </p>
+      <p>
+        I love developing <span data-card="games">Games</span> in <em>JavaScript</em> and <em>Unreal Engine</em>,
+        and creating <span data-card="portfolio">unique and interactive designs</span> using the latest HTML5, CSS3 and Object Oriented JavaScript design patterns.
+      </p>
+      <p>
+        I have experience with SEO, developing responsive designs, and working closely with various APIs, as well as some less-interesting backend and miscellaneous technologies such as: PHP, MySQL, XML/XSL, etc.
+      </p>
+    </div>
+    <div class="game-module game-module-contact">
+      <h2>Contact Me</h2>
+      <p>
+        Got an interesting job offer? Want my help with anything?<br />
+        Looking for info about Front End Development?
+      </p>
+      <p>
+        Feel free to contact me directly using this form!
+      </p>
+
+      <form action="send.php" method="post">
+        <fieldset>
+          <div>
+            <label for="name">
+              <span>Name:</span>
+              <input type="text" value="" id="name" name="name" class="txt" required />
+            </label>
+          </div>
+          <div>
+            <label for="email">
+              <span>Email:</span>
+              <input type="email" value="" id="email" name="email" class="txt" />
+            </label>
+          </div>
+          <div>
+            <label for="phone">
+              <span>Phone Number:</span>
+              <input type="text" value="" id="phone" name="phone" class="txt" pattern="(\d|\s)*" />
+            </label>
+          </div>
+          <div>
+            <label for="message">
+              <span>Message:</span>
+              <textarea id="message" name="message" class="txt" rows="6" required></textarea>
+            </label>
+          </div>
+          <div class="address">
+            <label for="address">
+              <span>Address:</span>
+              <input type="text" value="" id="address" name="address" class="txt" />
+            </label>
+          </div>
+          <div class="buttons">
+            <input type="submit" id="send" value="Send" />
+          </div>
+        </fieldset>
+        <div class="status">
+          <span>Thanks!<br />
+          I'll get back to you shortly.</span>
+        </div>
+    </form>
+
+    </div>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/main.js"></script>
-    
     <script>
       init();
     </script>
