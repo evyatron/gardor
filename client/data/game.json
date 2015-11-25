@@ -106,6 +106,14 @@
       "config": {
         "selector": "string"
       }
+    },
+    {
+      "id": "particles",
+      "className": "ModuleParticles",
+      "activation": "auto",
+      "config": {
+        
+      }
     }
   ]
 }

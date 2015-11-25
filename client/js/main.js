@@ -1119,6 +1119,10 @@ var Actor = (function Actor() {
       'x': 0,
       'y': 0
     };
+    this.drawPosition = {
+      'x': 0,
+      'y': 0
+    };
     this.pathToWalk = null;
     
     this.textureModule = {};
@@ -1146,6 +1150,7 @@ var Actor = (function Actor() {
     };
     
     this.position = this.game.getCoordsFromTile(this.tile);
+    this.drawPosition = this.game.getOffsetPosition(this.position);
 
     this.initModules(options.modules || []);
     
@@ -1311,6 +1316,8 @@ var Actor = (function Actor() {
       }
     }
     
+    this.drawPosition = game.getOffsetPosition(this.position);
+    
     var modules = this.modules;
     for (var i = 0, len = modules.length; i < len; i++) {
       var module = modules[i];
@@ -1329,12 +1336,11 @@ var Actor = (function Actor() {
 
     if (DEBUG) {
       var context = this.layer.context;
-      var drawPosition = game.getOffsetPosition(this.position);
       
       context.beginPath();
       context.fillStyle = 'rgba(255, 0, 0, .6)';
       context.strokeStyle = 'rgba(255, 0, 0, .6)';
-      context.arc(drawPosition.x, drawPosition.y, 2, 0, Math.PI * 2);
+      context.arc(this.drawPosition.x, this.drawPosition.y, 2, 0, Math.PI * 2);
       context.fill();
     
       if (this.pathToWalk) {
@@ -1976,6 +1982,383 @@ var ModuleContact = (function ModuleContact() {
   
   return ModuleContact;
 }());
+
+var ModuleParticles = (function ModuleParticles() {
+  function ModuleParticles(options) {
+    this.offset = [0, 0];
+    
+    ActorModule.call(this, options);
+  }
+  
+  ModuleParticles.prototype = Object.create(ActorModule.prototype);
+  ModuleParticles.prototype.constructor = ModuleParticles;
+  
+  ModuleParticles.prototype.init = function init(options) {
+    ActorModule.prototype.init.apply(this, arguments);
+    
+    !options && (options = {});
+    
+    this.offset = options.offset || [0, 0];
+
+    options.context = this.actor.layer.context;
+    options.position = {
+      'x': this.actor.drawPosition.x,
+      'y': this.actor.drawPosition.y
+    };
+    
+    this.particles = new Particles(options);
+    this.particles.isGenerating = true;
+    this.particles.isRunning = true;
+  };
+  
+  ModuleParticles.prototype.updateMethod = function updateMethod(dt) {
+    this.particles.position.x = this.actor.drawPosition.x + this.offset[0];
+    this.particles.position.y = this.actor.drawPosition.y + this.offset[1];
+    this.particles.update(dt);
+  };
+  
+  ModuleParticles.prototype.drawMethod = function drawMethod() {
+    this.particles.draw(this.actor.layer.context);
+  };
+  
+  var Particles = (function Particles() {
+    function Particles(options) {
+      this.canvas;
+      this.context;
+
+      this.speed;
+      this.size;
+      this.angle;
+      this.position;
+      this.lifetime;
+      this.frequency;
+      this.gravity;
+      this.colours = [];
+
+      this.timeUntilNext = 0;
+      this.numberOfParticles = 0;
+      this.particles = {};
+
+      this.didCreateCanvas = false;
+      this.isGenerating = false;
+      this.isRunning = false;
+      this.lastUpdate = 0;
+      this.dt;
+
+      this.onDestroy;
+      this.onStop;
+
+      this.colourPresets = {
+        'grayscale': ['#888', '#999', '#aaa', '#bbb', '#ccc', '#ddd'],
+        'fire': ['#fa0', '#ff0', '#f00'],
+      };
+
+      this.init(options);
+    }
+
+    Particles.prototype = Object.create(EventDispatcher.prototype);
+    Particles.prototype.constructor = Particles;
+
+    Particles.prototype.init = function init(options) {
+      !options && (options = {});
+      
+      this.setAngle(options.angle);
+      this.setFrequency(options.frequency);
+      this.setGravity(options.gravity);
+      this.setSpeed(options.speed);
+      this.setLifetime(options.lifetime);
+      this.setSize(options.size);
+      
+      this.setPosition(options.position);
+      this.setColours(options.colours);
+
+      this.onDestroy = options.onDestroy || function(){};
+      this.onStop = options.onStop || function(){};
+
+      if (options.canvas) {
+        this.canvas = options.canvas;
+      } else if (options.context) {
+        this.canvas = options.context.canvas;
+      } else {
+        this.didCreateCanvas = true;
+        this.canvas = document.createElement('canvas');
+      }
+
+      if (this.canvas) {
+        this.context = this.canvas.getContext('2d');
+      }
+    };
+
+    Particles.prototype.addColourPreset = function addColourPreset(name, colours) {
+      this.colourPresets[name] = colours;
+      return this;
+    };
+
+    Particles.prototype.setAngle = function setAngle(angle) {
+      this.angle = angle !== undefined? angle : [-35, 35];
+      return this;
+    };
+
+    Particles.prototype.setGravity = function setGravity(gravity) {
+      this.gravity = gravity !== undefined? gravity : [0.5, 1.5];
+      return this;
+    };
+
+    Particles.prototype.setFrequency = function setFrequency(frequency) {
+      this.frequency = frequency !== undefined? frequency: 0;
+      return this;
+    };
+
+    Particles.prototype.setSpeed = function setSpeed(speed) {
+      this.speed = speed !== undefined? speed: utils.random(200, 400);
+      return this;
+    };
+
+    Particles.prototype.setPosition = function setPosition(position) {
+      if (typeof arguments[0] === 'number' && typeof arguments[1] === 'number') {
+        position = {
+          'x': arguments[0],
+          'y': arguments[1]
+        };
+      }
+      
+      if (!position) {
+        position = {};
+      }
+
+      this.position = {
+        'x': position.x || 0,
+        'y': position.y || 0
+      };
+
+      return this;
+    };
+
+    Particles.prototype.setLifetime = function setLifetime(lifetime) {
+      this.lifetime = lifetime !== undefined? lifetime: 0;
+      return this;
+    };
+
+    Particles.prototype.setSize = function setSize(size) {
+      this.size = size;
+      return this;
+    };
+
+    Particles.prototype.setColours = function setColours(colours) {
+      this.colours = [];
+
+      if (!colours) {
+        colours = 'rgb(255, 0, 0)';
+      }
+
+      if (typeof colours === 'string') {
+        if (this.colourPresets[colours]) {
+          colours = this.colourPresets[colours];
+        } else {
+          colours = [colours];
+        }
+      }
+
+      if (typeof colours === 'number') {
+        for (var i = 0; i < colours; i++) {
+          var r = Math.round(utils.random(0, 255));
+          var g = Math.round(utils.random(0, 255));
+          var b = Math.round(utils.random(0, 255));
+          this.colours.push('rgb(' + r + ',' + g + ',' + b + ')');
+        }
+      } else if (Array.isArray(colours)) {
+        for (var i = 0; i < colours.length; i++) {
+          this.colours.push(colours[i]);
+        }
+      }
+
+      return this;
+    };
+
+    Particles.prototype.start = function start(setNumber) {
+      this.timeUntilNext = 0;
+
+      if (setNumber) {
+        for (var i = 0; i < setNumber; i++) {
+          this.createNew();
+        }
+      } else {
+        this.isGenerating = true;
+      }
+
+      this.isRunning = true;
+      this.lastUpdate = Date.now();
+      window.requestAnimationFrame(this.tick.bind(this));
+
+      return this;
+    };
+
+    Particles.prototype.stop = function stop() {
+      if (this.isRunning) {
+        this.isGenerating = false;
+        this.isRunning = false;
+        this.onStop();
+      }
+
+      return this;
+    };
+
+    Particles.prototype.destroy = function destroy() {
+      this.stop();
+
+      if (this.didCreateCanvas) {
+        if (this.canvas.parentNode) {
+          this.canvas.parentNode.removeChild(this.canvas);
+        }
+      }
+
+      this.onDestroy();
+
+      return this;
+    };
+
+    Particles.prototype.getValue = function getValue(value) {
+      return typeof value === 'number'? value :
+             value? utils.random(value[0], value[1]) : 0;
+    };
+
+    Particles.prototype.createNew = function createNew() {
+      var colour = utils.random(this.colours);
+      var angle = this.getValue(this.angle);
+      var size = this.getValue(this.size);
+      var lifetime = this.getValue(this.lifetime);
+      var speed = this.getValue(this.speed);
+      var gravity = this.getValue(this.gravity);
+      var x = this.position.x - size / 2;
+      var y = this.position.y - size / 2;
+      var speedRadian = (angle - 135) / (180 / Math.PI);
+      var vSpeed = {
+        'x': (speed * Math.cos(speedRadian)) - (speed * Math.sin(speedRadian)),
+        'y': (speed * Math.sin(speedRadian)) + (speed * Math.cos(speedRadian))
+      };
+
+      if (!this.particles[colour]) {
+        this.particles[colour] = [];
+      }
+
+      this.numberOfParticles++;
+      this.particles[colour].push({
+        'x': x,
+        'y': y,
+        'startX': x,
+        'startY': y,
+        'size': size,
+        'halfSize': size / 2,
+        'speedX': vSpeed.x,
+        'speedY': vSpeed.y,
+        'opacity': 1,
+        'timeToLive': lifetime,
+        'timeLived': 0,
+        'life': 0,
+        'gravity': gravity
+      });
+    };
+
+    Particles.prototype.tick = function tick() {
+      var now = Date.now();
+
+      this.dt = Math.min((now - this.lastUpdate) / 1000, 1000 / 60);
+
+      this.update(this.dt);
+      this.draw(this.context);
+
+      this.lastUpdate = now;
+      window.requestAnimationFrame(this.tick.bind(this));
+    };
+
+    Particles.prototype.update = function update(dt) {
+      for (var colour in this.particles) {
+        var particles = this.particles[colour];
+
+        for (var i = 0, len = particles.length, particle; i < len; i++) {
+          particle = particles[i];
+
+          if (particle) {
+            particle.timeLived += dt;
+            particle.life = particle.timeLived / particle.timeToLive;
+            particle.opacity = 1 - particle.life;
+            particle.x += (particle.speedX * dt);
+            particle.y += (particle.speedY * dt);
+
+            particle.speedY += particle.gravity * dt;
+
+            if (particle.timeLived >= particle.timeToLive) {
+              this.numberOfParticles--;
+              particles.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      }
+
+      if (this.isGenerating) {
+        this.timeUntilNext -= dt;
+        if (this.timeUntilNext <= 0) {
+          this.timeUntilNext = this.getValue(this.frequency);
+          this.createNew();
+        }
+      } else {
+        if (this.frequency === 0 && this.numberOfParticles <= 0) {
+          this.stop();
+        }
+      }
+    };
+
+    Particles.prototype.draw = function draw(context) {
+      var i, len, particle;
+
+      if (this.didCreateCanvas) {
+        context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+
+      for (var colour in this.particles) {
+        var particles = this.particles[colour];
+
+        context.fillStyle = colour;
+
+        for (i = 0, len = particles.length; i < len; i++) {
+          particle = particles[i];
+
+          context.globalAlpha = particle.opacity;
+          
+          context.fillRect(particle.x, particle.y, particle.size, particle.size);
+        }
+      }
+
+      context.globalAlpha = 1;
+    };
+
+    var utils = {
+      random: function random(from, to) {
+        if (Array.isArray(from)) {
+          return from[Math.floor(Math.random() * from.length)];
+        }
+
+        if (typeof from === 'boolean') {
+          return Math.random() > 0.5;
+        }
+
+        if (to === undefined) {
+          to = from || 1;
+          from = 0;
+        }
+
+        return Math.random() * (to - from) + from;
+      }
+    };
+
+    return Particles;
+  }());
+  
+  return ModuleParticles;
+}());
+
+
 
 /* Controls a given Actor */
 var PlayerController = (function PlayerController() {

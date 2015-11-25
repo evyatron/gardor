@@ -248,6 +248,34 @@
 
     
     {
+      "id": "js-particles",
+      "tooltip": "Particles\nHigh performance JavaScript canvas Particles object",
+      "isBlocking": true,
+      "tile": {
+        "y": 10,
+        "x": 9
+      },
+      "modules": [
+        {
+          "type": "webpage",
+          "url": "http://evyatar.amitay.me/playground/particles/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/trees.png",
+          "clip": [124, 64],
+          "width": 62,
+          "height": 64,
+          "origin": [0.4, 0.8]
+        }
+      ]
+    },
+    {
       "id": "js-fantasia",
       "tooltip": "Fantasia 2013\nA CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
       "isBlocking": true,
@@ -587,8 +615,9 @@
         {
           "type": "texture",
           "src": "/img/actors/rtp-objects.png",
+          "origin": [0, 0.5],
           "clip": [64, 16],
-          "width": 32,
+          "width": 16,
           "height": 32,
           "scale": 2
         }
@@ -641,8 +670,8 @@
         {
           "type": "texture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [96, 16],
-          "width": 32,
+          "clip": [112, 16],
+          "width": 16,
           "height": 32,
           "origin": [1, 0.5],
           "scale": 2
@@ -755,8 +784,9 @@
         {
           "type": "texture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [64, 80],
-          "width": 32,
+          "clip": [80, 80],
+          "origin": [0, 0.5],
+          "width": 16,
           "height": 32,
           "scale": 2
         }
@@ -773,8 +803,9 @@
         {
           "type": "texture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [64, 80],
-          "width": 32,
+          "clip": [80, 80],
+          "origin": [1, 0.5],
+          "width": 16,
           "height": 32,
           "scale": 2
         }
@@ -936,6 +967,16 @@
             "x": 1,
             "y": 0
           }
+        },
+        {
+          "type": "particles",
+          "offset": [0, -40],
+          "lifetime": [0.2, 0.8],
+          "angle": [-25, 25],
+          "speed": [70, 150],
+          "size": [5, 8],
+          "gravity": 300,
+          "colours": "fire"
         },
         {
           "type": "texture",
