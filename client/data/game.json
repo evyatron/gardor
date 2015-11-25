@@ -1,5 +1,5 @@
 {
-  "tileSize": 64,
+  "tileSize": 32,
   "startingMap": "main-map",
   "lerpAlpha": 1,
   "followPlayer": true,
@@ -11,7 +11,7 @@
     "highlightColor": "gold"
   },
   "dialogs": {
-    "font": "",
+    "font": "10pt 'Share Tech Mono'",
     "width": 480,
     "height": 150,
     "padding": 12,
@@ -24,43 +24,27 @@
   },
   "tiles": [
     {
-      "id": "grass",
+      "id": "land",
       "isBlocking": false,
       "texture": {
-        "src": "/img/tiles/rtp-tiles.png",
-        "clip": [80, 240],
-        "width": 32,
-        "height": 32,
-        "scale": 2,
-        "origin": [0, 0]
+        "src": "/img/tiles/atlas.png",
+        "clip": [192, 32]
       }
     },
     {
       "id": "water",
       "isBlocking": true,
       "texture": {
-        "src": "/img/tiles/water.png",
-        "origin": [0, 0]
-      }
-    },
-    {
-      "id": "floor",
-      "isBlocking": false,
-      "texture": {
-        "src": "/img/tiles/floor.png",
-        "origin": [0, 0]
+        "src": "/img/tiles/atlas.png",
+        "clip": [256, 128]
       }
     },
     {
       "id": "path",
       "isBlocking": false,
       "texture": {
-        "src": "/img/tiles/rtp-tiles.png",
-        "clip": [208, 144],
-        "width": 32,
-        "height": 32,
-        "scale": 2,
-        "origin": [0, 0]
+        "src": "/img/tiles/atlas.png",
+        "clip": [640, 160]
       }
     }
   ],

@@ -1,18 +1,6 @@
 var game;
 var DEBUG = /DEBUG/.test(window.location.search);
 var DEBUG_NAVMESH = /NAVMESH/.test(window.location.search);
-var EDITOR = /EDITOR/.test(window.location.search);
-
-function init() {
-  game = new Game({
-    'el': document.getElementById('game'),
-    'config': '/data/game.json'
-  });
-  
-  if (EDITOR) {
-    utils.loadScript('/js/editor.js');
-  }
-}
 
 var EventDispatcher = (function EventDispatcher() {
   function EventDispatcher() {
@@ -174,8 +162,12 @@ var Game = (function Game() {
     this.clickTexture = this.config.clickTexture;
     
     var tiles = this.config.tiles;
+    var tileSize = this.config.tileSize;
     for (var i = 0, len = tiles.length; i < len; i++) {
       var tile = tiles[i];
+      tile.texture.width = tileSize;
+      tile.texture.height = tileSize;
+      tile.texture.origin = [0, 0];
       tile.texture = new Texture(tile.texture);
       this.tiles[tile.id] = tile;
     }
@@ -445,7 +437,7 @@ var Game = (function Game() {
   Game.prototype.loadMap = function loadMap(mapId, callback) {
     console.log('Get Map:', mapId);
     
-    this.request('/data/' + mapId + '.json', function onMapLoaded(mapData) {
+    utils.request('/data/' + mapId + '.json', function onMapLoaded(mapData) {
       this.maps[mapData.id] = mapData;
       callback && callback(mapData);
     }.bind(this));
@@ -456,7 +448,7 @@ var Game = (function Game() {
   Game.prototype.loadConfig = function loadConfig(config) {
     console.log('Get Config:', config);
     
-    this.request(config, this.onLoadConfig.bind(this));
+    utils.request(config, this.onLoadConfig.bind(this));
   };
   
   Game.prototype.onLoadConfig = function onLoadConfig(config) {
@@ -553,23 +545,7 @@ var Game = (function Game() {
     
     this.camera.onResize();
   };
-  
-  Game.prototype.request = function request(url, callback) {
-    console.log('Request:', url);
-    
-    var httpRequest = new XMLHttpRequest();
-    
-    httpRequest.open('GET', url, true);
-    
-    httpRequest.responseType = 'json';
-    
-    httpRequest.onload = function onRequestDone(e) {
-      callback(e.target.response);
-    };
-    
-    httpRequest.send();
-  };
-  
+
   return Game;
 }());
 
@@ -739,23 +715,27 @@ var TilesetLayer = (function TilesetLayer() {
     var size = this.game.config.tileSize;
     var rows = this.grid;
     
-    if (rows.length === 0) {
-      return;
+    // Make sure all tiles are loaded and ready
+    for (var id in tilesMap) {
+      var tileObject = tilesMap[id];
+      if (!tileObject || !tileObject.texture || !tileObject.texture.isReady) {
+        return false;
+      }
     }
     
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
-    var cell, tile, columns;
+    var tileId, tile, columns;
     var tilesDrawn = 0;
-    
+    var defaultTile = game.currentMap.defaultTile;
     canvas.width = game.mapWidth;
     canvas.height = game.mapHeight;
 
     for (var i = 0, numberOfRows = rows.length; i < numberOfRows; i++) {
       columns = rows[i];
       for (var j = 0, numberOfCols = columns.length; j < numberOfCols; j++) {
-        cell = columns[j];
-        tile = tilesMap[cell];
+        tileId = columns[j] || defaultTile;
+        tile = tilesMap[tileId];
         
         if (tile) {
           var x = j * size;
@@ -786,6 +766,8 @@ var TilesetLayer = (function TilesetLayer() {
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.fillText(j + ',' + i, x + 4, y + 12);
           }
+        } else {
+          console.warn('Trying to draw invalid tile', tileId, i, j);
         }
       }
     }
@@ -1006,6 +988,22 @@ var utils = {
     };
   },
   
+  'request': function request(url, callback) {
+    console.log('Request:', url);
+    
+    var httpRequest = new XMLHttpRequest();
+    
+    httpRequest.open('GET', url, true);
+    
+    httpRequest.responseType = 'json';
+    
+    httpRequest.onload = function onRequestDone(e) {
+      callback(e.target.response);
+    };
+    
+    httpRequest.send();
+  },
+  
   'loadScript': function loadScript(src) {
     var el = document.createElement('script');
     el.src = src;
@@ -1045,6 +1043,7 @@ var Camera = (function Camera() {
   
   Camera.prototype.focusOnActor = function focusOnActor() {
     if (this.actorToFollow) {
+      var game = this.game;
       var position = this.actorToFollow.position;
       this.x = utils.clamp(-game.width / 2 + position.x, 0, game.bleed.x);
       this.y = utils.clamp(-game.height / 2 + position.y, 0, game.bleed.y);
@@ -1386,6 +1385,7 @@ var Texture = (function Texture() {
     this.width = 0;
     this.height = 0;
     this.scale = 1;
+    this.isReady = false;
     
     this.init(options, onLoad);
   }
@@ -1406,6 +1406,7 @@ var Texture = (function Texture() {
       var image = Texture.prototype.textures[this.src];
       if (image) {
         if (image.isReady) {
+          this.isReady = true;
           this.onLoad();
         } else {
           image.addEventListener('load', this.onLoad.bind(this));
@@ -1496,6 +1497,7 @@ var Texture = (function Texture() {
   Texture.prototype.onLoad = function onLoad() {
     var image = Texture.prototype.textures[this.src];
 
+    this.isReady = true;
     image.isReady = true;
     
     if (!this.width) {
@@ -1701,14 +1703,6 @@ var ModuleDialog = (function ModuleDialog() {
       'origin': [0, 0]
     });
     
-    var defaultDialogSettings = this.actor.game.config.dialogs;
-    this.font = this.dialog.font || defaultDialogSettings.font;
-    this.width = this.dialog.width || defaultDialogSettings.width;
-    this.height = this.dialog.height || defaultDialogSettings.height;
-    this.padding = this.dialog.padding || defaultDialogSettings.padding;
-    this.actorImageSize = this.dialog.actorImageSize || defaultDialogSettings.actorImageSize;
-    this.lineSpacing = this.dialog.lineSpacing || defaultDialogSettings.lineSpacing;
-    
     this.nextLine_bound = this.nextLine.bind(this);
     
     if (this.dialog) {
@@ -1717,6 +1711,14 @@ var ModuleDialog = (function ModuleDialog() {
     } else {
       console.warn('Cant find requested dialog', this);
     }
+    
+    var defaultDialogSettings = this.actor.game.config.dialogs;
+    this.font = this.dialog.font || defaultDialogSettings.font;
+    this.width = this.dialog.width || defaultDialogSettings.width;
+    this.height = this.dialog.height || defaultDialogSettings.height;
+    this.padding = this.dialog.padding || defaultDialogSettings.padding;
+    this.actorImageSize = this.dialog.actorImageSize || defaultDialogSettings.actorImageSize;
+    this.lineSpacing = this.dialog.lineSpacing || defaultDialogSettings.lineSpacing;
   };
   
   ModuleDialog.prototype.activate = function activate(e) {
@@ -2229,8 +2231,8 @@ var ModuleParticles = (function ModuleParticles() {
       var lifetime = this.getValue(this.lifetime);
       var speed = this.getValue(this.speed);
       var gravity = this.getValue(this.gravity);
-      var x = this.position.x - size / 2;
-      var y = this.position.y - size / 2;
+      var x = -size / 2;
+      var y = -size / 2;
       var speedRadian = (angle - 135) / (180 / Math.PI);
       var vSpeed = {
         'x': (speed * Math.cos(speedRadian)) - (speed * Math.sin(speedRadian)),
@@ -2245,8 +2247,6 @@ var ModuleParticles = (function ModuleParticles() {
       this.particles[colour].push({
         'x': x,
         'y': y,
-        'startX': x,
-        'startY': y,
         'size': size,
         'halfSize': size / 2,
         'speedX': vSpeed.x,
@@ -2311,7 +2311,9 @@ var ModuleParticles = (function ModuleParticles() {
 
     Particles.prototype.draw = function draw(context) {
       var i, len, particle;
-
+      var x = this.position.x;
+      var y = this.position.y;
+      
       if (this.didCreateCanvas) {
         context.clearRect(0, 0, this.canvas.width, this.canvas.height);
       }
@@ -2326,7 +2328,8 @@ var ModuleParticles = (function ModuleParticles() {
 
           context.globalAlpha = particle.opacity;
           
-          context.fillRect(particle.x, particle.y, particle.size, particle.size);
+          context.fillRect(x + particle.x, y + particle.y,
+                           particle.size, particle.size);
         }
       }
 
@@ -2357,8 +2360,6 @@ var ModuleParticles = (function ModuleParticles() {
   
   return ModuleParticles;
 }());
-
-
 
 /* Controls a given Actor */
 var PlayerController = (function PlayerController() {
@@ -2501,6 +2502,7 @@ var NavMesh = (function NavMesh() {
     var map = game.currentMap;
     var grid = map.grid;
     var tilesMap = this.game.tiles;
+    var defaultTile = map.defaultTile;
     
     this.mesh = [];
     
@@ -2509,7 +2511,7 @@ var NavMesh = (function NavMesh() {
       var meshRow = [];
       
       for (var j = 0, numberOfCols = row.length; j < numberOfCols; j++) {
-        var tile = tilesMap[row[j]];
+        var tile = tilesMap[row[j] || defaultTile];
         
         if (tile) {
           if (tile.isBlocking) {

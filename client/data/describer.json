@@ -1,0 +1,145 @@
+{
+  "tileSize": {
+    "type": "number",
+    "tooltip": "The width and height of tiles in the game",
+    "defaultValue": 32
+  },
+  "startingMap": {
+    "type": "string",
+    "tooltip": "Map id to first load with the game",
+    "defaultValue": ""
+  },
+  "lerpAlpha": {
+    "type": "number",
+    "tooltip": "Camera lerp alpha. 1 = stick to the player, 0.1 = ease into the player's position",
+    "defaultValue": 1
+  },
+  "followPlayer": {
+    "type": "boolean",
+    "tooltip": "Should the camera follow the player. Recommended for large maps.",
+    "defaultValue": true
+  },
+  "defaultFont": {
+    "type": "string",
+    "tooltip": "Default font to use in the game. Format is XXpt FONT_NAME",
+    "defaultValue": "11pt monospace"
+  },
+  
+  "tooltips": {
+    "font": {
+      "type": "string",
+      "tooltip": "Font to use for tooltips. Format is XXpt FONT_NAME",
+      "defaultValue": "11pt monospace"
+    },
+    "padding": {
+      "type": "array",
+      "valueType": "number",
+      "tooltip": "Tooltip padding in the format of [LEFT/RIGHT, TOP/BOTTOM]",
+      "defaultValue": [10, 5]
+    },
+    "lineSpacing": {
+      "type": "number",
+      "tooltip": "Spacing between the lines",
+      "defaultValue": 4
+    }
+  },
+  
+  "dialogs": {
+    "font": {
+      "type": "string",
+      "tooltip": "Font to use for dialogs. Format is XXpt FONT_NAME",
+      "defaultValue": "11pt monospace"
+    },
+    "width": {
+      "type": "number",
+      "tooltip": "Dialog box width",
+      "defaultValue": 500
+    },
+    "height": {
+      "type": "number",
+      "tooltip": "Dialog box height",
+      "defaultValue": 200
+    },
+    "padding": {
+      "type": "number",
+      "tooltip": "Dialog box padding around the edges",
+      "defaultValue": 10
+    },
+    "actorImageSize": {
+      "type": "number",
+      "tooltip": "Size to reserve for the player avatar",
+      "defaultValue": 64
+    },
+    "lineSpacing": {
+      "type": "number",
+      "tooltip": "Spacing between the lines",
+      "defaultValue": 8
+    }
+  },
+  
+  "clickTexture": {
+    "src": {
+      "type": "src",
+      "tooltip": "Image to show when player clicks on the map",
+      "defaultValue": ""
+    },
+    "timeToShow": {
+      "type": "number",
+      "tooltip": "Time (in seconds) to show the click texture",
+      "defaultValue": 0.5
+    }
+  },
+
+  "modules": [
+    {
+      "id": "texture",
+      "className": "TextureModule",
+      "activation": "auto",
+      "config": {
+        "src": "string",
+        "clip": "array",
+        "width": "number",
+        "height": "number",
+        "scale": "number"
+      }
+    },
+    {
+      "id": "webpage",
+      "className": "ModuleWebPage",
+      "activation": "interact",
+      "config": {
+        "url": "string",
+        "isInFrame": "boolean",
+        "scale": "number",
+        "useOffset": "object"
+      }
+    },
+    {
+      "id": "dialog",
+      "className": "ModuleDialog",
+      "activation": "interact",
+      "disableControllerWhenActive": true,
+      "config": {
+        "url": "string",
+        "dialogId": "string",
+        "useOffset": "object"
+      }
+    },
+    {
+      "id": "htmlElement",
+      "className": "ModuleHTMLElement",
+      "activation": "interact",
+      "config": {
+        "selector": "string"
+      }
+    },
+    {
+      "id": "particles",
+      "className": "ModuleParticles",
+      "activation": "auto",
+      "config": {
+        
+      }
+    }
+  ]
+}

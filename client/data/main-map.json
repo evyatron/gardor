@@ -3,22 +3,23 @@
   "name": "Main Map",
   "playerActor": "player",
   "padding": 20,
+  "defaultTile": "water",
   "grid": [
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "grass", "grass", "grass", "grass", "grass", "grass", "grass", "path", "grass", "grass", "grass", "grass", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "grass", "grass", "grass", "grass", "path", "grass", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "grass", "path", "grass", "water", "water", "water", "water", "water", "water", "water"],
-    ["water", "water", "water", "water", "water", "water", "water", "water", "water", "water", "grass", "path", "grass", "water", "water", "water", "water", "water", "water", "water"]
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
+    ["", "", "", "", "", "", "", "land", "land", "land", "path", "path", "path", "land", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "path", "path", "path", "land", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "path", "path", "path", "land", "", "", "", "", "", "", ""]
   ],
   "actors": [
     {
@@ -44,7 +45,8 @@
           "type": "texture",
           "src": "/img/actors/github.png",
           "src-hover": "/img/actors/github-over.png",
-          "origin": [0.5, 0.7]
+          "origin": [0.5, 0.7],
+          "scale": 0.75
         }
       ]
     },
@@ -71,7 +73,8 @@
           "type": "texture",
           "src": "/img/actors/linkedin.png",
           "src-hover": "/img/actors/linkedin-over.png",
-          "origin": [0.5, 0.7]
+          "origin": [0.5, 0.7],
+          "scale": 0.75
         }
       ]
     },
@@ -98,6 +101,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [0, 0],
           "width": 62,
           "height": 64,
@@ -126,6 +130,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [62, 0],
           "width": 62,
           "height": 64,
@@ -154,6 +159,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 0],
           "width": 62,
           "height": 64,
@@ -182,6 +188,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [186, 0],
           "width": 62,
           "height": 64,
@@ -210,6 +217,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [0, 64],
           "width": 62,
           "height": 64,
@@ -238,6 +246,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [62, 64],
           "width": 62,
           "height": 64,
@@ -268,6 +277,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -296,6 +306,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -324,6 +335,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -352,6 +364,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -380,6 +393,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -408,6 +422,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -436,6 +451,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -464,6 +480,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -492,6 +509,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -520,6 +538,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -548,6 +567,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -576,6 +596,7 @@
         {
           "type": "texture",
           "src": "/img/actors/trees.png",
+          "scale": 0.6,
           "clip": [124, 64],
           "width": 62,
           "height": 64,
@@ -599,8 +620,7 @@
           "clip": [32, 16],
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5],
-          "scale": 2
+          "origin": [0, 0.5]
         }
       ]
     },
@@ -618,8 +638,7 @@
           "origin": [0, 0.5],
           "clip": [64, 16],
           "width": 16,
-          "height": 32,
-          "scale": 2
+          "height": 32
         }
       ]
     },
@@ -636,8 +655,7 @@
           "src": "/img/actors/rtp-objects.png",
           "clip": [64, 16],
           "width": 32,
-          "height": 32,
-          "scale": 2
+          "height": 32
         }
       ]
     },
@@ -654,8 +672,7 @@
           "src": "/img/actors/rtp-objects.png",
           "clip": [64, 16],
           "width": 32,
-          "height": 32,
-          "scale": 2
+          "height": 32
         }
       ]
     },
@@ -673,8 +690,7 @@
           "clip": [112, 16],
           "width": 16,
           "height": 32,
-          "origin": [1, 0.5],
-          "scale": 2
+          "origin": [1, 0.5]
         }
       ]
     },
@@ -692,8 +708,7 @@
           "clip": [32, 48],
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5],
-          "scale": 2
+          "origin": [0, 0.5]
         }
       ]
     },
@@ -711,8 +726,7 @@
           "clip": [32, 48],
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5],
-          "scale": 2
+          "origin": [0, 0.5]
         }
       ]
     },
@@ -730,8 +744,7 @@
           "clip": [96, 48],
           "width": 32,
           "height": 32,
-          "origin": [1, 0.5],
-          "scale": 2
+          "origin": [1, 0.5]
         }
       ]
     },
@@ -749,8 +762,7 @@
           "clip": [96, 48],
           "width": 32,
           "height": 32,
-          "origin": [1, 0.5],
-          "scale": 2
+          "origin": [1, 0.5]
         }
       ]
     },
@@ -768,8 +780,7 @@
           "clip": [32, 80],
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5],
-          "scale": 2
+          "origin": [0, 0.5]
         }
       ]
     },
@@ -787,8 +798,7 @@
           "clip": [80, 80],
           "origin": [0, 0.5],
           "width": 16,
-          "height": 32,
-          "scale": 2
+          "height": 32
         }
       ]
     },
@@ -806,8 +816,7 @@
           "clip": [80, 80],
           "origin": [1, 0.5],
           "width": 16,
-          "height": 32,
-          "scale": 2
+          "height": 32
         }
       ]
     },
@@ -825,8 +834,7 @@
           "clip": [96, 80],
           "width": 32,
           "height": 32,
-          "origin": [1, 0.5],
-          "scale": 2
+          "origin": [1, 0.5]
         }
       ]
     },
@@ -836,22 +844,29 @@
       "id": "sign-about",
       "tooltip": "Welcome Centre",
       "tile": {
-        "y": 10,
-        "x": 12
+        "y": 8,
+        "x": 8
       },
+      "zIndex": 1,
       "isBlocking": false,
       "modules": [
         {
           "type": "dialog",
-          "dialogId": "page-about"
+          "dialogId": "page-about",
+          "useDir": "top",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
         },
         {
           "type": "texture",
           "src": "/img/actors/signs.png",
+          "scale": 0.6,
           "clip": [0, 0],
           "width": 32,
           "height": 32,
-          "origin": [0.5, 1.25]
+          "origin": [0.5, 0]
         }
       ]
     },
@@ -871,10 +886,11 @@
         {
           "type": "texture",
           "src": "/img/actors/signs.png",
+          "scale": 0.75,
           "clip": [0, 0],
           "width": 32,
           "height": 32,
-          "origin": [0.5, 1.25]
+          "origin": [0.5, 0.8]
         }
       ]
     },
@@ -894,10 +910,11 @@
         {
           "type": "texture",
           "src": "/img/actors/signs.png",
+          "scale": 0.75,
           "clip": [0, 0],
           "width": 32,
           "height": 32,
-          "origin": [0.5, 1.25]
+          "origin": [0.5, 0.8]
         }
       ]
     },
@@ -917,18 +934,57 @@
         {
           "type": "texture",
           "src": "/img/actors/signs.png",
+          "scale": 0.75,
           "width": 32,
           "height": 32,
-          "origin": [0.5, 1.25]
+          "origin": [0.5, 0.8]
         }
       ]
     },
 
     {
+      "id": "page-contact",
+      "tooltip": "Contact Me",
+      "tile": {
+        "y": 5,
+        "x": 11
+      },
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "htmlElement",
+          "selector": ".game-module-contact",
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "particles",
+          "offset": [0, -40],
+          "lifetime": [0.2, 0.8],
+          "angle": [-25, 25],
+          "speed": [70, 150],
+          "size": 6,
+          "gravity": 300,
+          "colours": "fire"
+        },
+        {
+          "type": "texture",
+          "src": "/img/actors/rtp-objects.png",
+          "scale": 0.9,
+          "clip": [288, 162],
+          "width": 32,
+          "height": 64,
+          "origin": [0.5, 0.8]
+        }
+      ]
+    },
+    {
       "id": "page-about",
       "tooltip": "About Me",
       "tile": {
-        "y": 9,
+        "y": 5,
         "x": 12
       },
       "isBlocking": true,
@@ -951,43 +1007,6 @@
         }
       ]
     },
-    {
-      "id": "page-contact",
-      "tooltip": "Contact Me",
-      "tile": {
-        "y": 9,
-        "x": 10
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "htmlElement",
-          "selector": ".game-module-contact",
-          "useOffset": {
-            "x": 1,
-            "y": 0
-          }
-        },
-        {
-          "type": "particles",
-          "offset": [0, -40],
-          "lifetime": [0.2, 0.8],
-          "angle": [-25, 25],
-          "speed": [70, 150],
-          "size": [5, 8],
-          "gravity": 300,
-          "colours": "fire"
-        },
-        {
-          "type": "texture",
-          "src": "/img/actors/rtp-objects.png",
-          "clip": [288, 162],
-          "width": 32,
-          "height": 64,
-          "origin": [0.5, 0.8]
-        }
-      ]
-    },
     
     {
       "id": "player",
@@ -996,7 +1015,7 @@
         "x": 11
       },
       "isBlocking": true,
-      "speed": 200,
+      "speed": 130,
       "zIndex": 1,
       "modules": [
         {
@@ -1004,7 +1023,6 @@
           "src": "/img/characters/player.png",
           "width": 32,
           "height": 32,
-          "scale": 1.7,
           "defaultClip": [0, 0],
           "dirClips": {
             "bottom": [0, 0],
@@ -1056,6 +1074,14 @@
           "id": "welcome",
           "actor": "NPC",
           "text": "Welcome to the Laboratory\nPlease don't feed the experiments"
+        }
+      ]
+    },
+    "boat": {
+      "lines": [
+        {
+          "actor": "PC",
+          "text": "I guess I won't be getting out of here anytime soon"
         }
       ]
     }
