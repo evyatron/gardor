@@ -1,6 +1,5 @@
-var game;
-var DEBUG = /DEBUG/.test(window.location.search);
-var DEBUG_NAVMESH = /NAVMESH/.test(window.location.search);
+/* global DEBUG */
+/* global DEBUG_NAVMESH */
 
 var EventDispatcher = (function EventDispatcher() {
   function EventDispatcher() {
@@ -92,6 +91,7 @@ var Game = (function Game() {
     this.navMesh = null;
     
     this.clickTexture = null;
+    this.timeToShowClickTexture = 0;
     this.timeShownClickTexture = 0;
     
     this.actorsUnderPointer = {};
@@ -110,6 +110,8 @@ var Game = (function Game() {
       ERROR: 3
     };
     
+    this.isRunning = false;
+    
     EventDispatcher.apply(this);
 
     this.init(options);
@@ -120,6 +122,9 @@ var Game = (function Game() {
   
   Game.prototype.init = function init(options) {
     !options && (options = {});
+    
+    this.setDebug(options.hasOwnProperty('debug')? options.debug : /DEBUG/.test(window.location.search));
+    this.setDebugNavmesh(options.hasOwnProperty('debugNavmesh')? options.debugNavmesh : /DEBUG/.test(window.location.search));
     
     this.el = options.el || document.body;
     
@@ -139,7 +144,40 @@ var Game = (function Game() {
     this.onResize();
     
     if (options.config) {
-      this.loadConfig(options.config);
+      if (typeof options.config === 'string') {
+        this.loadConfig(options.config);
+      }
+    }
+  };
+  
+  Game.prototype.destroy = function destroy() {
+    this.isRunning = false;
+    
+    delete window.DEBUG;
+    delete window.DEBUG_NAVMESH;
+    
+    for (var id in this.layers) {
+      var layer = this.layers[id];
+      if (layer.canvas) {
+        layer.canvas.parentNode.removeChild(layer.canvas);
+      }
+    }
+    
+    this.el.style.width = '';
+    this.el.style.height = '';
+  };
+  
+  Game.prototype.setDebug = function setDebug(isDebug) {
+    window.DEBUG = isDebug;
+    if (this.layers.background) {
+      this.layers.background.createTexture();
+    }
+  };
+  
+  Game.prototype.setDebugNavmesh = function setDebugNavmesh(isDebug) {
+    window.DEBUG_NAVMESH = isDebug;
+    if (this.layers.background) {
+      this.layers.background.createTexture();
     }
   };
   
@@ -160,6 +198,7 @@ var Game = (function Game() {
     });
     
     this.clickTexture = this.config.clickTexture;
+    this.timeToShowClickTexture = this.config.timeToShowClickTexture || 1;
     
     var tiles = this.config.tiles;
     var tileSize = this.config.tileSize;
@@ -168,6 +207,7 @@ var Game = (function Game() {
       tile.texture.width = tileSize;
       tile.texture.height = tileSize;
       tile.texture.origin = [0, 0];
+      tile.texture.game = this;
       tile.texture = new Texture(tile.texture);
       this.tiles[tile.id] = tile;
     }
@@ -185,8 +225,11 @@ var Game = (function Game() {
     this.isReady = true;
     this.dispatch('created', this);
 
+    this.isRunning = true;
     this.lastUpdate = Date.now();
     window.requestAnimationFrame(this.tick.bind(this));
+    
+    console.warn('Game created', this.tiles)
   };
   
   Game.prototype.goToMap = function goToMap(mapId) {
@@ -242,6 +285,8 @@ var Game = (function Game() {
     
     this.dt = (now - this.lastUpdate) / 1000;
     
+    this.log('dt: ' + this.dt);
+    
     this.stats.textures = 0;
 
     // Update - logic
@@ -254,8 +299,10 @@ var Game = (function Game() {
     this.log('textures: ' + this.stats.textures);
     
     // Next tick please
-    this.lastUpdate = now;
-    window.requestAnimationFrame(this.tick.bind(this));
+    if (this.isRunning) {
+      this.lastUpdate = now;
+      window.requestAnimationFrame(this.tick.bind(this));
+    }
   };
   
   Game.prototype.update = function update(dt) {
@@ -438,20 +485,26 @@ var Game = (function Game() {
     console.log('Get Map:', mapId);
     
     utils.request('/data/' + mapId + '.json', function onMapLoaded(mapData) {
-      this.maps[mapData.id] = mapData;
-      callback && callback(mapData);
+      if (mapData) {
+        this.addMap(mapData);
+        callback && callback(mapData);
+      }
     }.bind(this));
     
     this.maps[mapId] = true;
   };
   
+  Game.prototype.addMap = function addMap(map) {
+    this.maps[map.id] = map;
+  };
+  
   Game.prototype.loadConfig = function loadConfig(config) {
     console.log('Get Config:', config);
     
-    utils.request(config, this.onLoadConfig.bind(this));
+    utils.request(config, this.createGameFromConfig.bind(this));
   };
   
-  Game.prototype.onLoadConfig = function onLoadConfig(config) {
+  Game.prototype.createGameFromConfig = function createGameFromConfig(config) {
     console.info('Got Config', config);
     
     this.config = config;
@@ -664,6 +717,7 @@ var TilesetLayer = (function TilesetLayer() {
     Layer.prototype.init.apply(this, arguments);
     
     this.texture = new Texture({
+      'game': this.game,
       'origin': [0, 0]
     });
   };
@@ -676,6 +730,17 @@ var TilesetLayer = (function TilesetLayer() {
   };
   
   TilesetLayer.prototype.update = function update(dt) {
+    if (DEBUG_NAVMESH) {
+      if (!window.timeSinceUpdatedNavmesh) {
+        window.timeSinceUpdatedNavmesh = 0;
+      }
+      
+      window.timeSinceUpdatedNavmesh += dt;
+      if (window.timeSinceUpdatedNavmesh >= 1) {
+        window.timeSinceUpdatedNavmesh = 0;
+        this.isDirty = true;
+      }
+    }
     // Do nothing, but override so the default Layer update function won't run
   };
   
@@ -715,10 +780,16 @@ var TilesetLayer = (function TilesetLayer() {
     var size = this.game.config.tileSize;
     var rows = this.grid;
     
+    if (!game.currentMap) {
+      console.warn('[TilesetLayer] createTexture: No map loaded');
+      return false;
+    }
+    
     // Make sure all tiles are loaded and ready
     for (var id in tilesMap) {
       var tileObject = tilesMap[id];
       if (!tileObject || !tileObject.texture || !tileObject.texture.isReady) {
+        console.warn('[TilesetLayer] createTexture: Not all tiles ready');
         return false;
       }
     }
@@ -752,9 +823,9 @@ var TilesetLayer = (function TilesetLayer() {
             
             if (DEBUG_NAVMESH) {
               if (game.navMesh.isBlocked(thisTile)) {
-                context.fillStyle = 'rgba(255, 0, 0, .5)';
+                context.fillStyle = 'rgba(255, 0, 0, .2)';
               } else {
-                context.fillStyle = 'rgba(0, 255, 0, .5)';
+                context.fillStyle = 'rgba(0, 255, 0, .2)';
               }
               
               context.fillRect(x + 3, y + 3, size - 6, size - 6);
@@ -830,8 +901,9 @@ var HUDLayer = (function HUDLayer() {
     var clickTexture = this.game.config.clickTexture;
     
     if (clickTexture) {
+      clickTexture.game = this.game;
       this.clickTexture = new Texture(clickTexture);
-      this.timeToShowClickTexture = clickTexture.timeToShow;
+      this.timeToShowClickTexture = this.game.timeToShowClickTexture;
       this.timeShownClickTexture = this.timeToShowClickTexture;
     }
   };
@@ -904,8 +976,8 @@ var HUDLayer = (function HUDLayer() {
     var tooltip = this.tooltip;
     if (tooltip.isVisible) {
       var tooltipConfig = game.config.tooltips || {};
-      var paddingX = (tooltipConfig.padding || [0, 0])[0];
-      var paddingY = (tooltipConfig.padding || [0, 0])[1];
+      var paddingX = tooltipConfig.paddingLeftRight || 0;
+      var paddingY = tooltipConfig.paddingTopBottom || 0;
       var textSize = game.measureText(context, tooltip.text, tooltipConfig.lineSpacing); 
 
       tooltip.width = textSize.width;
@@ -944,6 +1016,10 @@ var HUDLayer = (function HUDLayer() {
       context.fillStyle = 'rgba(255, 255, 255, 1)';
       context.textAlign = 'left';
       context.textBaseline = 'top';
+      
+      if (this.game.config.defaultFont) {
+        context.font = this.game.config.defaultFont;
+      }
       this.textOffset = 0;
       for (var i = 0, len = this.debugLines.length; i < len; i++) {
         this.context.fillText(this.debugLines[i], 5, 5 + this.textOffset);
@@ -1376,6 +1452,7 @@ var Actor = (function Actor() {
 
 var Texture = (function Texture() {
   function Texture(options, onLoad) {
+    this.game = null;
     this.src = '';
     this.origin = [0.5, 0.5];
     this.drawOrigin = [0.5, 0.5];
@@ -1390,10 +1467,14 @@ var Texture = (function Texture() {
     this.init(options, onLoad);
   }
   
+  Texture.prototype = Object.create(EventDispatcher.prototype);
+  Texture.prototype.constructor = Texture;
+  
   // Save a map of src=>image, to not load same image multiple times
   Texture.prototype.textures = {};
   
   Texture.prototype.init = function init(options) {
+    this.game = options.game;
     this.src = options.src;
     this.origin = options.origin || [0.5, 0.5];
     this.width = options.width || 0;
@@ -1486,8 +1567,8 @@ var Texture = (function Texture() {
                         drawWidth,
                         drawHeight);
       
-      if (DEBUG) {
-        game.stats.textures++;
+      if (DEBUG && this.game) {
+        this.game.stats.textures++;
       }
     }
     
@@ -1509,6 +1590,8 @@ var Texture = (function Texture() {
 
     this.drawOrigin[0] = this.width * this.origin[0];
     this.drawOrigin[1] = this.height * this.origin[1];
+    
+    this.dispatch('load');
   };
   
   Texture.prototype.onError = function onError() {
@@ -1644,6 +1727,7 @@ var TextureModule = (function TextureModule() {
     ActorModule.prototype.init.apply(this, arguments);
     
     this.dirClips = options.dirClips || {};
+    options.game = this.actor.game;
     this.texture = new Texture(options);
   };
   
@@ -1700,6 +1784,7 @@ var ModuleDialog = (function ModuleDialog() {
     this.dialog = this.actor.game.currentMap.dialogs[this.dialogId];
     
     this.texture = new Texture({
+      'game': this.actor.game,
       'origin': [0, 0]
     });
     

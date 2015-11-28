@@ -4,9 +4,19 @@
   "lerpAlpha": 1,
   "followPlayer": true,
   "defaultFont": "11pt 'Share Tech Mono'",
+  "timeToShowClickTexture": 0.3,
+  "clickTexture": {
+    "src": "/img/hud/click.png"
+  },
+  "maps": {
+    "main-map": {
+      "src": "/data/main-map.json"
+    }
+  },
   "tooltips": {
     "font": "10pt 'Share Tech Mono'",
-    "padding": [10, 5],
+    "paddingLeftRight": 10,
+    "paddingTopBottom": 5,
     "lineSpacing": 4,
     "highlightColor": "gold"
   },
@@ -17,10 +27,6 @@
     "padding": 12,
     "actorImageSize": 64,
     "lineSpacing": 7
-  },
-  "clickTexture": {
-    "src": "/img/hud/click.png",
-    "timeToShow": 0.3
   },
   "tiles": [
     {

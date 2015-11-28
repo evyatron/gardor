@@ -1,35 +1,83 @@
-div, p, input, label {
+div, p, input, textarea, label {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+#game-container {
+  position: absolute;
+  top: 0;
+  bottom: 200px;
+  left: 300px;
+  right: 300px;
+  background: #333;
+  z-index: 20;
+}
 .editor-container {
   position: absolute;
   background: #777;
   border: 0 solid #000;
+  z-index: 50;
 }
 .editor-title {
   font-weight: bold;
-  padding: 5px;
+  padding: 3px 5px;
   background: rgba(255, 255, 255, .2);
   border-top: 1px solid #aaa;
   border-bottom: 1px solid #aaa;
 }
+  .editor-title input {
+    float: right;
+  }
 .details-pane {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 350px;
+  width: 300px;
+  padding-bottom: 100px;
   border-right-width: 1px;
   font-size: 0.9em;
-  overflow-y: scroll;
 }
+.map-pane {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  padding-bottom: 100px;
+  border-left-width: 1px;
+  font-size: 0.9em;
+}
+.textures {
+  bottom: 0;
+  left: 300px;
+  right: 300px;
+  height: 240px;
+  border-top-width: 1px;
+}
+
+.texture-selector {
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  border-radius: 2px;
+  background: #333;
+  box-shadow: 0 0 0 1px #bbb;
+  cursor: pointer;
+}
+  .texture-selector canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: green;
+    pointer-events: none;
+  }
 
 .editor-field {
   position: relative;
   display: flex;
-  padding: 4px;
+  padding: 1px 3px;
+  min-height: 23px;
 }
 .editor-field:hover {
   background: rgba(255, 255, 255, .1);
@@ -46,10 +94,133 @@ div, p, input, label {
     width: 50%;
   }
   .editor-field-value input[type = "text"],
-  .editor-field-value input[type = "number"] {
+  .editor-field-value input[type = "number"],
+  .editor-field-value textarea {
     width: 100%;
+    max-width: 100%;
     padding: 2px 4px;
     border: 1px solid black;
     border-radius: 4px;
+    font-family: monospace;
+  }
+  
+  
+[data-id = "tiles"] > .editor-field-label {
+  display: none;
+}
+[data-id = "tiles"] > .editor-field-value {
+  width: 100%;
+}
+
+.editor-button {
+  padding: 0 20px;
+  font-weight: normal;
+  background: linear-gradient(to bottom, #bcd, #89a);
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, .2),
+              0 0 0 1px rgba(0, 0, 0, .8) inset;
+  
+}
+.editor-button:hover {
+  background: linear-gradient(to bottom, #cde, #9ab);
+}
+  
+.textures {
+}
+.textures-list {
+  position: absolute;
+  top: 26px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+}
+  .textures-list .texture {
+    position: relative;
+    display: inline-block;
+    width: 250px;
+    height: 92px;
+    margin: 5px;
+    background: #333;
+    box-shadow: 0 0 0 1px #bbb;
+    border-radius: 2px;
+  }
+    .textures-list .texture canvas {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background-color: green;
+    }
+    .textures-list .texture textarea {
+      position: absolute;
+      top: 3px;
+      left: 73px;
+      width: 174px;
+      max-width: 174px;
+      height: 86px;
+      max-height: 86px;
+      font-size: .9em;
+      color: #fff;
+      background: transparent;
+      border: none;
+      resize: none
+    }
+    
+.textures-create {
+  position: absolute;
+  top: 2px;
+  left: 120px;
+  height: 22px;
+  line-height: 22px;
+}
+
+.image-viewer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  cursor: none;
+  box-shadow: 0 0 0 3px #fff,
+              0 0 0 7px #000;
+  display: none;
+}
+.image-viewer.visible {
+  display: block;
+}
+  .image-viewer .line {
+    position: absolute;
+    background: red;
+    z-index: 20;
+  }
+  .image-viewer .line.h {
+    height: 1px;
+    left: 0;
+    right: 0;
+  }
+  .image-viewer .line.v {
+    width: 1px;
+    top: 0;
+    bottom: 0;
+  }
+  .image-viewer .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: green;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+  .image-viewer .info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    z-index: 20;
+    color: #fff;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 1);
     font-family: monospace;
   }
