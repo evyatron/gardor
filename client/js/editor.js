@@ -78,10 +78,65 @@ Editor.prototype.init = function init(options) {
 
 Editor.prototype.onClick = function onClick(e) {
   var el = e.target;
-  var data = el.dataset || {};
   
   if (el.classList.contains('texture-selector')) {
-    console.warn('select texture', data.forField)
+    this.pickupTexture(el);
+  }
+  
+  if (el.id === 'game') {
+    this.placeTexture(e.pageX, e.pageY);
+  }
+};
+
+Editor.prototype.pickupTexture = function pickupTexture(elTextureSelector) {
+  var elTexture = closest(elTextureSelector, '.field-type-texture');
+  if (elTexture) {
+    var elField = elTexture.parentNode;
+    var textureId = elField.querySelector('input').value;
+    if (textureId) {
+      if (textureId === this.heldTextureId) {
+        this.heldTextureId = '';
+        elField.classList.remove('held-texture');
+      } else {
+        var elSelected = this.elDetails.querySelector('.held-texture');
+        if (elSelected) {
+          elSelected.classList.remove('held-texture');
+        }
+        this.heldTextureId = textureId;
+        elField.classList.add('held-texture');
+      }
+    }
+  }
+};
+
+Editor.prototype.placeTexture = function placeTexture(x, y) {
+  if (this.heldTextureId) {
+    var bounds = this.game.el.getBoundingClientRect();
+    var tile = this.game.getTileFromCoords({
+      'x': x - bounds.left,
+      'y': y - bounds.top
+    });
+    
+    var grid = this.mapConfig.grid;
+    var numberOfCols = grid[0].length;
+    if (tile.y === grid.length - 1) {
+      var row = [];
+      for (var i = 0; i < numberOfCols; i++) {
+        row.push('');
+      }
+      this.mapConfig.grid.push(row);
+    }
+    if (tile.x === numberOfCols - 1) {
+      for (var i = 0; i < grid.length; i++) {
+        grid[i].push('');
+      }
+    }
+    
+    this.mapConfig.grid[tile.y][tile.x] = this.heldTextureId;
+    
+    this.elMap.querySelector('#field-grid').textContent = JSON.stringify(this.mapConfig.grid);
+    
+    this.loadMapFromConfig();
   }
 };
 
@@ -284,7 +339,9 @@ Editor.prototype.onMapChange = function onMapChange(e) {
   }
   
   eval('this.mapConfig.' + id + ' = ' + value);
-  
+};
+
+Editor.prototype.loadMapFromConfig = function loadMapFromConfig() {
   this.game.goToMap(this.mapConfig.id);
 };
 
@@ -451,20 +508,18 @@ Editor.prototype.openTextureImage = function openTextureImage(e) {
   var texture = this.textures[id];
   
   if (texture) {
-    ImageViewer.show(texture.data.src);
+    ImageViewer.show(texture.data.src, function onSelect(x, y) {
+      texture.data.clip[0] = x;
+      texture.data.clip[1] = y;
+      this.updateTexture(id);
+    }.bind(this));
   }
 };
 
 Editor.prototype.onTextureChange = function onTextureChange(e) {
   var id = e.target.dataset.textureId;
-  var texture = this.textures[id];
-  var el = e.target.parentNode;
-  
-  if (!texture) {
-    return;
-  }
-  
   var value = e.target.value;
+  
   try {
     value = JSON.parse(value);
   } catch(eX) {
@@ -473,30 +528,35 @@ Editor.prototype.onTextureChange = function onTextureChange(e) {
   }
   
   if (value) {
-    this.textures[id].data = texture.data = value;
-    texture.texture = new Texture(texture.data);
-    
-    function onLoad() {
-      var context = el.querySelector('canvas').getContext('2d');
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      texture.texture.draw(context, 0, 0);
-    }
-    
-    if (texture.texture.isReady) {
-      onLoad();
-    } else {
-      texture.texture.on('load', onLoad);
-    }
-
-    /*
-    el.innerHTML = TEMPLATE_TEXTURE.format(texture.data).format({
-      'id': id,
-      'content': JSON.stringify(texture.data)
-    });
-    */
-    
-    this.dispatch('textureUpdated', id);
+    this.textures[id].data = value;
+    this.updateTexture(id);
   }
+};
+
+Editor.prototype.updateTexture = function updateTexture(id) {
+  var texture = this.textures[id];
+  var el = this.elTextures.querySelector('.texture[data-texture-id = "' + id + '"');
+  
+  if (!texture) {
+    return;
+  }
+  
+  texture.texture = new Texture(texture.data);
+  el.querySelector('textarea').textContent = JSON.stringify(texture.data);
+  
+  function onLoad() {
+    var context = el.querySelector('canvas').getContext('2d');
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    texture.texture.draw(context, 0, 0);
+  }
+  
+  if (texture.texture.isReady) {
+    onLoad();
+  } else {
+    texture.texture.on('load', onLoad);
+  }
+  
+  this.dispatch('textureUpdated', id);
 };
 
 
@@ -518,6 +578,8 @@ var ImageViewer = (function ImageViewer() {
     
     this.padding = 50;
     
+    this.onSelect = null;
+    
     this.init(options);
   }
   
@@ -528,7 +590,8 @@ var ImageViewer = (function ImageViewer() {
     this.createHTML();
   };
   
-  ImageViewer.prototype.show = function show(imagsrc) {
+  ImageViewer.prototype.show = function show(imagsrc, onSelect) {
+    this.onSelect = onSelect || null;
     this.image = new Image();
     this.image.addEventListener('load', this.onImageLoad.bind(this));
     this.image.src = imagsrc;
@@ -584,6 +647,11 @@ var ImageViewer = (function ImageViewer() {
   ImageViewer.prototype.onClick = function onClick(e) {
     this.onMouseMove(e);
     this.logPosition();
+    
+    if (this.onSelect) {
+      this.hide();
+      this.onSelect(this.position.x, this.position.y);
+    }
   };
   
   ImageViewer.prototype.logPosition = function logPosition() {
