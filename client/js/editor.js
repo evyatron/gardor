@@ -28,14 +28,15 @@ var HTML_TEXTURES     = '<div class="editor-title">Textures</div>' +
 var TEMPLATE_TEXTURE  = '<canvas class="image" width="{{tileSize}}" height="{{tileSize}}"></canvas>' +
                         '<textarea data-texture-id="{{id}}">{{content}}</textarea>';
 
+var INPUT_COMMON = 'data-field-id="{{id}}"';
 var TEMPLATES_INPUT = {
-  'string':   '<input type="text" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'src':      '<input type="text" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'number':   '<input type="number" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'boolean':  '<input type="checkbox" id="field-{{id}}" name="field-{{id}}" checked="{{defaultValue}}" />',
-  'array':    '<textarea type="array" id="field-{{id}}" name="field-{{id}}">{{defaultValue}}</textarea>',
+  'string':   '<input type="text" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
+  'src':      '<input type="text" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
+  'number':   '<input type="number" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
+  'boolean':  '<input type="checkbox" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" checked="{{defaultValue}}" />',
+  'array':    '<textarea type="array" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}">{{defaultValue}}</textarea>',
   'texture':  '<div class="texture-selector" data-for-field="field-{{id}}">' +
-                '<input type="hidden" id="field-{{id}}" name="field-{{id}}">' +
+                '<input type="hidden" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}">' +
                 '<canvas width="64" height="64"></canvas>' +
               '</div>'
 };
@@ -68,6 +69,8 @@ Editor.prototype.init = function init(options) {
   this.createContainers();
   
   this.elContainer.addEventListener('click', this.onClick.bind(this));
+  
+  this.elContainer.addEventListener('dragstart', this.onDragStart.bind(this));
   this.elContainer.addEventListener('dragover', this.onDragOver.bind(this));
   this.elContainer.addEventListener('drop', this.onDrop.bind(this));
   
@@ -88,83 +91,6 @@ Editor.prototype.onClick = function onClick(e) {
   }
 };
 
-Editor.prototype.pickupTexture = function pickupTexture(elTextureSelector) {
-  var elTexture = closest(elTextureSelector, '.field-type-texture');
-  if (elTexture) {
-    var elField = elTexture.parentNode;
-    var textureId = elField.querySelector('input').value;
-    if (textureId) {
-      if (textureId === this.heldTextureId) {
-        this.heldTextureId = '';
-        elField.classList.remove('held-texture');
-      } else {
-        var elSelected = this.elDetails.querySelector('.held-texture');
-        if (elSelected) {
-          elSelected.classList.remove('held-texture');
-        }
-        this.heldTextureId = textureId;
-        elField.classList.add('held-texture');
-      }
-    }
-  }
-};
-
-Editor.prototype.placeTexture = function placeTexture(x, y) {
-  if (this.heldTextureId) {
-    var bounds = this.game.el.getBoundingClientRect();
-    var tile = this.game.getTileFromCoords({
-      'x': x - bounds.left,
-      'y': y - bounds.top
-    });
-    
-    var grid = this.mapConfig.grid;
-    var numberOfCols = grid[0].length;
-    if (tile.y === grid.length - 1) {
-      var row = [];
-      for (var i = 0; i < numberOfCols; i++) {
-        row.push('');
-      }
-      this.mapConfig.grid.push(row);
-    }
-    if (tile.x === numberOfCols - 1) {
-      for (var i = 0; i < grid.length; i++) {
-        grid[i].push('');
-      }
-    }
-    
-    this.mapConfig.grid[tile.y][tile.x] = this.heldTextureId;
-    
-    this.elMap.querySelector('#field-grid').textContent = JSON.stringify(this.mapConfig.grid);
-    
-    this.loadMapFromConfig();
-  }
-};
-
-Editor.prototype.onTextureUpdated = function onTextureUpdated(id) {
-  var texture = this.textures[id];
-  if (!texture) {
-    return;
-  }
-};
-
-Editor.prototype.onDragOver = function onDragOver(e) {
-  e.preventDefault();
-};
-
-Editor.prototype.onDrop = function onDrop(e) {
-  var el = e.target;
-  
-  if (el.classList.contains('texture-selector')) {
-    var textureId = e.dataTransfer.getData('text');
-    var textureData = this.textures[textureId].data;
-    
-    el.querySelector('input').value = JSON.stringify(textureData);
-    var eChange = document.createEvent('HTMLEvents');
-    eChange.initEvent('change', true, true);
-    el.dispatchEvent(eChange);
-  }
-};
-
 Editor.prototype.onGotGameDescriber = function onGotGameDescriber(describer) {
   this.gameDescriber = describer.game;
   this.gameConfig = this.createJSON(this.gameDescriber);
@@ -173,13 +99,85 @@ Editor.prototype.onGotGameDescriber = function onGotGameDescriber(describer) {
   this.mapDescriber = describer.map;
   this.mapConfig = this.createJSON(this.mapDescriber);
   this.createMapPane();
-
-  this.createGameFromConfig();
   
+  this.populateFromGame();
+  
+  /*
   this.createTexture();
   this.createTexture();
   this.createTexture();
   this.createTexture();
+  */
+};
+
+Editor.prototype.populateFromGame = function populateFromGame(data) {
+  if (!data) {
+    utils.request('/data/game.json', this.populateFromGame.bind(this));
+    return false;
+  }
+  
+  for (var k in data) {
+    var describer = this.gameDescriber[k];
+    if (!describer) {
+      console.warn('No describer node found for', k, data[k]);
+      continue;
+    }
+    
+    var type = describer.type;
+    if (Array.isArray(describer)) {
+      
+    } else if (type === 'map') {
+    } else if (type === 'array') {
+      var arr = data[k];
+      var itemDescriber = describer.value;
+      var html = '';
+      
+      for (var i = 0; i < arr.length; i++) {
+        var item = arr[i];
+        var itemDesc = JSON.parse(JSON.stringify(itemDescriber));
+        for (var id in itemDesc) {
+          if (item.hasOwnProperty(id)) {
+            itemDesc[id].defaultValue = item[id];
+            if (item[id].src) {
+              this.createTexture(item[id]);
+            }
+          }
+        }
+        
+        html += this.getFieldHTML('tiles', itemDesc);
+      }
+      
+      var el = this.elDetails.querySelector('[data-group-id = "' + k + '"]');
+      if (el) {
+        el.innerHTML = html;
+      }
+    } else {
+      if (!type) {
+        var parentValue = data[k];
+        for (var subK in parentValue) {
+          var el = this.getField(k + '.' + subK);
+          if (el) {
+            el.value = parentValue[subK];
+          } else {
+            console.warn('No iput element found for field', k + '.' + subK);
+          }
+        }
+      } else {
+        var el = this.getField(k);
+        if (el) {
+          el.value = data[k];
+        } else {
+          console.warn('No iput element found for field', k);
+        }
+      }
+    }
+  }
+  
+  this.createGameFromConfig();
+};
+
+Editor.prototype.getField = function getField(id) {
+  return this.elDetails.querySelector('input[data-field-id = "' + id + '"]');
 };
 
 Editor.prototype.createGameFromConfig = function createGameFromConfig() {
@@ -188,11 +186,13 @@ Editor.prototype.createGameFromConfig = function createGameFromConfig() {
   if (this.game) {
     this.game.destroy();
   }
+  
   this.game = new Game({
     'el': document.getElementById('game'),
     'debug': this.elDetails.querySelector('#config-debug').checked,
     'debugNavmesh': this.elDetails.querySelector('#config-debug-navmesh').checked
   });
+  
   this.game.loadMap = this.loadGameMap.bind(this);
   
   this.game.createGameFromConfig(this.gameConfig);
@@ -203,18 +203,6 @@ Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
   
   this.game.addMap(this.mapConfig);
   callback && callback(this.mapConfig);
-};
-
-Editor.prototype.buildMapJSON = function buildMapJSON() {
-  var json = {};
-  
-  json.grid = [
-    [""]
-  ];
-  json.actors = [
-  ];
-  
-  return json;
 };
 
 Editor.prototype.createJSON = function createJSON(describer) {
@@ -244,10 +232,6 @@ Editor.prototype.getJSONProperty = function getJSONProperty(json) {
   }
   
   return result;
-};
-
-Editor.prototype.addTiles = function addTiles(json) {
-  json.tiles = [];
 };
 
 Editor.prototype.onDebugChange = function onDebugChange(e) {
@@ -360,7 +344,7 @@ Editor.prototype.createContainers = function createContainers() {
   this.elContainer.appendChild(this.elTextures);
   
   var elNewTexture = this.elTextures.querySelector('.textures-create');
-  elNewTexture.addEventListener('click', this.createTexture.bind(this));
+  elNewTexture.addEventListener('click', this.createTexture.bind(this, null));
   
   this.elDetails.addEventListener('change', this.onDetailsChange.bind(this));
   this.elMap.addEventListener('change', this.onMapChange.bind(this));
@@ -441,7 +425,7 @@ Editor.prototype.template_map = function template_map(id, field) {
 };
 
 Editor.prototype.template_array = function template_array(id, field) {
-  var html = '';
+  var html = '<div class="editor-group" data-group-id="' + id + '">';
   
   if (typeof field.value === 'string') {
     var inputTemplate = TEMPLATES_INPUT[field.type] || 'MISSING INPUT: ' + field.type;
@@ -458,19 +442,138 @@ Editor.prototype.template_array = function template_array(id, field) {
     }
   }
   
+  html += '</div>';
+  
   return html;
 };
 
-Editor.prototype.createTexture = function createTexture() {
+/* Textures handling */
+
+Editor.prototype.onDragStart = function onDragStart(e) {
+  this.elDragging = e.target;
+  e.target.classList.add('dragging');
+  document.body.classList.add('dragging-texture');
+};
+
+Editor.prototype.onDragOver = function onDragOver(e) {
+  e.preventDefault();
+  
+  var el = e.target;
+  if (el.classList.contains('texture-selector')) {
+    this.elDropZone = el;
+    el.classList.add('dragging-over');
+  } else if (this.elDropZone) {
+    this.elDropZone.classList.remove('dragging-over');
+  }
+};
+
+Editor.prototype.onDrop = function onDrop(e) {
+  var el = e.target;
+  
+  if (this.elDragging) {
+    this.elDragging.classList.remove('dragging');
+    this.elDragging = null;
+  }
+  if (this.elDropZone) {
+    this.elDropZone.classList.remove('dragging-over');
+    this.elDropZone = null;
+  }
+  
+  if (el.classList.contains('texture-selector')) {
+    var textureId = e.dataTransfer.getData('text');
+    this.setTexture(el, textureId);
+    
+    var eChange = document.createEvent('HTMLEvents');
+    eChange.initEvent('change', true, true);
+    el.dispatchEvent(eChange);
+  }
+  
+  document.body.classList.remove('dragging-texture');
+};
+
+Editor.prototype.setTexture = function setTexture(elTexture, id) {
+  var texture = this.textures[id];
+  var canvas = elTexture.querySelector('canvas');
+  var context = canvas.getContext('2d');
+  
+  canvas.width = texture.data.width;
+  canvas.height = texture.data.height;
+  texture.texture.draw(context, 0, 0);
+  
+  elTexture.querySelector('input').value = JSON.stringify(texture.data);
+};
+
+Editor.prototype.pickupTexture = function pickupTexture(elTextureSelector) {
+  var elTexture = closest(elTextureSelector, '.field-type-texture');
+  if (elTexture) {
+    var elField = elTexture.parentNode;
+    var textureId = elField.querySelector('input').value;
+    if (textureId) {
+      if (textureId === this.heldTextureId) {
+        this.heldTextureId = '';
+        elField.classList.remove('held-texture');
+      } else {
+        var elSelected = this.elDetails.querySelector('.held-texture');
+        if (elSelected) {
+          elSelected.classList.remove('held-texture');
+        }
+        this.heldTextureId = textureId;
+        elField.classList.add('held-texture');
+      }
+    }
+  }
+};
+
+Editor.prototype.placeTexture = function placeTexture(x, y) {
+  if (this.heldTextureId) {
+    var bounds = this.game.el.getBoundingClientRect();
+    var tile = this.game.getTileFromCoords({
+      'x': x - bounds.left,
+      'y': y - bounds.top
+    });
+    
+    var grid = this.mapConfig.grid;
+    var numberOfCols = grid[0].length;
+    if (tile.y === grid.length - 1) {
+      var row = [];
+      for (var i = 0; i < numberOfCols; i++) {
+        row.push('');
+      }
+      this.mapConfig.grid.push(row);
+    }
+    if (tile.x === numberOfCols - 1) {
+      for (var i = 0; i < grid.length; i++) {
+        grid[i].push('');
+      }
+    }
+    
+    this.mapConfig.grid[tile.y][tile.x] = this.heldTextureId;
+    
+    this.elMap.querySelector('#field-grid').textContent = JSON.stringify(this.mapConfig.grid);
+    
+    this.loadMapFromConfig();
+  }
+};
+
+Editor.prototype.onTextureUpdated = function onTextureUpdated(id) {
+  var texture = this.textures[id];
+  if (!texture) {
+    return;
+  }
+};
+
+Editor.prototype.createTexture = function createTexture(textureData) {
   var elList = this.elTextures.querySelector('.textures-list');
   var el = document.createElement('div');
   var id = 'texture_' + Date.now() + '_' + Math.random();
+  
   el.classList.add('texture');
+  
   el.dataset.textureId = id;
   
-  var texture = this.textures[id] = {
+  var texture = {
     'texture': null,
-    'data': {
+    'data': textureData || {
       'src': '/img/tiles/atlas.png',
       'origin': [0, 0],
       'clip': [0, 0],
@@ -479,6 +582,8 @@ Editor.prototype.createTexture = function createTexture() {
       'scale': 1
     }
   };
+  
+  this.textures[id] = texture;
   
   el.setAttribute('draggable', true);
   

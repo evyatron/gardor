@@ -730,7 +730,7 @@ var TilesetLayer = (function TilesetLayer() {
   };
   
   TilesetLayer.prototype.update = function update(dt) {
-    if (DEBUG_NAVMESH) {
+    if (window.DEBUG_NAVMESH) {
       if (!window.timeSinceUpdatedNavmesh) {
         window.timeSinceUpdatedNavmesh = 0;
       }
@@ -756,7 +756,7 @@ var TilesetLayer = (function TilesetLayer() {
     this.texture.clip = [camera.x, camera.y];
     this.texture.draw(this.context);
   
-    if (DEBUG) {
+    if (window.DEBUG) {
       var pointerTile = this.game.getPointerTile();
       if (pointerTile) {
         var size = this.game.config.tileSize;
@@ -815,13 +815,13 @@ var TilesetLayer = (function TilesetLayer() {
           tile.texture.draw(context, x, y);
           tilesDrawn++;
           
-          if (DEBUG) {
+          if (window.DEBUG) {
             var thisTile = {
               'x': j,
               'y': i
             };
             
-            if (DEBUG_NAVMESH) {
+            if (window.DEBUG_NAVMESH) {
               if (game.navMesh.isBlocked(thisTile)) {
                 context.fillStyle = 'rgba(255, 0, 0, .2)';
               } else {
@@ -1012,7 +1012,7 @@ var HUDLayer = (function HUDLayer() {
     
     game.endBenchmark('draw', 'hud');
 
-    if (DEBUG) {
+    if (window.DEBUG) {
       context.fillStyle = 'rgba(255, 255, 255, 1)';
       context.textAlign = 'left';
       context.textBaseline = 'top';
@@ -1409,7 +1409,7 @@ var Actor = (function Actor() {
 
     game.startBenchmark('draw', this.id);
 
-    if (DEBUG) {
+    if (window.DEBUG) {
       var context = this.layer.context;
       
       context.beginPath();
@@ -1567,7 +1567,7 @@ var Texture = (function Texture() {
                         drawWidth,
                         drawHeight);
       
-      if (DEBUG && this.game) {
+      if (window.DEBUG && this.game) {
         this.game.stats.textures++;
       }
     }
@@ -2535,7 +2535,7 @@ var PlayerController = (function PlayerController() {
       }
     }
     
-    if (DEBUG) {
+    if (window.DEBUG) {
       game.log('pointer: ' + this.pointer.x + ',' + this.pointer.y);
     }
   };

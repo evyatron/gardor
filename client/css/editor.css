@@ -37,6 +37,7 @@ div, p, input, textarea, label {
   padding-bottom: 100px;
   border-right-width: 1px;
   font-size: 0.9em;
+  overflow-y: auto;
 }
 .map-pane {
   top: 0;
@@ -64,6 +65,12 @@ div, p, input, textarea, label {
   background: #333;
   box-shadow: 0 0 0 1px #bbb;
   cursor: pointer;
+  transition: transform 120ms ease-in-out;
+}
+.dragging-texture .texture-selector.dragging-over {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 1px #bbb,
+              0 0 5px 0 rgba(0, 0, 0, .7);
 }
   .texture-selector canvas {
     position: absolute;
@@ -147,6 +154,9 @@ div, p, input, textarea, label {
     background: #333;
     box-shadow: 0 0 0 1px #bbb;
     border-radius: 2px;
+  }
+  .textures-list .texture.dragging {
+    background: #999;
   }
     .textures-list .texture canvas {
       position: absolute;

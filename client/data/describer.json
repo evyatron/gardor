@@ -130,7 +130,7 @@
         }
       },
       "tooltip": "Game tiles to be used when creating the map",
-      "defaultValue": {}
+      "defaultValue": []
     },
   
     "modules": [

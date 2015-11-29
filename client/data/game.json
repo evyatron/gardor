@@ -17,8 +17,7 @@
     "font": "10pt 'Share Tech Mono'",
     "paddingLeftRight": 10,
     "paddingTopBottom": 5,
-    "lineSpacing": 4,
-    "highlightColor": "gold"
+    "lineSpacing": 4
   },
   "dialogs": {
     "font": "10pt 'Share Tech Mono'",
@@ -34,7 +33,8 @@
       "isBlocking": false,
       "texture": {
         "src": "/img/tiles/atlas.png",
-        "clip": [192, 32]
+        "clip": [192, 32],
+        "origin": [0, 0]
       }
     },
     {
@@ -42,7 +42,8 @@
       "isBlocking": true,
       "texture": {
         "src": "/img/tiles/atlas.png",
-        "clip": [256, 128]
+        "clip": [256, 128],
+        "origin": [0, 0]
       }
     },
     {
@@ -50,7 +51,8 @@
       "isBlocking": false,
       "texture": {
         "src": "/img/tiles/atlas.png",
-        "clip": [640, 160]
+        "clip": [640, 160],
+        "origin": [0, 0]
       }
     }
   ],
