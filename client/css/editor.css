@@ -13,6 +13,9 @@ div, p, input, textarea, label {
   background: #333;
   z-index: 20;
 }
+#game {
+  pointer-events: none;
+}
 .editor-container {
   position: absolute;
   background: #777;
@@ -25,6 +28,9 @@ div, p, input, textarea, label {
   background: rgba(255, 255, 255, .2);
   border-top: 1px solid #aaa;
   border-bottom: 1px solid #aaa;
+}
+.editor-group .editor-title {
+  display: none;
 }
   .editor-title input {
     float: right;
@@ -59,8 +65,8 @@ div, p, input, textarea, label {
 .texture-selector {
   position: relative;
   display: inline-block;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   border-radius: 2px;
   background: #333;
   box-shadow: 0 0 0 1px #bbb;
@@ -88,7 +94,7 @@ div, p, input, textarea, label {
   padding: 1px 3px;
   min-height: 23px;
 }
-.editor-field:hover {
+.editor-field:not([data-id = "tiles"]):hover {
   background: rgba(255, 255, 255, .1);
 }
   .editor-field-label {
@@ -124,12 +130,12 @@ div, p, input, textarea, label {
 .editor-button {
   padding: 0 20px;
   font-weight: normal;
-  background: linear-gradient(to bottom, #bcd, #89a);
+  text-align: center;
   cursor: pointer;
   border-radius: 3px;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, .2),
               0 0 0 1px rgba(0, 0, 0, .8) inset;
-  
+  background: linear-gradient(to bottom, #bcd, #89a);
 }
 .editor-button:hover {
   background: linear-gradient(to bottom, #cde, #9ab);
@@ -186,6 +192,26 @@ div, p, input, textarea, label {
   height: 22px;
   line-height: 22px;
 }
+
+.tiles-editor {
+  position: relative;
+  flex: 1;
+  max-height: 410px;
+  padding-top: 40px;
+  overflow: auto;
+}
+  .tiles-editor .tile {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+  }
+  .tiles-editor .create-new-tile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 0;
+    margin: 5px;
+  }
 
 .image-viewer {
   position: absolute;

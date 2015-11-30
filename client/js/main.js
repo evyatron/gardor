@@ -203,7 +203,7 @@ var Game = (function Game() {
     var tiles = this.config.tiles;
     var tileSize = this.config.tileSize;
     for (var i = 0, len = tiles.length; i < len; i++) {
-      var tile = tiles[i];
+      var tile = JSON.parse(JSON.stringify(tiles[i]));
       tile.texture.width = tileSize;
       tile.texture.height = tileSize;
       tile.texture.origin = [0, 0];
@@ -228,8 +228,6 @@ var Game = (function Game() {
     this.isRunning = true;
     this.lastUpdate = Date.now();
     window.requestAnimationFrame(this.tick.bind(this));
-    
-    console.warn('Game created', this.tiles)
   };
   
   Game.prototype.goToMap = function goToMap(mapId) {

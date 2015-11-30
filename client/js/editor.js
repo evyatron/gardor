@@ -8,8 +8,8 @@ function init() {
 
 var HTML_DETAILS_PANE = '<div class="editor-title">' +
                           'Game Config' +
-                          '<input type="checkbox" id="config-debug" name="config-debug" checked />' +
-                          '<input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" />' +
+                          '<input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />' +
+                          '<input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />' +
                         '</div>';
 var HTML_MAP_PANE     = '<div class="editor-title">Map Config</div>';
 var TEMPLATE_FIELD    = '<div class="editor-field field-type-{{type}}" data-id="{{id}}" title="{{tooltip}}">' +
@@ -28,16 +28,15 @@ var HTML_TEXTURES     = '<div class="editor-title">Textures</div>' +
 var TEMPLATE_TEXTURE  = '<canvas class="image" width="{{tileSize}}" height="{{tileSize}}"></canvas>' +
                         '<textarea data-texture-id="{{id}}">{{content}}</textarea>';
 
-var INPUT_COMMON = 'data-field-id="{{id}}"';
 var TEMPLATES_INPUT = {
-  'string':   '<input type="text" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'src':      '<input type="text" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'number':   '<input type="number" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'boolean':  '<input type="checkbox" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}" checked="{{defaultValue}}" />',
-  'array':    '<textarea type="array" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}">{{defaultValue}}</textarea>',
+  'string':   '<input type="text" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
+  'src':      '<input type="text" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
+  'number':   '<input type="number" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
+  'boolean':  '<input type="checkbox" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" checked="{{defaultValue}}" />',
+  'array':    '<textarea type="array" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}">{{defaultValue}}</textarea>',
   'texture':  '<div class="texture-selector" data-for-field="field-{{id}}">' +
-                '<input type="hidden" ' + INPUT_COMMON + ' id="field-{{id}}" name="field-{{id}}">' +
-                '<canvas width="64" height="64"></canvas>' +
+                '<input type="hidden" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}">' +
+                '<canvas width="48" height="48"></canvas>' +
               '</div>'
 };
 
@@ -52,6 +51,7 @@ function Editor(options) {
   this.gameConfig = null;
   this.mapConfig = null;
   
+  this.tilesEditor = null;
   this.textures = {};
   
   this.init(options);
@@ -86,7 +86,7 @@ Editor.prototype.onClick = function onClick(e) {
     this.pickupTexture(el);
   }
   
-  if (el.id === 'game') {
+  if (el.id === 'game-container') {
     this.placeTexture(e.pageX, e.pageY);
   }
 };
@@ -96,18 +96,22 @@ Editor.prototype.onGotGameDescriber = function onGotGameDescriber(describer) {
   this.gameConfig = this.createJSON(this.gameDescriber);
   this.createDetailsPane();
   
+  this.tilesEditor = new Tiles({
+    'editor': this,
+    'elContainer': this.elDetails.querySelector('.editor-field[data-id = "tiles"]'),
+    'describer': describer.game.tiles.value,
+    'onChange': this.onTilesChange.bind(this)
+  });
+  
   this.mapDescriber = describer.map;
   this.mapConfig = this.createJSON(this.mapDescriber);
   this.createMapPane();
   
   this.populateFromGame();
-  
-  /*
-  this.createTexture();
-  this.createTexture();
-  this.createTexture();
-  this.createTexture();
-  */
+};
+
+Editor.prototype.onTilesChange = function onTilesChange(tiles) {
+  this.updateGameConfig('tiles', tiles);
 };
 
 Editor.prototype.populateFromGame = function populateFromGame(data) {
@@ -123,34 +127,17 @@ Editor.prototype.populateFromGame = function populateFromGame(data) {
       continue;
     }
     
+    if (k === 'tiles') {
+      this.tilesEditor.create(data[k]);
+      continue;
+    }
+    
     var type = describer.type;
     if (Array.isArray(describer)) {
       
     } else if (type === 'map') {
     } else if (type === 'array') {
-      var arr = data[k];
-      var itemDescriber = describer.value;
-      var html = '';
       
-      for (var i = 0; i < arr.length; i++) {
-        var item = arr[i];
-        var itemDesc = JSON.parse(JSON.stringify(itemDescriber));
-        for (var id in itemDesc) {
-          if (item.hasOwnProperty(id)) {
-            itemDesc[id].defaultValue = item[id];
-            if (item[id].src) {
-              this.createTexture(item[id]);
-            }
-          }
-        }
-        
-        html += this.getFieldHTML('tiles', itemDesc);
-      }
-      
-      var el = this.elDetails.querySelector('[data-group-id = "' + k + '"]');
-      if (el) {
-        el.innerHTML = html;
-      }
     } else {
       if (!type) {
         var parentValue = data[k];
@@ -496,8 +483,8 @@ Editor.prototype.setTexture = function setTexture(elTexture, id) {
   var canvas = elTexture.querySelector('canvas');
   var context = canvas.getContext('2d');
   
-  canvas.width = texture.data.width;
-  canvas.height = texture.data.height;
+  canvas.width = texture.data.width || this.gameConfig.tileSize;
+  canvas.height = texture.data.height || this.gameConfig.tileSize;
   texture.texture.draw(context, 0, 0);
   
   elTexture.querySelector('input').value = JSON.stringify(texture.data);
@@ -534,20 +521,29 @@ Editor.prototype.placeTexture = function placeTexture(x, y) {
     
     var grid = this.mapConfig.grid;
     var numberOfCols = grid[0].length;
-    if (tile.y === grid.length - 1) {
+    var didChangeGrid = false;
+
+    if (tile.y > grid.length - 1) {
+      tile.y = grid.length;
+      
       var row = [];
       for (var i = 0; i < numberOfCols; i++) {
         row.push('');
       }
       this.mapConfig.grid.push(row);
+      
+      didChangeGrid = true;
     }
-    if (tile.x === numberOfCols - 1) {
+    if (tile.x > numberOfCols - 1) {
+      tile.x = numberOfCols;
       for (var i = 0; i < grid.length; i++) {
         grid[i].push('');
       }
+      
+      didChangeGrid = true;
     }
     
-    this.mapConfig.grid[tile.y][tile.x] = this.heldTextureId;
+    this.mapConfig.grid[tile.y][tile.x] = didChangeGrid? '' : this.heldTextureId;
     
     this.elMap.querySelector('#field-grid').textContent = JSON.stringify(this.mapConfig.grid);
     
@@ -605,6 +601,8 @@ Editor.prototype.createTexture = function createTexture(textureData) {
 
   el.addEventListener('change', this.onTextureChange.bind(this));
   el.querySelector('.image').addEventListener('click', this.openTextureImage.bind(this));
+  
+  return id;
 };
 
 Editor.prototype.openTextureImage = function openTextureImage(e) {
@@ -664,6 +662,119 @@ Editor.prototype.updateTexture = function updateTexture(id) {
   this.dispatch('textureUpdated', id);
 };
 
+var Tiles = (function Tiles() {
+  function Tiles(options) {
+    this.elContainer = null;
+    this.el = null;
+    
+    this.editor = null;
+    this.describer = {};
+    this.onChange = null;
+    
+    this.init(options);
+  }
+  
+  Tiles.prototype.init = function init(options) {
+    this.editor = options.editor;
+    this.elContainer = options.elContainer;
+    this.describer = options.describer;
+    this.onChange = options.onChange;
+    
+    this.el = document.createElement('div');
+    this.el.className = 'tiles-editor';
+    this.el.innerHTML = '<div class="editor-button create-new-tile">New Tile</div>';
+    
+    this.elContainer.innerHTML = '';
+    this.elContainer.appendChild(this.el);
+    
+    this.el.addEventListener('change', this.onTilesChange.bind(this));
+    this.el.querySelector('.create-new-tile').addEventListener('click', this.createNew.bind(this));
+  };
+  
+  Tiles.prototype.addTile = function addTile(tile) {
+    var el = document.createElement('div');
+    var html = '';
+    var textureId = '';
+    
+    el.className = 'tile';
+
+    for (var k in tile) {
+      var describer = JSON.parse(JSON.stringify(this.describer[k]));
+      
+      describer.defaultValue = tile[k];
+      
+      if (describer.type === 'texture') {
+        describer.defaultValue = JSON.stringify(describer.defaultValue).replace(/"/g, '&quot;');
+        textureId = this.editor.createTexture(tile[k]);
+      }
+      
+      html += this.editor.getFieldHTML(k, describer);
+    }
+    
+    el.innerHTML = html;
+    this.el.appendChild(el);
+    
+    window.setTimeout(function() {
+      this.editor.setTexture(el.querySelector('.texture-selector'), textureId);
+    }.bind(this), 100);
+  };
+  
+  Tiles.prototype.createNew = function createNew() {
+    var tile = {};
+    
+    for (var k in this.describer) {
+      tile[k] = this.describer[k].defaultValue;
+    }
+    
+    this.addTile(tile);
+    
+    this.onTilesChange();
+  };
+  
+  Tiles.prototype.create = function create(tiles) {
+    for (var i = 0, len = tiles.length; i < len; i++) {
+      var tile = tiles[i];
+      
+      this.addTile(tile);
+    }
+  };
+  
+  Tiles.prototype.getTiles = function getTiles() {
+    var tiles = [];
+    var els = this.el.querySelectorAll('.tile');
+    
+    for (var i = 0, len = els.length; i < len; i++) {
+      var el = els[i];
+      var tile = {};
+      var elInputs = el.querySelectorAll('input');
+      
+      for (var j = 0, jLen = elInputs.length; j < jLen; j++) {
+        var elInput = elInputs[j];
+        var value = elInput.value;
+        
+        if (elInput.type === 'checkbox') {
+          value = elInput.checked;
+        } else if (elInput.dataset.fieldId === 'texture') {
+          value = JSON.parse(value);
+        }
+
+        tile[elInput.dataset.fieldId] = value;
+      }
+      
+      tiles.push(tile);
+    }
+
+    return tiles;
+  };
+  
+  Tiles.prototype.onTilesChange = function onTilesChange(e) {
+    e && e.stopPropagation();
+    
+    this.onChange(this.getTiles());
+  };
+  
+  return Tiles;
+}());
 
 var ImageViewer = (function ImageViewer() {
   function ImageViewer(options) {
@@ -847,3 +958,12 @@ function closest(el, selector) {
 }
 
 init();
+
+
+
+/*
+  water island tiles
+  [{"id":"land","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[192,32],"origin":[0,0]}},{"id":"water1","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[193,351],"origin":[0,0]}},{"id":"path","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[224,352],"origin":[0,0]}},{"id":"water2","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[250,354],"origin":[0,0]}},{"id":"water3","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[192,383],"origin":[0,0]}},{"id":"water","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[224,385],"width":32,"height":32,"scale":1}},{"id":"water5","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[247,384],"width":32,"height":32,"scale":1}},{"id":"grass","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[706,96],"width":32,"height":32,"scale":1}},{"id":"water6","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[194,411],"width":32,"height":32,"scale":1}},{"id":"water7","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[224,410],"width":32,"height":32,"scale":1}},{"id":"water8","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[247,410],"width":32,"height":32,"scale":1}},{"id":"grass2","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[673,160],"width":32,"height":32,"scale":1}},{"id":"grass3","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[735,160],"width":32,"height":32,"scale":1}},{"id":"island","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[224,448],"width":32,"height":32,"scale":1}}]
+  water island grid
+  [["land","land","land","land","land","land","land","land","land","land","land"],["land","grass","grass3","grass","grass","grass","grass","grass","grass","grass","land"],["land","grass3","grass","grass","grass3","grass","grass","grass2","grass3","grass","land"],["land","grass","grass","water1","path","path","path","water2","grass","grass","land"],["land","grass","grass","water3","island","water","water","water5","grass","grass","land"],["land","grass","grass2","water3","water","island","water","water5","grass","grass","land"],["land","grass","grass","water3","water","water","water","water5","grass","grass","land"],["land","grass","grass","water6","water7","water7","water7","water8","grass","grass","land"],["land","grass3","grass3","grass","grass","grass","grass3","grass","grass","grass2","land"],["land","grass2","grass","grass","grass","grass3","grass","grass","grass","grass","land"],["land","land","land","land","land","grass","grass","grass","land","land","land"],["land","land","land","land","land","grass","grass","grass","grass","grass","land"]]
+*/
