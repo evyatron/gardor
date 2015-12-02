@@ -42,7 +42,6 @@ var TEMPLATES_INPUT = {
 
 function Editor(options) {
   this.elContainer = null;
-  this.el;
   this.game = null;
   
   this.gameDescriber = null;
@@ -91,6 +90,14 @@ Editor.prototype.onClick = function onClick(e) {
   }
 };
 
+Editor.prototype.enablePlay = function enablePlay() {
+  this.elContainer.classList.remove('disable-play');
+};
+
+Editor.prototype.disablePlay = function disablePlay() {
+  this.elContainer.classList.add('disable-play');
+};
+
 Editor.prototype.onGotGameDescriber = function onGotGameDescriber(describer) {
   this.gameDescriber = describer.game;
   this.gameConfig = this.createJSON(this.gameDescriber);
@@ -111,7 +118,8 @@ Editor.prototype.onGotGameDescriber = function onGotGameDescriber(describer) {
 };
 
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
-  this.updateGameConfig('tiles', tiles);
+  this.gameConfig.tiles = tiles;
+  this.createGameFromConfig();
 };
 
 Editor.prototype.populateFromGame = function populateFromGame(data) {
@@ -119,9 +127,28 @@ Editor.prototype.populateFromGame = function populateFromGame(data) {
     utils.request('/data/game.json', this.populateFromGame.bind(this));
     return false;
   }
+
+  this.populateData(data, this.gameConfig, this.gameDescriber, this.elDetails);
+
+  this.populateFromMap();
+};
+
+Editor.prototype.populateFromMap = function populateFromMap(data) {
+  if (!data) {
+    utils.request('/data/main-map.json', this.populateFromMap.bind(this));
+    return false;
+  }
   
+  this.populateData(data, this.mapConfig, this.mapDescriber, this.elMap);
+
+  this.onTilesChange(this.tilesEditor.getTiles());
+  
+  this.game.goToMap(this.mapConfig.id);
+};
+
+Editor.prototype.populateData = function populateData(data, config, parentDescriber, elParent) {
   for (var k in data) {
-    var describer = this.gameDescriber[k];
+    var describer = parentDescriber[k];
     if (!describer) {
       console.warn('No describer node found for', k, data[k]);
       continue;
@@ -133,38 +160,46 @@ Editor.prototype.populateFromGame = function populateFromGame(data) {
     }
     
     var type = describer.type;
+    var el = this.getField(k, elParent);
+    
     if (Array.isArray(describer)) {
       
     } else if (type === 'map') {
+      config[k] = JSON.parse(JSON.stringify(data[k]));
     } else if (type === 'array') {
+      config[k] = JSON.parse(JSON.stringify(data[k]));
       
-    } else {
-      if (!type) {
+      if (el) {
+        el.value = JSON.stringify(data[k]);
+      }
+    } else if (!type) {
         var parentValue = data[k];
         for (var subK in parentValue) {
-          var el = this.getField(k + '.' + subK);
-          if (el) {
-            el.value = parentValue[subK];
+          var elSub = this.getField(k + '.' + subK, elParent);
+          if (elSub) {
+            elSub.value = parentValue[subK];
           } else {
             console.warn('No iput element found for field', k + '.' + subK);
           }
         }
-      } else {
-        var el = this.getField(k);
-        if (el) {
-          el.value = data[k];
+    } else {
+      config[k] = data[k];
+      
+      if (el) {
+        if (type === 'boolean') {
+          el.checked = data[k];
         } else {
-          console.warn('No iput element found for field', k);
+          el.value = data[k];
         }
+      } else {
+        console.warn('No input element found for field', k);
       }
     }
   }
-  
-  this.createGameFromConfig();
 };
 
-Editor.prototype.getField = function getField(id) {
-  return this.elDetails.querySelector('input[data-field-id = "' + id + '"]');
+Editor.prototype.getField = function getField(id, elParent) {
+  return (elParent || this.elContainer).querySelector('[data-field-id = "' + id + '"]');
 };
 
 Editor.prototype.createGameFromConfig = function createGameFromConfig() {
@@ -186,8 +221,6 @@ Editor.prototype.createGameFromConfig = function createGameFromConfig() {
 };
 
 Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
-  this.mapConfig.id = mapId;
-  
   this.game.addMap(this.mapConfig);
   callback && callback(this.mapConfig);
 };
@@ -403,10 +436,9 @@ Editor.prototype.getFieldHTML = function getFieldHTML(id, field) {
 Editor.prototype.template_map = function template_map(id, field) {
   var html = '';
   
-  var key = field.key;
   var value = field.value;
   
-  html = key.type + ':{}';
+  html = '"":{}';
   
   return html;
 };
@@ -499,6 +531,7 @@ Editor.prototype.pickupTexture = function pickupTexture(elTextureSelector) {
       if (textureId === this.heldTextureId) {
         this.heldTextureId = '';
         elField.classList.remove('held-texture');
+        this.enablePlay();
       } else {
         var elSelected = this.elDetails.querySelector('.held-texture');
         if (elSelected) {
@@ -506,6 +539,7 @@ Editor.prototype.pickupTexture = function pickupTexture(elTextureSelector) {
         }
         this.heldTextureId = textureId;
         elField.classList.add('held-texture');
+        this.disablePlay();
       }
     }
   }
@@ -522,28 +556,55 @@ Editor.prototype.placeTexture = function placeTexture(x, y) {
     var grid = this.mapConfig.grid;
     var numberOfCols = grid[0].length;
     var didChangeGrid = false;
+    var gridChange = {
+      'x': 0,
+      'y': 0
+    };
 
-    if (tile.y > grid.length - 1) {
-      tile.y = grid.length;
+    if (tile.y < 0) {
+      gridChange.y = -1;
+      
+      var row = [];
+      for (var i = 0; i < numberOfCols; i++) {
+        row.push('');
+      }
+      this.mapConfig.grid.splice(0, 0, row);
+    } else if (tile.y > grid.length - 1) {
+      gridChange.y = 1;
       
       var row = [];
       for (var i = 0; i < numberOfCols; i++) {
         row.push('');
       }
       this.mapConfig.grid.push(row);
-      
-      didChangeGrid = true;
     }
-    if (tile.x > numberOfCols - 1) {
-      tile.x = numberOfCols;
+    
+    if (tile.x < 0) {
+      gridChange.x = -1;
+      
+      for (var i = 0; i < grid.length; i++) {
+        grid[i].splice(0, 0, '');
+      }
+    } else if (tile.x > numberOfCols - 1) {
+      gridChange.x = 1;
+      
       for (var i = 0; i < grid.length; i++) {
         grid[i].push('');
       }
-      
-      didChangeGrid = true;
     }
     
-    this.mapConfig.grid[tile.y][tile.x] = didChangeGrid? '' : this.heldTextureId;
+    if (gridChange.x === 0 && gridChange.y === 0) {
+      this.mapConfig.grid[tile.y][tile.x] = this.heldTextureId;
+    } else if (gridChange.x < 0 || gridChange.y < 0) {
+      for (var i = 0, len = this.mapConfig.actors.length; i < len; i++) {
+        if (gridChange.x < 0) {
+          this.mapConfig.actors[i].tile.x += -gridChange.x;
+        }
+        if (gridChange.y < 0) {
+          this.mapConfig.actors[i].tile.y += -gridChange.y;
+        }
+      }
+    }
     
     this.elMap.querySelector('#field-grid').textContent = JSON.stringify(this.mapConfig.grid);
     
@@ -712,6 +773,12 @@ var Tiles = (function Tiles() {
     }
     
     el.innerHTML = html;
+    
+    var elUncheckedBoxes = el.querySelectorAll('input[type = "checkbox"][checked = "false"]');
+    for (var i = 0, len = elUncheckedBoxes.length; i < len; i++) {
+      elUncheckedBoxes[i].checked = false;
+    }
+    
     this.el.appendChild(el);
     
     window.setTimeout(function() {
@@ -733,9 +800,7 @@ var Tiles = (function Tiles() {
   
   Tiles.prototype.create = function create(tiles) {
     for (var i = 0, len = tiles.length; i < len; i++) {
-      var tile = tiles[i];
-      
-      this.addTile(tile);
+      this.addTile(tiles[i]);
     }
   };
   

@@ -42,7 +42,7 @@
       "isBlocking": true,
       "texture": {
         "src": "/img/tiles/atlas.png",
-        "clip": [256, 128],
+        "clip": [224, 383],
         "origin": [0, 0]
       }
     },

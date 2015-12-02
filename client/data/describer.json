@@ -8,7 +8,7 @@
     "startingMap": {
       "type": "string",
       "tooltip": "Map id to first load with the game",
-      "defaultValue": "TestMap"
+      "defaultValue": ""
     },
     "lerpAlpha": {
       "type": "number",
@@ -189,7 +189,7 @@
   "map": {
     "id": {
       "type": "string",
-      "tooltip": "Map id",
+      "tooltip": "Map Id",
       "defaultValue": ""
     },
     "name": {
@@ -199,7 +199,7 @@
     },
     "playerActor": {
       "type": "string",
-      "tooltip": "ID of the player controlled actor",
+      "tooltip": "Id of the player controlled actor",
       "defaultValue": "player"
     },
     "padding": {
@@ -231,6 +231,26 @@
       },
       "tooltip": "Actors in the map",
       "defaultValue": []
+    },
+    "dialogs": {
+      "type": "map",
+      "value": {
+        "src": {
+          "type": "string",
+          "tooltip": "The starting line Id",
+          "defaultValue": ""
+        },
+        "lines": {
+          "type": "array",
+          "value": {
+            
+          },
+          "tooltip": "Dialog lines",
+          "defaultValue": []
+        }
+      },
+      "tooltip": "Dialogs tobe used by actors",
+      "defaultValue": {}
     }
   }
 }

@@ -7,13 +7,13 @@ div, p, input, textarea, label {
 #game-container {
   position: absolute;
   top: 0;
-  bottom: 240px;
+  bottom: 220px;
   left: 300px;
   right: 300px;
-  background: #333;
   z-index: 20;
+  background: #222;
 }
-#game {
+.disable-play #game {
   pointer-events: none;
 }
 .editor-container {
@@ -58,7 +58,7 @@ div, p, input, textarea, label {
   bottom: 0;
   left: 300px;
   right: 300px;
-  height: 240px;
+  height: 220px;
   border-top-width: 1px;
 }
 
@@ -140,9 +140,7 @@ div, p, input, textarea, label {
 .editor-button:hover {
   background: linear-gradient(to bottom, #cde, #9ab);
 }
-  
-.textures {
-}
+
 .textures-list {
   position: absolute;
   top: 26px;
@@ -150,12 +148,13 @@ div, p, input, textarea, label {
   left: 0;
   right: 0;
   overflow-y: auto;
+  overflow-x: hidden;
 }
   .textures-list .texture {
     position: relative;
     display: inline-block;
-    width: 250px;
-    height: 92px;
+    width: 210px;
+    height: 82px;
     margin: 5px;
     background: #333;
     box-shadow: 0 0 0 1px #bbb;
@@ -173,7 +172,7 @@ div, p, input, textarea, label {
     .textures-list .texture textarea {
       position: absolute;
       top: 3px;
-      left: 73px;
+      left: 43px;
       width: 174px;
       max-width: 174px;
       height: 86px;
