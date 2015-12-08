@@ -1,4 +1,4 @@
-div, p, input, textarea, label {
+div, p, input, textarea {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -18,49 +18,184 @@ div, p, input, textarea, label {
 }
 .editor-container {
   position: absolute;
-  background: #777;
   border: 0 solid #000;
   z-index: 50;
 }
-.editor-title {
-  font-weight: bold;
-  padding: 3px 5px;
-  background: rgba(255, 255, 255, .2);
-  border-top: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
-}
-.editor-group .editor-title {
-  display: none;
-}
-  .editor-title input {
-    float: right;
-  }
-.details-pane {
+
+.editor-container.vertical {
   top: 0;
   bottom: 0;
+  background: linear-gradient(to right, #666, #777, #666);
+  padding-bottom: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.editor-container.horizontal {
+  left: 0;
+  right: 0;
+  background: #666;
+}
+
+.details-pane {
   left: 0;
   width: 300px;
-  padding-bottom: 100px;
   border-right-width: 1px;
   font-size: 0.9em;
+  margin: 0;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .map-pane {
-  top: 0;
-  bottom: 0;
   right: 0;
   width: 300px;
-  padding-bottom: 100px;
   border-left-width: 1px;
   font-size: 0.9em;
 }
 .textures {
   bottom: 0;
-  left: 300px;
-  right: 300px;
+  margin: 0 300px;
   height: 220px;
   border-top-width: 1px;
 }
+
+.editor-debug-flags {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  padding: 4px 3px;
+}
+  .editor-debug-flags input {
+    margin-left: 5px;
+  }
+
+
+
+.control-group {
+  position: relative;
+  padding: 2px 2px 2px 6px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+.control-group .control-label,
+.control-group .controls {
+  width: 50%;
+}
+input, textarea, .uneditable-input {
+  width: 100%;
+}
+label {
+  margin: 0;
+}
+fieldset.control-group {
+  margin: 2px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  background: rgba(0, 0, 0, .1);
+}
+legend {
+  width: auto;
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 0;
+  line-height: inherit;
+  padding: 2px 0;
+  border: none;
+}
+legend + .control-group {
+  margin-top: 0;
+}
+/*
+
+
+.pane-container-array .items {
+  padding: 5px;
+}
+.editor-container > .pane-container-object {
+  border: none;
+  margin: 0;
+  background: transparent;
+}
+  .pane-container-object .title,
+  .pane-container-array .title {
+    position: relative;
+    font-weight: bold;
+    padding: 2px;
+    background: rgba(255, 255, 255, .2);
+  }
+  .pane-container-array .items {
+    
+  }
+  .pane-array-item {
+    border: 1px solid rgba(255, 255, 255, .5);
+    background: rgba(0, 0, 0, .1);
+    margin-bottom: 10px;
+  }
+  .pane-array-item:last-child {
+    margin-bottom: 0;
+  }
+  .pane-container-object .properties {
+    
+  }
+  .pane-container-array .add-new {
+    position: absolute;
+    top: 50%;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin-top: -10px;
+    padding: 0;
+  }
+  
+  
+  .input {
+    position: relative;
+    display: flex;
+    padding: 3px;
+  }
+  .input:not(.input-array):hover {
+    background: rgba(255, 255, 255, .1);
+  }
+  .input-array {
+    display: block;
+    padding: 0;
+  }
+    .pane-input-label {
+      display: flex;
+      align-items: center;
+      font-size: .9em;
+      width: 50%;
+    }
+      .pane-input-label label {
+        flex: 1;
+      }
+    .pane-input-field {
+      width: 50%;
+    }
+    .pane-input-field input[type = "text"],
+    .pane-input-field input[type = "number"],
+    .pane-input-field textarea {
+      width: 100%;
+      max-width: 100%;
+      padding: 2px 4px;
+      border: 1px solid black;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    
+.input-vector .pane-input-field input[type = "number"] {
+  width: 50%;
+  text-align: center;
+}
+
+.input-texture > .pane-input-label {
+  width: 25%;
+}
+.input-texture > .pane-input-field {
+  width: 75%;
+}
+
 
 .texture-selector {
   position: relative;
@@ -88,44 +223,7 @@ div, p, input, textarea, label {
 .held-texture {
   background: rgba(255, 255, 255, .5);
 }
-.editor-field {
-  position: relative;
-  display: flex;
-  padding: 1px 3px;
-  min-height: 23px;
-}
-.editor-field:not([data-id = "tiles"]):hover {
-  background: rgba(255, 255, 255, .1);
-}
-  .editor-field-label {
-    display: flex;
-    align-items: center;
-    width: 50%;
-  }
-    .editor-field-label label {
-      flex: 1;
-    }
-  .editor-field-value {
-    width: 50%;
-  }
-  .editor-field-value input[type = "text"],
-  .editor-field-value input[type = "number"],
-  .editor-field-value textarea {
-    width: 100%;
-    max-width: 100%;
-    padding: 2px 4px;
-    border: 1px solid black;
-    border-radius: 4px;
-    font-family: monospace;
-  }
-  
-  
-[data-id = "tiles"] > .editor-field-label {
-  display: none;
-}
-[data-id = "tiles"] > .editor-field-value {
-  width: 100%;
-}
+
 
 .editor-button {
   padding: 0 20px;
@@ -261,3 +359,4 @@ div, p, input, textarea, label {
     text-shadow: 0 0 3px rgba(0, 0, 0, 1);
     font-family: monospace;
   }
+  */

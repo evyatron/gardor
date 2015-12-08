@@ -8,15 +8,18 @@
   "clickTexture": {
     "src": "/img/hud/click.png"
   },
-  "maps": {
-    "main-map": {
+  "maps": [
+    {
+      "id": "main-map",
       "src": "/data/main-map.json"
     }
-  },
+  ],
   "tooltips": {
     "font": "10pt 'Share Tech Mono'",
-    "paddingLeftRight": 10,
-    "paddingTopBottom": 5,
+    "padding": {
+      "x": 10,
+      "y": 5
+    },
     "lineSpacing": 4
   },
   "dialogs": {
@@ -33,8 +36,10 @@
       "isBlocking": false,
       "texture": {
         "src": "/img/tiles/atlas.png",
-        "clip": [192, 32],
-        "origin": [0, 0]
+        "clip": {
+          "x": 192,
+          "y": 32
+        }
       }
     },
     {
@@ -42,8 +47,10 @@
       "isBlocking": true,
       "texture": {
         "src": "/img/tiles/atlas.png",
-        "clip": [224, 383],
-        "origin": [0, 0]
+        "clip": {
+          "x": 224,
+          "y": 383
+        }
       }
     },
     {
@@ -51,60 +58,10 @@
       "isBlocking": false,
       "texture": {
         "src": "/img/tiles/atlas.png",
-        "clip": [640, 160],
-        "origin": [0, 0]
-      }
-    }
-  ],
-  "modules": [
-    {
-      "id": "texture",
-      "className": "TextureModule",
-      "activation": "auto",
-      "config": {
-        "src": "string",
-        "clip": "array",
-        "width": "number",
-        "height": "number",
-        "scale": "number"
-      }
-    },
-    {
-      "id": "webpage",
-      "className": "ModuleWebPage",
-      "activation": "interact",
-      "config": {
-        "url": "string",
-        "isInFrame": "boolean",
-        "scale": "number",
-        "useOffset": "object"
-      }
-    },
-    {
-      "id": "dialog",
-      "className": "ModuleDialog",
-      "activation": "interact",
-      "disableControllerWhenActive": true,
-      "config": {
-        "url": "string",
-        "dialogId": "string",
-        "useOffset": "object"
-      }
-    },
-    {
-      "id": "htmlElement",
-      "className": "ModuleHTMLElement",
-      "activation": "interact",
-      "config": {
-        "selector": "string"
-      }
-    },
-    {
-      "id": "particles",
-      "className": "ModuleParticles",
-      "activation": "auto",
-      "config": {
-        
+        "clip": {
+          "x": 640,
+          "y": 160
+        }
       }
     }
   ]

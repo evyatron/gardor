@@ -1,16 +1,17 @@
 /* global utils */
 /* global Game */
 /* global EventDispatcher */
+/* global JSONForm */
 
 function init() {
   window.editor = new Editor();
 }
 
-var HTML_DETAILS_PANE = '<div class="editor-title">' +
-                          'Game Config' +
-                          '<input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />' +
-                          '<input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />' +
-                        '</div>';
+var HTML_GAME_PANE = '<div class="editor-debug-flags">' +
+                        '<input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />' +
+                        '<input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />' +
+                      '</div>';
+                      
 var HTML_MAP_PANE     = '<div class="editor-title">Map Config</div>';
 var TEMPLATE_FIELD    = '<div class="editor-field field-type-{{type}}" data-id="{{id}}" title="{{tooltip}}">' +
                            '<div class="editor-field-label">' +
@@ -42,8 +43,26 @@ var TEMPLATES_INPUT = {
 
 function Editor(options) {
   this.elContainer = null;
+  this.elDebug = null;
   this.game = null;
   
+  this.gamePane = null;
+  this.mapPane = null;
+  
+  this.data = {
+    game: {
+      schema: null,
+      value: null
+    },
+    map: {
+      schema: null,
+      value: null
+    }
+  };
+  
+  //this.schema = {};
+  
+  /*
   this.gameDescriber = null;
   this.mapDescriber = null;
   
@@ -52,10 +71,11 @@ function Editor(options) {
   
   this.tilesEditor = null;
   this.textures = {};
+  */
   
   this.init(options);
 }
-  
+
 Editor.prototype = Object.create(EventDispatcher.prototype);
 Editor.prototype.constructor = Editor;
 
@@ -67,6 +87,10 @@ Editor.prototype.init = function init(options) {
   this.elContainer = options.elContainer || document.body;
   this.createContainers();
   
+  this.elDebug = this.elContainer.querySelector('.editor-debug-flags');
+  this.elDebug.addEventListener('change', this.onDebugChange.bind(this));
+
+  /*
   this.elContainer.addEventListener('click', this.onClick.bind(this));
   
   this.elContainer.addEventListener('dragstart', this.onDragStart.bind(this));
@@ -74,21 +98,129 @@ Editor.prototype.init = function init(options) {
   this.elContainer.addEventListener('drop', this.onDrop.bind(this));
   
   this.on('textureUpdated', this.onTextureUpdated.bind(this));
+  */
   
-  utils.request('/data/describer.json', this.onGotGameDescriber.bind(this));
+  utils.request('/data/schema.json', this.onGotSchema.bind(this));
 };
 
-Editor.prototype.onClick = function onClick(e) {
-  var el = e.target;
+Editor.prototype.createContainers = function createContainers() {
+  this.elGamePane = document.createElement('form');
+  this.elGamePane.className = 'editor-container vertical details-pane';
+  this.elGamePane.innerHTML = HTML_GAME_PANE;
+  this.elContainer.appendChild(this.elGamePane);
   
-  if (el.classList.contains('texture-selector')) {
-    this.pickupTexture(el);
+  this.elMapPane = document.createElement('form');
+  this.elMapPane.className = 'editor-container vertical map-pane';
+  this.elContainer.appendChild(this.elMapPane);
+  
+  this.elTextures = document.createElement('form');
+  this.elTextures.className = 'editor-container horizontal textures';
+  this.elTextures.innerHTML = HTML_TEXTURES;
+  this.elContainer.appendChild(this.elTextures);
+  
+  this.elGamePane.addEventListener('change', this.refreshGame.bind(this));
+  this.elMapPane.addEventListener('change', this.refreshGame.bind(this));
+  
+  var elNewTexture = this.elTextures.querySelector('.textures-create');
+  elNewTexture.addEventListener('click', this.createTexture.bind(this, null));
+};
+
+Editor.prototype.onGotSchema = function onGotSchema(schema) {
+  this.schema = schema;
+  
+  this.schema.game = this.updateSchemaWithTemplates(this.schema.game, schema.templates);
+  this.schema.map = this.updateSchemaWithTemplates(this.schema.map, schema.templates);
+
+  this.loadGame();
+};
+
+Editor.prototype.updateSchemaWithTemplates = function updateSchemaWithTemplates(schema, templates) {
+  if (templates[schema.type]) {
+    schema = JSON.parse(JSON.stringify(templates[schema.type]));
   }
   
-  if (el.id === 'game-container') {
-    this.placeTexture(e.pageX, e.pageY);
+  if (schema.type === 'object') {
+    for (var k in schema.properties) {
+      schema.properties[k] = this.updateSchemaWithTemplates(schema.properties[k], templates);
+      schema.properties[k].title = utils.formatID(k);
+    }
+  } else if (schema.type === 'array') {
+    schema.items = this.updateSchemaWithTemplates(schema.items, templates);
+  }
+  
+  return schema;
+};
+
+Editor.prototype.loadGame = function loadGame(gameConfig) {
+  if (!gameConfig) {
+    utils.request('/data/game.json', this.loadGame.bind(this));
+    return false;
+  }
+
+  this.gameForm = $(this.elGamePane).jsonForm({
+    'schema': this.schema.game,
+    'form': [
+      '*'/*,
+      {
+        "key": "tileSize",
+        'onChange': function (evt) {
+          console.warn('game change')
+        }
+      }*/
+    ],
+    'value': gameConfig
+  });
+
+  this.refreshGame();
+};
+
+Editor.prototype.refreshGame = function refreshGame() {
+  if (this.game) {
+    this.game.destroy();
+  }
+  
+  this.game = new Game({
+    'el': document.getElementById('game'),
+    'debug': this.elGamePane.querySelector('#config-debug').checked,
+    'debugNavmesh': this.elGamePane.querySelector('#config-debug-navmesh').checked
+  });
+  
+  this.game.loadMap = this.loadGameMap.bind(this);
+  
+  this.game.createGameFromConfig(this.gameForm.root.getFormValues());
+};
+
+Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
+  if (this.mapForm) {
+    var mapConfig = this.mapForm.root.getFormValues();
+    this.game.addMap(mapConfig);
+    callback && callback(mapConfig);
+  } else {
+    utils.request('/data/' + mapId + '.json', function onGotMap(mapData) {
+      this.mapForm = $(this.elMapPane).jsonForm({
+        'schema': this.schema.map,
+        'form': [
+          '*'
+        ],
+        'value': mapData
+      });
+      
+      this.loadGameMap(mapId, callback);
+    }.bind(this));
   }
 };
+
+Editor.prototype.onDebugChange = function onDebugChange(e) {
+  var el = e.target;
+  var state = el.checked;
+  
+  if (el.id === 'config-debug') {
+    this.game.setDebug(state);
+  } else if (el.id === 'config-debug-navmesh') {
+    this.game.setDebugNavmesh(state);
+  }
+};
+
 
 Editor.prototype.enablePlay = function enablePlay() {
   this.elContainer.classList.remove('disable-play');
@@ -98,52 +230,24 @@ Editor.prototype.disablePlay = function disablePlay() {
   this.elContainer.classList.add('disable-play');
 };
 
-Editor.prototype.onGotGameDescriber = function onGotGameDescriber(describer) {
-  this.gameDescriber = describer.game;
-  this.gameConfig = this.createJSON(this.gameDescriber);
-  this.createDetailsPane();
+Editor.prototype.onClick = function onClick(e) {
+  /*
+  var el = e.target;
   
-  this.tilesEditor = new Tiles({
-    'editor': this,
-    'elContainer': this.elDetails.querySelector('.editor-field[data-id = "tiles"]'),
-    'describer': describer.game.tiles.value,
-    'onChange': this.onTilesChange.bind(this)
-  });
+  if (el.classList.contains('texture-selector')) {
+    this.pickupTexture(el);
+  }
   
-  this.mapDescriber = describer.map;
-  this.mapConfig = this.createJSON(this.mapDescriber);
-  this.createMapPane();
-  
-  this.populateFromGame();
+  if (el.id === 'game-container') {
+    this.placeTexture(e.pageX, e.pageY);
+  }
+  */
 };
+
 
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
   this.gameConfig.tiles = tiles;
   this.createGameFromConfig();
-};
-
-Editor.prototype.populateFromGame = function populateFromGame(data) {
-  if (!data) {
-    utils.request('/data/game.json', this.populateFromGame.bind(this));
-    return false;
-  }
-
-  this.populateData(data, this.gameConfig, this.gameDescriber, this.elDetails);
-
-  this.populateFromMap();
-};
-
-Editor.prototype.populateFromMap = function populateFromMap(data) {
-  if (!data) {
-    utils.request('/data/main-map.json', this.populateFromMap.bind(this));
-    return false;
-  }
-  
-  this.populateData(data, this.mapConfig, this.mapDescriber, this.elMap);
-
-  this.onTilesChange(this.tilesEditor.getTiles());
-  
-  this.game.goToMap(this.mapConfig.id);
 };
 
 Editor.prototype.populateData = function populateData(data, config, parentDescriber, elParent) {
@@ -211,18 +315,13 @@ Editor.prototype.createGameFromConfig = function createGameFromConfig() {
   
   this.game = new Game({
     'el': document.getElementById('game'),
-    'debug': this.elDetails.querySelector('#config-debug').checked,
-    'debugNavmesh': this.elDetails.querySelector('#config-debug-navmesh').checked
+    'debug': this.elGamePane.querySelector('#config-debug').checked,
+    'debugNavmesh': this.elGamePane.querySelector('#config-debug-navmesh').checked
   });
   
   this.game.loadMap = this.loadGameMap.bind(this);
   
   this.game.createGameFromConfig(this.gameConfig);
-};
-
-Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
-  this.game.addMap(this.mapConfig);
-  callback && callback(this.mapConfig);
 };
 
 Editor.prototype.createJSON = function createJSON(describer) {
@@ -252,17 +351,6 @@ Editor.prototype.getJSONProperty = function getJSONProperty(json) {
   }
   
   return result;
-};
-
-Editor.prototype.onDebugChange = function onDebugChange(e) {
-  var el = e.target;
-  var state = el.checked;
-  
-  if (el.id === 'config-debug') {
-    this.game.setDebug(state);
-  } else if (el.id === 'config-debug-navmesh') {
-    this.game.setDebugNavmesh(state);
-  }
 };
 
 Editor.prototype.onDetailsChange = function onDetailsChange(e) {
@@ -349,35 +437,14 @@ Editor.prototype.loadMapFromConfig = function loadMapFromConfig() {
   this.game.goToMap(this.mapConfig.id);
 };
 
-Editor.prototype.createContainers = function createContainers() {
-  this.elDetails = document.createElement('div');
-  this.elDetails.className = 'editor-container details-pane';
-  this.elContainer.appendChild(this.elDetails);
-  
-  this.elMap = document.createElement('div');
-  this.elMap.className = 'editor-container map-pane';
-  this.elContainer.appendChild(this.elMap);
-  
-  this.elTextures = document.createElement('div');
-  this.elTextures.className = 'editor-container textures';
-  this.elTextures.innerHTML = HTML_TEXTURES;
-  this.elContainer.appendChild(this.elTextures);
-  
-  var elNewTexture = this.elTextures.querySelector('.textures-create');
-  elNewTexture.addEventListener('click', this.createTexture.bind(this, null));
-  
-  this.elDetails.addEventListener('change', this.onDetailsChange.bind(this));
-  this.elMap.addEventListener('change', this.onMapChange.bind(this));
-};
-
 Editor.prototype.createDetailsPane = function createDetailsPane() {
   var html = HTML_DETAILS_PANE + this.getDescriberHTML(this.gameDescriber);
-  this.elDetails.innerHTML = html;
+  this.elGamePane.innerHTML = html;
 };
 
 Editor.prototype.createMapPane = function createMapPane() {
   var html = HTML_MAP_PANE + this.getDescriberHTML(this.mapDescriber);
-  this.elMap.innerHTML = html;
+  this.elMapPane.innerHTML = html;
 };
 
 Editor.prototype.getDescriberHTML = function getDescriberHTML(data) {
@@ -533,7 +600,7 @@ Editor.prototype.pickupTexture = function pickupTexture(elTextureSelector) {
         elField.classList.remove('held-texture');
         this.enablePlay();
       } else {
-        var elSelected = this.elDetails.querySelector('.held-texture');
+        var elSelected = this.elGamePane.querySelector('.held-texture');
         if (elSelected) {
           elSelected.classList.remove('held-texture');
         }
@@ -606,7 +673,7 @@ Editor.prototype.placeTexture = function placeTexture(x, y) {
       }
     }
     
-    this.elMap.querySelector('#field-grid').textContent = JSON.stringify(this.mapConfig.grid);
+    this.elMapPane.querySelector('#field-grid').textContent = JSON.stringify(this.mapConfig.grid);
     
     this.loadMapFromConfig();
   }
@@ -723,123 +790,6 @@ Editor.prototype.updateTexture = function updateTexture(id) {
   this.dispatch('textureUpdated', id);
 };
 
-var Tiles = (function Tiles() {
-  function Tiles(options) {
-    this.elContainer = null;
-    this.el = null;
-    
-    this.editor = null;
-    this.describer = {};
-    this.onChange = null;
-    
-    this.init(options);
-  }
-  
-  Tiles.prototype.init = function init(options) {
-    this.editor = options.editor;
-    this.elContainer = options.elContainer;
-    this.describer = options.describer;
-    this.onChange = options.onChange;
-    
-    this.el = document.createElement('div');
-    this.el.className = 'tiles-editor';
-    this.el.innerHTML = '<div class="editor-button create-new-tile">New Tile</div>';
-    
-    this.elContainer.innerHTML = '';
-    this.elContainer.appendChild(this.el);
-    
-    this.el.addEventListener('change', this.onTilesChange.bind(this));
-    this.el.querySelector('.create-new-tile').addEventListener('click', this.createNew.bind(this));
-  };
-  
-  Tiles.prototype.addTile = function addTile(tile) {
-    var el = document.createElement('div');
-    var html = '';
-    var textureId = '';
-    
-    el.className = 'tile';
-
-    for (var k in tile) {
-      var describer = JSON.parse(JSON.stringify(this.describer[k]));
-      
-      describer.defaultValue = tile[k];
-      
-      if (describer.type === 'texture') {
-        describer.defaultValue = JSON.stringify(describer.defaultValue).replace(/"/g, '&quot;');
-        textureId = this.editor.createTexture(tile[k]);
-      }
-      
-      html += this.editor.getFieldHTML(k, describer);
-    }
-    
-    el.innerHTML = html;
-    
-    var elUncheckedBoxes = el.querySelectorAll('input[type = "checkbox"][checked = "false"]');
-    for (var i = 0, len = elUncheckedBoxes.length; i < len; i++) {
-      elUncheckedBoxes[i].checked = false;
-    }
-    
-    this.el.appendChild(el);
-    
-    window.setTimeout(function() {
-      this.editor.setTexture(el.querySelector('.texture-selector'), textureId);
-    }.bind(this), 100);
-  };
-  
-  Tiles.prototype.createNew = function createNew() {
-    var tile = {};
-    
-    for (var k in this.describer) {
-      tile[k] = this.describer[k].defaultValue;
-    }
-    
-    this.addTile(tile);
-    
-    this.onTilesChange();
-  };
-  
-  Tiles.prototype.create = function create(tiles) {
-    for (var i = 0, len = tiles.length; i < len; i++) {
-      this.addTile(tiles[i]);
-    }
-  };
-  
-  Tiles.prototype.getTiles = function getTiles() {
-    var tiles = [];
-    var els = this.el.querySelectorAll('.tile');
-    
-    for (var i = 0, len = els.length; i < len; i++) {
-      var el = els[i];
-      var tile = {};
-      var elInputs = el.querySelectorAll('input');
-      
-      for (var j = 0, jLen = elInputs.length; j < jLen; j++) {
-        var elInput = elInputs[j];
-        var value = elInput.value;
-        
-        if (elInput.type === 'checkbox') {
-          value = elInput.checked;
-        } else if (elInput.dataset.fieldId === 'texture') {
-          value = JSON.parse(value);
-        }
-
-        tile[elInput.dataset.fieldId] = value;
-      }
-      
-      tiles.push(tile);
-    }
-
-    return tiles;
-  };
-  
-  Tiles.prototype.onTilesChange = function onTilesChange(e) {
-    e && e.stopPropagation();
-    
-    this.onChange(this.getTiles());
-  };
-  
-  return Tiles;
-}());
 
 var ImageViewer = (function ImageViewer() {
   function ImageViewer(options) {
@@ -971,6 +921,801 @@ var ImageViewer = (function ImageViewer() {
   
   return new ImageViewer();
 }());
+
+
+utils.formatID = function formatID(id) {
+  id = id.split('_');
+  id = id[id.length - 1];
+  
+  var formattedId = id[0].toUpperCase();
+  
+  for (var i = 1, len = id.length; i < len; i++) {
+    var char = id[i];
+    if (char === char.toUpperCase()) {
+      formattedId += ' ';
+    }
+    
+    formattedId += char;
+  }
+  
+  return formattedId;
+};
+
+
+
+
+
+
+
+var Pane = (function Pane() {
+  function Pane(options) {
+    this.id = '';
+    this.el = null;
+    this.elInput = null;
+    this.schema = {};
+    this.flatSchema = {};
+    this.value = {};
+    
+    this.inputs = {};
+    
+    this.EVENTS = {
+      CHANGE: 'change',
+      READY: 'ready'
+    };
+    
+    this.init(options);
+  }
+  
+  Pane.prototype = Object.create(EventDispatcher.prototype);
+  Pane.prototype.constructor = Pane;
+  
+  Pane.prototype.init = function init(options) {
+    this.id = options.id;
+    this.el = options.el;
+    
+    this.el.addEventListener('click', this.onClick.bind(this));
+    
+    if (options.schemaURL) {
+      this.load(options.schemaURL);
+    } else if (options.schema) {
+      this.setSchema(options.schema);
+    }
+  };
+  
+  Pane.prototype.load = function load(url) {
+    this.describerURL = url;
+    utils.request(url, this.setSchema.bind(this));
+  };
+  
+  Pane.prototype.setSchema = function setSchema(schema) {
+    console.log('[Editor][Pane|' + this.id + '] Set schema', schema);
+    
+    this.schema = schema;
+    
+    this.createItem(this.id, schema, this.el);
+    
+    this.dispatch(this.EVENTS.READY, this);
+  };
+  
+  Pane.prototype.updateFromJSON = function updateFromJSON(json) {
+    this.update(json, this.id);
+    //this.value = JSON.parse(JSON.stringify(json));
+    this.dispatch(this.EVENTS.CHANGE, this);
+  };
+  
+  Pane.prototype.update = function update(json, parentId) {
+    for (var property in json) {
+      var value = json[property];
+      var schemaId = parentId + '_' + property;
+      var schema = this.getSchema(schemaId);
+      
+      if (!schema) {
+        console.warn('No schema found', schemaId, value);
+        continue;
+      }
+      
+      if (schema.type === 'object') {
+        this.update(value, schemaId);
+      } else if (schema.type === 'array') {
+        for (var i = 0, len = value.length; i < len; i++) {
+          this.addArrayItem(schemaId);
+          this.update(value[i], schemaId + '[' + i + ']');
+        }
+      } else {
+        var input = this.inputs[schemaId];
+        
+        if (input) {
+          console.warn('[editor] update', schemaId, schema.type, value, input);
+          input.setValue(value);
+        }
+      }
+    }
+  };
+  
+  Pane.prototype.onClick = function onClick(e) {
+    var el = e.target;
+    
+    if (el.dataset.addItem) {
+      this.addArrayItem(el.dataset.addItem);
+    }
+  };
+  
+  Pane.prototype.addArrayItem = function addArrayItem(schemaId) {
+    var schema = this.getSchema(schemaId);
+    
+    if (!schema) {
+      console.warn('Couldnt find schema for', schemaId);
+      return;
+    }
+    
+    var elItems = this.el.querySelector('.pane-container-array[data-schema-id = "' + schemaId + '"] .items');
+    
+    if (elItems) {
+      var itemsSchema = schema.items;
+      var arrayValue = this.getValue(schemaId);
+      var itemIndex = arrayValue.length;
+      var elItem = document.createElement('div');
+      
+      arrayValue.push(this.createJSONFromSchema(itemsSchema));
+      
+      elItem.className = 'pane-array-item';
+      this.createItem(schemaId + '[' + itemIndex + ']', itemsSchema, elItem);
+      
+      elItems.appendChild(elItem);
+    }
+  };
+  
+  Pane.prototype.createObject = function createObject(schemaId, schema, elParent) {
+    var el = document.createElement('div');
+    el.className = 'pane-container-object';
+    el.dataset.schemaId = schemaId;
+    el.innerHTML = '<div class="title">' + utils.formatID(schemaId) + '</div>' +
+                   '<div class="properties"></div>';
+    
+    var elProperties = el.querySelector('.properties');
+    
+    var properties = schema.properties;
+    for (var id in properties) {
+      this.createItem(schemaId + '_' + id, properties[id], elProperties);
+    }
+    
+    elParent.appendChild(el);
+  };
+  
+  Pane.prototype.createArray = function createArray(schemaId, schema, elParent) {
+    var el = document.createElement('div');
+    el.className = 'pane-container-array';
+    el.dataset.schemaId = schemaId;
+    el.innerHTML = '<div class="title">' + 
+                     utils.formatID(schemaId) +
+                     '<span class="editor-button add-new" data-add-item="' + schemaId + '">+</span>' +
+                   '</div>' +
+                   '<div class="items"></div>';
+    
+    elParent.appendChild(el);
+    
+    this.setValue(schemaId, schema.defaultValue || []);
+  };
+  
+  Pane.prototype.getSchema = function getSchema(schemaId) {
+    return this.flatSchema[this.cleanSchemaId(schemaId)];
+  };
+  
+  Pane.prototype.getValue = function getValue(id) {
+    var idParts = id.split('_');
+    var obj = this.value;
+    var arrayRegex = /\[(\d+)\]/;
+    var didFind = true;
+    
+    idParts.splice(0, 1);
+    
+    for (var i = 0, len = idParts.length; i < len; i++) {
+      var idPart = idParts[i];
+      var index = -1;
+      
+      if (arrayRegex.test(idPart)) {
+        index = parseInt(idPart.match(arrayRegex)[1], 10);
+        idPart = idPart.replace(/(\[\d+\])/g, '');
+      }
+      
+      if (idPart in obj) {
+        obj = obj[idPart];
+        if (index !== -1) {
+          obj = obj[index];
+        }
+      } else {
+        didFind = false;
+        break;
+      }
+    }
+    
+    return didFind? obj : null;
+  };
+  
+  Pane.prototype.setValue = function setValue(schemaId, value) {
+    var idParts = schemaId.split('_');
+    var obj = this.value;
+    var arrayRegex = /\[(\d+)\]/;
+    
+    idParts.splice(0, 1);
+    
+    for (var i = 0, len = idParts.length; i < len; i++) {
+      var idPart = idParts[i];
+      var index = -1;
+      
+      if (arrayRegex.test(idPart)) {
+        index = parseInt(idPart.match(arrayRegex)[1], 10);
+        idPart = idPart.replace(arrayRegex, '');
+      }
+      
+      if (i === len - 1) {
+        obj[idPart] = value;
+      } else {
+      
+        if (!obj[idPart]) {
+          if (index === -1) {
+            obj[idPart] = {};
+          } else {
+            obj[idPart] = [];
+          }
+        }
+        
+        obj = obj[idPart];
+        
+        if (index !== -1) {
+          obj = obj[index];
+        }
+      }
+    }
+  };
+  
+  Pane.prototype.createItem = function createItem(schemaId, schema, elParent) {
+    var type = schema.type;
+    
+    var cleanSchemaId = this.cleanSchemaId(schemaId);
+    if (!this.flatSchema[cleanSchemaId]) {
+      this.flatSchema[cleanSchemaId] = schema;
+    }
+    
+    if (!type) {
+      //console.warn('Invalid schema', schemaId, schema);
+    } else {
+      var hasCustomInput = window['Input_' + type];
+      if (!hasCustomInput && type == 'object') {
+        this.createObject(schemaId, schema, elParent);
+      } else if (!hasCustomInput && type === 'array') {
+        this.createArray(schemaId, schema, elParent);
+      } else {
+        var input = this.createInput(schemaId, schema, elParent);
+        this.inputs[schemaId] = input;
+      }
+    }
+  };
+  
+  Pane.prototype.createInput = function createInput(schemaId, schema, elParent) {
+    var type = schema.type;
+    var className = window['Input_' + type] || Input;
+    
+    var input = new className({
+      'id': schemaId,
+      'pane': this,
+      'schema': schema
+    });
+    
+    input.on(input.EVENTS.CHANGE, this.onInputChange.bind(this));
+    
+    elParent.appendChild(input.el);
+    
+    return input;
+  };
+  
+  Pane.prototype.createJSONFromSchema = function createJSONFromSchema(schema) {
+    var value;
+    
+    if (!schema) {
+      console.warn('Trying to create JSON from invalid schema');
+      return value;
+    }
+
+    if (schema.type === 'object') {
+      value = {};
+      for (var id in schema.properties) {
+        value[id] = this.createJSONFromSchema(schema.properties[id]);
+      }
+    } else if (schema.type === 'array') {
+      value = [
+        this.createJSONFromSchema(schema.items)
+      ];
+    } else {
+      if (schema.hasOwnProperty('default')) {
+        value = schema.default;
+      } else {
+        value = (schema.type === 'text')? '' :
+                (schema.type === 'boolean')? false :
+                '';
+      }
+    }
+    
+    return value;
+  };
+  
+  Pane.prototype.onInputChange = function onInputChange(input, oldValue, newValue) {
+    this.setValue(input.id, input.value);
+    this.dispatch(this.EVENTS.CHANGE, this, input, oldValue, newValue);
+  };
+  
+  Pane.prototype.cleanSchemaId = function cleanSchemaId(schemaId) {
+    return schemaId.replace(/(\[\d+\])/g, '');
+  };
+  
+  return Pane;
+}());
+
+var Input = (function Input() {
+  function Input(options) {
+    this.pane = null;
+    this.id = '';
+    this.el = null;
+    this.elInput = null;
+    this.schema = {};
+    this.value = null;
+    
+    this.EVENTS = {
+      CHANGE: 'change',
+      READY: 'ready'
+    };
+    
+    this.TYPE_MAPPINGS = {
+      'boolean': 'checkbox',
+      'texture': 'text'
+    };
+    
+    this.init(options);
+  }
+  
+  Input.prototype = Object.create(EventDispatcher.prototype);
+  Input.prototype.constructor = Input;
+  
+  Input.prototype.init = function init(options) {
+    this.pane = options.pane;
+    this.id = options.id;
+    this.schema = options.schema;
+    
+    if (!this.schema.hasOwnProperty('default')) {
+      this.schema.default = this.getDefaultDefaultValue();
+    }
+    
+    this.createHTML();
+    
+    this.value = this.schema.default;
+    
+    this.dispatch(this.EVENTS.READY, this);
+  };
+
+  Input.prototype.getDefaultDefaultValue = function getDefaultDefaultValue() {
+    var defaultValue = '';
+    
+    if (this.schema.type === 'object') {
+      defaultValue = {};
+    } else if (this.schema.type === 'array') {
+      defaultValue = [];
+    } else if (this.schema.type === 'vector') {
+      defaultValue = {
+        'x': 0,
+        'y': 0
+      };
+    } else if (this.schema.type === 'number') {
+      defaultValue = 0;
+    } else if (this.schema.type === 'boolean') {
+      defaultValue = false;
+    }
+    
+    return defaultValue;
+  };
+
+  Input.prototype.setupInput = function setupInput() {
+    this.elInput = this.el.querySelector('input');
+    if (this.elInput) {
+      this.elInput.addEventListener('change', this.onInputChange.bind(this));
+    }
+  };
+
+  Input.prototype.onInputChange = function onInputChange(e) {
+    if (this.schema.type === 'boolean') {
+      this.setValue(e.target.checked);
+    } else if (this.schema.type === 'number') {
+      this.setValue(e.target.value * 1);
+    } else {
+      this.setValue(e.target.value);
+    }
+  };
+
+  Input.prototype.setValue = function setValue(value, shouldSupressEvent) {
+    var oldValue = this.value;
+    
+    if (typeof value === 'object') {
+      value = JSON.parse(JSON.stringify(value));
+    }
+    
+    this.value = value;
+    
+    this.update();
+    
+    if (!shouldSupressEvent) {
+      this.dispatch(this.EVENTS.CHANGE, this, oldValue, value);
+    }
+  };
+
+  Input.prototype.update = function update() {
+    if (this.elInput) {
+      if (this.schema.type === 'boolean') {
+        this.elInput.checked = Boolean(this.value);
+      } else {
+        this.elInput.value = this.value;
+      }
+    }
+  };
+
+  Input.prototype.createHTML = function createHTML() {
+    console.log('[Editor][Input|' + this.id + '] Create HTML');
+    
+    this.el = document.createElement('div');
+    this.el.className = 'input input-' + this.schema.type;
+    this.el.setAttribute('title', this.schema.tooltip || 'NO TOOLTIP');
+    
+    this.el.innerHTML = this.getHTML();
+    
+    this.setupInput();
+  };
+
+  Input.prototype.getHTML = function getHTML() {
+    return '<div class="pane-input-label">' + 
+              '<label for="' + this.id + '">' + utils.formatID(this.id) + '</label>' +
+            '</div>' +
+            '<div class="pane-input-field">' + 
+              this.getInputHTML() +
+            '</div>';
+  };
+
+  Input.prototype.getInputHTML = function getInputHTML() {
+    var inputType = this.TYPE_MAPPINGS[this.schema.type] || this.schema.type;
+    return '<input ' +
+              'type="' + inputType + '" ' +
+              'name="' + this.id + '" ' +
+              'value="' + this.schema.default + '" />';
+  };
+  
+  return Input;
+}());
+
+var Input_grid = (function Input_grid() {
+  function Input_grid(options) {
+    Input.call(this, options);
+  }
+  
+  Input_grid.prototype = Object.create(Input.prototype);
+  Input_grid.prototype.constructor = Input_grid;
+  
+  Input_grid.prototype.update = function update() {
+    this.elInput.textContent = JSON.stringify(this.value);
+  };
+  
+  Input_grid.prototype.setupInput = function setupInput() {
+    this.elInput = this.el.querySelector('textarea');
+    
+    this.el.addEventListener('change', this.onInputChange.bind(this));
+  };
+  
+  Input_grid.prototype.onInputChange = function onInputChange(e) {
+    var value = this.elInput.textContent;
+    
+    try {
+      value = JSON.parse(value);
+    } catch(ex) {
+      alert('Invalid array', value);
+      value = null;
+    }
+    
+    if (value) {
+      this.setValue(value);
+    }
+  };
+  
+  Input_grid.prototype.getInputHTML = function getInputHTML() {
+    var html = '<textarea name="' + this.id + '"></textarea>';
+    
+    return html;
+  };
+  
+  return Input_grid;
+}());
+
+var Input_vector = (function Input_vector() {
+  function Input_vector(options) {
+    this.elInputX = null;
+    this.elInputY = null;
+    
+    Input.call(this, options);
+  }
+  
+  Input_vector.prototype = Object.create(Input.prototype);
+  Input_vector.prototype.constructor = Input_vector;
+
+  Input_vector.prototype.update = function update() {
+    this.elInputX.value = this.value.x;
+    this.elInputY.value = this.value.y;
+  };
+  
+  Input_vector.prototype.setupInput = function setupInput() {
+    this.elInputX = this.el.querySelector('[data-vector-axis = "x"]');
+    this.elInputY = this.el.querySelector('[data-vector-axis = "y"]');
+    
+    this.el.addEventListener('change', this.onInputChange.bind(this));
+  };
+  
+  Input_vector.prototype.onInputChange = function onInputChange(e) {
+    this.setValue({
+      'x': this.elInputX.value * 1,
+      'y': this.elInputY.value * 1
+    });
+  };
+  
+  Input_vector.prototype.getInputHTML = function getInputHTML() {
+    var html = '<input type="number" ' +
+                      'data-vector-axis="x" ' +
+                      'name="' + this.id + '_x" ' +
+                      'value="' + this.schema.default.x + '" />' +
+              '<input type="number" ' +
+                      'data-vector-axis="y" ' +
+                      'name="' + this.id + '_y" ' +
+                      'value="' + this.schema.default.y + '" />';
+    
+    return html;
+  };
+  
+  return Input_vector;
+}());
+
+var Input_texture = (function Input_texture() {
+  function Input_texture(options) {
+    this.inputs = {};
+    
+    Input.call(this, options);
+  }
+  
+  Input_texture.prototype = Object.create(Input.prototype);
+  Input_texture.prototype.constructor = Input_texture;
+  
+  Input_texture.prototype.init = function init() {
+    this.textureSchema = JSON.parse(JSON.stringify(editor.schema.texture));
+    
+    Input.prototype.init.apply(this, arguments);
+  };
+
+  Input_texture.prototype.setValue = function setValue(value, shouldSupressEvent) {
+    var oldValue = this.value;
+    
+    this.value = JSON.parse(JSON.stringify(value));
+
+    for (var id in this.inputs) {
+      if (this.value.hasOwnProperty(id)) {
+        this.inputs[id].setValue(this.value[id], shouldSupressEvent);
+      }
+    }
+    
+    if (!shouldSupressEvent) {
+      this.dispatch(this.EVENTS.CHANGE, this, oldValue, this.value);
+    }
+  };
+  
+  Input_texture.prototype.update = function update() {
+    for (var id in this.inputs) {
+      this.inputs[id].update();
+    }
+  };
+  
+  Input_texture.prototype.setupInput = function setupInput() {
+    var el = this.el.querySelector('.pane-input-field');
+    var properties = this.textureSchema.properties;
+    
+    for (var id in properties) {
+      var input = this.pane.createInput('texture_' + id, properties[id], el);
+      
+      this.inputs[id] = input;
+      
+      input.on(input.EVENTS.CHANGE, this.onSubInputChange.bind(this));
+    }
+  };
+  
+  Input_texture.prototype.onSubInputChange = function onSubInputChange(input) {
+    this.value[input.id.replace('texture_', '')] = input.value;
+  };
+  
+  Input_texture.prototype.getInputHTML = function getInputHTML() {
+    return '';
+  };
+  
+  return Input_texture;
+}());
+
+var Input_module = (function Input_module() {
+  function Input_module(options) {
+    Input.call(this, options);
+  }
+  
+  Input_module.prototype = Object.create(Input.prototype);
+  Input_module.prototype.constructor = Input_module;
+  
+  Input_module.prototype.setValue = function setValue(value, shouldSupressEvent) {
+    console.warn('module set value', value);
+    Input.prototype.setValue.apply(this, arguments);
+  };
+  
+  /*
+  Input_module.prototype.init = function init() {
+    Input.prototype.init.apply(this, arguments);
+  };
+  
+  Input_module.prototype.setValue = function setValue(value, shouldSupressEvent) {
+    var oldValue = this.value;
+    
+    this.value = JSON.parse(JSON.stringify(value));
+
+    for (var id in this.inputs) {
+      if (this.value.hasOwnProperty(id)) {
+        this.inputs[id].setValue(this.value[id], shouldSupressEvent);
+      }
+    }
+    
+    if (!shouldSupressEvent) {
+      this.dispatch(this.EVENTS.CHANGE, this, oldValue, this.value);
+    }
+  };
+  
+  Input_module.prototype.update = function update() {
+    for (var id in this.inputs) {
+      this.inputs[id].update();
+    }
+  };
+  */
+  
+  Input_module.prototype.setupInput = function setupInput() {
+    return;
+    var el = this.el.querySelector('.pane-input-field');
+    
+  };
+  
+  Input_module.prototype.onSubInputChange = function onSubInputChange(input) {
+    
+  };
+  
+  Input_module.prototype.getInputHTML = function getInputHTML() {
+    return 'MODULE';
+  };
+  
+  return Input_module;
+}());
+
+
+var Tiles = (function Tiles() {
+  function Tiles(options) {
+    this.elContainer = null;
+    this.el = null;
+    
+    this.editor = null;
+    this.schema = {};
+    this.onChange = null;
+    
+    this.init(options);
+  }
+  
+  Tiles.prototype.init = function init(options) {
+    this.editor = options.editor;
+    this.elContainer = options.elContainer;
+    this.schema = options.schema;
+    this.onChange = options.onChange;
+    
+    this.el = document.createElement('div');
+    this.el.className = 'tiles-editor';
+    this.el.innerHTML = '<div class="editor-button create-new-tile">New Tile</div>';
+    
+    this.elContainer.appendChild(this.el);
+    
+    this.el.addEventListener('change', this.onTilesChange.bind(this));
+    this.el.querySelector('.create-new-tile').addEventListener('click', this.createNew.bind(this));
+  };
+  
+  Tiles.prototype.addTile = function addTile(tile) {
+    var el = document.createElement('div');
+    var html = '';
+    var textureId = '';
+    
+    el.className = 'tile';
+
+    for (var k in tile) {
+      var schema = JSON.parse(JSON.stringify(this.schema[k]));
+      
+      schema.defaultValue = tile[k];
+      
+      if (schema.type === 'texture') {
+        schema.defaultValue = JSON.stringify(schema.defaultValue).replace(/"/g, '&quot;');
+        textureId = this.editor.createTexture(tile[k]);
+      }
+      
+      html += this.editor.getFieldHTML(k, schema);
+    }
+    
+    el.innerHTML = html;
+    
+    var elUncheckedBoxes = el.querySelectorAll('input[type = "checkbox"][checked = "false"]');
+    for (var i = 0, len = elUncheckedBoxes.length; i < len; i++) {
+      elUncheckedBoxes[i].checked = false;
+    }
+    
+    this.el.appendChild(el);
+    
+    window.setTimeout(function() {
+      this.editor.setTexture(el.querySelector('.texture-selector'), textureId);
+    }.bind(this), 100);
+  };
+  
+  Tiles.prototype.createNew = function createNew() {
+    var tile = {};
+    
+    for (var k in this.schema) {
+      tile[k] = this.schema[k].defaultValue;
+    }
+    
+    this.addTile(tile);
+    
+    this.onTilesChange();
+  };
+  
+  Tiles.prototype.create = function create(tiles) {
+    for (var i = 0, len = tiles.length; i < len; i++) {
+      this.addTile(tiles[i]);
+    }
+  };
+  
+  Tiles.prototype.getTiles = function getTiles() {
+    var tiles = [];
+    var els = this.el.querySelectorAll('.tile');
+    
+    for (var i = 0, len = els.length; i < len; i++) {
+      var el = els[i];
+      var tile = {};
+      var elInputs = el.querySelectorAll('input');
+      
+      for (var j = 0, jLen = elInputs.length; j < jLen; j++) {
+        var elInput = elInputs[j];
+        var value = elInput.value;
+        
+        if (elInput.type === 'checkbox') {
+          value = elInput.checked;
+        } else if (elInput.dataset.fieldId === 'texture') {
+          value = JSON.parse(value);
+        }
+
+        tile[elInput.dataset.fieldId] = value;
+      }
+      
+      tiles.push(tile);
+    }
+
+    return tiles;
+  };
+  
+  Tiles.prototype.onTilesChange = function onTilesChange(e) {
+    e && e.stopPropagation();
+    
+    this.onChange(this.getTiles());
+  };
+  
+  return Tiles;
+}());
+
+
+
 
 // A template formatting method
 // Replaces {{propertyName}} with properties from the 'args' object

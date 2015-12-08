@@ -6,14 +6,17 @@ var EventDispatcher = (function EventDispatcher() {
     this._listeners = {};
   }
 
-  EventDispatcher.prototype.dispatch = function dispatch(eventName, data) {
+  EventDispatcher.prototype.dispatch = function dispatch() {
+    var args = Array.prototype.slice.call(arguments);
+    var eventName = args.splice(0, 1);
+    
     if (!this._listeners) {
       this._listeners = {};
     }
 
     var listeners = this._listeners[eventName] || [];
     for (var i = 0, len = listeners.length; i < len; i++) {
-      listeners[i].call(this, data);
+      listeners[i].apply(this, args);
     }
   };
 
@@ -82,7 +85,6 @@ var Game = (function Game() {
     this.currentMap = null;
     
     this.tiles = {};
-    this.modules = {};
     this.maps = {};
     this.config = null;
     
@@ -206,18 +208,15 @@ var Game = (function Game() {
       var tile = JSON.parse(JSON.stringify(tiles[i]));
       tile.texture.width = tileSize;
       tile.texture.height = tileSize;
-      tile.texture.origin = [0, 0];
+      tile.texture.origin = {
+        'x': 0,
+        'y': 0
+      };
       tile.texture.game = this;
       tile.texture = new Texture(tile.texture);
       this.tiles[tile.id] = tile;
     }
-    
-    var modules = this.config.modules;
-    for (var i = 0, len = modules.length; i < len; i++) {
-      var module = modules[i];
-      this.modules[module.id] = module;
-    }
-    
+
     if (this.config.startingMap) {
       this.goToMap(this.config.startingMap);
     }
@@ -240,6 +239,11 @@ var Game = (function Game() {
     
     if (map === true) {
       return this.GOTO_MAP_RESULT.LOADING;
+    }
+    
+    if (!map.grid || map.grid.length === 0) {
+      console.warn('Got map without grid!', map);
+      return this.GOTO_MAP_RESULT.ERROR;
     }
     
     this.currentMap = map;
@@ -271,7 +275,7 @@ var Game = (function Game() {
     
     this.dispatch('mapCreated', this);
     
-    console.info('gotomap', map);
+    console.info('Finished loading map', this.currentMap);
   };
   
   Game.prototype.getModuleConfig = function getModuleConfig(moduleId) {
@@ -477,6 +481,20 @@ var Game = (function Game() {
       'height': height,
       'width': width
     };
+  };
+  
+  Game.prototype.getDialog = function getDialog(dialogId) {
+    var dialogs = (this.currentMap || {}).dialogs || [];
+    var dialog = null;
+    
+    for (var i = 0, len = dialogs.length; i < len; i++) {
+      if (dialogs[i].id === dialogId) {
+        dialog = dialogs[i];
+        break;
+      }
+    }
+    
+    return dialog;
   };
   
   Game.prototype.loadMap = function loadMap(mapId, callback) {
@@ -716,7 +734,10 @@ var TilesetLayer = (function TilesetLayer() {
     
     this.texture = new Texture({
       'game': this.game,
-      'origin': [0, 0]
+      'origin': {
+        'x': 0,
+        'y': 0
+      }
     });
   };
   
@@ -751,7 +772,10 @@ var TilesetLayer = (function TilesetLayer() {
     
     // move the Clip point according to the camera offset and draw the texture
     var camera = this.game.camera;
-    this.texture.clip = [camera.x, camera.y];
+    this.texture.clip = {
+      'x': camera.x,
+      'y': camera.y
+    };
     this.texture.draw(this.context);
   
     if (window.DEBUG) {
@@ -974,8 +998,7 @@ var HUDLayer = (function HUDLayer() {
     var tooltip = this.tooltip;
     if (tooltip.isVisible) {
       var tooltipConfig = game.config.tooltips || {};
-      var paddingX = tooltipConfig.paddingLeftRight || 0;
-      var paddingY = tooltipConfig.paddingTopBottom || 0;
+      var padding = tooltipConfig.padding || {'x': 0, 'y': 0};
       var textSize = game.measureText(context, tooltip.text, tooltipConfig.lineSpacing); 
 
       tooltip.width = textSize.width;
@@ -989,21 +1012,21 @@ var HUDLayer = (function HUDLayer() {
         context.font = tooltipConfig.font;
       }
       
-      context.fillRect(tooltip.x - paddingX - tooltip.width / 2,
-                       tooltip.y - paddingY,
-                       tooltip.width + paddingX * 2,
-                       tooltip.height + paddingY * 2);
+      context.fillRect(tooltip.x - padding.x - tooltip.width / 2,
+                       tooltip.y - padding.y,
+                       tooltip.width + padding.x * 2,
+                       tooltip.height + padding.y * 2);
                        
-      context.strokeRect(tooltip.x - paddingX - tooltip.width / 2,
-                       tooltip.y - paddingY,
-                       tooltip.width + paddingX * 2,
-                       tooltip.height + paddingY * 2);
+      context.strokeRect(tooltip.x - padding.x - tooltip.width / 2,
+                       tooltip.y - padding.y,
+                       tooltip.width + padding.x * 2,
+                       tooltip.height + padding.y * 2);
 
       context.fillStyle = 'rgba(255, 255, 255, 1)';
       game.drawText(context,
                     tooltip.text,
                     tooltip.x,
-                    tooltip.y + paddingY,
+                    tooltip.y + padding.y,
                     context.font,
                     tooltipConfig.lineSpacing);
     }
@@ -1198,7 +1221,7 @@ var Actor = (function Actor() {
     };
     this.pathToWalk = null;
     
-    this.textureModule = {};
+    this.texture = null;
     this.modules = [];
     
     this.isReady = false;
@@ -1243,41 +1266,29 @@ var Actor = (function Actor() {
   Actor.prototype.initModules = function initModules(modules) {
     for (var i = 0, len = modules.length; i < len; i++) {
       var moduleData = modules[i];
-      var moduleConfig = this.game.getModuleConfig(moduleData.type);
+      var moduleClass = moduleData.type;
       
-      if (!moduleConfig) {
-        console.warn('No module found in game config', moduleData);
-        continue;
-      }
-      
-      if (!window[moduleConfig.className]) {
-        console.warn('No class found for module', moduleData);
+      if (!window[moduleClass]) {
+        console.warn('No module found ', moduleData);
         continue;
       }
       
       moduleData.actor = this;
-      if (!moduleData.hasOwnProperty('activation')) {
-        moduleData.activation = moduleConfig.activation;
-      }
-      if (!moduleData.hasOwnProperty('disableControllerWhenActive')) {
-        moduleData.disableControllerWhenActive = moduleConfig.disableControllerWhenActive;
-      }
-      
-      
-      var module = new window[moduleConfig.className](moduleData);
+
+      var module = new window[moduleClass](moduleData);
       this.modules.push(module);
       
-      if (moduleData.type === 'texture') {
-        this.textureModule = module;
+      if (module instanceof ModuleTexture) {
+        this.texture = module;
       }
     }
-    
+
     return true;
   };
   
   Actor.prototype.getTexture = function getTexture() {
-    if (this.textureModule) {
-      return this.textureModule.texture;
+    if (this.texture) {
+      return this.texture.texture;
     }
   };
   
@@ -1452,9 +1463,18 @@ var Texture = (function Texture() {
   function Texture(options, onLoad) {
     this.game = null;
     this.src = '';
-    this.origin = [0.5, 0.5];
-    this.drawOrigin = [0.5, 0.5];
-    this.clip = [0, 0];
+    this.origin = {
+      'x': 0.5,
+      'y': 0.5
+    };
+    this.drawOrigin = {
+      'x': 0.5,
+      'y': 0.5
+    };
+    this.clip = {
+      'x': 0,
+      'y': 0
+    };
     this.defaultClip = null;
     
     this.width = 0;
@@ -1474,10 +1494,16 @@ var Texture = (function Texture() {
   Texture.prototype.init = function init(options) {
     this.game = options.game;
     this.src = options.src;
-    this.origin = options.origin || [0.5, 0.5];
     this.width = options.width || 0;
     this.height = options.height || 0;
-    this.clip = options.clip || [0, 0];
+    this.origin = options.origin || {
+      'x': 0.5,
+      'y': 0.5
+    };
+    this.clip = options.clip || {
+      'x': 0,
+      'y': 0
+    };
     this.defaultClip = options.defaultClip || null;
     this.scale = options.scale || 1;
     
@@ -1514,7 +1540,10 @@ var Texture = (function Texture() {
   };
   
   Texture.prototype.setClip = function setClip(clip) {
-    this.clip = clip || [0, 0];
+    this.clip = clip || {
+      'x': 0,
+      'y': 0
+    };
   };
   
   Texture.prototype.getImage = function getImage() {
@@ -1542,8 +1571,8 @@ var Texture = (function Texture() {
     var drawHeight = height * scale;
     var shouldDraw = true;
 
-    x = (x || 0) - origin[0] * scale;
-    y = (y || 0) - origin[1] * scale;
+    x = (x || 0) - origin.x * scale;
+    y = (y || 0) - origin.y * scale;
     
     if (gameBounds) {
       if (x + drawWidth < 0 || x > gameBounds.width ||
@@ -1555,8 +1584,8 @@ var Texture = (function Texture() {
     if (shouldDraw) {
       context.drawImage(image,
                         // Draw this
-                        clip[0],
-                        clip[1],
+                        clip.x,
+                        clip.y,
                         width,
                         height,
                         // Here
@@ -1586,8 +1615,8 @@ var Texture = (function Texture() {
       this.height = image.height;
     }
 
-    this.drawOrigin[0] = this.width * this.origin[0];
-    this.drawOrigin[1] = this.height * this.origin[1];
+    this.drawOrigin.x = this.width * this.origin.x;
+    this.drawOrigin.y = this.height * this.origin.y;
     
     this.dispatch('load');
   };
@@ -1616,6 +1645,13 @@ var ActorModule = (function ActorModule() {
     this.init(options);
   }
   
+  ActorModule.prototype.ACTIVATIONS = {
+    AUTOMATIC: 'auto',
+    INTERACT: 'interact',
+    MANUAL: 'manual',
+    PROXIMITY: 'proximity'
+  };
+  
   ActorModule.prototype.init = function init(options) {
     this.type = options.type;
     this.actor = options.actor;
@@ -1639,14 +1675,17 @@ var ActorModule = (function ActorModule() {
       }
     }
     
-    if (this.activation === 'auto') {
-      this.activate();
-    } else if (this.activation === 'interact') {
-      this.onClick = this.onClick_inactive;
-    } else if (this.activation === 'manual') {
-      
-    } else if (this.activation === 'proximity') {
-      
+    switch (this.activation) {
+      case ActorModule.prototype.ACTIVATIONS.AUTOMATIC:
+        this.activate();
+        break;
+      case ActorModule.prototype.ACTIVATIONS.INTERACT:
+        this.onClick = this.onClick_inactive;
+        break;
+      case ActorModule.prototype.ACTIVATIONS.MANUAL:
+        break;
+      case ActorModule.prototype.ACTIVATIONS.PROXIMITY:
+        break;
     }
   };
   
@@ -1709,19 +1748,23 @@ var ActorModule = (function ActorModule() {
   Basic Texture module to draw the actor's texture
   Since this is a module it's possible to use everal textures for each actor
 */
-var TextureModule = (function TextureModule() {
-  function TextureModule(options) {
+var ModuleTexture = (function ModuleTexture() {
+  function ModuleTexture(options) {
     this.texture = null;
     this.dirClips = {};
     this.actorDirection = '';
     
+    if (!options.hasOwnProperty('activation')) {
+      options.activation = ActorModule.prototype.ACTIVATIONS.AUTOMATIC;
+    }
+    
     this.init(options);
   }
   
-  TextureModule.prototype = Object.create(ActorModule.prototype);
-  TextureModule.prototype.constructor = TextureModule;
+  ModuleTexture.prototype = Object.create(ActorModule.prototype);
+  ModuleTexture.prototype.constructor = ModuleTexture;
   
-  TextureModule.prototype.init = function init(options) {
+  ModuleTexture.prototype.init = function init(options) {
     ActorModule.prototype.init.apply(this, arguments);
     
     this.dirClips = options.dirClips || {};
@@ -1729,7 +1772,7 @@ var TextureModule = (function TextureModule() {
     this.texture = new Texture(options);
   };
   
-  TextureModule.prototype.drawMethod = function draw() {
+  ModuleTexture.prototype.drawMethod = function draw() {
     var actor = this.actor;
     var game = actor.game;
     var drawPosition = game.getOffsetPosition(actor.position);
@@ -1749,7 +1792,7 @@ var TextureModule = (function TextureModule() {
                       game);
   };
 
-  return TextureModule;
+  return ModuleTexture;
 }());
 
 var ModuleDialog = (function ModuleDialog() {
@@ -1768,6 +1811,10 @@ var ModuleDialog = (function ModuleDialog() {
     this.padding = 0;
     this.actorImageSize = 0;
     this.lineSpacing = 0;
+    
+    if (!options.hasOwnProperty('activation')) {
+      options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
+    }
 
     ActorModule.call(this, options);
   }
@@ -1779,11 +1826,14 @@ var ModuleDialog = (function ModuleDialog() {
     ActorModule.prototype.init.apply(this, arguments);
     
     this.dialogId = options.dialogId;
-    this.dialog = this.actor.game.currentMap.dialogs[this.dialogId];
+    this.dialog = this.actor.game.getDialog(this.dialogId);
     
     this.texture = new Texture({
       'game': this.actor.game,
-      'origin': [0, 0]
+      'origin': {
+        'x': 0,
+        'y': 0
+      }
     });
     
     this.nextLine_bound = this.nextLine.bind(this);
@@ -1792,6 +1842,7 @@ var ModuleDialog = (function ModuleDialog() {
       this.lines = this.dialog.lines;
       this.startingLineId = this.dialog.startingLine || this.lines[0].id;
     } else {
+      this.dialog = {};
       console.warn('Cant find requested dialog', this);
     }
     
@@ -1886,8 +1937,8 @@ var ModuleDialog = (function ModuleDialog() {
         
         context.drawImage(avatarImage,
                           
-                          clip[0],
-                          clip[1],
+                          clip.x,
+                          clip.y,
                           texture.width,
                           texture.height,
                           
@@ -1965,6 +2016,10 @@ var ModuleWebPage = (function ModuleWebPage() {
     this.isInFrame = false;
     this.scale = 1;
     
+    if (!options.hasOwnProperty('activation')) {
+      options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
+    }
+    
     ActorModule.call(this, options);
   }
   
@@ -2009,6 +2064,10 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
     this.selector = '';
     this.el = null;
     
+    if (!options.hasOwnProperty('activation')) {
+      options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
+    }
+    
     ActorModule.call(this, options);
   }
   
@@ -2047,30 +2106,13 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
   return ModuleHTMLElement;
 }());
 
-var ModuleContact = (function ModuleContact() {
-  function ModuleContact(options) {
-    ActorModule.call(this, options);
-  }
-  
-  ModuleContact.prototype = Object.create(ActorModule.prototype);
-  ModuleContact.prototype.constructor = ModuleContact;
-  
-  ModuleContact.prototype.init = function init(options) {
-    ActorModule.prototype.init.apply(this, arguments);
-    
-  };
-  
-  ModuleContact.prototype.activate = function activate(e) {
-    ActorModule.prototype.activate.apply(this, arguments);
-    
-  };
-  
-  return ModuleContact;
-}());
-
 var ModuleParticles = (function ModuleParticles() {
   function ModuleParticles(options) {
     this.offset = [0, 0];
+    
+    if (!options.hasOwnProperty('activation')) {
+      options.activation = ActorModule.prototype.ACTIVATIONS.AUTOMATIC;
+    }
     
     ActorModule.call(this, options);
   }

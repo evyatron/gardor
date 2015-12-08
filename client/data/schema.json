@@ -1,0 +1,306 @@
+{
+  "game": {
+    "type": "object",
+    "properties": {
+      "tileSize": {
+        "type": "number",
+        "tooltip": "The width and height of tiles in the game",
+        "default": 32
+      },
+      "startingMap": {
+        "type": "text",
+        "tooltip": "Map id to first load with the game"
+      },
+      "lerpAlpha": {
+        "type": "number",
+        "tooltip": "Camera lerp alpha. 1 = stick to the player, 0.1 = ease into the player's position",
+        "default": 1
+      },
+      "followPlayer": {
+        "type": "boolean",
+        "tooltip": "Should the camera follow the player. Recommended for large maps.",
+        "default": true
+      },
+      "defaultFont": {
+        "type": "text",
+        "tooltip": "Default font to use in the game. Format is XXpt FONT_NAME",
+        "default": "11pt monospace"
+      },
+      "timeToShowClickTexture": {
+        "type": "number",
+        "tooltip": "Time (in seconds) to show the click texture",
+        "default": 0.5
+      },
+      "clickTexture": {
+        "type": "texture",
+        "tooltip": "Texture to show when player clicks on the map"
+      },
+      
+      "tooltips": {
+        "type": "object",
+        "properties": {
+          "font": {
+            "type": "text",
+            "tooltip": "Font to use for tooltips. Format is XXpt FONT_NAME",
+            "default": "11pt monospace"
+          },
+          "lineSpacing": {
+            "type": "number",
+            "tooltip": "Spacing between the lines",
+            "default": 4
+          },
+          "padding": {
+            "type": "vector",
+            "tooltip": "Padding",
+            "default": {
+              "x": 10,
+              "y": 5
+            }
+          }
+        }
+      },
+      
+      "dialogs": {
+        "type": "object",
+        "properties": {
+          "font": {
+            "type": "text",
+            "tooltip": "Font to use for dialogs. Format is XXpt FONT_NAME",
+            "default": "11pt monospace"
+          },
+          "width": {
+            "type": "number",
+            "tooltip": "Dialog box width",
+            "default": 500
+          },
+          "height": {
+            "type": "number",
+            "tooltip": "Dialog box height",
+            "default": 200
+          },
+          "padding": {
+            "type": "number",
+            "tooltip": "Dialog box padding around the edges",
+            "default": 10
+          },
+          "actorImageSize": {
+            "type": "number",
+            "tooltip": "Size to reserve for the player avatar",
+            "default": 64
+          },
+          "lineSpacing": {
+            "type": "number",
+            "tooltip": "Spacing between the lines",
+            "default": 8
+          }
+        }
+      },
+      
+      "maps": {
+        "type": "array",
+        "tooltip": "Game maps",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "text",
+              "tooltip": "Map Id"
+            },
+            "src": {
+              "type": "text",
+              "tooltip": "Map src"
+            }
+          }
+        }
+      },
+      
+      "tiles": {
+        "type": "array",
+        "tooltip": "Game tiles to be used when creating the map",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "text",
+              "tooltip": "Tile id, to be used when creating the actual map tileset",
+              "default": "default"
+            },
+            "isBlocking": {
+              "type": "boolean",
+              "tooltip": "Whether this tile is or isn't walkable"
+            },
+            "texture": {
+              "type": "texture",
+              "tooltip": "The texture used for the tile"
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "map": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "text",
+        "tooltip": "Map Id"
+      },
+      "name": {
+        "type": "text",
+        "tooltip": "Map name"
+      },
+      "playerActor": {
+        "type": "text",
+        "tooltip": "Id of the player controlled actor",
+        "default": "player"
+      },
+      "padding": {
+        "type": "number",
+        "tooltip": "padding between the map and the edges of the container",
+        "default": 20
+      },
+      "defaultTile": {
+        "type": "text",
+        "tooltip": "Default tile ID to use for empty tiles in the grid",
+        "default": "default"
+      },
+      "grid": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "text"
+          }
+        }
+      },
+      "actors": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "text",
+              "tooltip": "Actor ID - must be unique"
+            },
+            "tile": {
+              "type": "vector",
+              "tooltip": "Grid position"
+            },
+            "isBlocking": {
+              "type": "boolean",
+              "tooltip": "Is the actor blocking - player won't be able to move through it",
+              "default": true
+            },
+            "speed": {
+              "type": "number",
+              "tooltip": "Actor speed. 0 means the actor is unmovable."
+            },
+            "zIndex": {
+              "type": "number",
+              "tooltip": "When actors occupy the same area, the zIndex decides which one is on top"
+            },
+            "modules": {
+              "type": "array",
+              "items": {
+                "type": "module"
+              }
+            }
+          }
+        },
+        "tooltip": "Actors in the map"
+      },
+      "dialogs": {
+        "type": "array",
+        "tooltip": "Dialogs that can be used in the dialog module",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "text",
+              "tooltip": "The dialog Id, to be used when hooking up to an actor"
+            },
+            "startingLine": {
+              "type": "text",
+              "tooltip": "The starting line Id"
+            },
+            "lines": {
+              "type": "array",
+              "tooltip": "Dialog lines",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "text",
+                    "tooltip": "Line Id, to be used when jumping to lines"
+                  },
+                  "actor": {
+                    "type": "text",
+                    "tooltip": "The actor saying the line. Could be PC, NPC or any actor Id"
+                  },
+                  "text": {
+                    "type": "text",
+                    "tooltip": "The actual text to show"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "templates": {
+    "texture": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "type": "text"
+        },
+        "width": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "scale": {
+          "type": "number",
+          "default": 1
+        },
+        "clip": {
+          "type": "vector"
+        },
+        "origin": {
+          "type": "vector"
+        }
+      }
+    },
+    "vector": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      }
+    },
+    "module": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "text",
+          "enum": [
+            "ModuleTexture",
+            "ModuleDialog",
+            "ModuleWebPage",
+            "ModuleHTMLElement",
+            "ModuleParticles"
+          ]
+        }
+      }
+    }
+  }
+}

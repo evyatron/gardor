@@ -33,7 +33,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://github.com/evyatron",
           "isInFrame": false,
           "useOffset": {
@@ -42,10 +42,13 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/github.png",
           "src-hover": "/img/actors/github-over.png",
-          "origin": [0.5, 0.7],
+          "origin": {
+            "x": 0.5,
+            "y": 0.7
+          },
           "scale": 0.75
         }
       ]
@@ -61,7 +64,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "https://www.linkedin.com/in/evyataramitay",
           "isInFrame": false,
           "useOffset": {
@@ -70,10 +73,13 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/linkedin.png",
           "src-hover": "/img/actors/linkedin-over.png",
-          "origin": [0.5, 0.7],
+          "origin": {
+            "x": 0.5,
+            "y": 0.7
+          },
           "scale": 0.75
         }
       ]
@@ -90,7 +96,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://darkbounds.com/",
           "isInFrame": true,
           "useOffset": {
@@ -99,13 +105,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [0, 0],
+          "clip": {
+            "x": 0,
+            "y": 0
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.3, 0.8]
+          "origin": {
+            "x": 0.3,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -119,7 +131,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://nanocraft.amitay.me/",
           "isInFrame": true,
           "useOffset": {
@@ -128,13 +140,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [62, 0],
+          "clip": {
+            "x": 62,
+            "y": 0
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -148,7 +166,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/alice/",
           "isInFrame": true,
           "useOffset": {
@@ -157,13 +175,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 0],
+          "clip": {
+            "x": 124,
+            "y": 0
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -177,7 +201,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/simon/",
           "isInFrame": true,
           "useOffset": {
@@ -186,13 +210,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [186, 0],
+          "clip": {
+            "x": 186,
+            "y": 0
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -206,7 +236,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/supermoneyo/",
           "isInFrame": true,
           "useOffset": {
@@ -215,13 +245,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [0, 64],
+          "clip": {
+            "x": 0,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -235,7 +271,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/candickrush/",
           "isInFrame": true,
           "useOffset": {
@@ -244,13 +280,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [62, 64],
+          "clip": {
+            "x": 62,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -266,7 +308,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/particles/",
           "isInFrame": true,
           "useOffset": {
@@ -275,13 +317,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -295,7 +343,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/tasia/",
           "isInFrame": true,
           "useOffset": {
@@ -304,13 +352,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -324,7 +378,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://www.isittimeforcoffee.com/",
           "isInFrame": true,
           "useOffset": {
@@ -333,13 +387,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -353,7 +413,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/wobbly/",
           "isInFrame": true,
           "useOffset": {
@@ -362,13 +422,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -382,7 +448,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/conj/",
           "isInFrame": true,
           "useOffset": {
@@ -391,13 +457,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -411,7 +483,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/circular/",
           "isInFrame": true,
           "useOffset": {
@@ -420,13 +492,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -440,7 +518,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/p280/",
           "isInFrame": true,
           "useOffset": {
@@ -449,13 +527,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -469,7 +553,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/3dbounce/",
           "isInFrame": true,
           "useOffset": {
@@ -478,13 +562,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -498,7 +588,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/404.html",
           "isInFrame": true,
           "useOffset": {
@@ -507,13 +597,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -527,7 +623,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/dott/",
           "isInFrame": true,
           "useOffset": {
@@ -536,13 +632,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -556,7 +658,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/inverter/",
           "isInFrame": true,
           "useOffset": {
@@ -565,13 +667,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -585,7 +693,7 @@
       },
       "modules": [
         {
-          "type": "webpage",
+          "type": "ModuleWebPage",
           "url": "http://evyatar.amitay.me/playground/d3api/",
           "isInFrame": true,
           "useOffset": {
@@ -594,13 +702,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/trees.png",
           "scale": 0.6,
-          "clip": [124, 64],
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
           "width": 62,
           "height": 64,
-          "origin": [0.4, 0.8]
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -615,12 +729,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [32, 16],
+          "clip": {
+            "x": 32,
+            "y": 16
+          },
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5]
+          "origin": {
+            "x": 0,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -633,10 +753,16 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "origin": [0, 0.5],
-          "clip": [64, 16],
+          "origin": {
+            "x": 0,
+            "y": 0.5
+          },
+          "clip": {
+            "x": 64,
+            "y": 16
+          },
           "width": 16,
           "height": 32
         }
@@ -651,9 +777,12 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [64, 16],
+          "clip": {
+            "x": 64,
+            "y": 16
+          },
           "width": 32,
           "height": 32
         }
@@ -668,9 +797,12 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [64, 16],
+          "clip": {
+            "x": 64,
+            "y": 16
+          },
           "width": 32,
           "height": 32
         }
@@ -685,12 +817,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [112, 16],
+          "clip": {
+            "x": 112,
+            "y": 16
+          },
           "width": 16,
           "height": 32,
-          "origin": [1, 0.5]
+          "origin": {
+            "x": 1,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -703,12 +841,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [32, 48],
+          "clip": {
+            "x": 32,
+            "y": 48
+          },
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5]
+          "origin": {
+            "x": 0,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -721,12 +865,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [32, 48],
+          "clip": {
+            "x": 32,
+            "y": 48
+          },
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5]
+          "origin": {
+            "x": 0,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -739,12 +889,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [96, 48],
+          "clip": {
+            "x": 96,
+            "y": 48
+          },
           "width": 32,
           "height": 32,
-          "origin": [1, 0.5]
+          "origin": {
+            "x": 1,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -757,12 +913,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [96, 48],
+          "clip": {
+            "x": 96,
+            "y": 48
+          },
           "width": 32,
           "height": 32,
-          "origin": [1, 0.5]
+          "origin": {
+            "x": 1,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -775,12 +937,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [32, 80],
+          "clip": {
+            "x": 32,
+            "y": 80
+          },
           "width": 32,
           "height": 32,
-          "origin": [0, 0.5]
+          "origin": {
+            "x": 0,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -793,10 +961,16 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [80, 80],
-          "origin": [0, 0.5],
+          "clip": {
+            "x": 80,
+            "y": 80
+          },
+          "origin": {
+            "x": 0,
+            "y": 0.5
+          },
           "width": 16,
           "height": 32
         }
@@ -811,10 +985,16 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [80, 80],
-          "origin": [1, 0.5],
+          "clip": {
+            "x": 80,
+            "y": 80
+          },
+          "origin": {
+            "x": 1,
+            "y": 0.5
+          },
           "width": 16,
           "height": 32
         }
@@ -829,12 +1009,18 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [96, 80],
+          "clip": {
+            "x": 96,
+            "y": 80
+          },
           "width": 32,
           "height": 32,
-          "origin": [1, 0.5]
+          "origin": {
+            "x": 1,
+            "y": 0.5
+          }
         }
       ]
     },
@@ -851,7 +1037,7 @@
       "isBlocking": false,
       "modules": [
         {
-          "type": "dialog",
+          "type": "ModuleDialog",
           "dialogId": "page-about",
           "useDir": "top",
           "useOffset": {
@@ -860,13 +1046,19 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/signs.png",
           "scale": 0.6,
-          "clip": [0, 0],
+          "clip": {
+            "x": 0,
+            "y": 0
+          },
           "width": 32,
           "height": 32,
-          "origin": [0.5, 0]
+          "origin": {
+            "x": 0.5,
+            "y": 0
+          }
         }
       ]
     },
@@ -880,17 +1072,23 @@
       "isBlocking": false,
       "modules": [
         {
-          "type": "dialog",
+          "type": "ModuleDialog",
           "dialogId": "page-contact"
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/signs.png",
           "scale": 0.75,
-          "clip": [0, 0],
+          "clip": {
+            "x": 0,
+            "y": 0
+          },
           "width": 32,
           "height": 32,
-          "origin": [0.5, 0.8]
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -904,17 +1102,23 @@
       "isBlocking": false,
       "modules": [
         {
-          "type": "dialog",
+          "type": "ModuleDialog",
           "dialogId": "page-games"
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/signs.png",
           "scale": 0.75,
-          "clip": [0, 0],
+          "clip": {
+            "x": 0,
+            "y": 0
+          },
           "width": 32,
           "height": 32,
-          "origin": [0.5, 0.8]
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -928,16 +1132,19 @@
       "isBlocking": false,
       "modules": [
         {
-          "type": "dialog",
+          "type": "ModuleDialog",
           "dialogId": "page-playground"
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/signs.png",
           "scale": 0.75,
           "width": 32,
           "height": 32,
-          "origin": [0.5, 0.8]
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -952,7 +1159,7 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "htmlElement",
+          "type": "ModuleHTMLElement",
           "selector": ".game-module-contact",
           "useOffset": {
             "x": 1,
@@ -960,7 +1167,7 @@
           }
         },
         {
-          "type": "particles",
+          "type": "ModuleParticles",
           "offset": [0, -40],
           "lifetime": [0.2, 0.8],
           "angle": [-25, 25],
@@ -970,13 +1177,19 @@
           "colours": "fire"
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
           "scale": 0.9,
-          "clip": [288, 162],
+          "clip": {
+            "x": 288,
+            "y": 162
+          },
           "width": 32,
           "height": 64,
-          "origin": [0.5, 0.8]
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -990,7 +1203,7 @@
       "isBlocking": true,
       "modules": [
         {
-          "type": "htmlElement",
+          "type": "ModuleHTMLElement",
           "selector": ".game-module-about",
           "useOffset": {
             "x": -1,
@@ -998,12 +1211,18 @@
           }
         },
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/actors/rtp-objects.png",
-          "clip": [256, 162],
+          "clip": {
+            "x": 256,
+            "y": 162
+          },
           "width": 32,
           "height": 64,
-          "origin": [0.5, 0.8]
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
         }
       ]
     },
@@ -1019,23 +1238,39 @@
       "zIndex": 1,
       "modules": [
         {
-          "type": "texture",
+          "type": "ModuleTexture",
           "src": "/img/characters/player.png",
           "width": 32,
           "height": 32,
-          "defaultClip": [0, 0],
+          "defaultClip": {
+            "x": 0,
+            "y": 0
+          },
           "dirClips": {
-            "bottom": [0, 0],
-            "top": [0, 96],
-            "right": [0, 64],
-            "left": [0, 32]
+            "bottom": {
+              "x": 0,
+              "y": 0
+            },
+            "top": {
+              "x": 0,
+              "y": 96
+            },
+            "right": {
+              "x": 0,
+              "y": 64
+            },
+            "left": {
+              "x": 0,
+              "y": 32
+            }
           }
         }
       ]
     }
   ],
-  "dialogs": {
-    "page-about": {
+  "dialogs": [
+    {
+      "id": "page-about",
       "startingLine": "welcome",
       "lines": [
         {
@@ -1050,7 +1285,8 @@
         }
       ]
     },
-    "page-contact": {
+    {
+      "id": "page-contact",
       "lines": [
         {
           "id": "welcome",
@@ -1059,7 +1295,8 @@
         }
       ]
     },
-    "page-games": {
+    {
+      "id": "page-games",
       "lines": [
         {
           "id": "welcome",
@@ -1068,7 +1305,8 @@
         }
       ]
     },
-    "page-playground": {
+    {
+      "id": "page-playground",
       "lines": [
         {
           "id": "welcome",
@@ -1077,7 +1315,8 @@
         }
       ]
     },
-    "boat": {
+    {
+      "id": "boat",
       "lines": [
         {
           "actor": "PC",
@@ -1085,5 +1324,5 @@
         }
       ]
     }
-  }
+  ]
 }
