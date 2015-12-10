@@ -2,24 +2,24 @@
   "id": "main-map",
   "name": "Main Map",
   "playerActor": "player",
-  "padding": 20,
+  "padding": 0,
   "defaultTile": "water",
   "grid": [
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "land", "land", "land", "land", "land", "land", "path", "path", "path", "land", "land", "land", "land", "", "", "", ""],
-    ["", "", "", "", "", "", "", "land", "land", "land", "path", "path", "path", "land", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", "", "path", "path", "path", "land", "", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", "", "", "", "", "path", "path", "path", "land", "", "", "", "", "", "", ""]
+    ["", "", "", "", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-t-land", "water-tr-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-l-land", "land", "land", "land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "land", "land", "water-r-land", "", "", "", ""],
+    ["", "", "", "water-bl2-land", "water-b-land", "water-b-land", "water-bl-land", "land", "land", "land", "land", "land-l-path", "land-r-path", "land", "water-br-land", "water-b-land", "", "", "", "", ""],
+    ["", "", "", "", "", "", "water-bl2-land", "water-b-land", "water-b-land", "water-bl-land", "land", "land-l-path", "land-r-path", "land", "water-r-land", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "water-l-land", "land", "land-l-path", "land-r-path", "land", "water-r-land", "", "", "", "", "", ""]
   ],
   "actors": [
     {
@@ -1162,8 +1162,8 @@
           "type": "ModuleHTMLElement",
           "selector": ".game-module-contact",
           "useOffset": {
-            "x": 1,
-            "y": 0
+            "x": 0,
+            "y": 1
           }
         },
         {
@@ -1206,8 +1206,8 @@
           "type": "ModuleHTMLElement",
           "selector": ".game-module-about",
           "useOffset": {
-            "x": -1,
-            "y": 0
+            "x": 0,
+            "y": 1
           }
         },
         {
@@ -1242,6 +1242,7 @@
           "src": "/img/characters/player.png",
           "width": 32,
           "height": 32,
+          "scale": 1.5,
           "defaultClip": {
             "x": 0,
             "y": 0

@@ -7,9 +7,9 @@ div, p, input, textarea {
 #game-container {
   position: absolute;
   top: 0;
-  bottom: 220px;
-  left: 300px;
-  right: 300px;
+  bottom: 0;
+  left: 250px;
+  right: 250px;
   z-index: 20;
   background: #222;
 }
@@ -38,7 +38,7 @@ div, p, input, textarea {
 
 .details-pane {
   left: 0;
-  width: 300px;
+  width: 250px;
   border-right-width: 1px;
   font-size: 0.9em;
   margin: 0;
@@ -50,12 +50,6 @@ div, p, input, textarea {
   width: 300px;
   border-left-width: 1px;
   font-size: 0.9em;
-}
-.textures {
-  bottom: 0;
-  margin: 0 300px;
-  height: 220px;
-  border-top-width: 1px;
 }
 
 .editor-debug-flags {
@@ -73,18 +67,58 @@ div, p, input, textarea {
 
 .control-group {
   position: relative;
-  padding: 2px 2px 2px 6px;
+  padding: 2px 4px;
   margin: 0;
-  display: flex;
+  -display: flex;
   align-items: center;
 }
+.control-group > .control-group:first-child:last-child {
+  padding: 0;
+  margin: 0;
+}
+._jsonform-array-buttons {
+  display: block;
+  padding: 2px 0;
+  text-align: center;
+}
+.btn {
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background: #ddd;
+  border: black;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.btn:hover {
+  background: #fff;
+}
+.icon-plus-sign:after {
+  content: '+';
+}
+.icon-minus-sign:after {
+  content: '-';
+}
+/*
 .control-group .control-label,
 .control-group .controls {
   width: 50%;
 }
-input, textarea, .uneditable-input {
-  width: 100%;
+*/
+.control-label {
+  margin-bottom: 2px;
 }
+input,
+textarea,
+.uneditable-input {
+  width: 100%;
+  padding: 2px 4px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
 label {
   margin: 0;
 }
@@ -102,8 +136,15 @@ legend {
   padding: 2px 0;
   border: none;
 }
+.expandable legend {
+  cursor: pointer;
+}
 legend + .control-group {
   margin-top: 0;
+}
+
+.jsonform-error-maps {
+  
 }
 /*
 

@@ -11,16 +11,18 @@ body {
 
 body {
   font: normal 1em 'Share Tech Mono';
-  background: rgba(210, 191, 177, 1);
+  background: #156C99;
 }
 
 #game {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+  /*
   box-shadow: 0 0 0 2px #fff,
               0 0 0 4px #000;
-  transform: translate(-50%, -50%);
+              */
 }
   #game canvas {
     position: absolute;

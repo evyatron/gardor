@@ -107,22 +107,26 @@ Editor.prototype.createContainers = function createContainers() {
   this.elGamePane = document.createElement('form');
   this.elGamePane.className = 'editor-container vertical details-pane';
   this.elGamePane.innerHTML = HTML_GAME_PANE;
+  this.elGamePane.addEventListener('change', this.refreshGame.bind(this));
+  
   this.elContainer.appendChild(this.elGamePane);
   
   this.elMapPane = document.createElement('form');
   this.elMapPane.className = 'editor-container vertical map-pane';
+  this.elMapPane.addEventListener('change', this.refreshGame.bind(this));
+  
   this.elContainer.appendChild(this.elMapPane);
   
+  /*
   this.elTextures = document.createElement('form');
   this.elTextures.className = 'editor-container horizontal textures';
   this.elTextures.innerHTML = HTML_TEXTURES;
   this.elContainer.appendChild(this.elTextures);
   
-  this.elGamePane.addEventListener('change', this.refreshGame.bind(this));
-  this.elMapPane.addEventListener('change', this.refreshGame.bind(this));
-  
   var elNewTexture = this.elTextures.querySelector('.textures-create');
   elNewTexture.addEventListener('click', this.createTexture.bind(this, null));
+  */
+  
 };
 
 Editor.prototype.onGotSchema = function onGotSchema(schema) {
@@ -156,18 +160,29 @@ Editor.prototype.loadGame = function loadGame(gameConfig) {
     utils.request('/data/game.json', this.loadGame.bind(this));
     return false;
   }
+  
+  var formSettings = [];
+  var sections = ['maps', 'tiles', 'tooltips', 'dialogs'];
+  
+  for (var id in this.schema.game.properties) {
+    if (sections.indexOf(id) !== -1) {
+      formSettings.push({
+        "type": "fieldset",
+        "title": utils.formatID(id),
+        "expandable": true,
+        "items": [
+          id
+        ]
+      });
+    } else {
+      formSettings.push(id);
+    }
+  }
+  
 
   this.gameForm = $(this.elGamePane).jsonForm({
     'schema': this.schema.game,
-    'form': [
-      '*'/*,
-      {
-        "key": "tileSize",
-        'onChange': function (evt) {
-          console.warn('game change')
-        }
-      }*/
-    ],
+    'form': formSettings,
     'value': gameConfig
   });
 
@@ -187,7 +202,10 @@ Editor.prototype.refreshGame = function refreshGame() {
   
   this.game.loadMap = this.loadGameMap.bind(this);
   
-  this.game.createGameFromConfig(this.gameForm.root.getFormValues());
+  var config = this.gameForm.root.getFormValues();
+  config.followPlayer = false;
+  
+  this.game.createGameFromConfig(config);
 };
 
 Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
@@ -243,6 +261,11 @@ Editor.prototype.onClick = function onClick(e) {
   }
   */
 };
+
+
+
+
+
 
 
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
