@@ -16,6 +16,8 @@ var Game = (function Game() {
     this.height = 0;
     this.mapWidth = 0;
     this.mapHeight = 0;
+    this.containerWidth = 0;
+    this.containerHeight = 0;
     this.bleed = {
       'x': 0,
       'y': 0
@@ -531,13 +533,27 @@ var Game = (function Game() {
   };
   
   Game.prototype.onResize = function onResize() {
+    console.group('Resize');
+    
     var bounds = this.el.getBoundingClientRect();
     var elParent = this.el.parentNode;
     var padding = this.currentMap && this.currentMap.padding || 0;
     
+    this.containerWidth = elParent.offsetWidth;
+    this.containerHeight = elParent.offsetHeight;
+    
+    if (this.containerWidth % 2 === 1) {
+      this.containerWidth--;
+    }
+    if (this.containerHeight % 2 === 1) {
+      this.containerHeight--;
+    }
+    
+    console.log('Container: ', this.containerWidth, ',', this.containerHeight);
+
     if (this.currentMap && this.currentMap.width && this.currentMap.height) {
-      this.width = Math.min(this.currentMap.width, elParent.offsetWidth - padding);
-      this.height = Math.min(this.currentMap.height, elParent.offsetHeight - padding);
+      this.width = Math.min(this.currentMap.width, this.containerWidth - padding);
+      this.height = Math.min(this.currentMap.height, this.containerHeigh - padding);
     } else {
       this.width = elParent.offsetWidth - padding;
       this.height = elParent.offsetHeight - padding;
@@ -553,17 +569,7 @@ var Game = (function Game() {
       this.height--;
     }
     
-    this.el.style.width = this.width + 'px';
-    this.el.style.height = this.height + 'px';
-    
-    this.offset = {
-      'x': bounds.left,
-      'y': bounds.top
-    };
-    
-    for (var id in this.layers) {
-      this.layers[id].onResize();
-    }
+    console.log('Game: ', this.width, ',', this.height);
     
     this.bleed.x = this.mapWidth - this.width;
     this.bleed.y = this.mapHeight - this.height;
@@ -574,6 +580,23 @@ var Game = (function Game() {
     if (this.bleed.y < 0) {
       this.bleed.y = this.bleed.y / 2;
     }
+    
+    console.log('Bleed: ', this.bleed.x, ',', this.bleed.y);
+
+    this.el.style.width = this.containerWidth + 'px';
+    this.el.style.height = this.containerHeight + 'px';
+    
+    this.offset = {
+      'x': bounds.left + Math.max((this.containerWidth - this.width) / 2, 0),
+      'y': bounds.top + Math.max((this.containerHeight - this.height) / 2, 0)
+    };
+    
+    for (var id in this.layers) {
+      var layer = this.layers[id];
+      layer.onResize();
+      console.log(layer.id, ':', layer.width, ',', layer.height);
+    }
+    console.groupEnd('Resize');
     
     this.camera.onResize();
   };

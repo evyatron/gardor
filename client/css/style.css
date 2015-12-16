@@ -11,11 +11,21 @@ body {
 
 body {
   font: normal 1em 'Share Tech Mono';
-  background: #156C99;
 }
-
+#game-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 600px;
+  margin: -300px 0 0 -400px;
+}
 #game {
   position: absolute;
+  /*
+  top: 0;
+  left: 0;
+              */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -26,8 +36,8 @@ body {
 }
   #game canvas {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     pointer-events: none;
   }
   

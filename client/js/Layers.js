@@ -1,3 +1,4 @@
+/* global Texture */
 /*
   Base class for layers - in case we want to separate actors into different layers
   This could help with performance, for example placing all static actors
@@ -9,6 +10,8 @@ var Layer = (function Layer() {
     this.game;
     this.canvas;
     this.context;
+    this.width = 0;
+    this.height = 0;
     
     this.actors = [];
     this.actorsMap = {};
@@ -75,8 +78,7 @@ var Layer = (function Layer() {
   };
   
   Layer.prototype.clear = function clear() {
-    var game = this.game;
-    this.context.clearRect(0, 0, game.width, game.height);
+    this.context.clearRect(0, 0, this.width, this.height);
   };
   
   Layer.prototype.draw = function draw() {
@@ -93,8 +95,20 @@ var Layer = (function Layer() {
   };
   
   Layer.prototype.onResize = function onResize() {
-    this.canvas.width = this.game.width;
-    this.canvas.height = this.game.height;
+    this.width = this.game.width;
+    this.height = this.game.height;
+    
+    this.updateSize();
+    
+    return true;
+  };
+  
+  Layer.prototype.updateSize = function updateSize() {
+    this.canvas.width = this.width;
+    this.canvas.height = this.height;
+    this.canvas.style.marginLeft = -this.width / 2 + 'px';
+    this.canvas.style.marginTop = -this.height / 2 + 'px';
+    
     this.isDirty = true;
     
     return true;
@@ -160,22 +174,28 @@ var TilesetLayer = (function TilesetLayer() {
     
     // move the Clip point according to the camera offset and draw the texture
     var camera = this.game.camera;
+    var context = this.context;
+    
     this.texture.clip = {
       'x': camera.x,
       'y': camera.y
     };
-    this.texture.draw(this.context);
+    
+    this.texture.draw(context);
   
     if (window.DEBUG) {
       var pointerTile = this.game.getPointerTile();
+      
       if (pointerTile) {
         var size = this.game.config.tileSize;
         
-        this.context.fillStyle = 'rgba(255, 255, 255, .4)';
-        this.context.beginPath();
-        this.context.fillRect(Math.floor(pointerTile.x * size - camera.x),
-                              Math.floor(pointerTile.y * size - camera.y),
-                              size, size);
+        context.fillStyle = 'rgba(255, 255, 255, .4)';
+        context.beginPath();
+        context.fillRect(pointerTile.x * size - camera.x + this.offset.x,
+                         pointerTile.y * size - camera.y + this.offset.y,
+                         size, size);
+                         
+        this.game.log('pointer tile: ' + pointerTile.x + ',' + pointerTile.y);
       }
     }
     
@@ -186,11 +206,12 @@ var TilesetLayer = (function TilesetLayer() {
 
   TilesetLayer.prototype.createTexture = function createTexture() {
     var game = this.game;
+    var map = game.currentMap;
     var tilesMap = this.game.tiles;
     var size = this.game.config.tileSize;
     var rows = this.grid;
     
-    if (!game.currentMap) {
+    if (!map) {
       console.warn('[TilesetLayer] createTexture: No map loaded');
       return false;
     }
@@ -206,21 +227,43 @@ var TilesetLayer = (function TilesetLayer() {
     
     var canvas = document.createElement('canvas');
     var context = canvas.getContext('2d');
-    var tileId, tile, columns;
     var tilesDrawn = 0;
-    var defaultTile = game.currentMap.defaultTile;
-    canvas.width = game.mapWidth;
-    canvas.height = game.mapHeight;
+    var defaultTile = tilesMap[map.defaultTile];
+    var fillTile = tilesMap[map.fillTile];
+    var color = map.fillColor;
+    var offset = this.offset;
+
+    canvas.width = this.texture.width + game.mapWidth;
+    canvas.height = this.texture.height + game.mapHeight;
+    
+    // Fill default colour
+    if (color && !fillTile) {
+      context.fillStyle = color;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    // Fill default tile
+    var offsetX = -(size - offset.x % size);
+    var offsetY = -(size - offset.y % size);
+    var width = Math.max(this.width, game.mapWidth) + 0;
+    var height = Math.max(this.height, game.mapHeight) + 0;
+    
+    for (var x = offsetX; x < width; x += size) {
+      for (var y = offsetY; y < height; y += size) {
+        if (x < offset.x || x + size > offset.x + game.mapWidth ||
+            y < offset.y || y + size > offset.y + game.mapHeight) {
+          fillTile.texture.draw(context, x, y);
+        }
+      }
+    }
 
     for (var i = 0, numberOfRows = rows.length; i < numberOfRows; i++) {
-      columns = rows[i];
-      for (var j = 0, numberOfCols = columns.length; j < numberOfCols; j++) {
-        tileId = columns[j] || defaultTile;
-        tile = tilesMap[tileId];
+      for (var j = 0, numberOfCols = rows[i].length; j < numberOfCols; j++) {
+        var tile = tilesMap[rows[i][j]] || defaultTile;
         
         if (tile) {
-          var x = j * size;
-          var y = i * size;
+          var x = j * size + offset.x;
+          var y = i * size + offset.y;
           
           tile.texture.draw(context, x, y);
           tilesDrawn++;
@@ -248,32 +291,49 @@ var TilesetLayer = (function TilesetLayer() {
             context.fillText(j + ',' + i, x + 4, y + 12);
           }
         } else {
-          console.warn('Trying to draw invalid tile', tileId, i, j);
+          console.warn('Trying to draw invalid tile', rows[i][j], i, j);
         }
       }
     }
-    
-    // Create an image from the canvas and assign it to the texture
-    var image = new Image();
-    image.addEventListener('load', function onLoad(image) {
-      this.texture.setImage(image);
-    }.bind(this, image));
-    image.src = canvas.toDataURL();
+
+    // Assign the canvas directly to the texture to avoid converting it to an image
+    this.texture.setImage(canvas);
     
     console.info('Create texture with tiles: ' + tilesDrawn);
-
+    
     this.game.log('create tileset: ' + tilesDrawn + ' tiles');
-
+    
     this.isDirty = false;
   };
   
   TilesetLayer.prototype.onResize = function onResize() {
-    Layer.prototype.onResize.apply(this, arguments);
+    var game = this.game;
+    this.width = Math.min(game.mapWidth, game.containerWidth);
+    this.height = Math.min(game.mapHeight, game.containerHeight);
     
     if (this.texture) {
-      this.texture.width = this.game.width;
-      this.texture.height = this.game.height;
+      this.texture.width = Math.max(game.mapWidth, game.containerWidth);
+      this.texture.height = Math.max(game.mapHeight, game.containerHeight);
     }
+    
+    
+    // STRETCH TEST
+    this.width = game.containerWidth;
+    this.height = game.containerHeight;
+    
+    this.offset = {
+      'x': Math.max((this.width - game.mapWidth) / 2, 0),
+      'y': Math.max((this.height - game.mapHeight) / 2, 0)
+    };
+    
+    if (this.texture) {
+      this.texture.width = this.width;
+      this.texture.height = this.height;
+    }
+    
+    
+    
+    this.updateSize();
   };
   
   return TilesetLayer;
@@ -402,12 +462,12 @@ var HUDLayer = (function HUDLayer() {
       }
       
       context.fillRect(tooltip.x - padding.x - tooltip.width / 2,
-                       tooltip.y - padding.y,
+                       tooltip.y - padding.y * 1.5,
                        tooltip.width + padding.x * 2,
                        tooltip.height + padding.y * 2);
                        
       context.strokeRect(tooltip.x - padding.x - tooltip.width / 2,
-                       tooltip.y - padding.y,
+                       tooltip.y - padding.y * 1.5,
                        tooltip.width + padding.x * 2,
                        tooltip.height + padding.y * 2);
 
@@ -443,6 +503,7 @@ var HUDLayer = (function HUDLayer() {
 
   HUDLayer.prototype.onResize = function onResize() {
     Layer.prototype.onResize.apply(this, arguments);
+    
     var font = (this.game.config.tooltips || {}).font;
     
     var context = this.context;

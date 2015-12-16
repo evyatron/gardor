@@ -1,3 +1,5 @@
+/* global InputManager */
+/* global utils */
 /* Controls a given Actor */
 var PlayerController = (function PlayerController() {
   function PlayerController(options) {
@@ -79,17 +81,16 @@ var PlayerController = (function PlayerController() {
     if (this.isActive) {
       this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
       this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
-  
+      
       if (this.boundToGame) {
         var tileSize = game.config.tileSize;
+        
         this.pointer.x = utils.clamp(this.pointer.x, 0, game.width + game.bleed.x - tileSize);
         this.pointer.y = utils.clamp(this.pointer.y, 0, game.height + game.bleed.y - tileSize);
       }
     }
     
-    if (window.DEBUG) {
-      game.log('pointer: ' + this.pointer.x + ',' + this.pointer.y);
-    }
+    game.log('pointer: ' + this.pointer.x + ',' + this.pointer.y);
   };
   
   return PlayerController;
