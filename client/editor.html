@@ -12,10 +12,17 @@
       <div id="game"></div>
     </div>
     
-    <script src="js/jsonform/deps/jquery.min.js"></script>
-    <script src="js/jsonform/deps/underscore.js"></script>
-    <script src="js/jsonform/deps/opt/jsv.js"></script>
-    <script src="js/jsonform/lib/jsonform.js"></script>
+    <div class="editor-container vertical details-pane">
+      <div class="editor-debug-flags">
+        <input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />
+        <input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />
+      </div>
+      <div class="editor-title">Game Settings</div>
+    </div>
+    
+    <div class="editor-container vertical map-pane">
+      <div class="editor-title">Map</div>
+    </div>
     
     <script src="/js/common.js"></script>
     <script src="/js/main.js"></script>

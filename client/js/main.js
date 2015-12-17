@@ -9,6 +9,7 @@ var Game = (function Game() {
     
     this.lastUpdate = 0;
     this.dt = 0;
+    this.timeDialation = 1;
     this.isReady = false;
     this.layers = {};
     
@@ -106,7 +107,11 @@ var Game = (function Game() {
     window.addEventListener('resize', this.onResize.bind(this));
     this.onResize();
     
-    this.loadConfig(this.configSrc);
+    if (this.configSrc) {
+      this.loadConfig(this.configSrc);
+    }
+    
+    this.dispatch('ready');
   };
   
   Game.prototype.destroy = function destroy() {
@@ -248,7 +253,7 @@ var Game = (function Game() {
   Game.prototype.tick = function tick() {
     var now = Date.now();
     
-    this.dt = (now - this.lastUpdate) / 1000;
+    this.dt = (now - this.lastUpdate) / 1000 * this.timeDialation;
     
     this.log('dt: ' + this.dt);
     

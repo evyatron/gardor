@@ -243,16 +243,18 @@ var TilesetLayer = (function TilesetLayer() {
     }
     
     // Fill default tile
-    var offsetX = -(size - offset.x % size);
-    var offsetY = -(size - offset.y % size);
-    var width = Math.max(this.width, game.mapWidth) + 0;
-    var height = Math.max(this.height, game.mapHeight) + 0;
-    
-    for (var x = offsetX; x < width; x += size) {
-      for (var y = offsetY; y < height; y += size) {
-        if (x < offset.x || x + size > offset.x + game.mapWidth ||
-            y < offset.y || y + size > offset.y + game.mapHeight) {
-          fillTile.texture.draw(context, x, y);
+    if (fillTile) {
+      var offsetX = -(size - offset.x % size);
+      var offsetY = -(size - offset.y % size);
+      var width = Math.max(this.width, game.mapWidth) + 0;
+      var height = Math.max(this.height, game.mapHeight) + 0;
+      
+      for (var x = offsetX; x < width; x += size) {
+        for (var y = offsetY; y < height; y += size) {
+          if (x < offset.x || x + size > offset.x + game.mapWidth ||
+              y < offset.y || y + size > offset.y + game.mapHeight) {
+            fillTile.texture.draw(context, x, y);
+          }
         }
       }
     }

@@ -10,36 +10,11 @@ function init() {
 var HTML_GAME_PANE = '<div class="editor-debug-flags">' +
                         '<input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />' +
                         '<input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />' +
-                      '</div>';
+                      '</div>' +
+                      '<div class="editor-title">Game Settings</div>';
                       
-var HTML_MAP_PANE     = '<div class="editor-title">Map Config</div>';
-var TEMPLATE_FIELD    = '<div class="editor-field field-type-{{type}}" data-id="{{id}}" title="{{tooltip}}">' +
-                           '<div class="editor-field-label">' +
-                             '<label for="field-{{id}}">{{name}}</label>' +
-                           '</div>' +
-                           '<div class="editor-field-value">' +
-                             '{{input}}' +
-                           '</div>' +
-                         '</div>';
+var HTML_MAP_PANE  =  '<div class="editor-title">Map Config</div>';
 
-var HTML_TEXTURES     = '<div class="editor-title">Textures</div>' +
-                        '<div class="editor-button textures-create">New</div>' +
-                        '<div class="textures-list"></div>';
-
-var TEMPLATE_TEXTURE  = '<canvas class="image" width="{{tileSize}}" height="{{tileSize}}"></canvas>' +
-                        '<textarea data-texture-id="{{id}}">{{content}}</textarea>';
-
-var TEMPLATES_INPUT = {
-  'string':   '<input type="text" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'src':      '<input type="text" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'number':   '<input type="number" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}" />',
-  'boolean':  '<input type="checkbox" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" checked="{{defaultValue}}" />',
-  'array':    '<textarea type="array" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}">{{defaultValue}}</textarea>',
-  'texture':  '<div class="texture-selector" data-for-field="field-{{id}}">' +
-                '<input type="hidden" data-field-id="{{id}}" id="field-{{id}}" name="field-{{id}}" value="{{defaultValue}}">' +
-                '<canvas width="48" height="48"></canvas>' +
-              '</div>'
-};
 
 function Editor(options) {
   this.elContainer = null;
@@ -49,30 +24,11 @@ function Editor(options) {
   this.gamePane = null;
   this.mapPane = null;
   
-  this.data = {
-    game: {
-      schema: null,
-      value: null
-    },
-    map: {
-      schema: null,
-      value: null
-    }
+  this.config = {
+    game: null,
+    map: null
   };
-  
-  //this.schema = {};
-  
-  /*
-  this.gameDescriber = null;
-  this.mapDescriber = null;
-  
-  this.gameConfig = null;
-  this.mapConfig = null;
-  
-  this.tilesEditor = null;
-  this.textures = {};
-  */
-  
+
   this.init(options);
 }
 
@@ -85,74 +41,32 @@ Editor.prototype.init = function init(options) {
   !options && (options = {});
   
   this.elContainer = options.elContainer || document.body;
-  this.createContainers();
-  
+  this.elGamePane = this.elContainer.querySelector('.details-pane');
+  this.elMapPane = this.elContainer.querySelector('.map-pane');
+
   this.elDebug = this.elContainer.querySelector('.editor-debug-flags');
   this.elDebug.addEventListener('change', this.onDebugChange.bind(this));
-
-  /*
-  this.elContainer.addEventListener('click', this.onClick.bind(this));
-  
-  this.elContainer.addEventListener('dragstart', this.onDragStart.bind(this));
-  this.elContainer.addEventListener('dragover', this.onDragOver.bind(this));
-  this.elContainer.addEventListener('drop', this.onDrop.bind(this));
-  
-  this.on('textureUpdated', this.onTextureUpdated.bind(this));
-  */
   
   utils.request('/data/schema.json', this.onGotSchema.bind(this));
-};
-
-Editor.prototype.createContainers = function createContainers() {
-  this.elGamePane = document.createElement('form');
-  this.elGamePane.className = 'editor-container vertical details-pane';
-  this.elGamePane.innerHTML = HTML_GAME_PANE;
-  this.elGamePane.addEventListener('change', this.refreshGame.bind(this));
-  
-  this.elContainer.appendChild(this.elGamePane);
-  
-  this.elMapPane = document.createElement('form');
-  this.elMapPane.className = 'editor-container vertical map-pane';
-  this.elMapPane.addEventListener('change', this.refreshGame.bind(this));
-  
-  this.elContainer.appendChild(this.elMapPane);
-  
-  /*
-  this.elTextures = document.createElement('form');
-  this.elTextures.className = 'editor-container horizontal textures';
-  this.elTextures.innerHTML = HTML_TEXTURES;
-  this.elContainer.appendChild(this.elTextures);
-  
-  var elNewTexture = this.elTextures.querySelector('.textures-create');
-  elNewTexture.addEventListener('click', this.createTexture.bind(this, null));
-  */
-  
 };
 
 Editor.prototype.onGotSchema = function onGotSchema(schema) {
   this.schema = schema;
   
-  this.schema.game = this.updateSchemaWithTemplates(this.schema.game, schema.templates);
-  this.schema.map = this.updateSchemaWithTemplates(this.schema.map, schema.templates);
+  this.paneGame = new Pane({
+    'id': 'game',
+    'el': this.elGamePane,
+    'schema': this.schema.game,
+    'onChange': this.refreshGame.bind(this)
+  });
+  this.paneMap = new Pane({
+    'id': 'map',
+    'el': this.elMapPane,
+    'schema': this.schema.map,
+    'onChange': this.refreshMap.bind(this)
+  });
 
   this.loadGame();
-};
-
-Editor.prototype.updateSchemaWithTemplates = function updateSchemaWithTemplates(schema, templates) {
-  if (templates[schema.type]) {
-    schema = JSON.parse(JSON.stringify(templates[schema.type]));
-  }
-  
-  if (schema.type === 'object') {
-    for (var k in schema.properties) {
-      schema.properties[k] = this.updateSchemaWithTemplates(schema.properties[k], templates);
-      schema.properties[k].title = utils.formatID(k);
-    }
-  } else if (schema.type === 'array') {
-    schema.items = this.updateSchemaWithTemplates(schema.items, templates);
-  }
-  
-  return schema;
 };
 
 Editor.prototype.loadGame = function loadGame(gameConfig) {
@@ -161,35 +75,21 @@ Editor.prototype.loadGame = function loadGame(gameConfig) {
     return false;
   }
   
-  var formSettings = [];
-  var sections = ['maps', 'tiles', 'tooltips', 'dialogs'];
-  
-  for (var id in this.schema.game.properties) {
-    if (sections.indexOf(id) !== -1) {
-      formSettings.push({
-        "type": "fieldset",
-        "title": utils.formatID(id),
-        "expandable": true,
-        "items": [
-          id
-        ]
-      });
-    } else {
-      formSettings.push(id);
-    }
-  }
-  
-
-  this.gameForm = $(this.elGamePane).jsonForm({
-    'schema': this.schema.game,
-    'form': formSettings,
-    'value': gameConfig
-  });
+  this.config.game = gameConfig;
+  this.paneGame.updateFromJSON(gameConfig);
 
   this.refreshGame();
 };
 
+Editor.prototype.refreshMap = function refreshMap() {
+  delete this.game.maps[this.config.map.id];
+  this.paneMap.updateJSON(this.config.map);
+  this.game.goToMap(this.config.map.id);
+};
+
 Editor.prototype.refreshGame = function refreshGame() {
+  console.info('Refresh game');
+  
   if (this.game) {
     this.game.destroy();
   }
@@ -201,31 +101,39 @@ Editor.prototype.refreshGame = function refreshGame() {
   });
   
   this.game.loadMap = this.loadGameMap.bind(this);
-  
-  var config = this.gameForm.root.getFormValues();
-  config.followPlayer = false;
-  
-  this.game.createGameFromConfig(config);
+
+  this.game.on('ready', function onGameReady() {
+    var config = JSON.parse(JSON.stringify(this.config.game));
+    
+    this.paneGame.updateJSON(config);
+
+    this.game.createGameFromConfig(config);
+    
+    //this.disablePlay();
+  }.bind(this));
 };
 
 Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
-  if (this.mapForm) {
-    var mapConfig = this.mapForm.root.getFormValues();
+  var mapConfig = this.config.map;
+  
+  if (mapConfig) {
+    this.paneMap.updateFromJSON(mapConfig);
+    
     this.game.addMap(mapConfig);
     callback && callback(mapConfig);
   } else {
-    utils.request('/data/' + mapId + '.json', function onGotMap(mapData) {
-      this.mapForm = $(this.elMapPane).jsonForm({
-        'schema': this.schema.map,
-        'form': [
-          '*'
-        ],
-        'value': mapData
-      });
-      
-      this.loadGameMap(mapId, callback);
-    }.bind(this));
+    this.getGameMapConfig(mapId, callback);
   }
+};
+
+Editor.prototype.getGameMapConfig = function getGameMapConfig(mapId, callback) {
+  var url = '/data/' + mapId + '.json';
+  
+  utils.request(url, function onGotMap(mapConfig) {
+    this.config.map = mapConfig;
+    
+    this.loadGameMap(mapId, callback);
+  }.bind(this));
 };
 
 Editor.prototype.onDebugChange = function onDebugChange(e) {
@@ -241,10 +149,12 @@ Editor.prototype.onDebugChange = function onDebugChange(e) {
 
 
 Editor.prototype.enablePlay = function enablePlay() {
+  this.game.playerController.enable();
   this.elContainer.classList.remove('disable-play');
 };
 
 Editor.prototype.disablePlay = function disablePlay() {
+  this.game.playerController.disable();
   this.elContainer.classList.add('disable-play');
 };
 
@@ -376,185 +286,7 @@ Editor.prototype.getJSONProperty = function getJSONProperty(json) {
   return result;
 };
 
-Editor.prototype.onDetailsChange = function onDetailsChange(e) {
-  var el = e.target;
-  if (/debug/.test(el.id)) {
-    this.onDebugChange(e);
-    return;
-  }
-  var id = el.id.replace('field-', '');
-  var value = el.value;
-  var type = el.getAttribute('type');
-  
-  if (type === 'text') {
-    value = '"' + value + '"';
-  } else if (type === 'checkbox') {
-    value = el.checked;
-  }
-  
-  var elArrayParent = closest(el, '.field-type-array');
-  if (elArrayParent) {
-    id = elArrayParent.dataset.id;
-    value = [];
-    var elItems = elArrayParent.querySelectorAll('.editor-field-value');
-    for (var i = 0; i < elItems.length; i++) {
-      if (elItems[i].parentNode !== elArrayParent) {
-        continue;
-      }
-      
-      var obj = {};
-      var elValues = elItems[i].querySelectorAll('input');
-      
-      for (var j = 0; j < elValues.length; j++) {
-        var itemId = elValues[j].id.replace('field-' + id + '.', '');
-        var itemValue = elValues[j].value; 
-        
-        if (elValues[j].type === 'text') {
-          itemValue = itemValue;
-        } else if (elValues[j].type === 'checkbox') {
-          itemValue = elValues[j].checked;
-        }
-        
-        try {
-          itemValue = JSON.parse(itemValue);
-        } catch(ex) {
-          
-        }
-        
-        obj[itemId] = itemValue;
-      }
-      
-      value.push(obj);
-    }
-  }
-  
-  this.updateGameConfig(id, value);
-};
 
-Editor.prototype.updateGameConfig = function updateGameConfig(id, value) {
-  if (typeof value === 'object') {
-    value = JSON.stringify(value);
-  }
-  
-  eval('this.gameConfig.' + id + ' = ' + value);
-  
-  this.createGameFromConfig();
-};
-
-Editor.prototype.onMapChange = function onMapChange(e) {
-  var el = e.target;
-  var id = el.id.replace('field-', '');
-  var value = el.value;
-  var type = el.getAttribute('type');
-  
-  if (type === 'text') {
-    value = '"' + value + '"';
-  } else if (type === 'checkbox') {
-    value = el.checked;
-  }
-  
-  eval('this.mapConfig.' + id + ' = ' + value);
-};
-
-Editor.prototype.loadMapFromConfig = function loadMapFromConfig() {
-  this.game.goToMap(this.mapConfig.id);
-};
-
-Editor.prototype.createDetailsPane = function createDetailsPane() {
-  var html = HTML_DETAILS_PANE + this.getDescriberHTML(this.gameDescriber);
-  this.elGamePane.innerHTML = html;
-};
-
-Editor.prototype.createMapPane = function createMapPane() {
-  var html = HTML_MAP_PANE + this.getDescriberHTML(this.mapDescriber);
-  this.elMapPane.innerHTML = html;
-};
-
-Editor.prototype.getDescriberHTML = function getDescriberHTML(data) {
-  var html = '';
-  
-  for (var id in data) {
-    html += this.getFieldHTML(id, data[id]);
-  }
-  
-  return html;
-};
-
-Editor.prototype.getFieldHTML = function getFieldHTML(id, field) {
-  if (typeof field !== 'object') {
-    return '';
-  }
-
-  var html = '';
-
-  if (!field.type ||
-      field.type === 'map' ||
-      (field.type === 'array' && typeof field.value === 'object')
-     ) {
-    html += '<div class="editor-title">' + (field.name || id) + '</div>';
-  }
-  
-  if (field.type) {
-    if (!field.name) {
-      field.name = id.split('.');
-      field.name = field.name[field.name.length - 1];
-    }
-    
-    var inputTemplate = '';
-    
-    if (this['template_' + field.type]) {
-      inputTemplate = this['template_' + field.type](id, field);
-    } else {
-      inputTemplate = TEMPLATES_INPUT[field.type] || 'MISSING INPUT: ' + field.type;
-    }
-    
-    html += TEMPLATE_FIELD.format(field).format({
-      'id': id,
-      'input': inputTemplate.format(field).format({'id': id})
-    });
-  } else {
-    if (id !== 'modules') {
-      for (var subFieldId in field) {
-        html += this.getFieldHTML(id + '.' + subFieldId, field[subFieldId]);
-      }
-    }
-  }
-  
-  return html;
-};
-
-Editor.prototype.template_map = function template_map(id, field) {
-  var html = '';
-  
-  var value = field.value;
-  
-  html = '"":{}';
-  
-  return html;
-};
-
-Editor.prototype.template_array = function template_array(id, field) {
-  var html = '<div class="editor-group" data-group-id="' + id + '">';
-  
-  if (typeof field.value === 'string') {
-    var inputTemplate = TEMPLATES_INPUT[field.type] || 'MISSING INPUT: ' + field.type;
-    
-    html += inputTemplate.format({
-      'defaultValue': JSON.stringify(field.defaultValue)
-    }).format(field).format({
-      'id': id
-    });
-  } else {
-    var objectType = field.value;
-    for (var subId in objectType) {
-      html += this.getFieldHTML(id + '.' + subId, objectType[subId]);
-    }
-  }
-  
-  html += '</div>';
-  
-  return html;
-};
 
 /* Textures handling */
 
@@ -998,11 +730,14 @@ var Pane = (function Pane() {
     
     this.el.addEventListener('click', this.onClick.bind(this));
     
-    if (options.schemaURL) {
-      this.load(options.schemaURL);
-    } else if (options.schema) {
-      this.setSchema(options.schema);
+    if (options.onReady) {
+      this.on(this.EVENTS.READY, options.onReady);
     }
+    if (options.onChange) {
+      this.on(this.EVENTS.CHANGE, options.onChange);
+    }
+    
+    this.setSchema(options.schema);
   };
   
   Pane.prototype.load = function load(url) {
@@ -1015,15 +750,49 @@ var Pane = (function Pane() {
     
     this.schema = schema;
     
-    this.createItem(this.id, schema, this.el);
+    for (var propertyId in schema) {
+      this.createItem(this.id + '_' + propertyId, schema[propertyId], this.el);
+    }
     
+    console.info('Pane ready', this.id, this);
+
     this.dispatch(this.EVENTS.READY, this);
   };
   
+  Pane.prototype.updateJSON = function updateJSON(json) {
+    for (var id in this.inputs) {
+      var value = this.inputs[id].value;
+      var cleanId = id.replace(this.id + '_', '').replace(/_/g, '.');
+      
+      if (typeof value === 'string') {
+        value = '"' + value.replace(/"/g, '\\"') + '"';
+      } else if (typeof value === 'object') {
+        value = JSON.stringify(value);
+      }
+      
+      var expr = 'json.' + cleanId + ' = ' + value + ';';
+      
+      eval(expr);
+    }
+  };
+  
   Pane.prototype.updateFromJSON = function updateFromJSON(json) {
-    this.update(json, this.id);
-    //this.value = JSON.parse(JSON.stringify(json));
-    this.dispatch(this.EVENTS.CHANGE, this);
+    for (var id in this.inputs) {
+      var cleanId = id.replace(this.id + '_', '').replace(/_/g, '.');
+      var value = undefined;
+      
+      try {
+        var value = eval('json.' + cleanId);
+        var input = this.inputs[id];
+        if (input && value !== undefined) {
+          input.setValue(value, true);
+        }
+      } catch (ex) {
+        console.warn('No value found in JSON', id, cleanId, ex);
+      }
+    }
+    
+    //this.dispatch(this.EVENTS.CHANGE, this);
   };
   
   Pane.prototype.update = function update(json, parentId) {
@@ -1194,20 +963,13 @@ var Pane = (function Pane() {
   
   Pane.prototype.createItem = function createItem(schemaId, schema, elParent) {
     var type = schema.type;
-    
-    var cleanSchemaId = this.cleanSchemaId(schemaId);
-    if (!this.flatSchema[cleanSchemaId]) {
-      this.flatSchema[cleanSchemaId] = schema;
-    }
-    
+
     if (!type) {
       //console.warn('Invalid schema', schemaId, schema);
     } else {
       var hasCustomInput = window['Input_' + type];
       if (!hasCustomInput && type == 'object') {
         this.createObject(schemaId, schema, elParent);
-      } else if (!hasCustomInput && type === 'array') {
-        this.createArray(schemaId, schema, elParent);
       } else {
         var input = this.createInput(schemaId, schema, elParent);
         this.inputs[schemaId] = input;
@@ -1404,53 +1166,12 @@ var Input = (function Input() {
     var inputType = this.TYPE_MAPPINGS[this.schema.type] || this.schema.type;
     return '<input ' +
               'type="' + inputType + '" ' +
+              'id="' + this.id + '" ' +
               'name="' + this.id + '" ' +
               'value="' + this.schema.default + '" />';
   };
   
   return Input;
-}());
-
-var Input_grid = (function Input_grid() {
-  function Input_grid(options) {
-    Input.call(this, options);
-  }
-  
-  Input_grid.prototype = Object.create(Input.prototype);
-  Input_grid.prototype.constructor = Input_grid;
-  
-  Input_grid.prototype.update = function update() {
-    this.elInput.textContent = JSON.stringify(this.value);
-  };
-  
-  Input_grid.prototype.setupInput = function setupInput() {
-    this.elInput = this.el.querySelector('textarea');
-    
-    this.el.addEventListener('change', this.onInputChange.bind(this));
-  };
-  
-  Input_grid.prototype.onInputChange = function onInputChange(e) {
-    var value = this.elInput.textContent;
-    
-    try {
-      value = JSON.parse(value);
-    } catch(ex) {
-      alert('Invalid array', value);
-      value = null;
-    }
-    
-    if (value) {
-      this.setValue(value);
-    }
-  };
-  
-  Input_grid.prototype.getInputHTML = function getInputHTML() {
-    var html = '<textarea name="' + this.id + '"></textarea>';
-    
-    return html;
-  };
-  
-  return Input_grid;
 }());
 
 var Input_vector = (function Input_vector() {
@@ -1499,125 +1220,6 @@ var Input_vector = (function Input_vector() {
   return Input_vector;
 }());
 
-var Input_texture = (function Input_texture() {
-  function Input_texture(options) {
-    this.inputs = {};
-    
-    Input.call(this, options);
-  }
-  
-  Input_texture.prototype = Object.create(Input.prototype);
-  Input_texture.prototype.constructor = Input_texture;
-  
-  Input_texture.prototype.init = function init() {
-    this.textureSchema = JSON.parse(JSON.stringify(editor.schema.texture));
-    
-    Input.prototype.init.apply(this, arguments);
-  };
-
-  Input_texture.prototype.setValue = function setValue(value, shouldSupressEvent) {
-    var oldValue = this.value;
-    
-    this.value = JSON.parse(JSON.stringify(value));
-
-    for (var id in this.inputs) {
-      if (this.value.hasOwnProperty(id)) {
-        this.inputs[id].setValue(this.value[id], shouldSupressEvent);
-      }
-    }
-    
-    if (!shouldSupressEvent) {
-      this.dispatch(this.EVENTS.CHANGE, this, oldValue, this.value);
-    }
-  };
-  
-  Input_texture.prototype.update = function update() {
-    for (var id in this.inputs) {
-      this.inputs[id].update();
-    }
-  };
-  
-  Input_texture.prototype.setupInput = function setupInput() {
-    var el = this.el.querySelector('.pane-input-field');
-    var properties = this.textureSchema.properties;
-    
-    for (var id in properties) {
-      var input = this.pane.createInput('texture_' + id, properties[id], el);
-      
-      this.inputs[id] = input;
-      
-      input.on(input.EVENTS.CHANGE, this.onSubInputChange.bind(this));
-    }
-  };
-  
-  Input_texture.prototype.onSubInputChange = function onSubInputChange(input) {
-    this.value[input.id.replace('texture_', '')] = input.value;
-  };
-  
-  Input_texture.prototype.getInputHTML = function getInputHTML() {
-    return '';
-  };
-  
-  return Input_texture;
-}());
-
-var Input_module = (function Input_module() {
-  function Input_module(options) {
-    Input.call(this, options);
-  }
-  
-  Input_module.prototype = Object.create(Input.prototype);
-  Input_module.prototype.constructor = Input_module;
-  
-  Input_module.prototype.setValue = function setValue(value, shouldSupressEvent) {
-    console.warn('module set value', value);
-    Input.prototype.setValue.apply(this, arguments);
-  };
-  
-  /*
-  Input_module.prototype.init = function init() {
-    Input.prototype.init.apply(this, arguments);
-  };
-  
-  Input_module.prototype.setValue = function setValue(value, shouldSupressEvent) {
-    var oldValue = this.value;
-    
-    this.value = JSON.parse(JSON.stringify(value));
-
-    for (var id in this.inputs) {
-      if (this.value.hasOwnProperty(id)) {
-        this.inputs[id].setValue(this.value[id], shouldSupressEvent);
-      }
-    }
-    
-    if (!shouldSupressEvent) {
-      this.dispatch(this.EVENTS.CHANGE, this, oldValue, this.value);
-    }
-  };
-  
-  Input_module.prototype.update = function update() {
-    for (var id in this.inputs) {
-      this.inputs[id].update();
-    }
-  };
-  */
-  
-  Input_module.prototype.setupInput = function setupInput() {
-    return;
-    var el = this.el.querySelector('.pane-input-field');
-    
-  };
-  
-  Input_module.prototype.onSubInputChange = function onSubInputChange(input) {
-    
-  };
-  
-  Input_module.prototype.getInputHTML = function getInputHTML() {
-    return 'MODULE';
-  };
-  
-  return Input_module;
-}());
 
 
 var Tiles = (function Tiles() {
@@ -1799,4 +1401,79 @@ init();
   [{"id":"land","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[192,32],"origin":[0,0]}},{"id":"water1","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[193,351],"origin":[0,0]}},{"id":"path","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[224,352],"origin":[0,0]}},{"id":"water2","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[250,354],"origin":[0,0]}},{"id":"water3","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","clip":[192,383],"origin":[0,0]}},{"id":"water","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[224,385],"width":32,"height":32,"scale":1}},{"id":"water5","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[247,384],"width":32,"height":32,"scale":1}},{"id":"grass","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[706,96],"width":32,"height":32,"scale":1}},{"id":"water6","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[194,411],"width":32,"height":32,"scale":1}},{"id":"water7","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[224,410],"width":32,"height":32,"scale":1}},{"id":"water8","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[247,410],"width":32,"height":32,"scale":1}},{"id":"grass2","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[673,160],"width":32,"height":32,"scale":1}},{"id":"grass3","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[735,160],"width":32,"height":32,"scale":1}},{"id":"island","isBlocking":true,"texture":{"src":"/img/tiles/atlas.png","origin":[0,0],"clip":[224,448],"width":32,"height":32,"scale":1}}]
   water island grid
   [["land","land","land","land","land","land","land","land","land","land","land"],["land","grass","grass3","grass","grass","grass","grass","grass","grass","grass","land"],["land","grass3","grass","grass","grass3","grass","grass","grass2","grass3","grass","land"],["land","grass","grass","water1","path","path","path","water2","grass","grass","land"],["land","grass","grass","water3","island","water","water","water5","grass","grass","land"],["land","grass","grass2","water3","water","island","water","water5","grass","grass","land"],["land","grass","grass","water3","water","water","water","water5","grass","grass","land"],["land","grass","grass","water6","water7","water7","water7","water8","grass","grass","land"],["land","grass3","grass3","grass","grass","grass","grass3","grass","grass","grass2","land"],["land","grass2","grass","grass","grass","grass3","grass","grass","grass","grass","land"],["land","land","land","land","land","grass","grass","grass","land","land","land"],["land","land","land","land","land","grass","grass","grass","grass","grass","land"]]
+*/
+
+
+
+  /*
+  
+  this.createContainers();
+  
+  this.elContainer.addEventListener('click', this.onClick.bind(this));
+  
+  this.elContainer.addEventListener('dragstart', this.onDragStart.bind(this));
+  this.elContainer.addEventListener('dragover', this.onDragOver.bind(this));
+  this.elContainer.addEventListener('drop', this.onDrop.bind(this));
+  
+  this.on('textureUpdated', this.onTextureUpdated.bind(this));
+  */
+  
+  //utils.request('/data/schema.json', this.onGotSchema.bind(this));
+
+/*
+Editor.prototype.createContainers = function createContainers() {
+  this.elGamePane = document.createElement('form');
+  this.elGamePane.className = 'editor-container vertical details-pane';
+  this.elGamePane.innerHTML = HTML_GAME_PANE;
+  this.elGamePane.addEventListener('change', this.refreshGame.bind(this));
+  
+  this.elContainer.appendChild(this.elGamePane);
+  
+  this.elMapPane = document.createElement('form');
+  this.elMapPane.className = 'editor-container vertical map-pane';
+  this.elMapPane.innerHTML = HTML_MAP_PANE;
+  this.elMapPane.addEventListener('change', this.refreshGame.bind(this));
+  
+  this.elContainer.appendChild(this.elMapPane);
+  
+  /*
+  this.elTextures = document.createElement('form');
+  this.elTextures.className = 'editor-container horizontal textures';
+  this.elTextures.innerHTML = HTML_TEXTURES;
+  this.elContainer.appendChild(this.elTextures);
+  
+  var elNewTexture = this.elTextures.querySelector('.textures-create');
+  elNewTexture.addEventListener('click', this.createTexture.bind(this, null));
+  *-/
+  
+};
+
+*/
+
+/*
+Editor.prototype.onGotSchema = function onGotSchema(schema) {
+  this.schema = schema;
+  
+  this.schema.game = this.updateSchemaWithTemplates(this.schema.game, schema.templates);
+  this.schema.map = this.updateSchemaWithTemplates(this.schema.map, schema.templates);
+
+  this.loadGame();
+};
+
+Editor.prototype.updateSchemaWithTemplates = function updateSchemaWithTemplates(schema, templates) {
+  if (templates[schema.type]) {
+    schema = JSON.parse(JSON.stringify(templates[schema.type]));
+  }
+  
+  if (schema.type === 'object') {
+    for (var k in schema.properties) {
+      schema.properties[k] = this.updateSchemaWithTemplates(schema.properties[k], templates);
+      schema.properties[k].title = utils.formatID(k);
+    }
+  } else if (schema.type === 'array') {
+    schema.items = this.updateSchemaWithTemplates(schema.items, templates);
+  }
+  
+  return schema;
+};
 */

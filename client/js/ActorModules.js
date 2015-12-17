@@ -189,6 +189,9 @@ var ModuleDialog = (function ModuleDialog() {
     if (!options.hasOwnProperty('activation')) {
       options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
     }
+    if (!options.hasOwnProperty('disableControllerWhenActive')) {
+      options.disableControllerWhenActive = true;
+    }
 
     ActorModule.call(this, options);
   }
@@ -386,10 +389,25 @@ var ModuleDialog = (function ModuleDialog() {
 
 /* Shows a webpage either in a frame or a new tab. INTERACT by default */
 var ModuleWebPage = (function ModuleWebPage() {
+  var TEMPLATE_POPUP = '<div class="popup-block-content">' +
+                         '<div class="popup-block-title">Popup Blocked?? Noooooooo!</div>' +
+                         '<div class="popup-block-message">' +
+                            'Please allow popups to fully enjoy<br />' +
+                            'the wonder that is this link.' +
+                         '</div>' +
+                         '<div class="popup-block-buttons">' +
+                           '<div class="button">Okay</div>' +
+                         '</div>' +
+                       '</div>';
+  
   function ModuleWebPage(options) {
     this.url = '';
     this.isInFrame = false;
     this.scale = 1;
+    this.minWidth = 0;
+    this.minHeight = 0;
+    
+    this.elPopupMessage = null;
     
     if (!options.hasOwnProperty('activation')) {
       options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
@@ -407,12 +425,45 @@ var ModuleWebPage = (function ModuleWebPage() {
     this.url = options.url || '';
     this.isInFrame = options.hasOwnProperty('isInFrame')? options.isInFrame : false;
     this.scale = options.scale || 0.95;
+    this.minWidth = options.minWidth || 1600;
+    this.minHeight = options.minHeight || 900;
+  };
+  
+  ModuleWebPage.prototype.isDocSizeEnough = function isDocSizeEnough() {
+    var width = this.actor.game.el.offsetWidth;
+    var height = this.actor.game.el.offsetHeight;
+    
+    return width >= this.minWidth && height >= this.minHeight;
+  };
+  
+  ModuleWebPage.prototype.showPopupMessage = function showPopupMessage() {
+    this.elPopupMessage = document.createElement('div');
+    this.elPopupMessage.className = 'popup-block';
+    this.elPopupMessage.innerHTML = TEMPLATE_POPUP;
+    document.body.appendChild(this.elPopupMessage);
+    
+    this.actor.game.playerController.disable();
+    
+    var self = this;
+    this.elPopupMessage.addEventListener('click', function onClick(e) {
+      if (e.target.classList.contains('button')) {
+        self.elPopupMessage.removeEventListener('click', onClick);
+        self.hidePopupMessage();
+      }
+    });
+  };
+  
+  ModuleWebPage.prototype.hidePopupMessage = function hidePopupMessage() {
+    if (this.elPopupMessage && this.elPopupMessage.parentNode) {
+      this.elPopupMessage.parentNode.removeChild(this.elPopupMessage);
+    }
+    this.actor.game.playerController.enable();
   };
   
   ModuleWebPage.prototype.activate = function activate(e) {
     ActorModule.prototype.activate.apply(this, arguments);
     
-    if (this.isInFrame) {
+    if (this.isInFrame && this.isDocSizeEnough()) {
       var actor = this.actor;
       var parentEl = actor.game.el;
       var width = parentEl.offsetWidth * this.scale;
@@ -427,7 +478,10 @@ var ModuleWebPage = (function ModuleWebPage() {
       
       this.frame.src = this.url;
     } else {
-      window.open(this.url, '_blank');
+      var windowOpened = window.open(this.url, '_blank');
+      if (!windowOpened) {
+        this.showPopupMessage();
+      }
     }
   };
   
@@ -691,8 +745,6 @@ var ModuleParticles = (function ModuleParticles() {
       }
 
       this.isRunning = true;
-      this.lastUpdate = Date.now();
-      window.requestAnimationFrame(this.tick.bind(this));
 
       return this;
     };
@@ -759,18 +811,6 @@ var ModuleParticles = (function ModuleParticles() {
         'life': 0,
         'gravity': gravity
       });
-    };
-
-    Particles.prototype.tick = function tick() {
-      var now = Date.now();
-
-      this.dt = Math.min((now - this.lastUpdate) / 1000, 1000 / 60);
-
-      this.update(this.dt);
-      this.draw(this.context);
-
-      this.lastUpdate = now;
-      window.requestAnimationFrame(this.tick.bind(this));
     };
 
     Particles.prototype.update = function update(dt) {
