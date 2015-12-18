@@ -47,6 +47,10 @@ Editor.prototype.init = function init(options) {
   this.elDebug = this.elContainer.querySelector('.editor-debug-flags');
   this.elDebug.addEventListener('change', this.onDebugChange.bind(this));
   
+  this.elPlayable = this.elContainer.querySelector('input#is-playable');
+  
+  this.elPlayable.addEventListener('change', this.onPlayableChange.bind(this));
+  
   utils.request('/data/schema.json', this.onGotSchema.bind(this));
 };
 
@@ -118,15 +122,16 @@ Editor.prototype.onGameReady = function onGameReady() {
 };
 
 Editor.prototype.onGameClick = function onGameClick(data) {
+  if (this.isPlayable) {
+    return;
+  }
+  
   if (this.heldActor) {
-    this.heldActor.updateTile(data.tile);
-    this.heldActor.setAlpha();
-    this.heldActor = null;
+    this.placeActorOnTile(this.heldActor, data.tile);
   } else {
     var actorOnTile = data.actors[Object.keys(data.actors)[0]];
     
     if (actorOnTile) {
-      console.info('[Editor] Pickup actor', actorOnTile);
       this.heldActor = actorOnTile;
       this.heldActor.setAlpha(0.5);
     }
@@ -136,6 +141,21 @@ Editor.prototype.onGameClick = function onGameClick(data) {
 Editor.prototype.onGamePointerTileChange = function onGamePointerTileChange(data) {
   if (this.heldActor) {
     this.heldActor.updateTile(data.tile);
+  }
+};
+
+Editor.prototype.placeActorOnTile = function placeActorOnTile(actor, tile) {
+  this.heldActor.updateTile(tile);
+  this.heldActor.setAlpha();
+  this.heldActor = null;
+  
+  
+  var actors = this.config.map.actors;
+  for (var i = 0, len = actors.length; i < len; i++) {
+    if (actors[i].id === actor.id) {
+      actors[i].tile = tile;
+      break;
+    }
   }
 };
 
@@ -174,13 +194,24 @@ Editor.prototype.onDebugChange = function onDebugChange(e) {
 };
 
 Editor.prototype.enablePlay = function enablePlay() {
+  this.isPlayable = true;
   this.game.playerController.enable();
+  this.elPlayable.checked = true;
 };
 
 Editor.prototype.disablePlay = function disablePlay() {
+  this.isPlayable = false;
   this.game.playerController.disable();
+  this.elPlayable.checked = false;
 };
 
+Editor.prototype.onPlayableChange = function onPlayableChange() {
+  if (this.elPlayable.checked) {
+    this.enablePlay();
+  } else {
+    this.disablePlay();
+  }
+};
 
 
 

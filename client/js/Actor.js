@@ -156,6 +156,10 @@ var Actor = (function Actor() {
       this.tile = tile;
       this.position = this.game.getCoordsFromTile(this.tile);
       this.layer.sortActors();
+      
+      if (this.isBlocking) {
+        this.game.navMesh.update();
+      }
     }
   };
   
@@ -171,10 +175,7 @@ var Actor = (function Actor() {
       
       if (game.distance(this.targetPosition, this.position) <= speed) {
         this.position = this.targetPosition;
-        this.updateTile(this.targetTile);
-        
-        game.navMesh.update();
-        
+
         if (this.pathToWalk.length > 0) {
           this.targetTile = this.pathToWalk.splice(0, 1)[0];
           this.targetPosition = game.getCoordsFromTile(this.targetTile);
@@ -211,7 +212,8 @@ var Actor = (function Actor() {
           }
         }
         
-        this.updateTile(game.getTileFromCoords(this.position));
+        this.tile = game.getTileFromCoords(this.position);
+        this.layer.sortActors();
       }
     }
     

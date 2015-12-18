@@ -84,6 +84,16 @@ div, p, input, textarea {
   background: #fff;
 }
 
+.is-playable {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, .3);
+  border-radius: 6;
+  z-index: 10;
+}
 
 .pane-container-array .items {
   padding: 5px;
