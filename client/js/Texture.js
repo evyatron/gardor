@@ -20,6 +20,7 @@ var Texture = (function Texture() {
     this.width = 0;
     this.height = 0;
     this.scale = 1;
+    this.alpha = null;
     this.isReady = false;
     
     this.init(options, onLoad);
@@ -86,6 +87,14 @@ var Texture = (function Texture() {
     };
   };
   
+  Texture.prototype.setAlpha = function setAlpha(alpha) {
+    if (alpha === undefined) {
+      alpha = null;
+    }
+    
+    this.alpha = alpha;
+  };
+  
   Texture.prototype.getImage = function getImage() {
     return Texture.prototype.textures[this.src];
   };
@@ -122,6 +131,12 @@ var Texture = (function Texture() {
     }
     
     if (shouldDraw) {
+      var previousAlpha = null;
+      if (this.alpha !== null) {
+        previousAlpha = context.globalAlpha;
+        context.globalAlpha = this.alpha;
+      }
+      
       context.drawImage(image,
                         // Draw this
                         clip.x,
@@ -133,6 +148,10 @@ var Texture = (function Texture() {
                         y,
                         drawWidth,
                         drawHeight);
+      
+      if (previousAlpha !== null) {
+        context.globalAlpha = previousAlpha;
+      }
       
       if (window.DEBUG && this.game) {
         this.game.stats.textures++;

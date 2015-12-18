@@ -43,9 +43,7 @@ var PlayerController = (function PlayerController() {
   };
   
   PlayerController.prototype.onPointerClick = function onPointerClick(e) {
-    if (this.isActive) {
-      this.game.handleClick(e);
-    }
+    this.game.handleClick(e);
   };
   
   PlayerController.prototype.getActor = function getActor() {
@@ -78,16 +76,14 @@ var PlayerController = (function PlayerController() {
     this.justPressed = InputManager.justPressed;
     InputManager.justPressed = {};
     
-    if (this.isActive) {
-      this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
-      this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
+    this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
+    this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
+    
+    if (this.boundToGame) {
+      var tileSize = game.config.tileSize;
       
-      if (this.boundToGame) {
-        var tileSize = game.config.tileSize;
-        
-        this.pointer.x = utils.clamp(this.pointer.x, 0, game.width + game.bleed.x - tileSize);
-        this.pointer.y = utils.clamp(this.pointer.y, 0, game.height + game.bleed.y - tileSize);
-      }
+      this.pointer.x = utils.clamp(this.pointer.x, 0, game.width + game.bleed.x - tileSize);
+      this.pointer.y = utils.clamp(this.pointer.y, 0, game.height + game.bleed.y - tileSize);
     }
     
     game.log('pointer: ' + this.pointer.x + ',' + this.pointer.y);

@@ -69,7 +69,9 @@ var utils = {
   },
   
   'tilesEqual': function tilesEqual(tileA, tileB) {
-    return tileA.x === tileB.x && tileA.y === tileB.y;
+    !tileA && (tileA = {});
+    !tileB && (tileB = {});
+    return (tileA.x === tileB.x && tileA.y === tileB.y);
   },
   
   'getTileOffsetDirection': function getTileOffsetDirection(from, to) {

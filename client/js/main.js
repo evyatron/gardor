@@ -1,5 +1,6 @@
 /* global DEBUG */
 /* global DEBUG_NAVMESH */
+/* global utils */
 
 
 /* Main game class, magic happens here */
@@ -50,6 +51,14 @@ var Game = (function Game() {
       'textures': 0
     };
     this.runningBenchmarks = {};
+    
+    this.EVENTS = {
+      CLICK: 'click',
+      CREATE: 'create',
+      MAP_CREATE: 'mapCreated',
+      POINTER_TILE_CHANGE: 'pointerTileChange',
+      READY: 'ready'
+    };
     
     this.GOTO_MAP_RESULT = {
       SUCCESS: 0,
@@ -111,7 +120,7 @@ var Game = (function Game() {
       this.loadConfig(this.configSrc);
     }
     
-    this.dispatch('ready');
+    this.dispatch(this.EVENTS.READY);
   };
   
   Game.prototype.destroy = function destroy() {
@@ -171,7 +180,7 @@ var Game = (function Game() {
     }
     
     this.isReady = true;
-    this.dispatch('created', this);
+    this.dispatch(this.EVENTS.CREATE, this);
 
     this.isRunning = true;
     this.lastUpdate = Date.now();
@@ -241,7 +250,7 @@ var Game = (function Game() {
 
     this.onResize();
     
-    this.dispatch('mapCreated', this);
+    this.dispatch(this.EVENTS.MAP_CREATE, this);
     
     console.info('Finished loading map', this.currentMap);
   };
@@ -282,14 +291,23 @@ var Game = (function Game() {
     
     // Update player controller to check for input
     this.playerController.update(dt);
-
-    // Initialise a map of actors under the pointer,
-    // to avoid each actor or layer calculating this
-    this.actorsUnderPointer = {};
-    var actorsUnderPointer = this.getActorsOnTile(this.getPointerTile());
-    for (var i = 0, len = actorsUnderPointer.length; i < len; i++) {
-      this.actorsUnderPointer[actorsUnderPointer[i].id] = actorsUnderPointer[i];
-    } 
+    
+    // Save pointer tile and actors under it
+    var newPointerTile = this.getPointerTile();
+    if (!utils.tilesEqual(this.pointerTile, newPointerTile)) {
+      this.pointerTile = newPointerTile;
+      
+      this.actorsUnderPointer = {};
+      var actorsUnderPointer = this.getActorsOnTile(this.getPointerTile());
+      for (var i = 0, len = actorsUnderPointer.length; i < len; i++) {
+        this.actorsUnderPointer[actorsUnderPointer[i].id] = actorsUnderPointer[i];
+      }
+      
+      this.dispatch(this.EVENTS.POINTER_TILE_CHANGE, {
+        'tile': newPointerTile,
+        'actors': this.actorsUnderPointer
+      });
+    }
     
     // Update all layers
     for (var id in this.layers) {
@@ -322,20 +340,30 @@ var Game = (function Game() {
     var clickedTile = this.getPointerTile();
     var actors = this.getActorsOnTile(clickedTile);
     var wasClickHandled = false;
+    var isPlayerControllerActive = this.playerController.isActive;
     
-    for (var i = 0, len = actors.length; i < len; i++) {
-      if (actors[i].onClick(e)) {
-        wasClickHandled = true;
+    if (isPlayerControllerActive) {
+      for (var i = 0, len = actors.length; i < len; i++) {
+        if (actors[i].onClick(e)) {
+          wasClickHandled = true;
+        }
+      }
+      
+      if (!wasClickHandled) {
+        var isBlocked = this.navMesh.isBlocked(clickedTile);
+        if (!isBlocked) {
+          this.playerController.moveTo(clickedTile);
+          this.layers.hud.onClick(e);
+        }
       }
     }
     
-    if (!wasClickHandled) {
-      var isBlocked = this.navMesh.isBlocked(clickedTile);
-      if (!isBlocked) {
-        this.playerController.moveTo(clickedTile);
-        this.layers.hud.onClick(e);
-      }
-    }
+    this.dispatch(this.EVENTS.CLICK, {
+      'event': e,
+      'tile': clickedTile,
+      'actors': actors,
+      'isPlayerControllerActive': isPlayerControllerActive
+    });
   };
   
   Game.prototype.getActor = function getActor(actorId) {

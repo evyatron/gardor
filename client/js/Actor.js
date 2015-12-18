@@ -29,7 +29,7 @@ var Actor = (function Actor() {
     };
     this.pathToWalk = null;
     
-    this.texture = null;
+    this.textureModule = null;
     this.modules = [];
     
     this.isReady = false;
@@ -87,7 +87,7 @@ var Actor = (function Actor() {
       this.modules.push(module);
       
       if (module instanceof ModuleTexture) {
-        this.texture = module;
+        this.textureModule = module;
       }
     }
 
@@ -95,8 +95,14 @@ var Actor = (function Actor() {
   };
   
   Actor.prototype.getTexture = function getTexture() {
-    if (this.texture) {
-      return this.texture.texture;
+    if (this.textureModule) {
+      return this.textureModule.texture;
+    }
+  };
+  
+  Actor.prototype.setAlpha = function setAlpha(alpha) {
+    if (this.textureModule) {
+      this.textureModule.texture.setAlpha(alpha);
     }
   };
   
@@ -148,6 +154,7 @@ var Actor = (function Actor() {
   Actor.prototype.updateTile = function updateTile(tile) {
     if (!utils.tilesEqual(tile, this.tile)) {
       this.tile = tile;
+      this.position = this.game.getCoordsFromTile(this.tile);
       this.layer.sortActors();
     }
   };

@@ -102,15 +102,41 @@ Editor.prototype.refreshGame = function refreshGame() {
   
   this.game.loadMap = this.loadGameMap.bind(this);
 
-  this.game.on('ready', function onGameReady() {
-    var config = JSON.parse(JSON.stringify(this.config.game));
-    
-    this.paneGame.updateJSON(config);
+  this.game.on(this.game.EVENTS.READY, this.onGameReady.bind(this));
+  this.game.on(this.game.EVENTS.CLICK, this.onGameClick.bind(this));
+  this.game.on(this.game.EVENTS.POINTER_TILE_CHANGE, this.onGamePointerTileChange.bind(this));
+};
 
-    this.game.createGameFromConfig(config);
+Editor.prototype.onGameReady = function onGameReady() {
+  var config = JSON.parse(JSON.stringify(this.config.game));
+  
+  this.paneGame.updateJSON(config);
+
+  this.game.createGameFromConfig(config);
+  
+  this.disablePlay();
+};
+
+Editor.prototype.onGameClick = function onGameClick(data) {
+  if (this.heldActor) {
+    this.heldActor.updateTile(data.tile);
+    this.heldActor.setAlpha();
+    this.heldActor = null;
+  } else {
+    var actorOnTile = data.actors[Object.keys(data.actors)[0]];
     
-    //this.disablePlay();
-  }.bind(this));
+    if (actorOnTile) {
+      console.info('[Editor] Pickup actor', actorOnTile);
+      this.heldActor = actorOnTile;
+      this.heldActor.setAlpha(0.5);
+    }
+  }
+};
+
+Editor.prototype.onGamePointerTileChange = function onGamePointerTileChange(data) {
+  if (this.heldActor) {
+    this.heldActor.updateTile(data.tile);
+  }
 };
 
 Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
@@ -147,29 +173,12 @@ Editor.prototype.onDebugChange = function onDebugChange(e) {
   }
 };
 
-
 Editor.prototype.enablePlay = function enablePlay() {
   this.game.playerController.enable();
-  this.elContainer.classList.remove('disable-play');
 };
 
 Editor.prototype.disablePlay = function disablePlay() {
   this.game.playerController.disable();
-  this.elContainer.classList.add('disable-play');
-};
-
-Editor.prototype.onClick = function onClick(e) {
-  /*
-  var el = e.target;
-  
-  if (el.classList.contains('texture-selector')) {
-    this.pickupTexture(el);
-  }
-  
-  if (el.id === 'game-container') {
-    this.placeTexture(e.pageX, e.pageY);
-  }
-  */
 };
 
 
