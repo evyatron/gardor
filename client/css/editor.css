@@ -60,27 +60,31 @@ div, p, input, textarea {
   top: 0;
   right: 0;
   z-index: 5;
-  padding: 8px 0;
+  padding-top: 7px;
 }
   .editor-debug-flags input {
     float: right;
     margin-right: 5px;
   }
 
-
-.btn {
-  display: inline-block;
-  width: 48px;
-  height: 24px;
-  line-height: 24px;
+.editor-button {
+  padding: 0 20px;
+  font-weight: normal;
   text-align: center;
-  background: #ddd;
-  border: black;
-  border-radius: 4px;
-  text-decoration: none;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, .2),
+              0 0 0 1px rgba(0, 0, 0, .8) inset;
+  background: linear-gradient(to bottom, #bcd, #89a);
 }
-.btn:hover {
-  background: #fff;
+.editor-button:hover {
+  background: linear-gradient(to bottom, #cde, #9ab);
+}
+
+.export-config {
+  float: right;
+  margin: -3px 45px -3px 0;
+  padding: 3px 15px;
 }
 
 .is-playable {
@@ -89,9 +93,14 @@ div, p, input, textarea {
   left: 0;
   margin: 10px;
   padding: 10px;
-  background: rgba(0, 0, 0, .3);
+  color: #fff;
+  background: rgba(0, 0, 0, .6);
   border-radius: 6;
   z-index: 10;
+  border-radius: 6px;
+}
+.is-playable:hover {
+  background: rgba(0, 0, 0, .9);
 }
 
 .pane-container-array .items {
@@ -177,21 +186,6 @@ div, p, input, textarea {
   }
 .held-texture {
   background: rgba(255, 255, 255, .5);
-}
-
-
-.editor-button {
-  padding: 0 20px;
-  font-weight: normal;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 3px;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, .2),
-              0 0 0 1px rgba(0, 0, 0, .8) inset;
-  background: linear-gradient(to bottom, #bcd, #89a);
-}
-.editor-button:hover {
-  background: linear-gradient(to bottom, #cde, #9ab);
 }
 
 .textures-list {

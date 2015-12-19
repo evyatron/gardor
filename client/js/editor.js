@@ -50,6 +50,8 @@ Editor.prototype.init = function init(options) {
   
   this.elPlayable = this.elContainer.querySelector('input#is-playable');
   this.elPlayable.addEventListener('change', this.onPlayableChange.bind(this));
+  
+  this.elContainer.querySelector('.export-config').addEventListener('click', this.getData.bind(this));
 
   utils.request('/data/schema.json', this.onGotSchema.bind(this));
 };
@@ -95,10 +97,18 @@ Editor.prototype.loadGame = function loadGame(gameConfig) {
   this.refreshGame();
 };
 
+Editor.prototype.getData = function getData() {
+  console.group('JSON');
+  console.log("Game:\n" + JSON.stringify(this.config.game));
+  console.log("Map:\n" + JSON.stringify(this.config.map));
+  console.groupEnd();
+};
+
 Editor.prototype.refreshMap = function refreshMap() {
   delete this.game.maps[this.config.map.id];
   this.paneMap.updateJSON(this.config.map);
   this.game.goToMap(this.config.map.id);
+  
 };
 
 Editor.prototype.refreshGame = function refreshGame() {
@@ -119,6 +129,7 @@ Editor.prototype.refreshGame = function refreshGame() {
   this.game.on(this.game.EVENTS.READY, this.onGameReady.bind(this));
   this.game.on(this.game.EVENTS.CLICK, this.onGameClick.bind(this));
   this.game.on(this.game.EVENTS.POINTER_TILE_CHANGE, this.onGamePointerTileChange.bind(this));
+  
 };
 
 Editor.prototype.onGameReady = function onGameReady() {
