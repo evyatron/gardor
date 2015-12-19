@@ -312,9 +312,6 @@ div, p, input, textarea {
     flex: 1;
     padding: 0 0 0 4px;
   }
-  .tiles-editor .tile canvas {
-    display: block;
-  }
   .tiles-editor .tile .place-tile {
     position: absolute;
     top: 50%;
@@ -329,7 +326,7 @@ div, p, input, textarea {
 .texture {
   background: radial-gradient(closest-side, red, white);
 }
-.image-viewer {
+.texture-editor {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -342,25 +339,15 @@ div, p, input, textarea {
   background-size: 32px 32px;
   display: none;
 }
-.image-viewer.visible {
+.texture-editor.visible {
   display: block;
 }
-  .image-viewer .line {
+  .texture-editor .selection {
     position: absolute;
-    background: red;
+    background: rgba(255, 0, 0, .4);
     z-index: 20;
   }
-  .image-viewer .line.h {
-    height: 1px;
-    left: 0;
-    right: 0;
-  }
-  .image-viewer .line.v {
-    width: 1px;
-    top: 0;
-    bottom: 0;
-  }
-  .image-viewer .image {
+  .texture-editor .image {
     position: absolute;
     top: 0;
     left: 0;
@@ -370,7 +357,7 @@ div, p, input, textarea {
     background-position: 50% 50%;
     background-repeat: no-repeat;
   }
-  .image-viewer .info {
+  .texture-editor .info {
     position: absolute;
     top: 0;
     left: 0;

@@ -957,9 +957,9 @@ var Tiles = (function Tiles() {
 var TextureEditor = (function TextureEditor() {
   function TextureEditor(options) {
     this.elContainer = null;
-    this.elBody = null;
     this.elImage = null;
     this.elInfo = null;
+    this.elSelection = null;
     this.image = null;
     
     this.texture = null;
@@ -975,6 +975,7 @@ var TextureEditor = (function TextureEditor() {
     this.padding = 50;
     
     this.onSelect = null;
+    this.isBoundToGrid = true;
     
     this.init(options);
   }
@@ -983,7 +984,22 @@ var TextureEditor = (function TextureEditor() {
     !options && (options = {});
     this.elContainer = options.elContainer || document.body;
     
+    window.addEventListener('keydown', this.onKeyDown.bind(this));
+    window.addEventListener('keyup', this.onKeyUp.bind(this));
+    
     this.createHTML();
+  };
+  
+  TextureEditor.prototype.onKeyDown = function onKeyDown(e) {
+    if (e.keyCode === 17) {
+      this.isBoundToGrid = false;
+    }
+  };
+  
+  TextureEditor.prototype.onKeyUp = function onKeyUp(e) {
+    if (e.keyCode === 17) {
+      this.isBoundToGrid = true;
+    }
   };
   
   TextureEditor.prototype.show = function show(textureData, onUpdate) {
@@ -992,6 +1008,8 @@ var TextureEditor = (function TextureEditor() {
     this.image = new Image();
     this.image.addEventListener('load', this.onImageLoad.bind(this));
     this.image.src = textureData.src;
+    this.elSelection.style.width = this.textureData.width + 'px';
+    this.elSelection.style.height = this.textureData.height + 'px';
   };
   
   TextureEditor.prototype.hide = function hide() {
@@ -1025,14 +1043,23 @@ var TextureEditor = (function TextureEditor() {
   
   TextureEditor.prototype.onMouseMove = function onMouseMove(e) {
     var bounds = this.el.getBoundingClientRect();
-    var x = (e.pageX - bounds.left) / this.ratio;
-    var y = (e.pageY - bounds.top) / this.ratio;
+    var x = Math.round((e.pageX - bounds.left) / this.ratio);
+    var y = Math.round((e.pageY - bounds.top) / this.ratio);
 
-    this.position.x = x - (x % this.textureData.width);
-    this.position.y = y - (y % this.textureData.height);
+    if (this.isBoundToGrid) {
+      x -= (x % this.textureData.width);
+      y -= (y % this.textureData.height);
+    }
     
-    this.elLineV.style.left = this.position.x + 'px';
-    this.elLineH.style.top = this.position.y + 'px';
+    this.setPosition(x, y);
+  };
+  
+  TextureEditor.prototype.setPosition = function setPosition(x, y) {
+    this.position.x = x;
+    this.position.y = y;
+    
+    this.elSelection.style.left = this.position.x + 'px';
+    this.elSelection.style.top = this.position.y + 'px';
     
     this.elInfo.innerHTML = this.position.x + ',' + this.position.y;
   };
@@ -1057,11 +1084,12 @@ var TextureEditor = (function TextureEditor() {
   
   TextureEditor.prototype.createHTML = function createHTML() {
     this.el = document.createElement('div');
-    this.el.classList.add('image-viewer');
+    
+    this.el.className = 'texture-editor';
+    
     this.el.innerHTML = '<div class="image"></div>' +
                         '<div class="info"></div>' +
-                        '<div class="line h"></div>' +
-                        '<div class="line v"></div>' +
+                        '<div class="selection"></div>' +
                         '<div class="close"></div>';
     
     this.el.addEventListener('mousemove', this.onMouseMove.bind(this));
@@ -1070,8 +1098,7 @@ var TextureEditor = (function TextureEditor() {
     
     this.elImage = this.el.querySelector('.image');
     this.elInfo = this.el.querySelector('.info');
-    this.elLineV = this.el.querySelector('.line.v');
-    this.elLineH = this.el.querySelector('.line.h');
+    this.elSelection = this.el.querySelector('.selection');
     
     this.elContainer.appendChild(this.el);
   };
