@@ -39,7 +39,6 @@ div, p, input, textarea {
 
 .details-pane {
   left: 0;
-  border-right-width: 1px;
   font-size: 0.9em;
   margin: 0;
   overflow-y: auto;
@@ -47,10 +46,10 @@ div, p, input, textarea {
 }
 .map-pane {
   right: 0;
-  border-left-width: 1px;
   font-size: 0.9em;
 }
 .editor-title {
+  position: relative;
   padding: 5px 2px;
   background: rgba(255, 255, 255, .2);
   border-bottom: 1px solid rgba(255, 255, 255, .3);
@@ -246,25 +245,87 @@ div, p, input, textarea {
   line-height: 22px;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, .4);
+  box-shadow: 2px 0 4px 0 rgba(0, 0, 0, .5) inset;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-track-piece  {
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 1) inset;
+  background: linear-gradient(to right, #ddd, #aaa);
+}
+
 .tiles-editor {
   position: relative;
-  flex: 1;
-  max-height: 410px;
-  padding-top: 40px;
-  overflow: auto;
+  padding-top: 34px;
+  margin: 4px;
 }
+  .tiles-editor .tile[data-placing = "true"] {
+    background: red;
+  }
+  .tiles-editor .tiles-list {
+    max-height: 250px;
+    overflow: auto;
+  }
   .tiles-editor .tile {
+    position: relative;
     border-bottom: 1px solid #ccc;
-    margin-bottom: 5px;
+    padding: 3px 5px 2px 1px;
+    display: flex;
+    flex-direction: row-reverse;
   }
   .tiles-editor .create-new-tile {
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
-    padding: 8px 0;
-    margin: 5px;
+    bottom: 0;
+    right: 4px;
+    margin: 3px 0 2px 0;
+    display: flex;
+    align-items: center;
   }
+  .tiles-editor .tile input[data-property = "isBlocking"] {
+    vertical-align: middle;
+  }
+  .tiles-editor .tile label {
+    vertical-align: middle;
+  }
+  .tiles-editor .tile input {
+    font-size: .9em;
+    padding: 1px 3px;
+  }
+  .tiles-editor .tile .pane-input-field {
+    width: 75%;
+  }
+  .tiles-editor .tile .input {
+    display: block;
+    flex: 1;
+    padding: 0 0 0 4px;
+  }
+  .tiles-editor .tile canvas {
+    display: block;
+  }
+  .tiles-editor .tile .place-tile {
+    position: absolute;
+    top: 50%;
+    padding: 0;
+    right: 4px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin-top: -15px;
+  }
+  
 
 .image-viewer {
   position: absolute;
@@ -274,6 +335,9 @@ div, p, input, textarea {
   cursor: none;
   box-shadow: 0 0 0 3px #fff,
               0 0 0 7px #000;
+  background-color: #fff;
+  background-image: linear-gradient(to right, rgba(255, 0, 0, 0) 50%, rgba(255, 0, 0, .2) 50%);
+  background-size: 32px 32px;
   display: none;
 }
 .image-viewer.visible {
@@ -301,7 +365,6 @@ div, p, input, textarea {
     right: 0;
     bottom: 0;
     z-index: 10;
-    background-color: green;
     background-position: 50% 50%;
     background-repeat: no-repeat;
   }
@@ -315,4 +378,3 @@ div, p, input, textarea {
     text-shadow: 0 0 3px rgba(0, 0, 0, 1);
     font-family: monospace;
   }
-  */

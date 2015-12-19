@@ -47,6 +47,11 @@ var NavMesh = (function NavMesh() {
   NavMesh.prototype.update = function update() {
     var game = this.game;
     var map = game.currentMap;
+    
+    if (!map) {
+      return false;
+    }
+    
     var grid = map.grid;
     var tilesMap = this.game.tiles;
     var defaultTile = map.defaultTile;
@@ -93,6 +98,8 @@ var NavMesh = (function NavMesh() {
     }
     
     this.pathFinding.setGrid(this.mesh);
+    
+    return true;
   };
 
   return NavMesh;

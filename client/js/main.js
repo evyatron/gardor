@@ -160,7 +160,21 @@ var Game = (function Game() {
     this.clickTexture = this.config.clickTexture;
     this.timeToShowClickTexture = this.config.timeToShowClickTexture || 1;
     
-    var tiles = this.config.tiles;
+    this.setTiles(this.config.tiles);
+
+    if (this.config.startingMap) {
+      this.goToMap(this.config.startingMap);
+    }
+    
+    this.isReady = true;
+    this.dispatch(this.EVENTS.CREATE, this);
+
+    this.isRunning = true;
+    this.lastUpdate = Date.now();
+    window.requestAnimationFrame(this.tick.bind(this));
+  };
+  
+  Game.prototype.setTiles = function setTiles(tiles) {
     var tileSize = this.config.tileSize;
     for (var i = 0, len = tiles.length; i < len; i++) {
       var tile = JSON.parse(JSON.stringify(tiles[i]));
@@ -174,17 +188,12 @@ var Game = (function Game() {
       tile.texture = new Texture(tile.texture);
       this.tiles[tile.id] = tile;
     }
-
-    if (this.config.startingMap) {
-      this.goToMap(this.config.startingMap);
+    
+    if (this.layers.background) {
+      this.layers.background.createTexture();
     }
     
-    this.isReady = true;
-    this.dispatch(this.EVENTS.CREATE, this);
-
-    this.isRunning = true;
-    this.lastUpdate = Date.now();
-    window.requestAnimationFrame(this.tick.bind(this));
+    this.navMesh.update();
   };
   
   Game.prototype.goToMap = function goToMap(mapId) {

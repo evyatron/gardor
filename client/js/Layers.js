@@ -123,7 +123,6 @@ var Layer = (function Layer() {
 */
 var TilesetLayer = (function TilesetLayer() {
   function TilesetLayer(options) {
-    this.grid = [];
     this.texture = null;
     
     Layer.call(this, options);
@@ -147,7 +146,6 @@ var TilesetLayer = (function TilesetLayer() {
   TilesetLayer.prototype.setMap = function setMap(map) {
     console.log('Set Tiles: ', map);
     
-    this.grid = map.grid;
     this.isDirty = true;
   };
   
@@ -209,7 +207,7 @@ var TilesetLayer = (function TilesetLayer() {
     var map = game.currentMap;
     var tilesMap = this.game.tiles;
     var size = this.game.config.tileSize;
-    var rows = this.grid;
+    var rows = map.grid;
     
     if (!map) {
       console.warn('[TilesetLayer] createTexture: No map loaded');

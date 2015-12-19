@@ -34,38 +34,8 @@ var Texture = (function Texture() {
   
   Texture.prototype.init = function init(options) {
     this.game = options.game;
-    this.src = options.src;
-    this.width = options.width || 0;
-    this.height = options.height || 0;
-    this.origin = options.origin || {
-      'x': 0.5,
-      'y': 0.5
-    };
-    this.clip = options.clip || {
-      'x': 0,
-      'y': 0
-    };
-    this.defaultClip = options.defaultClip || null;
-    this.scale = options.scale || 1;
     
-    if (this.src) {
-      var image = Texture.prototype.textures[this.src];
-      if (image) {
-        if (image.isReady) {
-          this.isReady = true;
-          this.onLoad();
-        } else {
-          image.addEventListener('load', this.onLoad.bind(this));
-        }
-      } else {
-        image = new Image();
-        image.addEventListener('load', this.onLoad.bind(this));
-        image.addEventListener('error', this.onError.bind(this));
-        image.src = this.src;
-        
-        Texture.prototype.textures[this.src] = image;
-      }
-    }
+    this.setData(options);
   };
   
   Texture.prototype.setImage = function setImage(image) {
@@ -97,6 +67,43 @@ var Texture = (function Texture() {
   
   Texture.prototype.getImage = function getImage() {
     return Texture.prototype.textures[this.src];
+  };
+  
+  Texture.prototype.setData = function setData(data) {
+    this.src = data.src;
+    this.width = data.width || 0;
+    this.height = data.height || 0;
+    this.origin = data.origin || {
+      'x': 0.5,
+      'y': 0.5
+    };
+    this.clip = data.clip || {
+      'x': 0,
+      'y': 0
+    };
+    this.defaultClip = data.defaultClip || null;
+    this.scale = data.scale || 1;
+
+    if (this.src) {
+      this.isReady = false;
+      
+      var image = Texture.prototype.textures[this.src];
+      if (image) {
+        if (image.isReady) {
+          this.isReady = true;
+          this.onLoad();
+        } else {
+          image.addEventListener('load', this.onLoad.bind(this));
+        }
+      } else {
+        image = new Image();
+        image.addEventListener('load', this.onLoad.bind(this));
+        image.addEventListener('error', this.onError.bind(this));
+        image.src = this.src;
+        
+        Texture.prototype.textures[this.src] = image;
+      }
+    }
   };
   
   Texture.prototype.draw = function draw(context, x, y, gameBounds) {
