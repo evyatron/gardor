@@ -436,6 +436,7 @@ var Pane = (function Pane() {
     el.className = 'pane-container-object';
     el.dataset.schemaId = schemaId;
     el.innerHTML = '<div class="title">' + utils.formatID(schemaId) + '</div>' +
+                   '<input type="checkbox" checked class="toggle"></div>' +
                    '<div class="properties"></div>';
     
     var elProperties = el.querySelector('.properties');

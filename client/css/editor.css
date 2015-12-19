@@ -106,10 +106,8 @@ div, p, input, textarea {
 .pane-container-array .items {
   padding: 5px;
 }
-.editor-container > .pane-container-object {
-  border: none;
-  margin: 0;
-  background: transparent;
+.pane-container-object {
+  position: relative;
 }
   .pane-container-object .title {
     position: relative;
@@ -117,6 +115,37 @@ div, p, input, textarea {
     background: rgba(255, 255, 255, .2);
     border-bottom: 1px solid rgba(255, 255, 255, .3);
     border-top: 1px solid rgba(0, 0, 0, .3);
+  }
+  .pane-container-object .toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 5;
+    height: 26px;
+    -webkit-appearance: none;
+    outline: none;
+  }
+  .pane-container-object .toggle:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: 10px solid transparent;
+    border-top-color: #468;
+    transform: translateY(2.5px);
+    transition: transform 160ms ease-in-out;
+  }
+  .pane-container-object .toggle:checked:before {
+    transform: translateY(-7.5px) scaleY(-1);
+  }
+  .pane-container-object .properties {
+    overflow: hidden;
+    height: auto;
+    transition: height 160ms ease-in-out;
+  }
+  .pane-container-object .toggle:not(:checked) + .properties {
+    height: 0;
   }
   
   
@@ -262,14 +291,13 @@ div, p, input, textarea {
 
 .tiles-editor {
   position: relative;
-  padding-top: 34px;
-  margin: 4px;
 }
   .tiles-editor .tile[data-placing = "true"] {
     background: red;
   }
   .tiles-editor .tiles-list {
     max-height: 250px;
+    margin: 0 2px;
     overflow: auto;
   }
   .tiles-editor .tile {
