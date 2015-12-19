@@ -326,7 +326,9 @@ div, p, input, textarea {
     margin-top: -15px;
   }
   
-
+.texture {
+  background: radial-gradient(closest-side, red, white);
+}
 .image-viewer {
   position: absolute;
   top: 50%;

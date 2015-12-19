@@ -227,7 +227,7 @@ Editor.prototype.disablePlay = function disablePlay() {
 };
 
 
-
+// Change events
 Editor.prototype.onPlayableChange = function onPlayableChange() {
   if (this.elPlayable.checked) {
     this.enablePlay();
@@ -1080,7 +1080,7 @@ var TextureEditor = (function TextureEditor() {
 }());
 
 var EditorTexture = (function EditorTexture() {
-  var TEMPLATE = '<canvas></canvas>';
+  var TEMPLATE = '<canvas />';
   
   function EditorTexture(options) {
     this.elContainer = null;
@@ -1091,6 +1091,8 @@ var EditorTexture = (function EditorTexture() {
     this.texture = null;
     
     this.onChange = null;
+    
+    this.size = 32;
     
     this.init(options);
   }
@@ -1134,8 +1136,10 @@ var EditorTexture = (function EditorTexture() {
     this.canvas = this.el.querySelector('canvas');
     this.canvas.addEventListener('click', this.onClick.bind(this));
     
-    this.canvas.style.width = '32px';
-    this.canvas.style.height = '32px';
+    this.canvas.style.width = this.size + 'px';
+    this.canvas.style.height = this.size + 'px';
+    this.el.style.width = this.size + 'px';
+    this.el.style.height = this.size + 'px';
     
     this.elContainer.appendChild(this.el);
   };
