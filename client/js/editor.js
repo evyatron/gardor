@@ -125,7 +125,6 @@ Editor.prototype.onMouseDown = function onMouseDown(e) {
   }
 }
 
-
 Editor.prototype.onGotSchema = function onGotSchema(schema) {
   this.schema = schema;
   
@@ -168,10 +167,39 @@ Editor.prototype.loadGame = function loadGame(gameConfig) {
 };
 
 Editor.prototype.getData = function getData() {
+  var w = window.open('__blank', 'about:blank', '');
+  w.document.write('<body>' +
+                      '<style>' +
+                        '* { padding: 0; margin: 0; }' +
+                        'body { background: #eee; margin: 0; padding: 0; }' +
+                        'h1 { padding: 5px 10px; cursor: pointer; }' +
+                        'h1:hover { background: rgba(0, 0, 0, .2); }' +
+                        '.pane { width: 50%; float: left; }' +
+                        '.json { padding: 5px; border: 1px solid #000; background: #fff; }' +
+                      '</style>' +
+                      '<script>' +
+                        'function selectJSON(el) {' +
+                          'window.getSelection().removeAllRanges();' +
+                          'var range = document.createRange();' +
+                          'range.selectNode(el);' +
+                          'window.getSelection().addRange(range);' +
+                        '}' +
+                      '</script>' +
+                      '<div class="pane">' +
+                        '<h1 onclick="selectJSON(this.nextSibling);">Game</h1>' +
+                        '<pre class="json">' + JSON.stringify(this.config.game, null, 2) + '</pre>' +
+                      '</div>' +
+                      '<div class="pane">' +
+                        '<h1 onclick="selectJSON(this.nextSibling);">Map</h1>' +
+                        '<pre class="json">' + JSON.stringify(this.config.map, null, 2) + '</pre>' +
+                      '</div>' +
+                    '</body>');
+  /*
   console.group('JSON');
   console.log("Game:\n" + JSON.stringify(this.config.game));
   console.log("Map:\n" + JSON.stringify(this.config.map));
   console.groupEnd();
+  */
 };
 
 Editor.prototype.refreshMap = function refreshMap() {
