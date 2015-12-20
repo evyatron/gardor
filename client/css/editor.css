@@ -300,12 +300,66 @@ div, p, input, textarea {
   background: linear-gradient(to right, #ddd, #aaa);
 }
 
+.editor-title .create-new {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 4px;
+  margin: 3px 0 2px 0;
+  display: flex;
+  align-items: center;
+}
+
+.actors-editor {
+  position: relative;
+}
+  .actors-list {
+    position: relative;
+    max-height: 450px;
+    margin: 0 2px;
+    overflow: auto;
+  }
+  .actors-editor .actor {
+    position: relative;
+    border-top: 2px solid rgba(0, 0, 0, .7);
+    border-bottom: 2px solid rgba(0, 0, 0, .7);
+    margin: 0 1px 10px 0;
+  }
+  .actors-editor .actor.highlight {
+    background: rgba(128, 128, 32, .4);
+  }
+  .actors-editor .actor[data-placing = "true"] {
+    background: red;
+  }
+  .actor .main-info {
+  }
+  .actor .input-id {
+    min-height: 32px;
+  }
+    .actor .input-id .pane-input-label {
+      padding-left: 34px;
+    }
+  .actor-modules-title {
+    margin-top: 2px;
+    padding: 2px;
+    background: rgba(255, 255, 255, .2);
+    border-bottom: 1px solid rgba(255 ,255, 255, .3);
+  }
+  .actor-modules {
+    background: rgba(255, 255, 255, .1);
+  }
+  .actor-module {
+    position: relative;
+  }
+  .ModuleTexture {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
 .tiles-editor {
   position: relative;
 }
-  .tiles-editor .tile[data-placing = "true"] {
-    background: red;
-  }
   .tiles-editor .tiles-list {
     max-height: 250px;
     margin: 0 2px;
@@ -318,14 +372,8 @@ div, p, input, textarea {
     display: flex;
     flex-direction: row-reverse;
   }
-  .tiles-editor .create-new-tile {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 4px;
-    margin: 3px 0 2px 0;
-    display: flex;
-    align-items: center;
+  .tiles-editor .tile[data-placing = "true"] {
+    background: red;
   }
   .tiles-editor .tile input[data-property = "isBlocking"] {
     vertical-align: middle;

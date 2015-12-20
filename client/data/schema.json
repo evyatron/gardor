@@ -125,5 +125,36 @@
       "tooltip": "Tile to repeat around the map area",
       "default": ""
     }
+  },
+  
+  "actorModules": {
+    "ModuleWebPage": {
+      "url": {
+        "type": "text",
+        "tooltip": "URL to show"
+      },
+      "isInFrame": {
+        "type": "boolean",
+        "tooltip": "Whether this opens in an iframe or a new window"
+      },
+      "useOffset": {
+        "type": "vector",
+        "tooltip": "Where the player will be moved when moving to interact"
+      }
+    },
+    "ModuleDialog": {
+      "dialogId": {
+        "type": "text",
+        "tooltip": "Which dialog to show"
+      },
+      "useDir": {
+        "type": "text",
+        "tooltip": "Direction the actor will face when interacting\ntop/bottom/left/right"
+      },
+      "useOffset": {
+        "type": "vector",
+        "tooltip": "Where the player will be moved when moving to interact"
+      }
+    }
   }
 }

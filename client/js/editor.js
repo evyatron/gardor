@@ -155,7 +155,8 @@ Editor.prototype.onGotSchema = function onGotSchema(schema) {
   
   this.actorsEditor = new Actors({
     'editor': this,
-    'elContainer': this.elMapPane
+    'elContainer': this.elMapPane,
+    'onChange': this.onActorsChange.bind(this)
   });
 
   this.loadGame();
@@ -213,7 +214,6 @@ Editor.prototype.refreshMap = function refreshMap() {
   delete this.game.maps[this.config.map.id];
   this.paneMap.updateJSON(this.config.map);
   this.game.goToMap(this.config.map.id);
-  
 };
 
 Editor.prototype.refreshGame = function refreshGame() {
@@ -337,45 +337,47 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
     return;
   }
   
-  var grid = this.config.map.grid;
-  var shouldEditGrid = true;
+  var canResizeGrid = true;
   var shouldRefreshMap = false;
   
+  // Place or pick up actors to move around
   if (this.heldActor) {
-    shouldEditGrid = false;
+    canResizeGrid = false;
     this.placeActorOnTile(this.heldActor, data.tile);
+    this.actorsEditor.removeHighlight();
   } else {
     var actorOnTile = data.actors[Object.keys(data.actors)[0]];
     if (actorOnTile) {
-      shouldEditGrid = false;
-      this.actorsEditor.show(actorOnTile);
+      canResizeGrid = false;
+      this.actorsEditor.highlight(actorOnTile);
       
       if (!isLeftButton) {
         this.heldActor = actorOnTile;
         this.heldActor.setAlpha(0.5);
       }
+    } else {
+      this.actorsEditor.removeHighlight();
     }
   }
   
-  if (shouldEditGrid) {
+  // If nothing else happened - check for resizing the grid
+  if (canResizeGrid) {
     var didResizeGrid = this.resizeGridByClick(data, isLeftButton);
     if (didResizeGrid) {
       shouldRefreshMap = true;
     }
   }
-  
 
   // Change tiles
   if (this.tilesEditor.placingTile) {
-    grid[data.tile.y][data.tile.x] = this.tilesEditor.placingTile.id;
+    this.config.map.grid[data.tile.y][data.tile.x] = this.tilesEditor.placingTile.id;
     shouldRefreshMap = true;
   }
   
+  // If we edited something - refresh!
   if (shouldRefreshMap) {
     this.refreshMap();
-    return;
   }
-  
 };
 
 Editor.prototype.onGameClick = function onGameClick(data) {
@@ -416,6 +418,7 @@ Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
     mapConfig = JSON.parse(JSON.stringify(mapConfig));
     
     this.paneMap.updateFromJSON(mapConfig);
+    this.actorsEditor.loadFromGame(mapConfig);
 
     this.game.addMap(mapConfig);
     callback && callback(mapConfig);
@@ -472,6 +475,11 @@ Editor.prototype.onTilesChange = function onTilesChange(tiles) {
   this.game.setTiles(tiles);
 };
 
+Editor.prototype.onActorsChange = function onActorsChange(actors) {
+  this.config.map.actors = actors;
+  this.refreshMap();
+};
+
 Editor.prototype.onDebugChange = function onDebugChange(e) {
   var el = e.target;
   var state = el.checked;
@@ -526,11 +534,6 @@ var Pane = (function Pane() {
     this.setSchema(options.schema);
   };
   
-  Pane.prototype.load = function load(url) {
-    this.describerURL = url;
-    utils.request(url, this.setSchema.bind(this));
-  };
-  
   Pane.prototype.setSchema = function setSchema(schema) {
     console.log('[Editor][Pane|' + this.id + '] Set schema', schema);
     
@@ -568,7 +571,7 @@ var Pane = (function Pane() {
       var value = undefined;
       
       try {
-        var value = eval('json.' + cleanId);
+        value = eval('json.' + cleanId);
         var input = this.inputs[id];
         if (input && value !== undefined) {
           input.setValue(value, true);
@@ -577,8 +580,6 @@ var Pane = (function Pane() {
         console.warn('No value found in JSON', id, cleanId, ex);
       }
     }
-    
-    //this.dispatch(this.EVENTS.CHANGE, this);
   };
   
   Pane.prototype.update = function update(json, parentId) {
@@ -1011,9 +1012,66 @@ var Input_vector = (function Input_vector() {
 
 
 var Actors = (function Actors() {
+  var TEMPLATE_ACTORS = '<div class="editor-title">' +
+                          'Actors' +
+                          '<div class="editor-button create-new">New Actor</div>' +
+                        '</div>' +
+                        '<div class="actors-list"></div>';
+                        
+  var TEMPLATE_ACTOR = '<div class="main-info">' +
+  
+                          '<div class="input input-text input-id">' +
+                            '<div class="pane-input-label">' +
+                              '<label for="actor_id[{{id}}]">Id</label>' +
+                            '</div>' +
+                            '<div class="pane-input-field">' +
+                              '<input type="text" readonly data-property="id" data-id="{{id}}" title="Actor\'s ID" id="actor_id[{{id}}]" value="{{id}}" />' +
+                            '</div>' +
+                          '</div>' +
+                          
+                          '<div class="input input-boolean">' +
+                            '<div class="pane-input-label">' +
+                              '<label for="">Is Blocking</label>' +
+                            '</div>' +
+                            '<div class="pane-input-field" title="If true player won\'t be able to pass through this">' +
+                              '<input type="checkbox" data-property="isBlocking" data-id="{{id}}" id="actor_isBlocking[{{id}}]" />' +
+                              '<label for="actor_isBlocking[{{id}}]">Blocking</label>' +
+                            '</div>' +
+                          '</div>' +
+                          
+                          '<div class="input input-text input-tooltip">' +
+                            '<div class="pane-input-label">' +
+                              '<label for="actor_tooltip[{{id}}]">Tooltip</label>' +
+                            '</div>' +
+                            '<div class="pane-input-field">' +
+                              '<input type="text" data-property="tooltip" data-id="{{id}}" title="Actor\'s Tooltip" id="actor_tooltip[{{id}}]" value="{{tooltip}}" />' +
+                            '</div>' +
+                          '</div>' +
+                          
+                          '<div class="input input-number input-zIndex">' +
+                            '<div class="pane-input-label">' +
+                              '<label for="actor_zIndex[{{id}}]">Z-Index</label>' +
+                            '</div>' +
+                            '<div class="pane-input-field">' +
+                              '<input type="number" data-property="zIndex" data-id="{{id}}" title="Actor\'s z-index - higher is closer to camera" id="actor_zIndex[{{id}}]" value="{{zIndex}}" />' +
+                            '</div>' +
+                          '</div>' +
+                          
+                        '</div>' +
+                        '<div class="actor-modules-title">Modules</div>' +
+                        '<div class="actor-modules">' +
+                        '</div>';
+  
   function Actors(options) {
-    this.editor = null;
     this.elContainer = null;
+    this.el = null;
+    
+    this.editor = null;
+    this.onChange = null;
+    
+    this.actors = [];
+    this.textures = {};
+    this.modules = {};
     
     this.init(options);
   }
@@ -1021,19 +1079,251 @@ var Actors = (function Actors() {
   Actors.prototype.init = function init(options) {
     this.editor = options.editor;
     this.elContainer = options.elContainer;
+    this.onChange = options.onChange;
+    
+    this.createHTML();
+    
+    this.el.addEventListener('click', this.onClick.bind(this));
+    this.el.addEventListener('change', this.onActorsChange.bind(this));
+    this.el.querySelector('.create-new').addEventListener('click', this.createNew.bind(this));
   };
   
-  Actors.prototype.show = function show(actor) {
-    console.warn('show actor edit', actor);
+  Actors.prototype.highlight = function highlight(actor) {
+    this.removeHighlight();
+    
+    var el = this.getActorEl(actor);
+    if (el) {
+      el.classList.add('highlight');
+      this.elList.scrollTop = el.offsetTop - 10;
+    }
+  };
+  
+  Actors.prototype.removeHighlight = function removeHighlight() {
+    var el = this.elList.querySelector('.actor.highlight');
+    if (el) {
+      el.classList.remove('highlight');
+    }
+  };
+  
+  Actors.prototype.addActor = function addActor(actor) {
+    var el = document.createElement('div');
+    
+    actor = JSON.parse(JSON.stringify(actor));
+    
+    if (!actor.tooltip) {
+      actor.tooltip = '';
+    }
+    if (!actor.zIndex) {
+      actor.zIndex = 0;
+    }
+    
+    this.actors.push(actor);
+    
+    el.className = 'actor';
+    el.dataset.id = actor.id;
+    
+    el.innerHTML = TEMPLATE_ACTOR.format(actor);
+    
+    this.createActorModules(actor, el);
+
+    el.querySelector('[data-property = "isBlocking"]').checked = actor.isBlocking;
+
+    this.elList.appendChild(el);
+  };
+  
+  Actors.prototype.createActorModules = function createActorModules(actor, el) {
+    var elModules = el.querySelector('.actor-modules');
+    var modules = actor.modules || [];
+    
+    this.modules[actor.id] = [];
+    
+    for (var i = 0, len = modules.length; i < len; i++) {
+      var actorModule = new EditorActorModule({
+        'index': i,
+        'actor': actor,
+        'data': modules[i],
+        'onChange': this.onActorModuleChange.bind(this)
+      });
+      
+      this.modules[actor.id].push(actorModule);
+      
+      elModules.appendChild(actorModule.el);
+    }
+  };
+  
+  Actors.prototype.onActorModuleChange = function onActorModuleChange(actor, index, data) {
+    console.warn('Module change', actor.id, index, data);
+    
+    actor.modules[index] = data;
+    
+    this.onChange(this.actors);
+  };
+  
+  Actors.prototype.onTextureChange = function onTextureChange(id) {
+    var actor = this.getActor(id);
+    var texture = this.textures[id];
+    actor.texture = JSON.parse(JSON.stringify(texture.data));
+    
+    this.onChange(this.actorss);
+  };
+  
+  Actors.prototype.createNew = function createNew() {
+    var actor = {
+      'id': 'default_' + Date.now(),
+      'isBlocking': false
+    };
+
+    this.addActor(actor);
+    
+    this.onChange(this.actors);
+    
+    this.elList.scrollTop = 999999;
+  };
+  
+  Actors.prototype.loadFromGame = function loadFromGame(mapConfig) {
+    if (this.actors.length > 0) {
+      return;
+    }
+    
+    var actors = mapConfig.actors;
+    
+    for (var i = 0, len = actors.length; i < len; i++) {
+      this.addActor(actors[i]);
+    }
+  };
+
+  Actors.prototype.onClick = function onClick(e) {
+    
+  };
+  
+  Actors.prototype.onActorsChange = function onActorsChange(e) {
+    e && e.stopPropagation();
+    
+    var elChanged = e.target;
+    var id = elChanged.dataset.id;
+    var actor = this.getActor(id);
+    if (!actor) {
+      return;
+    }
+    
+    var elActor = this.getActorEl(actor);
+    if (!elActor) {
+      return;
+    }
+    
+    var elTooltip = elActor.querySelector('[data-property = "tooltip"]');
+    var elBlocking = elActor.querySelector('[data-property = "isBlocking"]');
+    var elZIndex = elActor.querySelector('[data-property = "zIndex"]');
+    
+    actor.isBlocking = elBlocking.checked;
+    actor.tooltip = elTooltip.value || '';
+    actor.zIndex = elZIndex.value || 0;
+
+    this.onChange(this.actors);
+  };
+  
+  Actors.prototype.getActor = function getActor(id) {
+    var actor = null;
+    
+    for (var i = 0, len = this.actors.length; i < len; i++) {
+      if (this.actors[i].id === id) {
+        actor = this.actors[i];
+        break;
+      }
+    }
+    
+    return actor;
+  };
+  
+  Actors.prototype.getActorEl = function getActorEl(actor) {
+    return this.el.querySelector('.actor[data-id = "' + actor.id + '"]');
+  };
+  
+  Actors.prototype.createHTML = function createHTML() {
+    this.el = document.createElement('div');
+    this.el.className = 'actors-editor';
+    this.el.innerHTML = TEMPLATE_ACTORS;
+    
+    this.elList = this.el.querySelector('.actors-list');
+    
+    this.elContainer.appendChild(this.el);
   };
   
   return Actors;
 }());
 
+var EditorActorModule = (function EditorActorModule() {
+  function EditorActorModule(options) {
+    this.index = -1;
+    this.el = null;
+    this.data = null;
+    this.onChange = null;
+    
+    this.pane = null;
+    this.texture = null;
+    
+    this.init(options);
+  }
+  
+  EditorActorModule.prototype.init = function init(options) {
+    this.index = options.index;
+    this.actor = options.actor;
+    this.data = JSON.parse(JSON.stringify(options.data));
+    this.onChange = options.onChange || function(){};
+    
+    this.createHTML();
+  };
+  
+  EditorActorModule.prototype.onPaneChange = function onPaneChange() {
+    this.pane.updateJSON(this.data);
+    this.reportChange();
+  };
+  
+  EditorActorModule.prototype.onTextureChange = function onTextureChange() {
+    var data = JSON.parse(JSON.stringify(this.texture.data));
+    data.type = this.data.type;
+    this.data = data;
+    
+    this.reportChange();
+  };
+  
+  EditorActorModule.prototype.reportChange = function reportChange() {
+    this.onChange(this.actor, this.index, this.data);
+  };
+  
+  EditorActorModule.prototype.createHTML = function createHTML() {
+    var type = this.data.type;
+    
+    this.el = document.createElement('div');
+    this.el.className = 'actor-module ' + type;
+
+    if (type === 'ModuleTexture') {
+      this.texture = new EditorTexture({
+        'elContainer': this.el,
+        'data': this.data,
+        'onChange': this.onTextureChange.bind(this)
+      });      
+    } else {
+      var schema = editor.schema.actorModules[type];
+      if (schema) {
+        this.pane = new Pane({
+          'id': this.actor.id + '_' + type,
+          'el': this.el,
+          'schema': schema,
+          'onChange': this.onPaneChange.bind(this)
+        });
+        this.pane.updateFromJSON(this.data);
+      }
+    }
+  };
+  
+  return EditorActorModule;
+}());
+
 var Tiles = (function Tiles() {
   var TEMPLATE_TILES = '<div class="editor-title">' +
                           'Tiles' +
-                          '<div class="editor-button create-new-tile">New Tile</div>' +
+                          '<div class="editor-button create-new">New Tile</div>' +
                         '</div>' +
                         '<div class="tiles-list"></div>';
                         
@@ -1054,6 +1344,7 @@ var Tiles = (function Tiles() {
     
     this.editor = null;
     this.onChange = null;
+    this.placingTile = null;
     
     this.tiles = [];
     this.tilesTextures = [];
@@ -1070,7 +1361,7 @@ var Tiles = (function Tiles() {
     
     this.el.addEventListener('click', this.onClick.bind(this));
     this.el.addEventListener('change', this.onTilesChange.bind(this));
-    this.el.querySelector('.create-new-tile').addEventListener('click', this.createNew.bind(this));
+    this.el.querySelector('.create-new').addEventListener('click', this.createNew.bind(this));
   };
   
   Tiles.prototype.addTile = function addTile(tile) {
