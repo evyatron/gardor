@@ -83,6 +83,8 @@ Editor.prototype.applyUserSettings = function applyUserSettings() {
     settings = this.settings;
   }
   
+  this.settings = settings;
+  
   this.elGamePane.style.width = settings.gamePane.width + '%';
   this.elMapPane.style.width = settings.mapPane.width + '%';
 };
