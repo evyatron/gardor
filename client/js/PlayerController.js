@@ -28,10 +28,11 @@ var PlayerController = (function PlayerController() {
     
     this.boundToGame = typeof options.boundToGame === 'boolean'? options.boundToGame : true;
 
-    InputManager.bindAction('activate', InputManager.KEYS.SPACE);
-    InputManager.bindAction('moveTo', InputManager.KEYS.LEFT_MOUSE_BUTTON);
+    InputManager.bindAction('interact', InputManager.KEYS.LEFT_MOUSE_BUTTON);
+    InputManager.bindAction('secondary', InputManager.KEYS.RIGHT_MOUSE_BUTTON);
     
-    InputManager.on('pressed', 'moveTo', this.onPointerClick.bind(this));
+    InputManager.on('pressed', 'interact', this.game.handlePrimaryAction.bind(this.game));
+    InputManager.on('pressed', 'secondary', this.game.handleSecondaryAction.bind(this.game));
 
     InputManager.listenTo(this.game.el);
     
@@ -40,10 +41,6 @@ var PlayerController = (function PlayerController() {
   
   PlayerController.prototype.setControlledActor = function setControlledActor(actor) {
     this.controlledActor = actor;
-  };
-  
-  PlayerController.prototype.onPointerClick = function onPointerClick(e) {
-    this.game.handleClick(e);
   };
   
   PlayerController.prototype.getActor = function getActor() {

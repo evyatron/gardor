@@ -152,6 +152,11 @@ Editor.prototype.onGotSchema = function onGotSchema(schema) {
     'elContainer': this.elGamePane,
     'onChange': this.onTilesChange.bind(this)
   });
+  
+  this.actorsEditor = new Actors({
+    'editor': this,
+    'elContainer': this.elMapPane
+  });
 
   this.loadGame();
 };
@@ -228,6 +233,7 @@ Editor.prototype.refreshGame = function refreshGame() {
   
   this.game.on(this.game.EVENTS.READY, this.onGameReady.bind(this));
   this.game.on(this.game.EVENTS.CLICK, this.onGameClick.bind(this));
+  this.game.on(this.game.EVENTS.CLICK_SECONDARY, this.onGameClickSecondary.bind(this));
   this.game.on(this.game.EVENTS.POINTER_TILE_CHANGE, this.onGamePointerTileChange.bind(this));
   
 };
@@ -242,39 +248,145 @@ Editor.prototype.onGameReady = function onGameReady() {
   this.game.createGameFromConfig(config);
 };
 
-Editor.prototype.onGameClick = function onGameClick(data) {
+Editor.prototype.resizeGridByClick = function resizeGridByClick(data, isLeftButton) {
+  var grid = this.config.map.grid;
+  var clickedTileX = data.tile.x;
+  var clickedTileY = data.tile.y;
+  var didResizeGrid = false;
+  var adding = isLeftButton;
+  var actorsOffset = {
+    'x': 0,
+    'y': 0
+  };
+  var MIN_SIZE = 3;
+  
+  if (adding || grid[0].length > MIN_SIZE) {
+    if (clickedTileX === 0) {
+      for (var i = 0; i < grid.length; i++) {
+        if (adding) {
+          grid[i].splice(0, 0, '');
+        } else {
+          grid[i].splice(0, 1);
+        }
+      }
+      actorsOffset.x = adding? 1 : -1;
+      didResizeGrid = true;
+    } else if (clickedTileX === grid[0].length - 1) {
+      for (var i = 0; i < grid.length; i++) {
+        if (adding) {
+          grid[i].push('');
+        } else {
+          grid[i].splice(grid[i].length - 1, 1);
+        }
+      }
+      didResizeGrid = true;
+    }
+  }
+  
+  if (adding || grid.length > MIN_SIZE) {
+    if (clickedTileY === 0) {
+      if (adding) {
+        var row = [];
+        for (var i = 0; i < grid[0].length; i++) {
+          row.push('');
+        }
+        grid.splice(0, 0, row);
+        actorsOffset.y = 1;
+      } else {
+        grid.splice(0, 1);
+        actorsOffset.y = -1;
+      }
+      
+      didResizeGrid = true;
+    } else if (clickedTileY === grid.length - 1) {
+      if (adding) {
+        var row = [];
+        for (var i = 0; i < grid[0].length; i++) {
+          row.push('');
+        }
+        grid.push(row);
+      } else {
+        grid.splice(grid.length - 1, 1);
+      }
+      didResizeGrid = true;
+    }
+  }
+  
+
+  if (didResizeGrid) {
+    var actors = this.config.map.actors;
+    
+    for (var i = 0, len = actors.length; i < len; i++) {
+      actors[i].tile.x += actorsOffset.x;
+      actors[i].tile.y += actorsOffset.y;
+      
+      if (actors[i].tile.y < 0 || actors[i].tile.y > grid.length - 1) {
+        actors[i].tile.y = Math.floor(grid.length / 2);
+      }
+      if (actors[i].tile.x < 0 || actors[i].tile.x > grid[0].length - 1) {
+        actors[i].tile.x = Math.floor(grid[0].length / 2);
+      }
+    }
+  }
+  
+  return didResizeGrid;
+};
+
+Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) {
   if (this.isPlayable) {
     return;
   }
   
-  var tile = data.tile;
+  var grid = this.config.map.grid;
+  var shouldEditGrid = true;
+  var shouldRefreshMap = false;
   
+  if (this.heldActor) {
+    shouldEditGrid = false;
+    this.placeActorOnTile(this.heldActor, data.tile);
+  } else {
+    var actorOnTile = data.actors[Object.keys(data.actors)[0]];
+    if (actorOnTile) {
+      shouldEditGrid = false;
+      this.actorsEditor.show(actorOnTile);
+      
+      if (!isLeftButton) {
+        this.heldActor = actorOnTile;
+        this.heldActor.setAlpha(0.5);
+      }
+    }
+  }
+  
+  if (shouldEditGrid) {
+    var didResizeGrid = this.resizeGridByClick(data, isLeftButton);
+    if (didResizeGrid) {
+      shouldRefreshMap = true;
+    }
+  }
+  
+
   // Change tiles
   if (this.tilesEditor.placingTile) {
-    var tileId = this.tilesEditor.placingTile.id;
-    var grid = this.config.map.grid;
-    
-    grid[tile.y][tile.x] = tileId;
-    
-    this.game.currentMap = JSON.parse(JSON.stringify(this.config.map));
-    this.game.layers.background.createTexture();
-    this.game.navMesh.update();
-    
+    grid[data.tile.y][data.tile.x] = this.tilesEditor.placingTile.id;
+    shouldRefreshMap = true;
+  }
+  
+  if (shouldRefreshMap) {
+    this.refreshMap();
     return;
   }
   
-  // Move actors
-  if (this.heldActor) {
-    this.placeActorOnTile(this.heldActor, tile);
-  } else {
-    var actorOnTile = data.actors[Object.keys(data.actors)[0]];
-    
-    if (actorOnTile) {
-      this.heldActor = actorOnTile;
-      this.heldActor.setAlpha(0.5);
-    }
-  }
 };
+
+Editor.prototype.onGameClick = function onGameClick(data) {
+  this.handleGameClick(data, true);
+};
+
+Editor.prototype.onGameClickSecondary = function onGameClickSecondary(data) {
+  this.handleGameClick(data, false);
+};
+
+
 
 Editor.prototype.onGamePointerTileChange = function onGamePointerTileChange(data) {
   if (this.heldActor) {
@@ -898,6 +1010,25 @@ var Input_vector = (function Input_vector() {
 }());
 
 
+var Actors = (function Actors() {
+  function Actors(options) {
+    this.editor = null;
+    this.elContainer = null;
+    
+    this.init(options);
+  }
+  
+  Actors.prototype.init = function init(options) {
+    this.editor = options.editor;
+    this.elContainer = options.elContainer;
+  };
+  
+  Actors.prototype.show = function show(actor) {
+    console.warn('show actor edit', actor);
+  };
+  
+  return Actors;
+}());
 
 var Tiles = (function Tiles() {
   var TEMPLATE_TILES = '<div class="editor-title">' +

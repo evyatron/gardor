@@ -215,14 +215,14 @@ var InputManager = (function InputManager() {
     
     var key = this.mouseButtonKeys[e.button];
     if (typeof key === 'number') {
-      this.setKeyStatus(key, true);
+      this.setKeyStatus(key, true, e);
     }
   };
 
   InputManager.prototype.onMouseUp = function onMouseUp(e) {
     var key = this.mouseButtonKeys[e.button];
     if (typeof key === 'number') {
-      this.setKeyStatus(key, false);
+      this.setKeyStatus(key, false, e);
     }
   };
 
@@ -236,14 +236,14 @@ var InputManager = (function InputManager() {
   };
 
   InputManager.prototype.onKeyDown = function onKeyDown(e) {
-    this.setKeyStatus(e.keyCode, true);
+    this.setKeyStatus(e.keyCode, true, e);
   };
 
   InputManager.prototype.onKeyUp = function onKeyUp(e) {
-    this.setKeyStatus(e.keyCode, false);
+    this.setKeyStatus(e.keyCode, false, e);
   };
   
-  InputManager.prototype.setKeyStatus = function setKeyStatus(key, isDown) {
+  InputManager.prototype.setKeyStatus = function setKeyStatus(key, isDown, event) {
     var isFirstPress = !this.KEYS_DOWN[key];
     var actionName = this.keyToAction[key];
     
@@ -263,7 +263,7 @@ var InputManager = (function InputManager() {
         
         if (listeners) {
           for (var i = 0, len = listeners.length; i < len; i++) {
-            listeners[i]();
+            listeners[i](event);
           }
         }
       }

@@ -54,6 +54,7 @@ var Game = (function Game() {
     
     this.EVENTS = {
       CLICK: 'click',
+      CLICK_SECONDARY: 'clickSecondary',
       CREATE: 'create',
       MAP_CREATE: 'mapCreated',
       POINTER_TILE_CHANGE: 'pointerTileChange',
@@ -345,13 +346,12 @@ var Game = (function Game() {
     this.stats.draw = this.endBenchmark('global', 'draw');
   };
   
-  Game.prototype.handleClick = function handleClick(e) {
+  Game.prototype.handlePrimaryAction = function handlePrimaryAction(e) {
     var clickedTile = this.getPointerTile();
     var actors = this.getActorsOnTile(clickedTile);
     var wasClickHandled = false;
-    var isPlayerControllerActive = this.playerController.isActive;
     
-    if (isPlayerControllerActive) {
+    if (this.playerController.isActive) {
       for (var i = 0, len = actors.length; i < len; i++) {
         if (actors[i].onClick(e)) {
           wasClickHandled = true;
@@ -371,7 +371,19 @@ var Game = (function Game() {
       'event': e,
       'tile': clickedTile,
       'actors': actors,
-      'isPlayerControllerActive': isPlayerControllerActive
+      'isPlayerControllerActive': this.playerController.isActive
+    });
+  };
+  
+  Game.prototype.handleSecondaryAction = function handleSecondaryAction(e) {
+    var clickedTile = this.getPointerTile();
+    var actors = this.getActorsOnTile(clickedTile);
+    
+    this.dispatch(this.EVENTS.CLICK_SECONDARY, {
+      'event': e,
+      'tile': clickedTile,
+      'actors': actors,
+      'isPlayerControllerActive': this.playerController.isActive
     });
   };
   
