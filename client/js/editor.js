@@ -29,6 +29,15 @@ function Editor(options) {
     game: null,
     map: null
   };
+  
+  this.settings = {
+    'gamePane': {
+      'width': 15
+    },
+    'mapPane': {
+      'width': 15
+    }
+  };
 
   this.init(options);
 }
@@ -52,9 +61,70 @@ Editor.prototype.init = function init(options) {
   this.elPlayable.addEventListener('change', this.onPlayableChange.bind(this));
   
   this.elContainer.querySelector('.export-config').addEventListener('click', this.getData.bind(this));
+  
+  this.elContainer.addEventListener('mousedown', this.onMouseDown.bind(this));
+  
+  this.applyUserSettings();
 
   utils.request('/data/schema.json', this.onGotSchema.bind(this));
 };
+
+Editor.prototype.applyUserSettings = function applyUserSettings() {
+  var settings = localStorage.editorSettings;
+  if (settings) {
+    try {
+      settings = JSON.parse(settings);
+    } catch (ex) {
+      
+    }
+  }
+  
+  if (!settings) {
+    settings = this.settings;
+  }
+  
+  this.elGamePane.style.width = settings.gamePane.width + '%';
+  this.elMapPane.style.width = settings.mapPane.width + '%';
+};
+
+Editor.prototype.saveUserSettings = function saveUserSettings() {
+  localStorage.editorSettings = JSON.stringify(this.settings);
+};
+
+Editor.prototype.onMouseDown = function onMouseDown(e) {
+  var self = this;
+  var el = e.target;
+  var toResize = el.dataset.resize;
+  var settings = this.settings[toResize === 'game'? 'gamePane' : 'mapPane'];
+  var elPane = toResize === 'game'? this.elGamePane : this.elMapPane;
+  
+  function onMouseMove(e) {
+    var x = e.pageX;
+    var width = (x / window.innerWidth * 100);
+    
+    if (elPane.classList.contains('right')) {
+      width = (100 - width);
+    }
+    
+    elPane.style.width = width + '%';
+    settings.width = width;
+    window.dispatchEvent(new Event('resize'));
+  }
+  
+  function onMouseUp(e) {
+    self.elContainer.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+    el.parentNode.classList.remove('resizing');
+    self.saveUserSettings();
+  }
+  
+  if (toResize) {
+    this.elContainer.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    el.parentNode.classList.add('resizing');
+  }
+}
+
 
 Editor.prototype.onGotSchema = function onGotSchema(schema) {
   this.schema = schema;

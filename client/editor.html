@@ -8,29 +8,32 @@
     <link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <div id="game-container">
-      <div id="game"></div>
-      
-      <div class="is-playable">
-        <input type="checkbox" name="is-playable" id="is-playable" />
-        <label for="is-playable">Is Playable</label>
-      </div>
-    </div>
-    
-    
-    <div class="editor-container vertical details-pane">
-      <div class="editor-title">
-        Game Settings
-        <b class="editor-button export-config">JSON</b>
-        <div class="editor-debug-flags">
-          <input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />
-          <input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />
+    <div id="container">
+      <div class="editor-container vertical details-pane left">
+        <span class="resizer" data-resize="game"></span>
+        <div class="editor-title">
+          Game Settings
+          <b class="editor-button export-config">JSON</b>
+          <div class="editor-debug-flags">
+            <input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />
+            <input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div class="editor-container vertical map-pane">
-      <div class="editor-title">Map</div>
+      
+      <div id="game-container">
+        <div id="game"></div>
+        
+        <div class="is-playable">
+          <input type="checkbox" name="is-playable" id="is-playable" />
+          <label for="is-playable">Is Playable</label>
+        </div>
+      </div>
+
+      <div class="editor-container vertical map-pane right">
+        <span class="resizer" data-resize="map"></span>
+        <div class="editor-title">Map</div>
+      </div>
     </div>
     
     <script src="/js/common.js"></script>
