@@ -72,10 +72,10 @@ var PlayerController = (function PlayerController() {
     
     this.justPressed = InputManager.justPressed;
     InputManager.justPressed = {};
-    
+
     this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
     this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
-    
+
     if (this.boundToGame) {
       var tileSize = game.config.tileSize;
       

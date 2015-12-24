@@ -1175,10 +1175,10 @@
         },
         {
           "type": "ModuleParticles",
-          "offset": [
-            -32,
-            0
-          ],
+          "offset": {
+            "x": -32,
+            "y": 0
+          },
           "lifetime": [
             0.2,
             0.5
@@ -1200,10 +1200,10 @@
         },
         {
           "type": "ModuleParticles",
-          "offset": [
-            32,
-            0
-          ],
+          "offset": {
+            "x": 32,
+            "y": 0
+          },
           "lifetime": [
             0.2,
             0.5

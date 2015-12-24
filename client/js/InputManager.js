@@ -166,7 +166,7 @@ var InputManager = (function InputManager() {
     window.addEventListener('keyup', this.onKeyUp.bind(this));
     
     el.addEventListener('mousedown', this.onMouseDown.bind(this));
-    window.addEventListener('mousemove', this.onMouseMove.bind(this));
+    el.addEventListener('mousemove', this.onMouseMove.bind(this));
     window.addEventListener('mouseup', this.onMouseUp.bind(this));
     window.addEventListener('mousewheel', this.onMouseWheel.bind(this));
     

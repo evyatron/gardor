@@ -556,7 +556,10 @@ var ModuleParticles = (function ModuleParticles() {
     
     !options && (options = {});
     
-    this.offset = options.offset || [0, 0];
+    this.offset = options.offset || {
+      'x': 0,
+      'y': 0
+    };
 
     options.context = this.actor.layer.context;
     options.position = {
@@ -570,8 +573,8 @@ var ModuleParticles = (function ModuleParticles() {
   };
   
   ModuleParticles.prototype.updateMethod = function updateMethod(dt) {
-    this.particles.position.x = this.actor.drawPosition.x + this.offset[0];
-    this.particles.position.y = this.actor.drawPosition.y + this.offset[1];
+    this.particles.position.x = this.actor.drawPosition.x + this.offset.x;
+    this.particles.position.y = this.actor.drawPosition.y + this.offset.y;
     this.particles.update(dt);
   };
   

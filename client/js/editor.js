@@ -649,8 +649,8 @@ var Pane = (function Pane() {
     el.className = 'pane-container-object';
     el.dataset.schemaId = schemaId;
     el.innerHTML = '<div class="title">' + utils.formatID(schemaId) + '</div>' +
-                   '<input type="checkbox" checked class="toggle"></div>' +
-                   '<div class="properties"></div>';
+                   '<input type="checkbox" checked class="expand-collapse"></div>' +
+                   '<div class="properties collapsible"></div>';
     
     var elProperties = el.querySelector('.properties');
     
@@ -670,7 +670,8 @@ var Pane = (function Pane() {
                      utils.formatID(schemaId) +
                      '<span class="editor-button add-new" data-add-item="' + schemaId + '">+</span>' +
                    '</div>' +
-                   '<div class="items"></div>';
+                   '<input type="checkbox" checked class="expand-collapse"></div>' +
+                   '<div class="items collapsible"></div>';
     
     elParent.appendChild(el);
     
@@ -1016,10 +1017,10 @@ var Actors = (function Actors() {
                           'Actors' +
                           '<div class="editor-button create-new">New Actor</div>' +
                         '</div>' +
-                        '<div class="actors-list"></div>';
+                        '<input type="checkbox" checked class="expand-collapse"></div>' +
+                        '<div class="actors-list collapsible"></div>';
                         
   var TEMPLATE_ACTOR = '<div class="main-info">' +
-  
                           '<div class="input input-text input-id">' +
                             '<div class="pane-input-label">' +
                               '<label for="actor_id[{{id}}]">Id</label>' +
@@ -1058,7 +1059,6 @@ var Actors = (function Actors() {
                           '</div>' +
                           
                         '</div>' +
-                        '<div class="actor-modules-title">Modules</div>' +
                         '<div class="actor-modules">' +
                         '</div>';
   
@@ -1162,16 +1162,15 @@ var Actors = (function Actors() {
   Actors.prototype.onTextureChange = function onTextureChange(id) {
     var actor = this.getActor(id);
     var texture = this.textures[id];
+    console.warn(id, texture.data)
     actor.texture = JSON.parse(JSON.stringify(texture.data));
     
     this.onChange(this.actorss);
   };
   
   Actors.prototype.createNew = function createNew() {
-    var actor = {
-      'id': 'default_' + Date.now(),
-      'isBlocking': false
-    };
+    var actor = JSON.parse(JSON.stringify(this.actors[this.actors.length - 1]));
+    actor.id = prompt('enter id');
 
     this.addActor(actor);
     
@@ -1275,7 +1274,11 @@ var EditorActorModule = (function EditorActorModule() {
   };
   
   EditorActorModule.prototype.onPaneChange = function onPaneChange() {
-    this.pane.updateJSON(this.data);
+    var valueData = {};
+    valueData[this.data.type] = this.data;
+    this.pane.updateJSON(valueData);
+    this.data = valueData[this.data.type];
+    
     this.reportChange();
   };
   
@@ -1306,13 +1309,23 @@ var EditorActorModule = (function EditorActorModule() {
     } else {
       var schema = editor.schema.actorModules[type];
       if (schema) {
+        var schemaData = {};
+        var valueData = {};
+        schemaData[type] = schema;
+        valueData[type] = this.data;
+        
         this.pane = new Pane({
           'id': this.actor.id + '_' + type,
           'el': this.el,
-          'schema': schema,
+          'schema': schemaData,
           'onChange': this.onPaneChange.bind(this)
         });
-        this.pane.updateFromJSON(this.data);
+        this.pane.updateFromJSON(valueData);
+        
+        var elToggler = this.pane.el.querySelector('input[type = "checkbox"]');
+        if (elToggler) {
+          elToggler.checked = false;
+        }
       }
     }
   };
@@ -1323,9 +1336,10 @@ var EditorActorModule = (function EditorActorModule() {
 var Tiles = (function Tiles() {
   var TEMPLATE_TILES = '<div class="editor-title">' +
                           'Tiles' +
-                          '<div class="editor-button create-new">New Tile</div>' +
+                          '<div class="editor-button create-new">+</div>' +
                         '</div>' +
-                        '<div class="tiles-list"></div>';
+                        '<input type="checkbox" checked class="expand-collapse"></div>' +
+                        '<div class="tiles-list collapsible"></div>';
                         
   var TEMPLATE_TILE = '<div class="input input-text">' +
                         '<div class="pane-input-field">' +
@@ -1490,6 +1504,8 @@ var Tiles = (function Tiles() {
 
 var TextureEditor = (function TextureEditor() {
   function TextureEditor(options) {
+    this.el = null;
+    this.elContent = null;
     this.elContainer = null;
     this.elImage = null;
     this.elInfo = null;
@@ -1539,9 +1555,20 @@ var TextureEditor = (function TextureEditor() {
   TextureEditor.prototype.show = function show(textureData, onUpdate) {
     this.textureData = textureData;
     this.onUpdate = onUpdate || null;
+    this.position.x = 0;
+    this.position.y = 0;
+    
+    if (!this.textureData.hasOwnProperty('width')) {
+      this.textureData.width = editor.game.config.tileSize;
+    }
+    if (!this.textureData.hasOwnProperty('height')) {
+      this.textureData.height = editor.game.config.tileSize;
+    }
+    
     this.image = new Image();
     this.image.addEventListener('load', this.onImageLoad.bind(this));
     this.image.src = textureData.src;
+    
     this.elSelection.style.width = this.textureData.width + 'px';
     this.elSelection.style.height = this.textureData.height + 'px';
   };
@@ -1556,13 +1583,13 @@ var TextureEditor = (function TextureEditor() {
     var height = this.image.height;
     var ratioWidth = (this.elContainer.offsetWidth - this.padding) / width;
     var ratioHeight = (this.elContainer.offsetHeight - this.padding) / height;
-    var ratio = Math.min(ratioWidth, ratioHeight);
+    var ratio = Math.min(Math.min(ratioWidth, ratioHeight), 1);
 
     this.ratio = ratio;
     
     this.elImage.style.backgroundImage = 'url(' + this.image.src + ')';
     
-    this.el.style.cssText = [
+    this.elContent.style.cssText = [
       'width: ' + width + 'px',
       'height: ' + height + 'px',
       'margin-top: ' + -height/2 + 'px',
@@ -1576,7 +1603,7 @@ var TextureEditor = (function TextureEditor() {
   };
   
   TextureEditor.prototype.onMouseMove = function onMouseMove(e) {
-    var bounds = this.el.getBoundingClientRect();
+    var bounds = this.elContent.getBoundingClientRect();
     var x = Math.round((e.pageX - bounds.left) / this.ratio);
     var y = Math.round((e.pageY - bounds.top) / this.ratio);
 
@@ -1599,15 +1626,22 @@ var TextureEditor = (function TextureEditor() {
   };
   
   TextureEditor.prototype.onClick = function onClick(e) {
-    this.onMouseMove(e);
+    var elClicked = e.target;
     
-    this.textureData.clip = {
-      'x': this.position.x,
-      'y': this.position.y
-    };
+    if (elClicked === this.el) {
+      this.hide();
+    } else {
     
-    this.hide();
-    this.onUpdate(this.textureData);
+      this.onMouseMove(e);
+      
+      this.textureData.clip = {
+        'x': this.position.x,
+        'y': this.position.y
+      };
+      
+      this.hide();
+      this.onUpdate(this.textureData);
+    }
   };
 
   TextureEditor.prototype.onKeyPress = function onKeyPress(e) {
@@ -1621,12 +1655,14 @@ var TextureEditor = (function TextureEditor() {
     
     this.el.className = 'texture-editor';
     
-    this.el.innerHTML = '<div class="image"></div>' +
-                        '<div class="info"></div>' +
-                        '<div class="selection"></div>' +
-                        '<div class="close"></div>';
-    
-    this.el.addEventListener('mousemove', this.onMouseMove.bind(this));
+    this.el.innerHTML = '<div class="content">' +
+                          '<div class="image"></div>' +
+                          '<div class="info"></div>' +
+                          '<div class="selection"></div>' +
+                          '<div class="close"></div>' +
+                        '</div>';
+    this.elContent = this.el.querySelector('.content');
+    this.elContent.addEventListener('mousemove', this.onMouseMove.bind(this));
     this.el.addEventListener('click', this.onClick.bind(this));
     window.addEventListener('keyup', this.onKeyPress.bind(this));
     
@@ -1718,7 +1754,14 @@ var EditorTexture = (function EditorTexture() {
   
   for (var i = 1, len = id.length; i < len; i++) {
     var char = id[i];
-    if (char === char.toUpperCase()) {
+    var prevChar = id[i - 1];
+    var nextChar = id[i + 1];
+    
+    var isUpperCase = char === char.toUpperCase();
+    var isPrevUpperCase = prevChar && prevChar === prevChar.toUpperCase();
+    var isNextUpperCase = nextChar && nextChar === nextChar.toUpperCase();
+    
+    if (isUpperCase) {
       formattedId += ' ';
     }
     
