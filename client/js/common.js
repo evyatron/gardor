@@ -58,6 +58,10 @@ var EventDispatcher = (function EventDispatcher() {
       callback.apply(this, arguments);
     }.bind(this));
   };
+  
+  EventDispatcher.prototype.removeEventListeners = function removeEventListeners() {
+    this._listeners = {};
+  };
 
   return EventDispatcher;
 }());
@@ -102,8 +106,6 @@ var utils = {
   },
   
   'request': function request(url, callback) {
-    console.log('Request:', url);
-    
     var httpRequest = new XMLHttpRequest();
     
     httpRequest.open('GET', url, true);
@@ -115,6 +117,23 @@ var utils = {
     };
     
     httpRequest.send();
+  },
+  
+  'post': function post(url, data, callback) {
+    var httpRequest = new XMLHttpRequest();
+    
+    httpRequest.open('POST', url, true);
+    
+    httpRequest.responseType = 'json';
+    httpRequest.setRequestHeader('Content-type', 'application/json');
+    
+    httpRequest.onload = function onRequestDone(e) {
+      if (callback) {
+        callback(e.target.response);
+      }
+    };
+    
+    httpRequest.send(data);
   },
   
   'loadScript': function loadScript(src) {

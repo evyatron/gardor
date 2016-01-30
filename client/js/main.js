@@ -1,5 +1,6 @@
 /* global DEBUG */
 /* global DEBUG_NAVMESH */
+/* global EventDispatcher */
 /* global utils */
 
 
@@ -139,6 +140,8 @@ var Game = (function Game() {
     
     this.el.style.width = '';
     this.el.style.height = '';
+    
+    this.removeEventListeners();
   };
   
   Game.prototype.setDebug = function setDebug(isDebug) {
@@ -540,7 +543,7 @@ var Game = (function Game() {
   Game.prototype.createGameFromConfig = function createGameFromConfig(config) {
     console.info('Got Config', config);
     
-    this.config = config;
+    this.config = JSON.parse(JSON.stringify(config));
     this.createGame();
   };
   

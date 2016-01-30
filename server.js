@@ -1,23 +1,93 @@
-var http = require('http');
-var path = require('path');
-var socketio = require('socket.io');
-var express = require('express');
-var router = express();
-var server = http.createServer(router);
-var io = socketio.listen(server);
+var path        = require('path');
+var express     = require('express');
+var bodyParser  = require('body-parser');
+var fs          = require('fs');
 
-var port = process.env.PORT || 3000;
-var ip = process.env.IP || '0.0.0.0';
 
-router.use(express.static(path.resolve(__dirname, 'client')));
+var PORT = process.env.PORT || 3000;
+var IP   = process.env.IP   || '0.0.0.0';
 
-function onNewConnection(socket) {
-  console.log('New connection', socket.id);
+var app = express(); 
+
+
+// Default client routing for all static assets
+var routerClient = express.Router();
+routerClient.use(express.static(path.resolve(__dirname, 'client')));
+app.use('/', routerClient);
+
+
+
+// API routing - for editor work
+var routerAPI = express.Router();
+routerAPI.use(bodyParser.urlencoded({ extended: false }));
+routerAPI.use(bodyParser.json());
+
+function getGamePath(gameId) {
+  return path.resolve(__dirname, 'client/data/' + gameId + '.json');
 }
 
-io.on('connection', onNewConnection);
+function apiError(res, err) {
+  console.warn('Error in APi', err);
+  
+  res.json({
+    'error': err
+  });
+}
 
-
-server.listen(port, ip, function onServerRunning(){
-  console.info('Server running on ' + ip + ':' + port + '...');
+// Get a game
+routerAPI.get('/game/:game_id', function onRequestRoot(req, res) {
+  fs.readFile(getGamePath(req.params.game_id), 'utf8', function onFileRead(err, data) {
+    if (err) {
+      apiError(res, err);
+      return;
+    }
+    
+    res.json(JSON.parse(data));
+  });
 });
+
+// Update a game
+routerAPI.post('/game/:game_id', function onRequestRoot(req, res) {
+  var content = req.body;
+  
+  if (content) {
+    try {
+      content = JSON.stringify(content, null, 2);
+    } catch(ex) {
+      console.warn('Got invalid JSON from save request');
+      content = null;
+    }
+  }
+    
+  if (!content) {
+    apiError(res, 'No or invalid JSON posted to the request');
+    return;
+  }
+  
+  var path = getGamePath(req.params.game_id);
+  
+  fs.access(path, fs.W_OK, function onAccess(err) {
+    if (err) {
+      apiError(res, err);
+      return;
+    }
+
+    fs.writeFile(path, content, 'utf8', function onFileWrite(err, data) {
+      if (err) {
+        apiError(res, err);
+      } else {
+        res.json({
+          'success': true
+        });
+      }
+    });
+  });
+});
+
+app.use('/api', routerAPI);
+
+
+
+// Run the server
+app.listen(PORT, IP);
+console.log('Server running on ' + IP + ':' + PORT + '...');

@@ -38,6 +38,8 @@ function Editor(options) {
       'width': 15
     }
   };
+  
+  this.gameId = 'game';
 
   this.init(options);
 }
@@ -164,7 +166,7 @@ Editor.prototype.onGotSchema = function onGotSchema(schema) {
 
 Editor.prototype.loadGame = function loadGame(gameConfig) {
   if (!gameConfig) {
-    utils.request('/data/game.json', this.loadGame.bind(this));
+    utils.request('/api/game/' + this.gameId, this.loadGame.bind(this));
     return false;
   }
   
@@ -172,6 +174,27 @@ Editor.prototype.loadGame = function loadGame(gameConfig) {
   this.paneGame.updateFromJSON(gameConfig);
 
   this.refreshGame();
+};
+
+Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
+  var mapConfig = this.config.map;
+  
+  if (mapConfig) {
+    mapConfig = JSON.parse(JSON.stringify(mapConfig));
+    
+    this.paneMap.updateFromJSON(mapConfig);
+    this.actorsEditor.loadFromGame(mapConfig);
+
+    this.game.addMap(mapConfig);
+    callback && callback(mapConfig);
+    
+    this.disablePlay();
+  } else {
+    utils.request('/data/' + mapId + '.json', function onGotMap(mapConfig) {
+      this.config.map = mapConfig;
+      this.loadGameMap(mapId, callback);
+    }.bind(this));
+  }
 };
 
 Editor.prototype.getData = function getData() {
@@ -235,17 +258,11 @@ Editor.prototype.refreshGame = function refreshGame() {
   this.game.on(this.game.EVENTS.CLICK, this.onGameClick.bind(this));
   this.game.on(this.game.EVENTS.CLICK_SECONDARY, this.onGameClickSecondary.bind(this));
   this.game.on(this.game.EVENTS.POINTER_TILE_CHANGE, this.onGamePointerTileChange.bind(this));
-  
 };
 
 Editor.prototype.onGameReady = function onGameReady() {
-  var config = JSON.parse(JSON.stringify(this.config.game));
-  
-  this.paneGame.updateJSON(config);
-  
-  this.tilesEditor.loadFromGame(config);
-
-  this.game.createGameFromConfig(config);
+  this.tilesEditor.loadFromGame(this.config.game);
+  this.game.createGameFromConfig(this.config.game);
 };
 
 Editor.prototype.resizeGridByClick = function resizeGridByClick(data, isLeftButton) {
@@ -381,6 +398,7 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
 };
 
 Editor.prototype.onGameClick = function onGameClick(data) {
+  console.warn('click')
   this.handleGameClick(data, true);
 };
 
@@ -411,33 +429,6 @@ Editor.prototype.placeActorOnTile = function placeActorOnTile(actor, tile) {
   }
 };
 
-Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
-  var mapConfig = this.config.map;
-  
-  if (mapConfig) {
-    mapConfig = JSON.parse(JSON.stringify(mapConfig));
-    
-    this.paneMap.updateFromJSON(mapConfig);
-    this.actorsEditor.loadFromGame(mapConfig);
-
-    this.game.addMap(mapConfig);
-    callback && callback(mapConfig);
-    
-    this.disablePlay();
-  } else {
-    this.getGameMapConfig(mapId, callback);
-  }
-};
-
-Editor.prototype.getGameMapConfig = function getGameMapConfig(mapId, callback) {
-  var url = '/data/' + mapId + '.json';
-  
-  utils.request(url, function onGotMap(mapConfig) {
-    this.config.map = mapConfig;
-    this.loadGameMap(mapId, callback);
-  }.bind(this));
-};
-
 Editor.prototype.enablePlay = function enablePlay() {
   this.isPlayable = true;
   this.game.playerController.enable();
@@ -463,7 +454,10 @@ Editor.prototype.onPlayableChange = function onPlayableChange() {
 };
 
 Editor.prototype.onGameConfigChange = function onGameConfigChange() {
+  this.paneGame.updateJSON(this.config.game);
   this.refreshGame();
+  
+  this.saveGameConfig();
 };
 
 Editor.prototype.onMapConfigChange = function onMapConfigChange(e) {
@@ -473,6 +467,8 @@ Editor.prototype.onMapConfigChange = function onMapConfigChange(e) {
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
   this.config.game.tiles = tiles;
   this.game.setTiles(tiles);
+  
+  this.saveGameConfig();
 };
 
 Editor.prototype.onActorsChange = function onActorsChange(actors) {
@@ -489,6 +485,10 @@ Editor.prototype.onDebugChange = function onDebugChange(e) {
   } else if (el.id === 'config-debug-navmesh') {
     this.game.setDebugNavmesh(state);
   }
+};
+
+Editor.prototype.saveGameConfig = function saveGameConfig() {
+  utils.post('/api/game/' + this.gameId, JSON.stringify(this.config.game));
 };
 
 
