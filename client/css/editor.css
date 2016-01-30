@@ -48,7 +48,6 @@ div, p, input, textarea {
 }
 .editor-container.vertical.resizing .resizer,
 .editor-container.vertical .resizer:hover {
-  width: 20px;
   background: rgba(255, 255, 255, .8);
 }
 .editor-container.vertical.left .resizer {
@@ -373,44 +372,30 @@ div, p, input, textarea {
   }
   .tiles-editor .tile {
     position: relative;
-    border-bottom: 1px solid #ccc;
-    padding: 3px 5px 2px 3px;
-    display: flex;
-    flex-direction: row-reverse;
+    display: inline-block;
+    padding: 4px;
+    margin: 2px;
+    background: rgba(255, 255, 255, .2);
   }
-  .tiles-editor .tile:last-child {
-    border-bottom-width: 0;
+  .tiles-editor .tile:hover {
+    background: rgba(255, 255, 255, .4);
   }
   .tiles-editor .tile[data-placing = "true"] {
     background: red;
   }
-  .tiles-editor .tile input[data-property = "isBlocking"] {
+  .tiles-editor .tile .texture-container {
+    display: inline-block;
     vertical-align: middle;
-  }
-  .tiles-editor .tile label {
-    vertical-align: middle;
-  }
-  .tiles-editor .tile input {
-    font-size: .9em;
-    padding: 1px 3px;
-  }
-  .tiles-editor .tile .pane-input-field {
-    width: 75%;
-  }
-  .tiles-editor .tile .input {
-    display: block;
-    flex: 1;
-    padding: 0 0 0 4px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 1);
   }
   .tiles-editor .tile .place-tile {
-    position: absolute;
-    top: 50%;
+    width: 20px;
+    height: 34px;
+    line-height: 34px;
     padding: 0;
-    right: 4px;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    margin-top: -15px;
+    margin-left: 4px;
+    display: inline-block;
+    vertical-align: middle;
   }
   
 .texture {

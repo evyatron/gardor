@@ -1341,16 +1341,8 @@ var Tiles = (function Tiles() {
                         '<input type="checkbox" checked class="expand-collapse"></div>' +
                         '<div class="tiles-list collapsible"></div>';
                         
-  var TEMPLATE_TILE = '<div class="input input-text">' +
-                        '<div class="pane-input-field">' +
-                          '<input type="text" data-property="id" data-index="{{index}}" title="Tile\'s ID" id="tile_id[{{index}}]" value="{{id}}" />' +
-                        '</div>' +
-                        '<div class="pane-input-field" title="If true player won\'t be able to walk over this tile">' +
-                          '<input type="checkbox" data-property="isBlocking" data-index="{{index}}" id="tile_isBlocking[{{index}}]" />' +
-                          '<label for="tile_isBlocking[{{index}}]">Blocking</label>' +
-                        '</div>' +
-                      '</div>' +
-                      '<b class="editor-button place-tile" data-index="{{index}}" title="Place Tile">&gt;&gt;</b>';
+  var TEMPLATE_TILE = '<div class="texture-container"></div>' +
+                      '<b class="editor-button place-tile" data-index="{{index}}" title="Place Tile">&gt;</b>';
   
   function Tiles(options) {
     this.elContainer = null;
@@ -1374,7 +1366,6 @@ var Tiles = (function Tiles() {
     this.createHTML();
     
     this.el.addEventListener('click', this.onClick.bind(this));
-    this.el.addEventListener('change', this.onTilesChange.bind(this));
     this.el.querySelector('.create-new').addEventListener('click', this.createNew.bind(this));
   };
   
@@ -1388,6 +1379,8 @@ var Tiles = (function Tiles() {
     
     el.className = 'tile';
     el.dataset.index = tile.index;
+    el.dataset.blocking = tile.isBlocking;
+    el.dataset.id = tile.id;
     el.dataset.placing = false;
     
     el.innerHTML = TEMPLATE_TILE.format(tile);
@@ -1400,20 +1393,27 @@ var Tiles = (function Tiles() {
     };
     
     this.tilesTextures[tile.index] = new EditorTexture({
-      'elContainer': el,
+      'elContainer': el.querySelector('.texture-container'),
       'data': tile.texture,
+      'meta': {
+        'id': tile.id,
+        'isBlocking': tile.isBlocking
+      },
       'onChange': this.onTextureChange.bind(this, tile.index)
     });
-    
-    el.querySelector('[data-property = "isBlocking"]').checked = tile.isBlocking;
 
     this.elList.appendChild(el);
   };
   
   Tiles.prototype.onTextureChange = function onTextureChange(tileIndex) {
     var tile = this.tiles[tileIndex];
+    var elTile = this.getTileEl(tile);
     var texture = this.tilesTextures[tileIndex];
-    tile.texture = JSON.parse(JSON.stringify(texture.data));
+    var data = texture.data;
+    var meta = texture.meta;
+    
+    tile.texture = JSON.parse(JSON.stringify(data));
+    console.warn(meta, elTile);
     
     this.onChange(this.tiles);
   };
@@ -1433,10 +1433,8 @@ var Tiles = (function Tiles() {
   };
   
   Tiles.prototype.loadFromGame = function loadFromGame(gameConfig) {
-    var tiles = gameConfig.tiles;
-    
-    for (var i = 0, len = tiles.length; i < len; i++) {
-      this.addTile(tiles[i]);
+    for (var i = 0, len = gameConfig.tiles.length; i < len; i++) {
+      this.addTile(gameConfig.tiles[i]);
     }
   };
 
@@ -1465,25 +1463,7 @@ var Tiles = (function Tiles() {
       }
     }
   };
-  
-  Tiles.prototype.onTilesChange = function onTilesChange(e) {
-    e && e.stopPropagation();
-    
-    var elChanged = e.target;
-    var index = elChanged.dataset.index * 1;
-    var tile = this.tiles[index];
-    var elTile = this.getTileEl(tile);
-    
-    if (!tile || !elTile) {
-      return;
-    }
-    
-    tile.isBlocking = elTile.querySelector('[data-property = "isBlocking"]').checked;
-    tile.id = elTile.querySelector('[data-property = "id"]').value;
-    
-    this.onChange(this.tiles);
-  };
-  
+
   Tiles.prototype.getTileEl = function getTileEl(tile) {
     return this.el.querySelector('.tile[data-index = "' + tile.index + '"]');
   };
@@ -1522,7 +1502,7 @@ var TextureEditor = (function TextureEditor() {
       'y': 0
     };
     
-    this.padding = 50;
+    this.padding = 400;
     
     this.onSelect = null;
     this.isBoundToGrid = true;
@@ -1552,8 +1532,9 @@ var TextureEditor = (function TextureEditor() {
     }
   };
   
-  TextureEditor.prototype.show = function show(textureData, onUpdate) {
+  TextureEditor.prototype.show = function show(textureData, meta, onUpdate) {
     this.textureData = textureData;
+    this.textureMeta = meta || {};
     this.onUpdate = onUpdate || null;
     this.position.x = 0;
     this.position.y = 0;
@@ -1571,6 +1552,8 @@ var TextureEditor = (function TextureEditor() {
     
     this.elSelection.style.width = this.textureData.width + 'px';
     this.elSelection.style.height = this.textureData.height + 'px';
+    
+    this.setPosition(textureData.clip.x, textureData.clip.y);
   };
   
   TextureEditor.prototype.hide = function hide() {
@@ -1697,6 +1680,7 @@ var EditorTexture = (function EditorTexture() {
   EditorTexture.prototype.init = function init(options) {
     this.elContainer = options.elContainer;
     this.data = options.data;
+    this.meta = options.meta || {};
     this.onChange = options.onChange || function(){};
     
     this.createHTML();
@@ -1706,7 +1690,7 @@ var EditorTexture = (function EditorTexture() {
   };
   
   EditorTexture.prototype.onClick = function onClick() {
-    TextureEditor.show(this.data, this.onUpdateTexture.bind(this));
+    TextureEditor.show(this.data, this.meta, this.onUpdateTexture.bind(this));
   };
   
   EditorTexture.prototype.onUpdateTexture = function onUpdateTexture(data) {
