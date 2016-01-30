@@ -289,8 +289,8 @@
       "texture": {
         "src": "/img/RPGpack_sheet.png",
         "clip": {
-          "x": 320,
-          "y": 320
+          "x": 576,
+          "y": 640
         },
         "width": 64,
         "height": 64,
