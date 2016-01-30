@@ -255,9 +255,13 @@ Editor.prototype.refreshGame = function refreshGame() {
   this.game.loadMap = this.loadGameMap.bind(this);
   
   this.game.on(this.game.EVENTS.READY, this.onGameReady.bind(this));
-  this.game.on(this.game.EVENTS.CLICK, this.onGameClick.bind(this));
-  this.game.on(this.game.EVENTS.CLICK_SECONDARY, this.onGameClickSecondary.bind(this));
   this.game.on(this.game.EVENTS.POINTER_TILE_CHANGE, this.onGamePointerTileChange.bind(this));
+  this.game.on(this.game.EVENTS.CLICK, function onGameClick(data) {
+    this.handleGameClick(data, true);
+  }.bind(this));
+  this.game.on(this.game.EVENTS.CLICK_SECONDARY, function onGameClickSecondary(data) {
+    this.handleGameClick(data, false);
+  }.bind(this));
 };
 
 Editor.prototype.onGameReady = function onGameReady() {
@@ -395,15 +399,6 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
   if (shouldRefreshMap) {
     this.refreshMap();
   }
-};
-
-Editor.prototype.onGameClick = function onGameClick(data) {
-  console.warn('click')
-  this.handleGameClick(data, true);
-};
-
-Editor.prototype.onGameClickSecondary = function onGameClickSecondary(data) {
-  this.handleGameClick(data, false);
 };
 
 
@@ -1433,6 +1428,10 @@ var Tiles = (function Tiles() {
   };
   
   Tiles.prototype.loadFromGame = function loadFromGame(gameConfig) {
+    this.tiles = [];
+    this.tilesTextures = [];
+    this.elList.innerHTML = '';
+    
     for (var i = 0, len = gameConfig.tiles.length; i < len; i++) {
       this.addTile(gameConfig.tiles[i]);
     }

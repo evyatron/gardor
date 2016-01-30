@@ -34,38 +34,7 @@ function apiError(res, err) {
   });
 }
 
-// Get a game
-routerAPI.get('/game/:game_id', function onRequestRoot(req, res) {
-  fs.readFile(getGamePath(req.params.game_id), 'utf8', function onFileRead(err, data) {
-    if (err) {
-      apiError(res, err);
-      return;
-    }
-    
-    res.json(JSON.parse(data));
-  });
-});
-
-// Update a game
-routerAPI.post('/game/:game_id', function onRequestRoot(req, res) {
-  var content = req.body;
-  
-  if (content) {
-    try {
-      content = JSON.stringify(content, null, 2);
-    } catch(ex) {
-      console.warn('Got invalid JSON from save request');
-      content = null;
-    }
-  }
-    
-  if (!content) {
-    apiError(res, 'No or invalid JSON posted to the request');
-    return;
-  }
-  
-  var path = getGamePath(req.params.game_id);
-  
+function apiSaveFile(res, path, content) {
   fs.access(path, fs.W_OK, function onAccess(err) {
     if (err) {
       apiError(res, err);
@@ -82,6 +51,43 @@ routerAPI.post('/game/:game_id', function onRequestRoot(req, res) {
       }
     });
   });
+}
+
+function apiPrintJSON(res, path) {
+  fs.readFile(path, 'utf8', function onFileRead(err, data) {
+    if (err) {
+      apiError(res, err);
+      return;
+    }
+    
+    res.json(JSON.parse(data));
+  });
+}
+
+// Get a game
+routerAPI.get('/game/:game_id', function onRequestRoot(req, res) {
+  apiPrintJSON(res, getGamePath(req.params.game_id));
+});
+
+// Update a game
+routerAPI.post('/game/:game_id', function onRequestRoot(req, res) {
+  var content = req.body;
+  
+  if (content) {
+    try {
+      content = JSON.stringify(content, null, 2);
+    } catch(ex) {
+      console.warn('Got invalid JSON from save request');
+      content = null;
+    }
+  }
+    
+  if (!content) {
+    apiError(res, 'Missing or invalid JSON posted to the request');
+    return;
+  }
+  
+  apiSaveFile(res, getGamePath(req.params.game_id), content);
 });
 
 app.use('/api', routerAPI);
