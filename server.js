@@ -17,6 +17,8 @@ routerAPI.use(bodyParser.urlencoded({ extended: false }));
 routerAPI.use(bodyParser.json());
 routerAPI.get('/game/:game_id', getGame);
 routerAPI.post('/game/:game_id', updateGame);
+routerAPI.get('/game/:game_id/map/:map_id', getMap);
+routerAPI.post('/game/:game_id/map/:map_id', updateMap);
 app.use('/api', routerAPI);
 
 function getGame(req, res) {
@@ -27,29 +29,38 @@ function getGame(req, res) {
 function updateGame(req, res) {
   console.log('[API][Game|' + req.params.game_id + '] Save');
   
-  var content = req.body;
-  
+  var content = apiGetJSONToSave(req, res);
   if (content) {
-    try {
-      content = JSON.stringify(content, null, 2);
-    } catch(ex) {
-      console.warn('Got invalid JSON from save request');
-      content = null;
-    }
+    apiSaveFile(res, getGamePath(req.params.game_id), content);
   }
-    
-  if (!content) {
-    apiError(res, 'Missing or invalid JSON posted to the request');
-    return;
-  }
+}
+
+function getMap(req, res) {
+  console.log('[API][Map|' + req.params.map_id + '] Get');
+  apiPrintJSON(res, getMapPath(req.params.game_id, req.params.map_id));
+}
+
+function updateMap(req, res) {
+  console.log('[API][Map|' + req.params.map_id + '] Save');
   
-  apiSaveFile(res, getGamePath(req.params.game_id), content);
+  var content = apiGetJSONToSave(req, res);
+  if (content) {
+    apiSaveFile(res, getMapPath(req.params.map_id, req.params.map_id), content);
+  }
 }
 
 // helpers
 
 function getGamePath(gameId) {
-  return path.resolve(__dirname, 'client/data/' + gameId + '.json');
+  return path.resolve(__dirname, 'client/data/' + cleanupPath(gameId) + '.json');
+}
+
+function getMapPath(gameId, mapId) {
+  return path.resolve(__dirname, 'client/data/' + cleanupPath(mapId) + '.json');
+}
+
+function cleanupPath(id) {
+  return id.toLowerCase().replace(/\s/g, '-');
 }
 
 function apiError(res, err) {
@@ -88,6 +99,25 @@ function apiPrintJSON(res, path) {
   });
 }
 
+function apiGetJSONToSave(request, response) {
+  var content = request.body;
+  
+  if (content) {
+    try {
+      content = JSON.stringify(content, null, 2);
+    } catch(ex) {
+      console.warn('Got invalid JSON from save request');
+      content = null;
+    }
+  }
+    
+  if (!content) {
+    apiError(response, 'Missing or invalid JSON posted to the request');
+    return;
+  }
+  
+  return content;
+}
 
 (function addTimestampsToLogs() {
   var log = console.log;

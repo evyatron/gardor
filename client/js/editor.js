@@ -184,13 +184,13 @@ Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
     
     this.paneMap.updateFromJSON(mapConfig);
     this.actorsEditor.loadFromGame(mapConfig);
-
+    
     this.game.addMap(mapConfig);
     callback && callback(mapConfig);
     
     this.disablePlay();
   } else {
-    utils.request('/data/' + mapId + '.json', function onGotMap(mapConfig) {
+    utils.request('/api/game/' + this.gameId + '/map/' + mapId, function onGotMap(mapConfig) {
       this.config.map = mapConfig;
       this.loadGameMap(mapId, callback);
     }.bind(this));
@@ -235,7 +235,6 @@ Editor.prototype.getData = function getData() {
 
 Editor.prototype.refreshMap = function refreshMap() {
   delete this.game.maps[this.config.map.id];
-  this.paneMap.updateJSON(this.config.map);
   this.game.goToMap(this.config.map.id);
 };
 
@@ -359,7 +358,7 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
   }
   
   var canResizeGrid = true;
-  var shouldRefreshMap = false;
+  var didChangeMap = false;
   
   // Place or pick up actors to move around
   if (this.heldActor) {
@@ -385,23 +384,23 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
   if (canResizeGrid) {
     var didResizeGrid = this.resizeGridByClick(data, isLeftButton);
     if (didResizeGrid) {
-      shouldRefreshMap = true;
+      didChangeMap = true;
     }
   }
 
   // Change tiles
   if (this.tilesEditor.placingTile) {
-    this.config.map.grid[data.tile.y][data.tile.x] = this.tilesEditor.placingTile.id;
-    shouldRefreshMap = true;
+    var tileToPlace = isLeftButton? this.tilesEditor.placingTile.id : '';
+    this.config.map.grid[data.tile.y][data.tile.x] = tileToPlace;
+    didChangeMap = true;
   }
   
   // If we edited something - refresh!
-  if (shouldRefreshMap) {
+  if (didChangeMap) {
     this.refreshMap();
+    this.saveMapConfig();
   }
 };
-
-
 
 Editor.prototype.onGamePointerTileChange = function onGamePointerTileChange(data) {
   if (this.heldActor) {
@@ -456,7 +455,10 @@ Editor.prototype.onGameConfigChange = function onGameConfigChange() {
 };
 
 Editor.prototype.onMapConfigChange = function onMapConfigChange(e) {
+  this.paneMap.updateJSON(this.config.map);
   this.refreshMap();
+  
+  this.saveMapConfig();
 };
 
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
@@ -469,6 +471,8 @@ Editor.prototype.onTilesChange = function onTilesChange(tiles) {
 Editor.prototype.onActorsChange = function onActorsChange(actors) {
   this.config.map.actors = actors;
   this.refreshMap();
+  
+  this.saveMapConfig();
 };
 
 Editor.prototype.onDebugChange = function onDebugChange(e) {
@@ -484,6 +488,10 @@ Editor.prototype.onDebugChange = function onDebugChange(e) {
 
 Editor.prototype.saveGameConfig = function saveGameConfig() {
   utils.post('/api/game/' + this.gameId, JSON.stringify(this.config.game));
+};
+
+Editor.prototype.saveMapConfig = function saveMapConfig() {
+  utils.post('/api/game/' + this.gameId + '/map/' + this.config.map.id, JSON.stringify(this.config.map));
 };
 
 
