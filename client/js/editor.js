@@ -164,16 +164,21 @@ Editor.prototype.onGotSchema = function onGotSchema(schema) {
   this.loadGame();
 };
 
-Editor.prototype.loadGame = function loadGame(gameConfig) {
-  if (!gameConfig) {
-    utils.request('/api/game/' + this.gameId, this.loadGame.bind(this));
-    return false;
-  }
+Editor.prototype.loadGame = function loadGame() {
+  var gameConfig = this.config.game;
   
-  this.config.game = gameConfig;
-  this.paneGame.updateFromJSON(gameConfig);
-
-  this.refreshGame();
+  if (gameConfig) {
+    gameConfig = JSON.parse(JSON.stringify(gameConfig));
+    
+    this.paneGame.updateFromJSON(gameConfig);
+    
+    this.refreshGame(true);
+  } else {
+    utils.request('/api/game/' + this.gameId, function onGotGame(gameConfig) {
+      this.config.game = gameConfig;
+      this.loadGame();
+    }.bind(this));
+  }
 };
 
 Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
@@ -234,12 +239,20 @@ Editor.prototype.getData = function getData() {
 };
 
 Editor.prototype.refreshMap = function refreshMap() {
+  console.warn('Refresh map');
+  
+  utils.post('/api/game/' + this.gameId + '/map/' + this.config.map.id, JSON.stringify(this.config.map));
+  
   delete this.game.maps[this.config.map.id];
   this.game.goToMap(this.config.map.id);
 };
 
-Editor.prototype.refreshGame = function refreshGame() {
+Editor.prototype.refreshGame = function refreshGame(isFromLoad) {
   console.info('Refresh game');
+  
+  if (!isFromLoad) {
+    this.saveGameConfig();
+  }
   
   if (this.game) {
     this.game.destroy();
@@ -381,24 +394,25 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
   }
   
   // If nothing else happened - check for resizing the grid
+  var didResizeGrid = false;
   if (canResizeGrid) {
-    var didResizeGrid = this.resizeGridByClick(data, isLeftButton);
+    didResizeGrid = this.resizeGridByClick(data, isLeftButton);
     if (didResizeGrid) {
       didChangeMap = true;
     }
   }
 
   // Change tiles
-  if (this.tilesEditor.placingTile) {
-    var tileToPlace = isLeftButton? this.tilesEditor.placingTile.id : '';
-    this.config.map.grid[data.tile.y][data.tile.x] = tileToPlace;
-    didChangeMap = true;
+  if (!didResizeGrid) {
+    if (this.tilesEditor.placingTile) {
+      var tileToPlace = isLeftButton? this.tilesEditor.placingTile.id : '';
+      this.config.map.grid[data.tile.y][data.tile.x] = tileToPlace;
+      didChangeMap = true;
+    }
   }
   
-  // If we edited something - refresh!
   if (didChangeMap) {
     this.refreshMap();
-    this.saveMapConfig();
   }
 };
 
@@ -412,8 +426,7 @@ Editor.prototype.placeActorOnTile = function placeActorOnTile(actor, tile) {
   this.heldActor.updateTile(tile);
   this.heldActor.setAlpha();
   this.heldActor = null;
-  
-  
+
   var actors = this.config.map.actors;
   for (var i = 0, len = actors.length; i < len; i++) {
     if (actors[i].id === actor.id) {
@@ -421,6 +434,8 @@ Editor.prototype.placeActorOnTile = function placeActorOnTile(actor, tile) {
       break;
     }
   }
+  
+  this.refreshMap();
 };
 
 Editor.prototype.enablePlay = function enablePlay() {
@@ -439,26 +454,9 @@ Editor.prototype.disablePlay = function disablePlay() {
 
 
 // Change events
-Editor.prototype.onPlayableChange = function onPlayableChange() {
-  if (this.elPlayable.checked) {
-    this.enablePlay();
-  } else {
-    this.disablePlay();
-  }
-};
-
 Editor.prototype.onGameConfigChange = function onGameConfigChange() {
   this.paneGame.updateJSON(this.config.game);
   this.refreshGame();
-  
-  this.saveGameConfig();
-};
-
-Editor.prototype.onMapConfigChange = function onMapConfigChange(e) {
-  this.paneMap.updateJSON(this.config.map);
-  this.refreshMap();
-  
-  this.saveMapConfig();
 };
 
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
@@ -468,11 +466,22 @@ Editor.prototype.onTilesChange = function onTilesChange(tiles) {
   this.saveGameConfig();
 };
 
+Editor.prototype.onMapConfigChange = function onMapConfigChange(e) {
+  this.paneMap.updateJSON(this.config.map);
+  this.refreshMap();
+};
+
 Editor.prototype.onActorsChange = function onActorsChange(actors) {
   this.config.map.actors = actors;
   this.refreshMap();
-  
-  this.saveMapConfig();
+};
+
+Editor.prototype.onPlayableChange = function onPlayableChange() {
+  if (this.elPlayable.checked) {
+    this.enablePlay();
+  } else {
+    this.disablePlay();
+  }
 };
 
 Editor.prototype.onDebugChange = function onDebugChange(e) {
@@ -488,10 +497,6 @@ Editor.prototype.onDebugChange = function onDebugChange(e) {
 
 Editor.prototype.saveGameConfig = function saveGameConfig() {
   utils.post('/api/game/' + this.gameId, JSON.stringify(this.config.game));
-};
-
-Editor.prototype.saveMapConfig = function saveMapConfig() {
-  utils.post('/api/game/' + this.gameId + '/map/' + this.config.map.id, JSON.stringify(this.config.map));
 };
 
 

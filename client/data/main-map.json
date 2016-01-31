@@ -8,7 +8,7 @@
   "fillTile": "water",
   "grid": [
     [
-      "",
+      "water-tl-land",
       "water-t-land",
       "water-t-land",
       "water-t-land",
@@ -165,7 +165,7 @@
       "land",
       "water-br-land",
       "water-b-land",
-      ""
+      "default_1454189647696"
     ],
     [
       "",
@@ -240,7 +240,8 @@
             }
           }
         }
-      ]
+      ],
+      "tooltip": ""
     },
     {
       "id": "social-github",
@@ -337,7 +338,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "game-nanocraft",
@@ -372,7 +374,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "game-alice",
@@ -407,7 +410,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "game-simon",
@@ -442,7 +446,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "game-supermoneyo",
@@ -477,7 +482,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "game-candickrush",
@@ -512,7 +518,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-particles",
@@ -547,7 +554,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-fantasia",
@@ -582,7 +590,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-timeforcoffee",
@@ -617,7 +626,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-wobbly",
@@ -652,15 +662,16 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-conjunctions",
       "tooltip": "Conjunctions\nExploration of CSS3 transformation and transformation origins.",
       "isBlocking": true,
       "tile": {
-        "y": 8,
-        "x": 4
+        "x": 4,
+        "y": 8
       },
       "modules": [
         {
@@ -687,7 +698,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-circular",
@@ -722,7 +734,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-p280",
@@ -757,7 +770,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-bounce",
@@ -792,7 +806,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-404",
@@ -827,15 +842,16 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-dott",
       "tooltip": "Day of the Tentacle\nCSS3 representation of Purple from Day of the Tentacle",
       "isBlocking": true,
       "tile": {
-        "y": 7,
-        "x": 3
+        "x": 3,
+        "y": 7
       },
       "modules": [
         {
@@ -862,15 +878,16 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-inverter",
       "tooltip": "Image Inverter\nA simple utility page for inverting images without Server Side code (using HTML5 File API)",
       "isBlocking": true,
       "tile": {
-        "y": 7,
-        "x": 4
+        "x": 4,
+        "y": 7
       },
       "modules": [
         {
@@ -897,7 +914,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "js-d3api",
@@ -932,7 +950,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "room-tl",
@@ -952,7 +971,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-t1",
@@ -972,7 +993,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-t2",
@@ -992,7 +1015,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-t3",
@@ -1012,7 +1037,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-tr",
@@ -1032,7 +1059,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-l1",
@@ -1052,7 +1081,9 @@
             "y": 320
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-l2",
@@ -1072,7 +1103,9 @@
             "y": 320
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-r1",
@@ -1092,7 +1125,9 @@
             "y": 320
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-r2",
@@ -1112,7 +1147,9 @@
             "y": 320
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-bl",
@@ -1132,7 +1169,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-b1",
@@ -1152,7 +1191,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-b-door",
@@ -1223,7 +1264,8 @@
           "gravity": 200,
           "colours": "fire"
         }
-      ]
+      ],
+      "tooltip": ""
     },
     {
       "id": "room-b2",
@@ -1243,7 +1285,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "room-br",
@@ -1263,7 +1307,9 @@
             "y": 256
           }
         }
-      ]
+      ],
+      "tooltip": "",
+      "zIndex": 0
     },
     {
       "id": "sign-about",
@@ -1305,14 +1351,19 @@
       "id": "sign-contact",
       "tooltip": "Post Office",
       "tile": {
-        "y": 7,
-        "x": 10
+        "x": 10,
+        "y": 7
       },
       "isBlocking": false,
       "modules": [
         {
           "type": "ModuleDialog",
-          "dialogId": "page-contact"
+          "dialogId": "page-contact",
+          "useDir": "",
+          "useOffset": {
+            "x": 0,
+            "y": 0
+          }
         },
         {
           "type": "ModuleTexture",
@@ -1329,7 +1380,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "sign-games",
@@ -1359,7 +1411,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "sign-playground",
@@ -1385,7 +1438,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "page-contact",
@@ -1419,7 +1473,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     },
     {
       "id": "page-about",
@@ -1452,7 +1507,8 @@
             "y": 0.8
           }
         }
-      ]
+      ],
+      "zIndex": 0
     }
   ],
   "dialogs": [
