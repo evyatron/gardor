@@ -1,19 +1,13 @@
 {
   "tileSize": 64,
-  "startingMap": "main-map",
+  "startingMap": "main",
   "lerpAlpha": 1,
   "followPlayer": true,
   "defaultFont": "11pt 'Share Tech Mono'",
   "timeToShowClickTexture": 0.3,
   "clickTexture": {
-    "src": "/img/hud/click.png"
+    "src": "hud/click.png"
   },
-  "maps": [
-    {
-      "id": "main-map",
-      "src": "/data/main-map.json"
-    }
-  ],
   "tooltips": {
     "font": "10pt 'Share Tech Mono'",
     "padding": {
@@ -35,7 +29,7 @@
       "id": "land",
       "isBlocking": false,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 64,
           "y": 64
@@ -53,7 +47,7 @@
       "id": "water",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 704,
           "y": 64
@@ -71,7 +65,7 @@
       "id": "path",
       "isBlocking": false,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 374,
           "y": 64
@@ -89,7 +83,7 @@
       "id": "water-r-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 640,
           "y": 64
@@ -107,7 +101,7 @@
       "id": "water-t-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 704,
           "y": 128
@@ -125,7 +119,7 @@
       "id": "water-tl-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 832,
           "y": 0
@@ -143,7 +137,7 @@
       "id": "water-tr-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 896,
           "y": 0
@@ -161,7 +155,7 @@
       "id": "water-l-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 768,
           "y": 64
@@ -179,7 +173,7 @@
       "id": "water-b-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 704,
           "y": 0
@@ -197,7 +191,7 @@
       "id": "water-bl-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 768,
           "y": 0
@@ -215,7 +209,7 @@
       "id": "water-bl2-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 832,
           "y": 64
@@ -233,7 +227,7 @@
       "id": "water-br-land",
       "isBlocking": true,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 640,
           "y": 0
@@ -251,7 +245,7 @@
       "id": "land-l-path",
       "isBlocking": false,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 320,
           "y": 64
@@ -269,7 +263,7 @@
       "id": "land-r-path",
       "isBlocking": false,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 448,
           "y": 64
@@ -287,7 +281,7 @@
       "id": "default_1454189647696",
       "isBlocking": false,
       "texture": {
-        "src": "/img/RPGpack_sheet.png",
+        "src": "RPGpack_sheet.png",
         "clip": {
           "x": 896,
           "y": 64

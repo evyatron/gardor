@@ -2,7 +2,9 @@
 /* global DEBUG_NAVMESH */
 /* global EventDispatcher */
 /* global utils */
-
+/* global PlayerController */
+/* global Camera */
+/* global NavMesh */
 
 /* Main game class, magic happens here */
 var Game = (function Game() {
@@ -45,6 +47,8 @@ var Game = (function Game() {
     this.timeShownClickTexture = 0;
     
     this.actorsUnderPointer = {};
+    
+    this.configDir = '';
 
     this.stats = {
       'update': {},
@@ -67,6 +71,12 @@ var Game = (function Game() {
       NOT_LOADED: 1,
       LOADING: 2,
       ERROR: 3
+    };
+    
+    this.ASSET_TYPE = {
+      AUDIO: 0,
+      IMAGE: 1,
+      MAP: 2
     };
     
     this.SCRIPTS = [
@@ -97,12 +107,35 @@ var Game = (function Game() {
     this.setDebugNavmesh(options.hasOwnProperty('debugNavmesh')? options.debugNavmesh : /DEBUG_NAVMESH/.test(window.location.search));
     
     this.el = options.el || document.body;
-    this.configSrc = options.config;
+    this.configDir = options.configDir;
     
     utils.loadScripts(this.SCRIPTS, this.onScriptsLoaded.bind(this));
+    
+    // If we got the config dir as an argument, hook it up to load the game
+    if (this.configDir) {
+      this.on(this.EVENTS.READY, function onReadyToInit() {
+        utils.request(this.getAssetPath('game.json'), this.createGameFromConfig.bind(this));
+      }.bind(this));
+    }
+  };
+
+  Game.prototype.getAssetPath = function getAssetPath(src, type) {
+    var base = this.configDir + '/';
+    
+    if (type === this.ASSET_TYPE.IMAGE) {
+      src = base + 'images/' + src;
+    } else if (type === this.ASSET_TYPE.AUDIO) {
+      src = base + 'audio/' + src;
+    } else if (type === this.ASSET_TYPE.MAP) {
+      src = base + 'maps/' + src + '.json';
+    } else {
+      src = base + src;
+    }
+    
+    return src;
   };
   
-  Game.prototype.onScriptsLoaded = function onScriptsLoaded() {;
+  Game.prototype.onScriptsLoaded = function onScriptsLoaded() {
     this.playerController = new PlayerController({
       'game': this
     });
@@ -117,10 +150,6 @@ var Game = (function Game() {
     
     window.addEventListener('resize', this.onResize.bind(this));
     this.onResize();
-    
-    if (this.configSrc) {
-      this.loadConfig(this.configSrc);
-    }
     
     this.dispatch(this.EVENTS.READY);
   };
@@ -520,7 +549,7 @@ var Game = (function Game() {
   Game.prototype.loadMap = function loadMap(mapId, callback) {
     console.log('Get Map:', mapId);
     
-    utils.request('/data/' + mapId + '.json', function onMapLoaded(mapData) {
+    utils.request(this.getAssetPath(mapId, this.ASSET_TYPE.MAP), function onMapLoaded(mapData) {
       if (mapData) {
         this.addMap(mapData);
         callback && callback(mapData);
@@ -533,13 +562,7 @@ var Game = (function Game() {
   Game.prototype.addMap = function addMap(map) {
     this.maps[map.id] = map;
   };
-  
-  Game.prototype.loadConfig = function loadConfig(config) {
-    console.log('Get Config:', config);
-    
-    utils.request(config, this.createGameFromConfig.bind(this));
-  };
-  
+
   Game.prototype.createGameFromConfig = function createGameFromConfig(config) {
     console.info('Got Config', config);
     

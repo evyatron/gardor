@@ -1,5 +1,5 @@
 {
-  "id": "main-map",
+  "id": "main",
   "name": "Main Map",
   "playerActor": "player",
   "padding": 0,
@@ -213,7 +213,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/characters/player.png",
+          "src": "characters/player.png",
           "width": 32,
           "height": 32,
           "scale": 1.5,
@@ -264,8 +264,8 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/github.png",
-          "src-hover": "/img/actors/github-over.png",
+          "src": "actors/github.png",
+          "src-hover": "actors/github-over.png",
           "origin": {
             "x": 0.5,
             "y": 0.7
@@ -295,8 +295,8 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/linkedin.png",
-          "src-hover": "/img/actors/linkedin-over.png",
+          "src": "actors/linkedin.png",
+          "src-hover": "actors/linkedin-over.png",
           "origin": {
             "x": 0.5,
             "y": 0.7
@@ -325,7 +325,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 0,
@@ -361,7 +361,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 62,
@@ -397,7 +397,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -433,7 +433,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 186,
@@ -469,7 +469,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 0,
@@ -505,7 +505,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 62,
@@ -541,7 +541,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -577,7 +577,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -613,7 +613,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -649,7 +649,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -685,7 +685,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -721,7 +721,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -757,7 +757,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -793,7 +793,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -829,7 +829,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -865,7 +865,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -901,7 +901,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -937,7 +937,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/trees.png",
+          "src": "actors/trees.png",
           "scale": 0.6,
           "clip": {
             "x": 124,
@@ -963,7 +963,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -985,7 +985,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1007,7 +1007,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1029,7 +1029,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1051,7 +1051,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1073,7 +1073,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1095,7 +1095,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1117,7 +1117,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1139,7 +1139,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1161,7 +1161,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1183,7 +1183,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1206,7 +1206,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1277,7 +1277,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1299,7 +1299,7 @@
       "modules": [
         {
           "type": "ModuleTexture",
-          "src": "/img/RPGpack_sheet.png",
+          "src": "RPGpack_sheet.png",
           "width": 64,
           "height": 64,
           "clip": {
@@ -1332,7 +1332,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/signs.png",
+          "src": "actors/signs.png",
           "scale": 0.6,
           "clip": {
             "x": 0,
@@ -1367,7 +1367,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/signs.png",
+          "src": "actors/signs.png",
           "scale": 0.75,
           "clip": {
             "x": 0,
@@ -1398,7 +1398,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/signs.png",
+          "src": "actors/signs.png",
           "scale": 0.75,
           "clip": {
             "x": 0,
@@ -1429,7 +1429,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/signs.png",
+          "src": "actors/signs.png",
           "scale": 0.75,
           "width": 32,
           "height": 32,
@@ -1460,7 +1460,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/rtp-objects.png",
+          "src": "actors/rtp-objects.png",
           "scale": 0.9,
           "clip": {
             "x": 288,
@@ -1495,7 +1495,7 @@
         },
         {
           "type": "ModuleTexture",
-          "src": "/img/actors/rtp-objects.png",
+          "src": "actors/rtp-objects.png",
           "clip": {
             "x": 256,
             "y": 162

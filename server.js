@@ -2,9 +2,7 @@ var path        = require('path');
 var express     = require('express');
 var bodyParser  = require('body-parser');
 var fs          = require('fs');
-
-var app = express(); 
-
+var app         = express(); 
 
 // Default client routing for all static assets
 var routerClient = express.Router();
@@ -13,14 +11,16 @@ app.use('/', routerClient);
 
 // API routing - for editor work
 var routerAPI = express.Router();
+routerAPI.get('/game/:game_id', getGame);                 // Get game  - api/game/[GAME_ID]
+routerAPI.post('/game/:game_id', updateGame);             // Save game - api/game/[GAME_ID]
+routerAPI.get('/game/:game_id/map/:map_id', getMap);      // Get map   - api/game/[GAME_ID]/map/[MAP_ID]
+routerAPI.post('/game/:game_id/map/:map_id', updateMap);  // Save map  - api/game/[GAME_ID]/map/[MAP_ID]
+routerAPI.get('/game/:game_id/fs', getGameFilesystem);    // Get files - api/game/[GAME_ID]/fs
 routerAPI.use(bodyParser.urlencoded({ extended: false }));
 routerAPI.use(bodyParser.json());
-routerAPI.get('/game/:game_id', getGame);
-routerAPI.post('/game/:game_id', updateGame);
-routerAPI.get('/game/:game_id/map/:map_id', getMap);
-routerAPI.post('/game/:game_id/map/:map_id', updateMap);
 app.use('/api', routerAPI);
 
+/* End-points start */
 function getGame(req, res) {
   console.log('[API][Game|' + req.params.game_id + '] Get');
   apiPrintJSON(res, getGamePath(req.params.game_id));
@@ -45,18 +45,37 @@ function updateMap(req, res) {
   
   var content = apiGetJSONToSave(req, res);
   if (content) {
-    apiSaveFile(res, getMapPath(req.params.map_id, req.params.map_id), content);
+    apiSaveFile(res, getMapPath(req.params.game_id, req.params.map_id), content);
   }
 }
 
-// helpers
+function getGameFilesystem(req, res) {
+  var path = getGameBasePath(req.params.game_id);
+  
+  if (req.query.dir) {
+    path += '/' + req.query.dir.replace(/\.\.\//g, '');
+  }
+  
+  fs.readdir(path, function onOpenGameDir(err, files) {
+    if (err) {
+      apiError(res, err);
+    } else {
+      res.json(files);
+    }
+  });
+}
+/* End-points End */
+
+function getGameBasePath(gameId) {
+  return path.resolve(__dirname, 'client/' + cleanupPath(gameId));
+}
 
 function getGamePath(gameId) {
-  return path.resolve(__dirname, 'client/data/' + cleanupPath(gameId) + '.json');
+  return getGameBasePath(gameId) + '/game.json';
 }
 
 function getMapPath(gameId, mapId) {
-  return path.resolve(__dirname, 'client/data/' + cleanupPath(mapId) + '.json');
+  return getGameBasePath(gameId) + '/maps/' + cleanupPath(mapId) + '.json';
 }
 
 function cleanupPath(id) {
@@ -66,6 +85,7 @@ function cleanupPath(id) {
 function apiError(res, err) {
   console.warn('Error in APi', err);
   
+  res.status(500);
   res.json({
     'error': err
   });

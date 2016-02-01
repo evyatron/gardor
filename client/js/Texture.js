@@ -96,11 +96,16 @@ var Texture = (function Texture() {
           image.addEventListener('load', this.onLoad.bind(this));
         }
       } else {
+        var src = this.src;
+        if (this.game) {
+          src = this.game.getAssetPath(src, this.game.ASSET_TYPE.IMAGE);
+        }
+        
         image = new Image();
         image.addEventListener('load', this.onLoad.bind(this));
         image.addEventListener('error', this.onError.bind(this));
-        image.src = this.src;
-        
+        image.src = src;
+
         Texture.prototype.textures[this.src] = image;
       }
     }

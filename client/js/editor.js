@@ -264,6 +264,8 @@ Editor.prototype.refreshGame = function refreshGame(isFromLoad) {
     'debugNavmesh': this.elGamePane.querySelector('#config-debug-navmesh').checked
   });
   
+  this.game.configDir = '/' + this.gameId;
+  
   this.game.loadMap = this.loadGameMap.bind(this);
   
   this.game.on(this.game.EVENTS.READY, this.onGameReady.bind(this));
@@ -1697,6 +1699,7 @@ var EditorTexture = (function EditorTexture() {
     
     this.createHTML();
     
+    this.data.game = editor.game;
     this.texture = new Texture(this.data);
     this.texture.on('load', this.drawTexture.bind(this));
   };
