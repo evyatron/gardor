@@ -71,6 +71,45 @@ Editor.prototype.init = function init(options) {
   utils.request('/data/schema.json', this.onGotSchema.bind(this));
 };
 
+Editor.prototype.onGotSchema = function onGotSchema(schema) {
+  this.schema = schema;
+  
+  // Game info details pane
+  this.paneGame = new Pane({
+    'id': 'game',
+    'el': this.elGamePane,
+    'schema': this.schema.game,
+    'onChange': this.onGameConfigChange.bind(this)
+  });
+  
+  // Map info details pane
+  this.paneMap = new Pane({
+    'id': 'map',
+    'el': this.elMapPane,
+    'schema': this.schema.map,
+    'onChange': this.onMapConfigChange.bind(this)
+  });
+  
+  // Tiles editor
+  this.tilesEditor = new Tiles({
+    'editor': this,
+    'elContainer': this.elGamePane,
+    'onChange': this.onTilesChange.bind(this)
+  });
+  
+  this.actorsEditor = new Actors({
+    'editor': this,
+    'elContainer': this.elMapPane,
+    'onChange': this.onActorsChange.bind(this)
+  });
+  
+  TextureEditor.init({
+    'editor': this
+  });
+
+  this.loadGame();
+};
+
 Editor.prototype.applyUserSettings = function applyUserSettings() {
   var settings = localStorage.editorSettings;
   if (settings) {
@@ -128,41 +167,6 @@ Editor.prototype.onMouseDown = function onMouseDown(e) {
     el.parentNode.classList.add('resizing');
   }
 }
-
-Editor.prototype.onGotSchema = function onGotSchema(schema) {
-  this.schema = schema;
-  
-  // Game info details pane
-  this.paneGame = new Pane({
-    'id': 'game',
-    'el': this.elGamePane,
-    'schema': this.schema.game,
-    'onChange': this.onGameConfigChange.bind(this)
-  });
-  
-  // Map info details pane
-  this.paneMap = new Pane({
-    'id': 'map',
-    'el': this.elMapPane,
-    'schema': this.schema.map,
-    'onChange': this.onMapConfigChange.bind(this)
-  });
-  
-  // Tiles editor
-  this.tilesEditor = new Tiles({
-    'editor': this,
-    'elContainer': this.elGamePane,
-    'onChange': this.onTilesChange.bind(this)
-  });
-  
-  this.actorsEditor = new Actors({
-    'editor': this,
-    'elContainer': this.elMapPane,
-    'onChange': this.onActorsChange.bind(this)
-  });
-
-  this.loadGame();
-};
 
 Editor.prototype.loadGame = function loadGame() {
   var gameConfig = this.config.game;
@@ -462,6 +466,10 @@ Editor.prototype.onGameConfigChange = function onGameConfigChange() {
 };
 
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
+  for (var i = 0, len = tiles.length; i < len; i++) {
+    delete tiles[i].texture.game;
+  }
+  
   this.config.game.tiles = tiles;
   this.game.setTiles(tiles);
   
@@ -571,7 +579,11 @@ var Pane = (function Pane() {
       
       var expr = 'json.' + cleanId + ' = ' + value + ';';
       
-      eval(expr);
+      try {
+        eval(expr);
+      } catch(ex) {
+        console.warn('error setting: ', expr);
+      }
     }
   };
   
@@ -582,13 +594,29 @@ var Pane = (function Pane() {
       
       try {
         value = eval('json.' + cleanId);
+        
         var input = this.inputs[id];
         if (input && value !== undefined) {
           input.setValue(value, true);
         }
       } catch (ex) {
-        console.warn('No value found in JSON', id, cleanId, ex);
+        //console.warn('No value found in JSON', id, cleanId, ex);
       }
+      
+      /*
+      var cleanId = id.replace(this.id + '_', '').replace(/_/g, '.');
+      var value = undefined;
+      
+      try {
+        value = eval('json.' + cleanId);
+        var input = this.inputs[id];
+        if (input && value !== undefined) {
+          input.setValue(value, true);
+        }
+      } catch (ex) {
+        //console.warn('No value found in JSON', id, cleanId, ex);
+      }
+      */
     }
   };
   
@@ -1422,8 +1450,8 @@ var Tiles = (function Tiles() {
     var data = texture.data;
     var meta = texture.meta;
     
+    delete data.game;
     tile.texture = JSON.parse(JSON.stringify(data));
-    console.warn(meta, elTile);
     
     this.onChange(this.tiles);
   };
@@ -1497,12 +1525,12 @@ var Tiles = (function Tiles() {
 
 
 var TextureEditor = (function TextureEditor() {
-  function TextureEditor(options) {
+  function TextureEditor() {
     this.el = null;
     this.elContent = null;
     this.elContainer = null;
     this.elImage = null;
-    this.elInfo = null;
+    this.elData = null;
     this.elSelection = null;
     this.image = null;
     
@@ -1518,20 +1546,31 @@ var TextureEditor = (function TextureEditor() {
     
     this.padding = 400;
     
+    this.fs = [
+      {
+        'path': 'images',
+        'name': 'images',
+        'isFolder': true,
+        'files': []
+      }
+    ];
+    
     this.onSelect = null;
     this.isBoundToGrid = true;
-    
-    this.init(options);
   }
   
   TextureEditor.prototype.init = function init(options) {
     !options && (options = {});
+    
+    this.editor = options.editor;
     this.elContainer = options.elContainer || document.body;
     
     window.addEventListener('keydown', this.onKeyDown.bind(this));
     window.addEventListener('keyup', this.onKeyUp.bind(this));
     
     this.createHTML();
+    
+    this.getFiles(this.fs[0]);
   };
   
   TextureEditor.prototype.onKeyDown = function onKeyDown(e) {
@@ -1547,27 +1586,22 @@ var TextureEditor = (function TextureEditor() {
   };
   
   TextureEditor.prototype.show = function show(textureData, meta, onUpdate) {
+    var game = this.editor.game;
+    
     this.textureData = textureData;
     this.textureMeta = meta || {};
     this.onUpdate = onUpdate || null;
-    this.position.x = 0;
-    this.position.y = 0;
     
     if (!this.textureData.hasOwnProperty('width')) {
-      this.textureData.width = editor.game.config.tileSize;
+      this.textureData.width = game.config.tileSize;
     }
     if (!this.textureData.hasOwnProperty('height')) {
-      this.textureData.height = editor.game.config.tileSize;
+      this.textureData.height = game.config.tileSize;
     }
     
     this.image = new Image();
     this.image.addEventListener('load', this.onImageLoad.bind(this));
-    this.image.src = textureData.src;
-    
-    this.elSelection.style.width = this.textureData.width + 'px';
-    this.elSelection.style.height = this.textureData.height + 'px';
-    
-    this.setPosition(textureData.clip.x, textureData.clip.y);
+    this.image.src = game.getAssetPath(textureData.src, game.ASSET_TYPE.IMAGE);
   };
   
   TextureEditor.prototype.hide = function hide() {
@@ -1586,21 +1620,30 @@ var TextureEditor = (function TextureEditor() {
     
     this.elImage.style.backgroundImage = 'url(' + this.image.src + ')';
     
+    width *= ratio;
+    height *= ratio;
+    
     this.elContent.style.cssText = [
       'width: ' + width + 'px',
       'height: ' + height + 'px',
       'margin-top: ' + -height/2 + 'px',
-      'margin-left: ' + -width/2 + 'px',
-      'transform: scale(' + ratio + ')'
+      'margin-left: ' + (-width/2 + this.elData.offsetWidth) + 'px'
     ].join(';');
     
+    var selectionWidth = this.textureData.width * ratio;
+    var selectionHeight = this.textureData.height * ratio;
+    this.elSelection.style.width = selectionWidth + 'px';
+    this.elSelection.style.height = selectionHeight + 'px';
+
+    this.updateSelectionPosition(this.textureData.clip.x, this.textureData.clip.y);
+
     this.el.classList.add('visible');
     
     this.isVisible = true;
   };
   
   TextureEditor.prototype.onMouseMove = function onMouseMove(e) {
-    var bounds = this.elContent.getBoundingClientRect();
+    var bounds = this.elImage.getBoundingClientRect();
     var x = Math.round((e.pageX - bounds.left) / this.ratio);
     var y = Math.round((e.pageY - bounds.top) / this.ratio);
 
@@ -1609,42 +1652,95 @@ var TextureEditor = (function TextureEditor() {
       y -= (y % this.textureData.height);
     }
     
-    this.setPosition(x, y);
+    this.updateSelectionPosition(x, y);
   };
   
-  TextureEditor.prototype.setPosition = function setPosition(x, y) {
-    this.position.x = x;
-    this.position.y = y;
+  TextureEditor.prototype.updateSelectionPosition = function updateSelectionPosition(x, y) {
+    this.textureData.clip.x = x;
+    this.textureData.clip.y = y;
     
-    this.elSelection.style.left = this.position.x + 'px';
-    this.elSelection.style.top = this.position.y + 'px';
+    this.elSelection.style.left = x * this.ratio + 'px';
+    this.elSelection.style.top = y * this.ratio + 'px';
     
-    this.elInfo.innerHTML = this.position.x + ',' + this.position.y;
+    this.dataPane.updateFromJSON(this.textureData);
+  };
+  
+  TextureEditor.prototype.onDataChange = function onDataChange(e) {
+    this.dataPane.updateJSON(this.textureData);
+    this.onUpdate(this.textureData);
   };
   
   TextureEditor.prototype.onClick = function onClick(e) {
     var elClicked = e.target;
     
-    if (elClicked === this.el) {
-      this.hide();
-    } else {
-    
+    if (elClicked !== this.el) {
       this.onMouseMove(e);
-      
-      this.textureData.clip = {
-        'x': this.position.x,
-        'y': this.position.y
-      };
-      
-      this.hide();
       this.onUpdate(this.textureData);
     }
+    
+    this.hide();
   };
 
   TextureEditor.prototype.onKeyPress = function onKeyPress(e) {
     if (e.keyCode === 27) {
       this.hide();
     }
+  };
+
+  TextureEditor.prototype.getFiles = function getFiles(pathObj) {
+    var path = '/api/game/' + this.editor.gameId + '/fs';
+    path += '?dir=' + pathObj.path;
+    
+    utils.request(path, function onGotFiles(files) {
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var entry = {
+          'path': pathObj.path + '/' + file,
+          'name': file,
+          'isFolder': !/\./.test(file),
+          'files': []
+        };
+        
+        if (entry.isFolder) {
+          this.getFiles(entry);
+        }
+        
+        pathObj.files.push(entry);
+      }
+      
+      pathObj.files.sort(function sorter(a, b) {
+        return a.isFolder && !b.isFolder? -1 :
+               !a.isFolder && b.isFolder? 1 :
+               a.name < b.name? -1 :
+               a.name > b.name? 1 :
+               0;
+      });
+      
+      this.printFiles();
+    }.bind(this));
+  };
+  
+  TextureEditor.prototype.printFiles = function printFiles() {  
+    function getDir(entry) {
+      var html = '<li class="folder-' + entry.isFolder + '" data-path="' + entry.path + '">' +
+                   '<div class="name">' + entry.name + '</div>';
+      
+      if (entry.isFolder) {
+        html += '<ul>';
+        
+        for (var i = 0; i < entry.files.length; i++) {
+          html += getDir(entry.files[i]);
+        }
+        
+        html += '</ul>';
+      }
+      
+      html += '</li>';
+      
+      return html;
+    }
+    
+    this.elFiles.innerHTML = getDir(this.fs[0]);
   };
   
   TextureEditor.prototype.createHTML = function createHTML() {
@@ -1654,18 +1750,30 @@ var TextureEditor = (function TextureEditor() {
     
     this.el.innerHTML = '<div class="content">' +
                           '<div class="image"></div>' +
-                          '<div class="info"></div>' +
                           '<div class="selection"></div>' +
-                          '<div class="close"></div>' +
+                          '<div class="data">' +
+                            '<div class="pane"></div>' +
+                            '<ul class="files"></ul>' +
+                          '</div>' +
                         '</div>';
-    this.elContent = this.el.querySelector('.content');
-    this.elContent.addEventListener('mousemove', this.onMouseMove.bind(this));
-    this.el.addEventListener('click', this.onClick.bind(this));
-    window.addEventListener('keyup', this.onKeyPress.bind(this));
     
+    this.elContent = this.el.querySelector('.content');
     this.elImage = this.el.querySelector('.image');
-    this.elInfo = this.el.querySelector('.info');
+    this.elData = this.el.querySelector('.data');
+    this.elFiles = this.elData.querySelector('.files');
     this.elSelection = this.el.querySelector('.selection');
+    
+    // Game info details pane
+    this.dataPane = new Pane({
+      'id': 'texture',
+      'el': this.elData.querySelector('.pane'),
+      'schema': this.editor.schema.texture,
+      'onChange': this.onDataChange.bind(this)
+    });
+                        
+    this.elImage.addEventListener('mousemove', this.onMouseMove.bind(this));
+    this.elImage.addEventListener('click', this.onClick.bind(this));
+    window.addEventListener('keyup', this.onKeyPress.bind(this));
     
     this.elContainer.appendChild(this.el);
   };
@@ -1710,8 +1818,8 @@ var EditorTexture = (function EditorTexture() {
   
   EditorTexture.prototype.onUpdateTexture = function onUpdateTexture(data) {
     this.data = data;
-    this.texture.setData(data);
     
+    this.texture.setData(data);
     this.drawTexture();
     
     this.onChange(this.data);

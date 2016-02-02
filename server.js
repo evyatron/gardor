@@ -11,13 +11,13 @@ app.use('/', routerClient);
 
 // API routing - for editor work
 var routerAPI = express.Router();
+routerAPI.use(bodyParser.urlencoded({ extended: false }));
+routerAPI.use(bodyParser.json());
 routerAPI.get('/game/:game_id', getGame);                 // Get game  - api/game/[GAME_ID]
 routerAPI.post('/game/:game_id', updateGame);             // Save game - api/game/[GAME_ID]
 routerAPI.get('/game/:game_id/map/:map_id', getMap);      // Get map   - api/game/[GAME_ID]/map/[MAP_ID]
 routerAPI.post('/game/:game_id/map/:map_id', updateMap);  // Save map  - api/game/[GAME_ID]/map/[MAP_ID]
 routerAPI.get('/game/:game_id/fs', getGameFilesystem);    // Get files - api/game/[GAME_ID]/fs
-routerAPI.use(bodyParser.urlencoded({ extended: false }));
-routerAPI.use(bodyParser.json());
 app.use('/api', routerAPI);
 
 /* End-points start */
@@ -83,7 +83,7 @@ function cleanupPath(id) {
 }
 
 function apiError(res, err) {
-  console.warn('Error in APi', err);
+  console.warn('Error in APi: ', err);
   
   res.status(500);
   res.json({
@@ -126,9 +126,11 @@ function apiGetJSONToSave(request, response) {
     try {
       content = JSON.stringify(content, null, 2);
     } catch(ex) {
-      console.warn('Got invalid JSON from save request');
+      console.warn('Got invalid JSON from save request', ex);
       content = null;
     }
+  } else {
+    console.warn('Got no JSON in request');
   }
     
   if (!content) {

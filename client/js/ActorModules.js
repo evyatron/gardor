@@ -1,3 +1,5 @@
+/* global Texture */
+
 /*
   Base class for all modules that can be attached to actors
   Nothing should use the ActorModule directly, but rather inherited classes
@@ -139,7 +141,7 @@ var ModuleTexture = (function ModuleTexture() {
   
   ModuleTexture.prototype.init = function init(options) {
     ActorModule.prototype.init.apply(this, arguments);
-    
+
     this.dirClips = options.dirClips || {};
     options.game = this.actor.game;
     this.texture = new Texture(options);

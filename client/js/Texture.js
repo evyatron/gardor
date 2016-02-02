@@ -15,7 +15,6 @@ var Texture = (function Texture() {
       'x': 0,
       'y': 0
     };
-    this.defaultClip = null;
     
     this.width = 0;
     this.height = 0;
@@ -81,7 +80,6 @@ var Texture = (function Texture() {
       'x': 0,
       'y': 0
     };
-    this.defaultClip = data.defaultClip || null;
     this.scale = data.scale || 1;
 
     if (this.src) {

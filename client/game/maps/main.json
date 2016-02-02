@@ -310,8 +310,8 @@
       "tooltip": "Dark Bounds\nTop-down spaceship multiplayer game\nCSS, JavaScript, WebSockets, Node.JS",
       "isBlocking": true,
       "tile": {
-        "y": 5,
-        "x": 9
+        "x": 9,
+        "y": 5
       },
       "modules": [
         {
@@ -1198,8 +1198,8 @@
     {
       "id": "room-b-door",
       "tile": {
-        "y": 5,
-        "x": 4
+        "x": 4,
+        "y": 5
       },
       "isBlocking": false,
       "zIndex": 5,
@@ -1292,8 +1292,8 @@
     {
       "id": "room-br",
       "tile": {
-        "y": 5,
-        "x": 6
+        "x": 6,
+        "y": 5
       },
       "isBlocking": true,
       "modules": [

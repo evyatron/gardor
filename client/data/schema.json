@@ -127,6 +127,64 @@
     }
   },
   
+  "texture": {
+    "src": {
+      "type": "text"
+    },
+    "width": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    },
+    "scale": {
+      "type": "number",
+      "default": 1
+    },
+    "origin": {
+      "type": "vector",
+      "default": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "clip": {
+      "type": "vector",
+      "default": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    "clipBottom": {
+      "type": "vector",
+      "default": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "clipTop": {
+      "type": "vector",
+      "default": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "clipRight": {
+      "type": "vector",
+      "default": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "clipLeft": {
+      "type": "vector",
+      "default": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  
   "actorModules": {
     "ModuleWebPage": {
       "type": "object",

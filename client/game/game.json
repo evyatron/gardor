@@ -30,13 +30,30 @@
       "isBlocking": false,
       "texture": {
         "src": "RPGpack_sheet.png",
+        "width": 64,
+        "height": 64,
+        "scale": 1,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
         "clip": {
           "x": 64,
           "y": 64
         },
-        "width": 64,
-        "height": 64,
-        "origin": {
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
           "x": 0,
           "y": 0
         }
