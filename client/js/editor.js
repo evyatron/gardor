@@ -1598,6 +1598,12 @@ var TextureEditor = (function TextureEditor() {
     if (!this.textureData.hasOwnProperty('height')) {
       this.textureData.height = game.config.tileSize;
     }
+    if (!this.textureData.hasOwnProperty('clip')) {
+      this.textureData.clip = {
+        'x': 0,
+        'y': 0
+      };
+    }
     
     this.image = new Image();
     this.image.addEventListener('load', this.onImageLoad.bind(this));
