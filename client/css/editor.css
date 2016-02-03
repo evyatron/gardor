@@ -416,7 +416,7 @@ div, p, input, textarea {
 }
   .texture-editor .content {
     position: absolute;
-    top: 50%;
+    top: 150px;
     left: 50%;
     box-shadow: 0 0 0 3px #fff,
                 0 0 0 7px #000;
@@ -456,7 +456,7 @@ div, p, input, textarea {
   .texture-editor .data {
     position: absolute;
     top: 0;
-    bottom: 0;
+    min-height: 100%;
     right: 100%;
     margin-right: 3px;
     font-size: 1em;
@@ -466,10 +466,13 @@ div, p, input, textarea {
   }
   
   .texture-editor .files {
+    position: relative;
     margin-top: 10px;
     padding-top: 10px;
     border-top: 2px solid rgba(0, 0, 0, .3);
   }
+    .texture-editor .files ul {
+    }
     .texture-editor .files li {
       margin-left: 5px;
       list-style-type: none;
@@ -481,9 +484,43 @@ div, p, input, textarea {
       border-left: none;
       margin-left: 0;
     }
+    .texture-editor .files .name {
+      pointer-events: none;
+    }
     .texture-editor .files .folder-true > .name {
       font-weight: bolder;
     }
     .texture-editor .files .folder-false:hover {
-      background: rgba(255, 255, 255, .1);
+      background: rgba(255, 255, 255, .2);
+      font-weight: bolder;
     }
+.file-system-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 200px;
+  height: 200px;
+  margin-top: -100px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 80ms ease-in;
+}
+.file-system-tooltip.visible {
+  opacity: 1;
+}
+  .file-system-tooltip .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 2px;
+    border: 1px solid #000;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
