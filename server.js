@@ -2,7 +2,12 @@ var path        = require('path');
 var express     = require('express');
 var bodyParser  = require('body-parser');
 var fs          = require('fs');
-var app         = express(); 
+var multer      = require('multer');
+
+var app = express(); 
+var upload = multer({
+  'dest': 'temp_uploads/'
+});
 
 // Default client routing for all static assets
 var routerClient = express.Router();
@@ -18,6 +23,7 @@ routerAPI.post('/game/:game_id', updateGame);             // Save game - api/gam
 routerAPI.get('/game/:game_id/map/:map_id', getMap);      // Get map   - api/game/[GAME_ID]/map/[MAP_ID]
 routerAPI.post('/game/:game_id/map/:map_id', updateMap);  // Save map  - api/game/[GAME_ID]/map/[MAP_ID]
 routerAPI.get('/game/:game_id/fs', getGameFilesystem);    // Get files - api/game/[GAME_ID]/fs
+routerAPI.post('/game/:game_id/fs', upload.any(), uploadFile);  // Get files - api/game/[GAME_ID]/fs
 app.use('/api', routerAPI);
 
 /* End-points start */
@@ -61,6 +67,35 @@ function getGameFilesystem(req, res) {
       apiError(res, err);
     } else {
       res.json(files);
+    }
+  });
+}
+
+function uploadFile(req, res) {
+  var path = getGameBasePath(req.params.game_id);
+  var dir = req.query.dir;
+
+  if (dir) {
+    path += '/' + req.query.dir.replace(/\.\.\//g, '');
+  }
+  
+  console.info('Upload [' + req.files.length + '] files to', path);
+  
+  for (var i = 0, len = req.files.length; i < len; i++) {
+    saveFile(req.files[i], path);
+  }
+  
+  res.json({
+    'success': true
+  });
+}
+
+function saveFile(file, path) {
+  console.info('Upload file [' + path + file.originalname + ']');
+  
+  fs.rename(file.path, path + '/' + file.originalname, function onRename(err) {
+    if (err) {
+      console.warn('Error moving file', file, path);
     }
   });
 }

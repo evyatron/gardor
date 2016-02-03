@@ -8,6 +8,22 @@
   "fillTile": "water",
   "grid": [
     [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
       "water-tl-land",
       "water-t-land",
       "water-t-land",
@@ -204,7 +220,7 @@
     {
       "id": "player",
       "tile": {
-        "y": 9,
+        "y": 10,
         "x": 8
       },
       "isBlocking": false,
@@ -231,7 +247,7 @@
       "isBlocking": true,
       "zIndex": 1,
       "tile": {
-        "y": 3,
+        "y": 4,
         "x": 3
       },
       "modules": [
@@ -262,7 +278,7 @@
       "isBlocking": true,
       "zIndex": 1,
       "tile": {
-        "y": 3,
+        "y": 4,
         "x": 4
       },
       "modules": [
@@ -293,7 +309,7 @@
       "isBlocking": true,
       "tile": {
         "x": 9,
-        "y": 5
+        "y": 6
       },
       "modules": [
         {
@@ -328,7 +344,7 @@
       "tooltip": "Nanocraft\nIsometric RTS/CookieClicker mashup\nCSS, JavaScript, Firebase as backend",
       "isBlocking": true,
       "tile": {
-        "y": 5,
+        "y": 6,
         "x": 10
       },
       "modules": [
@@ -364,7 +380,7 @@
       "tooltip": "[ALICE].\nSide scroller with changing gravity\nCSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "y": 5,
+        "y": 6,
         "x": 11
       },
       "modules": [
@@ -400,7 +416,7 @@
       "tooltip": "Simon\nRecreation of the classic Simon game\nHTML5, WebAudioAPI and Responsive Design",
       "isBlocking": true,
       "tile": {
-        "y": 5,
+        "y": 6,
         "x": 12
       },
       "modules": [
@@ -436,7 +452,7 @@
       "tooltip": "SuperMoney-O\nA political-satiric mario-clone game\nCSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "y": 4,
+        "y": 5,
         "x": 9
       },
       "modules": [
@@ -472,7 +488,7 @@
       "tooltip": "Can Dick Rush\nMaze-navigation, created following a certain copyright story\nCSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "y": 4,
+        "y": 5,
         "x": 10
       },
       "modules": [
@@ -508,7 +524,7 @@
       "tooltip": "Particles\nHigh performance JavaScript canvas Particles object",
       "isBlocking": true,
       "tile": {
-        "y": 7,
+        "y": 8,
         "x": 6
       },
       "modules": [
@@ -544,7 +560,7 @@
       "tooltip": "Fantasia 2013\nA CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
       "isBlocking": true,
       "tile": {
-        "y": 8,
+        "y": 9,
         "x": 1
       },
       "modules": [
@@ -580,7 +596,7 @@
       "tooltip": "Is It Time For Coffee?\nA webpage to let you know if it's time for coffee",
       "isBlocking": true,
       "tile": {
-        "y": 8,
+        "y": 9,
         "x": 2
       },
       "modules": [
@@ -616,7 +632,7 @@
       "tooltip": "Wibbly Wobbly\nCSS Animations and wobbly movement using only CSS3's advanced selectors (for both the animation and the settings)",
       "isBlocking": true,
       "tile": {
-        "y": 8,
+        "y": 9,
         "x": 3
       },
       "modules": [
@@ -653,7 +669,7 @@
       "isBlocking": true,
       "tile": {
         "x": 4,
-        "y": 8
+        "y": 9
       },
       "modules": [
         {
@@ -688,7 +704,7 @@
       "tooltip": "Circular Movements\nExploration of circular movement in CSS3",
       "isBlocking": true,
       "tile": {
-        "y": 8,
+        "y": 9,
         "x": 5
       },
       "modules": [
@@ -724,7 +740,7 @@
       "tooltip": "PC Case Designer\nA page that lets you design a 3D PC case (Antec P280 specifically) using JavaScript and 3D CSS3",
       "isBlocking": true,
       "tile": {
-        "y": 8,
+        "y": 9,
         "x": 6
       },
       "modules": [
@@ -760,7 +776,7 @@
       "tooltip": "3D Bounce\nExperiments with 3D CSS3 and animations",
       "isBlocking": true,
       "tile": {
-        "y": 7,
+        "y": 8,
         "x": 1
       },
       "modules": [
@@ -796,7 +812,7 @@
       "tooltip": "404 Page\nMy 404 page, messing around with Canvas - control with Keyboard Arrows and mouse",
       "isBlocking": true,
       "tile": {
-        "y": 7,
+        "y": 8,
         "x": 2
       },
       "modules": [
@@ -833,7 +849,7 @@
       "isBlocking": true,
       "tile": {
         "x": 3,
-        "y": 7
+        "y": 8
       },
       "modules": [
         {
@@ -869,7 +885,7 @@
       "isBlocking": true,
       "tile": {
         "x": 4,
-        "y": 7
+        "y": 8
       },
       "modules": [
         {
@@ -904,7 +920,7 @@
       "tooltip": "Diablo 3 API Client Library\nAn API Client Library for Diablo 3 built in JavaScript",
       "isBlocking": true,
       "tile": {
-        "y": 7,
+        "y": 8,
         "x": 5
       },
       "modules": [
@@ -938,7 +954,7 @@
     {
       "id": "room-tl",
       "tile": {
-        "y": 2,
+        "y": 3,
         "x": 2
       },
       "isBlocking": true,
@@ -960,7 +976,7 @@
     {
       "id": "room-t1",
       "tile": {
-        "y": 2,
+        "y": 3,
         "x": 3
       },
       "isBlocking": true,
@@ -982,7 +998,7 @@
     {
       "id": "room-t2",
       "tile": {
-        "y": 2,
+        "y": 3,
         "x": 4
       },
       "isBlocking": true,
@@ -1004,7 +1020,7 @@
     {
       "id": "room-t3",
       "tile": {
-        "y": 2,
+        "y": 3,
         "x": 5
       },
       "isBlocking": true,
@@ -1026,7 +1042,7 @@
     {
       "id": "room-tr",
       "tile": {
-        "y": 2,
+        "y": 3,
         "x": 6
       },
       "isBlocking": true,
@@ -1048,7 +1064,7 @@
     {
       "id": "room-l1",
       "tile": {
-        "y": 3,
+        "y": 4,
         "x": 2
       },
       "isBlocking": true,
@@ -1070,7 +1086,7 @@
     {
       "id": "room-l2",
       "tile": {
-        "y": 4,
+        "y": 5,
         "x": 2
       },
       "isBlocking": true,
@@ -1092,7 +1108,7 @@
     {
       "id": "room-r1",
       "tile": {
-        "y": 3,
+        "y": 4,
         "x": 6
       },
       "isBlocking": true,
@@ -1114,7 +1130,7 @@
     {
       "id": "room-r2",
       "tile": {
-        "y": 4,
+        "y": 5,
         "x": 6
       },
       "isBlocking": true,
@@ -1136,7 +1152,7 @@
     {
       "id": "room-bl",
       "tile": {
-        "y": 5,
+        "y": 6,
         "x": 2
       },
       "isBlocking": true,
@@ -1158,7 +1174,7 @@
     {
       "id": "room-b1",
       "tile": {
-        "y": 5,
+        "y": 6,
         "x": 3
       },
       "isBlocking": true,
@@ -1181,7 +1197,7 @@
       "id": "room-b-door",
       "tile": {
         "x": 4,
-        "y": 5
+        "y": 6
       },
       "isBlocking": false,
       "zIndex": 5,
@@ -1252,7 +1268,7 @@
     {
       "id": "room-b2",
       "tile": {
-        "y": 5,
+        "y": 6,
         "x": 5
       },
       "isBlocking": true,
@@ -1275,7 +1291,7 @@
       "id": "room-br",
       "tile": {
         "x": 6,
-        "y": 5
+        "y": 6
       },
       "isBlocking": true,
       "modules": [
@@ -1297,7 +1313,7 @@
       "id": "sign-about",
       "tooltip": "Welcome Centre",
       "tile": {
-        "y": 5,
+        "y": 6,
         "x": 5
       },
       "zIndex": 1,
@@ -1334,7 +1350,7 @@
       "tooltip": "Post Office",
       "tile": {
         "x": 10,
-        "y": 7
+        "y": 8
       },
       "isBlocking": false,
       "modules": [
@@ -1369,7 +1385,7 @@
       "id": "sign-games",
       "tooltip": "Video Game Arcade",
       "tile": {
-        "y": 7,
+        "y": 8,
         "x": 11
       },
       "isBlocking": false,
@@ -1400,7 +1416,7 @@
       "id": "sign-playground",
       "tooltip": "JavaScript Laboratory",
       "tile": {
-        "y": 7,
+        "y": 8,
         "x": 12
       },
       "isBlocking": false,
@@ -1427,7 +1443,7 @@
       "id": "page-contact",
       "tooltip": "Contact Me",
       "tile": {
-        "y": 2,
+        "y": 3,
         "x": 8
       },
       "isBlocking": true,
@@ -1462,7 +1478,7 @@
       "id": "page-about",
       "tooltip": "About Me",
       "tile": {
-        "y": 2,
+        "y": 3,
         "x": 9
       },
       "isBlocking": true,

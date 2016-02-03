@@ -38,8 +38,8 @@
           "y": 0
         },
         "clip": {
-          "x": 64,
-          "y": 64
+          "x": 192,
+          "y": 128
         },
         "clipBottom": {
           "x": 0,
@@ -311,6 +311,24 @@
         }
       },
       "index": 14
+    },
+    {
+      "id": "default_1454537582202",
+      "isBlocking": false,
+      "texture": {
+        "src": "RPGpack_sheet.png",
+        "clip": {
+          "x": 896,
+          "y": 448
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 15
     }
   ]
 }

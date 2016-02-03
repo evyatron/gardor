@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Texture Editor - Gardor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+      }
+      
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+      
+      .pane-container-array .items {
+        padding: 5px;
+      }
+      .pane-container-object {
+        position: relative;
+      }
+        .pane-container-object .title {
+          position: relative;
+          padding: 2px;
+          background: rgba(255, 255, 255, .2);
+          border-bottom: 1px solid rgba(255, 255, 255, .3);
+          border-top: 1px solid rgba(0, 0, 0, .3);
+        }
+        .expand-collapse {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 100%;
+          z-index: 5;
+          height: 21px;
+          -webkit-appearance: none;
+          outline: none;
+        }
+        .expand-collapse:before {
+          content: '';
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          border: 10px solid transparent;
+          border-top-color: #468;
+          transform: translateY(2.5px);
+          transition: transform 160ms ease-in-out;
+        }
+        .expand-collapse:checked:before {
+          transform: translateY(-7.5px) scaleY(-1);
+        }
+        .pane-container-object .properties {
+          overflow: hidden;
+          height: auto;
+          transition: height 160ms ease-in-out;
+        }
+        .expand-collapse:not(:checked) + .collapsible {
+          height: 0;
+        }
+        
+        .input {
+          position: relative;
+          display: flex;
+          padding: 1px;
+          box-shadow: 0px -1px 0 0px rgba(255, 255, 255, 0.1);
+        }
+        .input:not(.input-array):hover {
+          background: rgba(255, 255, 255, .1);
+        }
+        .input-array {
+          display: block;
+          padding: 0;
+        }
+          .pane-input-label {
+            display: flex;
+            align-items: center;
+            font-size: .9em;
+            width: 50%;
+          }
+          .pane-input-field {
+            display: flex;
+            width: 50%;
+          }
+          .pane-input-field input[type = "text"],
+          .pane-input-field input[type = "number"],
+          .pane-input-field textarea {
+            width: 100%;
+            max-width: 100%;
+            padding: 1px 2px;
+            border: 1px solid black;
+            font-family: monospace;
+            font-size: 1em;
+          }
+          
+      .input-vector .pane-input-field input[type = "number"] {
+        width: 50%;
+        text-align: center;
+      }
+      .texture-editor {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 100;
+      }
+        .texture-editor .content {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 305px;
+          right: 0;
+          box-shadow: 0 0 0 3px #fff,
+                      0 0 0 7px #000;
+          background-color: #fff;
+          background-image: linear-gradient(to right, rgba(255, 0, 0, 0) 50%, rgba(255, 0, 0, .2) 50%);
+          background-size: 32px 32px;
+        }
+        .texture-editor .selection {
+          position: absolute;
+          background: rgba(255, 0, 0, .4);
+          z-index: 20;
+          cursor: none;
+          pointer-events: none;
+        }
+        .texture-editor .image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 10;
+          cursor: none;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+        .texture-editor .data {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 15;
+          font-size: 1em;
+          width: 300px;
+          background: #999;
+          border-right: 5px solid #000;
+        }
+        
+        .texture-editor .files {
+          position: absolute;
+          top: 300px;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow-x: auto;
+          overflow-y: scroll;
+          margin-top: 10px;
+          padding-top: 10px;
+          border-top: 2px solid rgba(0, 0, 0, .3);
+        }
+          .texture-editor .files ul {
+          }
+          .texture-editor .files li {
+            margin-left: 5px;
+            list-style-type: none;
+            cursor: default;
+            padding-left: 5px;
+            border-left: 1px solid rgba(0, 0, 0, .5);
+          }
+          .texture-editor .files > li {
+            border-left: none;
+            margin-left: 0;
+          }
+          .texture-editor .files .name {
+            pointer-events: none;
+          }
+          .texture-editor .files .folder-true > .name {
+            font-weight: bolder;
+          }
+          .texture-editor .files .folder-false:hover {
+            background: rgba(255, 255, 255, .2);
+            font-weight: bolder;
+          }
+      .file-system-tooltip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 200;
+        width: 200px;
+        height: 200px;
+        margin-top: -100px;
+        background: #fff;
+        border: 2px solid #000;
+        border-radius: 4px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 80ms ease-in;
+      }
+      .file-system-tooltip.visible {
+        opacity: 1;
+      }
+        .file-system-tooltip .image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: 2px;
+          border: 1px solid #000;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: 50% 50%;
+        }
+    </style>
+  </head>
+  <body>
+    <script src="/js/common.js"></script>
+    <script src="/editor/js/Pane.js"></script>
+    <script src="/editor/js/FileBrowser.js"></script>
+    <script src="/editor/js/TextureEditor.js"></script>
+    <script>
+      window.show = function show(editor, data, meta, onUpdate) {
+        window.editor = editor;
+        
+        TextureEditor.init({
+          'editor': editor
+        });
+        
+        TextureEditor.show(data, meta, onUpdate);
+      };
+    </script>
+  </body>
+</html>
