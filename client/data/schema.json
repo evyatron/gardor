@@ -274,5 +274,13 @@
         }
       }
     }
+  },
+  
+  "tile": {
+    "isBlocking": {
+      "type": "boolean",
+      "tooltip": "True - player can't walk over this tile",
+      "default": false
+    }
   }
 }

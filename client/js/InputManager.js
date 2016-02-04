@@ -43,6 +43,8 @@ var InputManager = (function InputManager() {
       RIGHT: 39,
       DOWN: 40,
       
+      DELETE: 46,
+      
       NUMBER_0: 48,
       NUMBER_1: 49,
       NUMBER_2: 50,

@@ -72,6 +72,18 @@ var utils = {
     return Math.min(Math.max(value, min), max);
   },
   
+  'inParent': function inParent(el, selector) {
+    while (el) {
+      var matchesSelector = (el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector || function(){}).bind(el);
+      if (matchesSelector(selector)) {
+        return true;
+      }
+      
+      el = el.parentNode;
+    }
+    return false;
+  },
+  
   'tilesEqual': function tilesEqual(tileA, tileB) {
     !tileA && (tileA = {});
     !tileB && (tileB = {});

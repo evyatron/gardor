@@ -106,18 +106,7 @@ var TextureEditor = (function TextureEditor() {
     this.ratio = ratio;
     
     window.resizeTo(width + this.elData.offsetWidth + 100, height + 100);
-    
-    /*
-    width *= ratio;
-    height *= ratio;
-    
-    this.elContent.style.cssText = [
-      'width: ' + width + 'px',
-      'height: ' + height + 'px',
-      'margin-left: ' + (-width/2 + this.elData.offsetWidth) + 'px'
-    ].join(';');
-    */
-    
+
     var selectionWidth = this.textureData.width * ratio;
     var selectionHeight = this.textureData.height * ratio;
     this.elSelection.style.width = selectionWidth + 'px';

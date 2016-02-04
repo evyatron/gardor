@@ -397,3 +397,25 @@ div, p, input, textarea {
 .texture {
   background: radial-gradient(closest-side, red, white);
 }
+
+.edit-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  padding: 10px;
+  background: #aaa;
+  border: 1px solid #000;
+  border-radius: 3px;
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 80ms ease-in;
+}
+.edit-tooltip.visible {
+  pointer-events: auto;
+  opacity: 1;
+}
+  .edit-tooltip .pane {
+    
+  }

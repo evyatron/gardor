@@ -65,8 +65,12 @@ Editor.prototype.init = function init(options) {
   this.elContainer.querySelector('.export-config').addEventListener('click', this.getData.bind(this));
   
   this.elContainer.addEventListener('mousedown', this.onMouseDown.bind(this));
+  window.addEventListener('keyup', this.onKeyUp.bind(this));
   
   this.applyUserSettings();
+  Tooltip.init({
+    'editor': this
+  });
 
   utils.request('/data/schema.json', this.onGotSchema.bind(this));
 };
@@ -168,6 +172,18 @@ Editor.prototype.onMouseDown = function onMouseDown(e) {
     el.parentNode.classList.add('resizing');
   }
 }
+
+Editor.prototype.onKeyUp = function onKeyUp(e) {
+  if (e.keyCode === InputManager.KEYS.DELETE) {
+    if (this.heldActor) {
+      var shouldDelete = confirm('Are you sure you want to delete "' + this.heldActor.id + '"?');
+      if (shouldDelete) {
+        this.actorsEditor.removeActor(this.heldActor);
+        this.heldActor = null;
+      }
+    }
+  }
+};
 
 Editor.prototype.loadGame = function loadGame() {
   var gameConfig = this.config.game;
@@ -510,6 +526,107 @@ Editor.prototype.saveGameConfig = function saveGameConfig() {
   utils.post('/api/game/' + this.gameId, JSON.stringify(this.config.game));
 };
 
+var Tooltip = (function Tooltip() {
+  function Tooltip() {
+    this.el = null;
+    this.editor = null;
+  }
+  
+  Tooltip.prototype.TYPES = {
+    TILE: 'tile'
+  };
+  
+  Tooltip.prototype.TYPES_SCHEMAS = {};
+  Tooltip.prototype.TYPES_SCHEMAS[Tooltip.prototype.TYPES.TILE] = 'tile';
+  
+  Tooltip.prototype.init = function init(options) {
+    this.editor = options.editor;
+    
+    this.createHTML();
+    
+    document.body.addEventListener('mousemove', this.onMouseMove.bind(this));
+  };
+  
+  Tooltip.prototype.onMouseMove = function onMouseMove(e) {
+    var el = e.target;
+    var dataset = el.dataset || {};
+    var type = dataset.tooltipType;
+    
+    if (type) {
+      var id = dataset.tooltipId;
+      var data = this['getData_' + type](id);
+      var schema = this.editor.schema[this.TYPES_SCHEMAS[type]];
+      var bounds = el.getBoundingClientRect();
+      
+      if (!data) {
+        console.warn('No data to display tooltip', type, id, data, schema);
+        return;
+      }
+      if (!schema) {
+        console.warn('No schema to display tooltip', type, id, data, schema);
+        return;
+      }
+      
+      var x = bounds.left + bounds.width / 2;
+      var y = bounds.top + bounds.height / 2;
+      this.el.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+      
+      this.createTooltip(type, id, schema, data);
+    } else if (!utils.inParent(el, '.edit-tooltip')) {
+      this.hide();
+    }
+  };
+  
+  Tooltip.prototype.createTooltip = function createTooltip(type, id, schema, data) {
+    if (this.pane && this.pane.id === id) {
+      return;
+    }
+    
+    this.elPane.innerHTML = '';
+    
+    this.pane = new Pane({
+      'id': id,
+      'el': this.elPane,
+      'schema': schema,
+      'onChange': function onDataChange() {
+        var json = {};
+        this.pane.updateJSON(json);
+        this['change_' + type](id, json);
+      }.bind(this)
+    });
+    this.pane.updateFromJSON(data);
+    
+    this.el.classList.add('visible');
+  };
+  
+  Tooltip.prototype.hide = function hide() {
+    this.pane = null;
+    this.elPane.innerHTML = '';
+    this.el.classList.remove('visible');
+  };
+  
+  Tooltip.prototype.getData_tile = function getData_tile(id) {
+    return this.editor.tilesEditor.getTileTooltipData(id);
+  };
+  
+  Tooltip.prototype.change_tile = function change_tile(id, data) {
+    return this.editor.tilesEditor.updateTile(id, data);
+  };
+  
+  Tooltip.prototype.createHTML = function createHTML() {
+    this.el = document.createElement('div');
+    this.el.className = 'edit-tooltip';
+    
+    this.el.innerHTML = '<div class="pane"></div>';
+    
+    this.elPane = this.el.querySelector('.pane');
+    
+    document.body.appendChild(this.el);
+  };
+  
+  return new Tooltip();
+}());
+
 
 var Actors = (function Actors() {
   var TEMPLATE_ACTORS = '<div class="editor-title">' +
@@ -558,8 +675,7 @@ var Actors = (function Actors() {
                           '</div>' +
                           
                         '</div>' +
-                        '<div class="actor-modules">' +
-                        '</div>';
+                        '<div class="actor-modules"></div>';
   
   function Actors(options) {
     this.elContainer = null;
@@ -628,6 +744,28 @@ var Actors = (function Actors() {
     el.querySelector('[data-property = "isBlocking"]').checked = actor.isBlocking;
 
     this.elList.appendChild(el);
+  };
+  
+  Actors.prototype.removeActor = function removeActor(actor) {
+    var didFindActor = false;
+    var actors = this.actors;
+    
+    for (var i = 0, len = actors.length; i < len; i++) {
+      if (actors[i].id === actor.id) {
+        actors.splice(i, 1);
+        didFindActor = true;
+        break;
+      }
+    }
+    
+    if (didFindActor) {
+      var el = this.getActorEl(actor);
+      if (el) {
+        el.parentNode.removeChild(el);
+      }
+      
+      this.onChange(this.actors);
+    }
   };
   
   Actors.prototype.createActorModules = function createActorModules(actor, el) {
@@ -881,7 +1019,7 @@ var Tiles = (function Tiles() {
     el.dataset.blocking = tile.isBlocking;
     el.dataset.id = tile.id;
     el.dataset.placing = false;
-    
+
     el.innerHTML = TEMPLATE_TILE.format(tile);
     
     tile.texture.width = this.editor.config.game.tileSize;
@@ -894,14 +1032,39 @@ var Tiles = (function Tiles() {
     this.tilesTextures[tile.index] = new EditorTexture({
       'elContainer': el.querySelector('.texture-container'),
       'data': tile.texture,
-      'meta': {
-        'id': tile.id,
-        'isBlocking': tile.isBlocking
-      },
       'onChange': this.onTextureChange.bind(this, tile.index)
     });
+    
+    el.querySelector('.texture-container canvas').dataset.tooltipId = tile.id;
+    el.querySelector('.texture-container canvas').dataset.tooltipType = Tooltip.TYPES.TILE;
 
     this.elList.appendChild(el);
+  };
+  
+  Tiles.prototype.getTileTooltipData = function getTileTooltipData(tileId) {
+    var tile = this.getTile(tileId);
+    var data = null;
+    
+    if (tile) {
+      data = {
+        'isBlocking': tile.isBlocking
+      };
+    }
+    
+    return data;
+  };
+  
+  Tiles.prototype.updateTile = function updateTile(tileId, data) {
+    var tile = this.getTile(tileId);
+    if (tile) {
+      for (var k in data) {
+        if (tile.hasOwnProperty(k)) {
+          tile[k] = data[k];
+        }
+      }
+      
+      this.onChange(this.tiles);
+    }
   };
   
   Tiles.prototype.onTextureChange = function onTextureChange(tileIndex) {
@@ -970,6 +1133,19 @@ var Tiles = (function Tiles() {
     }
   };
 
+  Tiles.prototype.getTile = function getTile(tileId) {
+    var tile = null;
+    
+    for (var i = 0, len = this.tiles.length; i < len; i++) {
+      if (this.tiles[i].id === tileId) {
+        tile = this.tiles[i];
+        break;
+      }
+    }
+    
+    return tile;
+  };
+  
   Tiles.prototype.getTileEl = function getTileEl(tile) {
     return this.el.querySelector('.tile[data-index = "' + tile.index + '"]');
   };
@@ -1098,19 +1274,5 @@ String.prototype.format = function format(args, shouldSanitise) {
     return value;
   });
 };
-
-function closest(el, selector) {
-  var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
-  
-  while (el) {
-    if (matchesSelector.bind(el)(selector)) {
-      return el;
-    } else {
-      el = el.parentElement;
-    }
-  }
-  
-  return false;
-}
 
 init();
