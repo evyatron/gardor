@@ -342,16 +342,6 @@ var TilesetLayer = (function TilesetLayer() {
 /* HUD layer for all UI (debug, dialogs, tooltips, etc.) */
 var HUDLayer = (function HUDLayer() {
   function HUDLayer(options) {
-    this.tooltip = {
-      'actorId': '',
-      'x': 0,
-      'y': 0,
-      'width': 0,
-      'height': 0,
-      'text': '',
-      'isVisible': false
-    };
-    
     this.clickTexture = null;
     this.clickPosition = {
       'x': 0,
@@ -360,6 +350,9 @@ var HUDLayer = (function HUDLayer() {
     this.timeShownClickTexture = 0;
     this.timeToShowClickTexture = 0;
     
+    this.elTooltip = null;
+    this.tooltipActor = null;
+    
     this.debugLines = [];
     
     Layer.call(this, options);
@@ -367,6 +360,12 @@ var HUDLayer = (function HUDLayer() {
   
   HUDLayer.prototype = Object.create(Layer.prototype);
   HUDLayer.prototype.constructor = HUDLayer;
+  
+  HUDLayer.prototype.init = function init() {
+    Layer.prototype.init.apply(this, arguments);
+    
+    this.createHTML();
+  };
   
   HUDLayer.prototype.setMap = function setMap(map) {
     var clickTexture = this.game.config.clickTexture;
@@ -396,35 +395,48 @@ var HUDLayer = (function HUDLayer() {
       this.timeShownClickTexture += dt;
     }
 
-    var actorUnderPointer = null;
+    this.toggleTooltip();
+
+    game.endBenchmark('update', 'hud');
+    
+    return true;
+  };
+  
+  HUDLayer.prototype.toggleTooltip = function toggleTooltip() {
+    var game = this.game;
+    var tooltipActor = null;
+    
     if (game.playerController.isActive) {
       for (var id in game.actorsUnderPointer) {
         if (game.actorsUnderPointer[id].tooltip) {
-          actorUnderPointer = game.actorsUnderPointer[id];
+          tooltipActor = game.actorsUnderPointer[id];
           break;
         }
       }
     }
     
-    var tooltip = this.tooltip;
-    if (!actorUnderPointer) {
-      tooltip.actorId = '';
-      tooltip.isVisible = false;
-    } else {
-      if (tooltip.actorId !== actorUnderPointer.id) {
-        tooltip.actorId = actorUnderPointer.id;
-        tooltip.text = actorUnderPointer.tooltip;
-        tooltip.isVisible = true;
-      }
-      
-      var offsetPosition = this.game.getOffsetPosition(actorUnderPointer.position);
-      tooltip.x = offsetPosition.x;
-      tooltip.y = offsetPosition.y + game.config.tileSize / 2;
+    if (tooltipActor && !this.tooltipActor) {
+      this.elTooltip.innerHTML = this.formatTooltip(tooltipActor.tooltip);
+      this.elTooltip.classList.add('visible');
+    } else if (!tooltipActor && this.tooltipActor) {
+      this.elTooltip.classList.remove('visible');
+    } else if (tooltipActor && this.tooltipActor && tooltipActor.id !== this.tooltipActor.id) {
+      this.elTooltip.innerHTML = this.formatTooltip(tooltipActor.tooltip);
     }
     
-    game.endBenchmark('update', 'hud');
+    if (tooltipActor) {
+      var actorPosition = game.getScreenPosition(game.getOffsetPosition(tooltipActor));
+      var bounds = this.elTooltip.getBoundingClientRect();
+      var x = Math.round(actorPosition.x - bounds.width / 2);
+      var y = Math.round(actorPosition.y + game.config.tileSize / 2);
+      this.elTooltip.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    }
     
-    return true;
+    this.tooltipActor = tooltipActor;
+  };
+  
+  HUDLayer.prototype.formatTooltip = function formatTooltip(tooltip) {
+    return tooltip;
   };
   
   HUDLayer.prototype.writeDebugLine = function writeDebugLine(text) {
@@ -443,7 +455,14 @@ var HUDLayer = (function HUDLayer() {
       this.clickTexture.draw(context, position.x, position.y);
     }
     
+    if (this.tooltipActor) {
+      
+    } else {
+      this.elTooltip.classList.remove('visible');
+    }
+    
     // Tooltip
+    /*
     var tooltip = this.tooltip;
     if (tooltip.isVisible) {
       var tooltipConfig = game.config.tooltips || {};
@@ -479,6 +498,7 @@ var HUDLayer = (function HUDLayer() {
                     context.font,
                     tooltipConfig.lineSpacing);
     }
+    */
     
     game.endBenchmark('draw', 'hud');
 
@@ -516,5 +536,12 @@ var HUDLayer = (function HUDLayer() {
       context.font = font;
     }
   };
+  
+  HUDLayer.prototype.createHTML = function createHTML() {
+    this.elTooltip = document.createElement('div');
+    this.elTooltip.className = 'actors-tooltip';
+    this.game.el.appendChild(this.elTooltip);
+  };
+  
   return HUDLayer;
 }());

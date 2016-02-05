@@ -871,6 +871,41 @@
         }
       },
       "index": 30
+    },
+    {
+      "id": "default_1454611245028",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1152,
+          "y": 128
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 31
     }
   ]
 }

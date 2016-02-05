@@ -443,6 +443,11 @@ var Game = (function Game() {
   };
   
   Game.prototype.getOffsetPosition = function getOffsetPosition(position) {
+    // If an actor - use its position
+    if (position.position) {
+      position = position.position;
+    }
+    
     return {
       'x': position.x - this.camera.x,
       'y': position.y - this.camera.y
@@ -466,6 +471,13 @@ var Game = (function Game() {
       'y': Math.floor((tile.y * size) + size / 2)
     };
   };
+  
+  Game.prototype.getScreenPosition = function getScreenPosition(position) {
+    return {
+      'x': position.x + this.offset.x,
+      'y': position.y + this.offset.y
+    };
+  };
 
   Game.prototype.getHUD = function getHUD() {
     return this.layers.hud;
@@ -479,59 +491,9 @@ var Game = (function Game() {
   };
   
   Game.prototype.drawText = function drawText(context, text, x, y, font, lineSpacing) {
-    context.font = font || this.config.defaultFont;
-
-    var textLines = text.split("\n");
-    var lineHeight = parseInt(context.font, 10) + (lineSpacing || 0);
-    
-    //var fillStyle = context.fillStyle;
-    //var highlightFillStyle = this.config.tooltips.highlightColor;
-    
-    for (var i = 0, len = textLines.length; i < len; i++) {
-      var formattedText = textLines[i];
-      /*
-      var formattedTextParts = [];
-      
-      formattedText = formattedText.replace(/<b>[^\<]*<\/b>/g, function(whole, match) {
-        console.warn(arguments);
-        formattedTextParts.push({
-          'text': match,
-          'isHighlighted': true
-        });
-        return match;
-      });
-      
-      console.warn(formattedTextParts)
-      */
-
-      context.fillText(formattedText, x, y + lineHeight * i);
-    }
+    console.warn('SHOULD NOT USE DRAW TEXT', arguments);
   };
-  
-  Game.prototype.measureText = function measureText(context, text, lineSpacing) {
-    var height = 0;
-    var width = 0;
-    var textLines = text.split("\n");
-    
-    if (!lineSpacing) {
-      lineSpacing = 0;
-    }
-    
-    var fontHeight = parseInt(context.font, 10);
-    
-    height = textLines.length * fontHeight +
-            (textLines.length - 1) * lineSpacing;
-    
-    for (var i = 0, len = textLines.length; i < len; i++) {
-      width = Math.max(width, context.measureText(textLines[i]).width);
-    }
-    
-    return {
-      'height': height,
-      'width': width
-    };
-  };
-  
+
   Game.prototype.getDialog = function getDialog(dialogId) {
     var dialogs = (this.currentMap || {}).dialogs || [];
     var dialog = null;

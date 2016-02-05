@@ -22,6 +22,7 @@
       "",
       "",
       "",
+      "",
       ""
     ],
     [
@@ -39,10 +40,12 @@
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
+      "default_1454537582202",
       ""
     ],
     [
       "",
+      "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
@@ -73,6 +76,7 @@
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
+      "default_1454537582202",
       ""
     ],
     [
@@ -85,6 +89,7 @@
       "default_1454604778776",
       "default_1454604778776",
       "default_1454604463328",
+      "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
@@ -107,6 +112,7 @@
       "default_1454604603178",
       "default_1454537582202",
       "default_1454537582202",
+      "default_1454537582202",
       ""
     ],
     [
@@ -119,9 +125,10 @@
       "default_1454604778776",
       "default_1454604778776",
       "default_1454604463328",
-      "default_1454607629662",
-      "default_1454607629662",
+      "default_1454611245028",
+      "default_1454611245028",
       "default_1454604463328",
+      "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
       ""
@@ -137,10 +144,11 @@
       "default_1454604440102",
       "default_1454606446005",
       "default_1454604603178",
-      "default_1454607629662",
+      "default_1454611245028",
       "default_1454604463328",
       "default_1454537582202",
       "default_1454537582202",
+      "default_1454537582202",
       ""
     ],
     [
@@ -154,31 +162,16 @@
       "default_1454537582202",
       "default_1454537582202",
       "default_1454604536217",
-      "default_1454607629662",
+      "default_1454611245028",
       "default_1454604536217",
       "default_1454537582202",
       "default_1454537582202",
-      ""
-    ],
-    [
-      "",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
-      "default_1454537582202",
       "default_1454537582202",
       ""
     ],
     [
       "",
+      "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
@@ -209,6 +202,7 @@
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
+      "default_1454537582202",
       ""
     ],
     [
@@ -226,9 +220,47 @@
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
+      "default_1454537582202",
       ""
     ],
     [
+      "",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      ""
+    ],
+    [
+      "",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      ""
+    ],
+    [
+      "",
       "",
       "",
       "",
@@ -277,8 +309,8 @@
       "isBlocking": true,
       "zIndex": 1,
       "tile": {
-        "x": 2,
-        "y": 9
+        "x": 7,
+        "y": 8
       },
       "modules": [
         {
@@ -308,8 +340,8 @@
       "isBlocking": true,
       "zIndex": 1,
       "tile": {
-        "x": 2,
-        "y": 10
+        "x": 8,
+        "y": 8
       },
       "modules": [
         {
@@ -335,10 +367,10 @@
     },
     {
       "id": "game-darkbounds",
-      "tooltip": "Dark Bounds\nTop-down spaceship multiplayer game\nCSS, JavaScript, WebSockets, Node.JS",
+      "tooltip": "Dark Bounds<br />Top-down spaceship multiplayer game<br />CSS, JavaScript, WebSockets, Node.JS",
       "isBlocking": true,
       "tile": {
-        "x": 6,
+        "x": 14,
         "y": 11
       },
       "modules": [
@@ -371,10 +403,10 @@
     },
     {
       "id": "game-nanocraft",
-      "tooltip": "Nanocraft\nIsometric RTS/CookieClicker mashup\nCSS, JavaScript, Firebase as backend",
+      "tooltip": "Nanocraft<br />Isometric RTS/CookieClicker mashup<br />CSS, JavaScript, Firebase as backend",
       "isBlocking": true,
       "tile": {
-        "x": 7,
+        "x": 13,
         "y": 11
       },
       "modules": [
@@ -407,10 +439,10 @@
     },
     {
       "id": "game-alice",
-      "tooltip": "[ALICE].\nSide scroller with changing gravity\nCSS and JavaScript",
+      "tooltip": "[ALICE].<br />Side scroller with changing gravity<br />CSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "x": 7,
+        "x": 13,
         "y": 9
       },
       "modules": [
@@ -443,10 +475,10 @@
     },
     {
       "id": "game-simon",
-      "tooltip": "Simon\nRecreation of the classic Simon game\nHTML5, WebAudioAPI and Responsive Design",
+      "tooltip": "Simon<br />Recreation of the classic Simon game<br />HTML5, WebAudioAPI and Responsive Design",
       "isBlocking": true,
       "tile": {
-        "x": 7,
+        "x": 13,
         "y": 10
       },
       "modules": [
@@ -465,7 +497,7 @@
           "scale": 0.6,
           "clip": {
             "x": 186,
-            "y": 0
+            "y": 64
           },
           "width": 62,
           "height": 64,
@@ -479,11 +511,11 @@
     },
     {
       "id": "game-supermoneyo",
-      "tooltip": "SuperMoney-O\nA political-satiric mario-clone game\nCSS and JavaScript",
+      "tooltip": "SuperMoney-O<br />A political-satiric mario-clone game<br />CSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "x": 6,
-        "y": 9
+        "x": 14,
+        "y": 7
       },
       "modules": [
         {
@@ -515,11 +547,11 @@
     },
     {
       "id": "game-candickrush",
-      "tooltip": "Can Dick Rush\nMaze-navigation, created following a certain copyright story\nCSS and JavaScript",
+      "tooltip": "Can Dick Rush<br />Maze-navigation, created following a certain copyright story<br />CSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "x": 6,
-        "y": 10
+        "x": 14,
+        "y": 9
       },
       "modules": [
         {
@@ -551,7 +583,7 @@
     },
     {
       "id": "js-particles",
-      "tooltip": "Particles\nHigh performance JavaScript canvas Particles object",
+      "tooltip": "Particles<br />High performance JavaScript canvas Particles object",
       "isBlocking": true,
       "tile": {
         "x": 3,
@@ -587,7 +619,7 @@
     },
     {
       "id": "js-fantasia",
-      "tooltip": "Fantasia 2013\nA CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
+      "tooltip": "Fantasia 2013<br />A CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
       "isBlocking": true,
       "tile": {
         "x": 3,
@@ -623,10 +655,10 @@
     },
     {
       "id": "js-timeforcoffee",
-      "tooltip": "Is It Time For Coffee?\nA webpage to let you know if it's time for coffee",
+      "tooltip": "Is It Time For Coffee?<br />A webpage to let you know if it's time for coffee",
       "isBlocking": true,
       "tile": {
-        "x": 5,
+        "x": 2,
         "y": 12
       },
       "modules": [
@@ -659,7 +691,7 @@
     },
     {
       "id": "js-wobbly",
-      "tooltip": "Wibbly Wobbly\nCSS Animations and wobbly movement using only CSS3's advanced selectors (for both the animation and the settings)",
+      "tooltip": "Wibbly Wobbly<br />CSS Animations and wobbly movement using only CSS3's advanced selectors (for both the animation and the settings)",
       "isBlocking": true,
       "tile": {
         "x": 4,
@@ -695,7 +727,7 @@
     },
     {
       "id": "js-conjunctions",
-      "tooltip": "Conjunctions\nExploration of CSS3 transformation and transformation origins.",
+      "tooltip": "Conjunctions<br />Exploration of CSS3 transformation and transformation origins.",
       "isBlocking": true,
       "tile": {
         "x": 4,
@@ -731,7 +763,7 @@
     },
     {
       "id": "js-circular",
-      "tooltip": "Circular Movements\nExploration of circular movement in CSS3",
+      "tooltip": "Circular Movements<br />Exploration of circular movement in CSS3",
       "isBlocking": true,
       "tile": {
         "x": 4,
@@ -767,10 +799,10 @@
     },
     {
       "id": "js-p280",
-      "tooltip": "PC Case Designer\nA page that lets you design a 3D PC case (Antec P280 specifically) using JavaScript and 3D CSS3",
+      "tooltip": "PC Case Designer<br />A page that lets you design a 3D PC case (Antec P280 specifically) using JavaScript and 3D CSS3",
       "isBlocking": true,
       "tile": {
-        "x": 5,
+        "x": 2,
         "y": 9
       },
       "modules": [
@@ -803,7 +835,7 @@
     },
     {
       "id": "js-bounce",
-      "tooltip": "3D Bounce\nExperiments with 3D CSS3 and animations",
+      "tooltip": "3D Bounce<br />Experiments with 3D CSS3 and animations",
       "isBlocking": true,
       "tile": {
         "x": 4,
@@ -839,7 +871,7 @@
     },
     {
       "id": "js-404",
-      "tooltip": "404 Page\nMy 404 page, messing around with Canvas - control with Keyboard Arrows and mouse",
+      "tooltip": "404 Page<br />My 404 page, messing around with Canvas - control with Keyboard Arrows and mouse",
       "isBlocking": true,
       "tile": {
         "x": 3,
@@ -875,10 +907,10 @@
     },
     {
       "id": "js-dott",
-      "tooltip": "Day of the Tentacle\nCSS3 representation of Purple from Day of the Tentacle",
+      "tooltip": "Day of the Tentacle<br />CSS3 representation of Purple from Day of the Tentacle",
       "isBlocking": true,
       "tile": {
-        "x": 5,
+        "x": 2,
         "y": 11
       },
       "modules": [
@@ -911,10 +943,10 @@
     },
     {
       "id": "js-inverter",
-      "tooltip": "Image Inverter\nA simple utility page for inverting images without Server Side code (using HTML5 File API)",
+      "tooltip": "Image Inverter<br />A simple utility page for inverting images without Server Side code (using HTML5 File API)",
       "isBlocking": true,
       "tile": {
-        "x": 5,
+        "x": 2,
         "y": 10
       },
       "modules": [
@@ -947,7 +979,7 @@
     },
     {
       "id": "js-d3api",
-      "tooltip": "Diablo 3 API Client Library\nAn API Client Library for Diablo 3 built in JavaScript",
+      "tooltip": "Diablo 3 API Client Library<br />An API Client Library for Diablo 3 built in JavaScript",
       "isBlocking": true,
       "tile": {
         "x": 3,
@@ -1115,8 +1147,8 @@
       "id": "page-contact",
       "tooltip": "Contact Me",
       "tile": {
-        "x": 2,
-        "y": 11
+        "x": 11,
+        "y": 12
       },
       "isBlocking": true,
       "modules": [
@@ -1150,7 +1182,7 @@
       "id": "page-about",
       "tooltip": "About Me",
       "tile": {
-        "x": 2,
+        "x": 10,
         "y": 12
       },
       "isBlocking": true,
@@ -1179,6 +1211,108 @@
         }
       ],
       "zIndex": 0
+    },
+    {
+      "id": "test",
+      "tooltip": "TEST",
+      "tile": {
+        "x": 5,
+        "y": 7
+      },
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleHTMLElement",
+          "selector": ".game-module-about",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "clip": {
+            "x": 448,
+            "y": 1088
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": 1,
+          "clipBottom": {
+            "x": 0,
+            "y": 0
+          },
+          "clipTop": {
+            "x": 0,
+            "y": 0
+          },
+          "clipRight": {
+            "x": 0,
+            "y": 0
+          },
+          "clipLeft": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "zIndex": "0"
+    },
+    {
+      "id": "door",
+      "tooltip": "TEST",
+      "tile": {
+        "x": 10,
+        "y": 8
+      },
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleHTMLElement",
+          "selector": ".game-module-about",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "clip": {
+            "x": 448,
+            "y": 1088
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": 1,
+          "clipBottom": {
+            "x": 0,
+            "y": 0
+          },
+          "clipTop": {
+            "x": 0,
+            "y": 0
+          },
+          "clipRight": {
+            "x": 0,
+            "y": 0
+          },
+          "clipLeft": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "zIndex": "0"
     }
   ],
   "dialogs": [
@@ -1189,7 +1323,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Welcome Centre\nWhere welcoming's our job!"
+          "text": "Welcome to the Welcome Centre<br />Where welcoming's our job!"
         },
         {
           "id": "answer",
@@ -1204,7 +1338,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Post Office\nContact me for YOUR chance of a reply!"
+          "text": "Welcome to the Post Office<br />Contact me for YOUR chance of a reply!"
         }
       ]
     },
@@ -1214,7 +1348,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Video Game Arcade\nGLHF"
+          "text": "Welcome to the Video Game Arcade<br />GLHF"
         }
       ]
     },
@@ -1224,7 +1358,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Laboratory\nPlease don't feed the experiments"
+          "text": "Welcome to the Laboratory<br />Please don't feed the experiments"
         }
       ]
     },

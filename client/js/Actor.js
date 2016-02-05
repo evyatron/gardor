@@ -168,7 +168,7 @@ var Actor = (function Actor() {
     
     game.startBenchmark('update', this.id);
     
-    this.isPointerOver = this.id in game.actorsUnderPointer;
+    this.isPointerOver = game.actorsUnderPointer.hasOwnProperty(this.id);
     
     if (this.pathToWalk) {
       var speed = this.speed * dt;
@@ -235,6 +235,15 @@ var Actor = (function Actor() {
 
     game.startBenchmark('draw', this.id);
 
+    var modules = this.modules;
+    for (var i = 0, len = modules.length; i < len; i++) {
+      var module = modules[i];
+      module.draw && module.draw();
+    }
+    
+    game.endBenchmark('draw', this.id);
+    
+
     if (window.DEBUG) {
       var context = this.layer.context;
       
@@ -261,14 +270,6 @@ var Actor = (function Actor() {
         context.fill();
       }
     }
-
-    var modules = this.modules;
-    for (var i = 0, len = modules.length; i < len; i++) {
-      var module = modules[i];
-      module.draw && module.draw();
-    }
-    
-    game.endBenchmark('draw', this.id);
     
     return true;
   };

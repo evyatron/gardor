@@ -920,6 +920,9 @@ var EditorActorModule = (function EditorActorModule() {
   };
   
   EditorActorModule.prototype.onTextureChange = function onTextureChange() {
+    console.warn('texture change');
+    
+    delete this.texture.data.game;
     var data = JSON.parse(JSON.stringify(this.texture.data));
     data.type = this.data.type;
     this.data = data;
@@ -1069,10 +1072,8 @@ var Tiles = (function Tiles() {
   
   Tiles.prototype.onTextureChange = function onTextureChange(tileIndex) {
     var tile = this.tiles[tileIndex];
-    var elTile = this.getTileEl(tile);
     var texture = this.tilesTextures[tileIndex];
     var data = texture.data;
-    var meta = texture.meta;
     
     delete data.game;
     tile.texture = JSON.parse(JSON.stringify(data));
