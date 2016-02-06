@@ -1,4 +1,8 @@
 /* global Texture */
+/* global utils */
+/* global Actor */
+"use strict";
+
 /*
   Base class for layers - in case we want to separate actors into different layers
   This could help with performance, for example placing all static actors
@@ -187,7 +191,7 @@ var TilesetLayer = (function TilesetLayer() {
       if (pointerTile) {
         var size = this.game.config.tileSize;
         
-        context.fillStyle = 'rgba(255, 255, 255, .4)';
+        context.fillStyle = 'rgba(255, 255, 255, .3)';
         context.beginPath();
         context.fillRect(pointerTile.x * size - camera.x + this.offset.x,
                          pointerTile.y * size - camera.y + this.offset.y,
@@ -230,25 +234,25 @@ var TilesetLayer = (function TilesetLayer() {
     var fillTile = tilesMap[map.fillTile];
     var color = map.fillColor;
     var offset = this.offset;
-
+    var padding = game.followPadding;
+    var x, y;
+    
     canvas.width = this.texture.width + game.mapWidth;
     canvas.height = this.texture.height + game.mapHeight;
     
     // Fill default colour
-    if (color && !fillTile) {
-      context.fillStyle = color;
-      context.fillRect(0, 0, canvas.width, canvas.height);
-    }
+    context.fillStyle = (color && !fillTile)? color : 'red';
+    context.fillRect(0, 0, canvas.width, canvas.height);
     
     // Fill default tile
     if (fillTile) {
-      var offsetX = -(size - offset.x % size);
-      var offsetY = -(size - offset.y % size);
-      var width = Math.max(this.width, game.mapWidth) + 0;
-      var height = Math.max(this.height, game.mapHeight) + 0;
+      var offsetX = -(size - offset.x % size) - padding;
+      var offsetY = -(size - offset.y % size) - padding;
+      var width = Math.max(this.width, game.mapWidth) + padding;
+      var height = Math.max(this.height, game.mapHeight) + padding;
       
-      for (var x = offsetX; x < width; x += size) {
-        for (var y = offsetY; y < height; y += size) {
+      for (x = offsetX; x < width; x += size) {
+        for (y = offsetY; y < height; y += size) {
           if (x < offset.x || x + size > offset.x + game.mapWidth ||
               y < offset.y || y + size > offset.y + game.mapHeight) {
             fillTile.texture.draw(context, x, y);
@@ -262,8 +266,8 @@ var TilesetLayer = (function TilesetLayer() {
         var tile = tilesMap[rows[i][j]] || defaultTile;
         
         if (tile) {
-          var x = j * size + offset.x;
-          var y = i * size + offset.y;
+          x = j * size + offset.x;
+          y = i * size + offset.y;
           
           tile.texture.draw(context, x, y);
           tilesDrawn++;
@@ -315,11 +319,9 @@ var TilesetLayer = (function TilesetLayer() {
       this.texture.width = Math.max(game.mapWidth, game.containerWidth);
       this.texture.height = Math.max(game.mapHeight, game.containerHeight);
     }
-    
-    
-    // STRETCH TEST
-    this.width = game.containerWidth;
-    this.height = game.containerHeight;
+
+    this.width = game.containerWidth + game.followPadding * 2;
+    this.height = game.containerHeight + game.followPadding * 2;
     
     this.offset = {
       'x': Math.max((this.width - game.mapWidth) / 2, 0),
@@ -330,8 +332,6 @@ var TilesetLayer = (function TilesetLayer() {
       this.texture.width = this.width;
       this.texture.height = this.height;
     }
-    
-    
     
     this.updateSize();
   };
@@ -349,11 +349,9 @@ var HUDLayer = (function HUDLayer() {
     };
     this.timeShownClickTexture = 0;
     this.timeToShowClickTexture = 0;
-    
-    this.elTooltip = null;
-    this.tooltipActor = null;
-    
+
     this.debugLines = [];
+    this.textBoxes = {};
     
     Layer.call(this, options);
   }
@@ -361,12 +359,10 @@ var HUDLayer = (function HUDLayer() {
   HUDLayer.prototype = Object.create(Layer.prototype);
   HUDLayer.prototype.constructor = HUDLayer;
   
-  HUDLayer.prototype.init = function init() {
-    Layer.prototype.init.apply(this, arguments);
-    
-    this.createHTML();
+  HUDLayer.prototype.POSITION = {
+    SCREEN_BOTTOM: 'screen-bottom'
   };
-  
+
   HUDLayer.prototype.setMap = function setMap(map) {
     var clickTexture = this.game.config.clickTexture;
     
@@ -415,24 +411,15 @@ var HUDLayer = (function HUDLayer() {
       }
     }
     
-    if (tooltipActor && !this.tooltipActor) {
-      this.elTooltip.innerHTML = this.formatTooltip(tooltipActor.tooltip);
-      this.elTooltip.classList.add('visible');
-    } else if (!tooltipActor && this.tooltipActor) {
-      this.elTooltip.classList.remove('visible');
-    } else if (tooltipActor && this.tooltipActor && tooltipActor.id !== this.tooltipActor.id) {
-      this.elTooltip.innerHTML = this.formatTooltip(tooltipActor.tooltip);
-    }
-    
     if (tooltipActor) {
-      var actorPosition = game.getScreenPosition(game.getOffsetPosition(tooltipActor));
-      var bounds = this.elTooltip.getBoundingClientRect();
-      var x = Math.round(actorPosition.x - bounds.width / 2);
-      var y = Math.round(actorPosition.y + game.config.tileSize / 2);
-      this.elTooltip.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+      this.showTextBox('actors-tooltip', {
+        'content': this.formatTooltip(tooltipActor.tooltip),
+        'position': tooltipActor.getScreenPosition(),
+        'centred': true
+      });
+    } else {
+      this.hideTextBox('actors-tooltip');
     }
-    
-    this.tooltipActor = tooltipActor;
   };
   
   HUDLayer.prototype.formatTooltip = function formatTooltip(tooltip) {
@@ -454,51 +441,6 @@ var HUDLayer = (function HUDLayer() {
       var position = game.getOffsetPosition(this.clickPosition);
       this.clickTexture.draw(context, position.x, position.y);
     }
-    
-    if (this.tooltipActor) {
-      
-    } else {
-      this.elTooltip.classList.remove('visible');
-    }
-    
-    // Tooltip
-    /*
-    var tooltip = this.tooltip;
-    if (tooltip.isVisible) {
-      var tooltipConfig = game.config.tooltips || {};
-      var padding = tooltipConfig.padding || {'x': 0, 'y': 0};
-      var textSize = game.measureText(context, tooltip.text, tooltipConfig.lineSpacing); 
-
-      tooltip.width = textSize.width;
-      tooltip.height = textSize.height;
-      
-      context.textBaseline = 'middle';
-      context.textAlign = 'center';
-      context.fillStyle = 'rgba(0, 0, 0, .75)';
-      context.strokeStyle = 'rgba(0, 0, 0, 1)';
-      if (tooltipConfig.font) {
-        context.font = tooltipConfig.font;
-      }
-      
-      context.fillRect(tooltip.x - padding.x - tooltip.width / 2,
-                       tooltip.y - padding.y * 1.5,
-                       tooltip.width + padding.x * 2,
-                       tooltip.height + padding.y * 2);
-                       
-      context.strokeRect(tooltip.x - padding.x - tooltip.width / 2,
-                       tooltip.y - padding.y * 1.5,
-                       tooltip.width + padding.x * 2,
-                       tooltip.height + padding.y * 2);
-
-      context.fillStyle = 'rgba(255, 255, 255, 1)';
-      game.drawText(context,
-                    tooltip.text,
-                    tooltip.x,
-                    tooltip.y + padding.y,
-                    context.font,
-                    tooltipConfig.lineSpacing);
-    }
-    */
     
     game.endBenchmark('draw', 'hud');
 
@@ -524,24 +466,65 @@ var HUDLayer = (function HUDLayer() {
   HUDLayer.prototype.onResize = function onResize() {
     Layer.prototype.onResize.apply(this, arguments);
     
-    var font = (this.game.config.tooltips || {}).font;
-    
     var context = this.context;
     context.textBaseline = 'top';
     context.textAlign = 'center';
     context.shadowColor = 'rgba(0, 0, 0, 1)';
     context.shadowBlur = 1;
+  };
+  
+  HUDLayer.prototype.showTextBox = function showTextBox(id, options) {
+    !options && (options = {});
     
-    if (font) {
-      context.font = font;
+    var el = this.textBoxes[id];
+    var position = options.position || {};
+    
+    if (!el) {
+      el = document.createElement('div');
+      el.classList.add('text-box');
+      el.classList.add(id);
+      
+      if (options.classes) {
+        for (var i = 0; i < options.classes.length; i++) {
+          el.classList.add(options.classes[i]);
+        }
+      }
+      
+      this.game.el.appendChild(el);
+      
+      this.textBoxes[id] = el;
+    }
+    
+    el.innerHTML = options.content;
+  
+    if (position) {
+      if (utils.enumContains(this.POSITION, position)) {
+        el.classList.add('position-' + position);
+      } else {
+        if (options.centred) {
+          var bounds = el.getBoundingClientRect();
+          position.x = Math.round(position.x - bounds.width / 2);
+          position.y = Math.round(position.y + this.game.config.tileSize / 2);
+        }
+        
+        el.style.transform = 'translate(' + position.x + 'px, ' + position.y + 'px)';
+      }
+    }
+      
+    el.classList.add('visible');
+  };
+  
+  HUDLayer.prototype.hideTextBox = function hideTextBox(id) {
+    var el = this.textBoxes[id];
+    if (el) {
+      el.addEventListener('webkitTransitionEnd', function onHide(e) {
+        e.target.parentNode.removeChild(e.target);
+      });
+      
+      el.classList.remove('visible');
+      this.textBoxes[id] = null;
     }
   };
-  
-  HUDLayer.prototype.createHTML = function createHTML() {
-    this.elTooltip = document.createElement('div');
-    this.elTooltip.className = 'actors-tooltip';
-    this.game.el.appendChild(this.elTooltip);
-  };
-  
+
   return HUDLayer;
 }());

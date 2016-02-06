@@ -1,4 +1,7 @@
 /* global Texture */
+/* global utils */
+/* global InputManager */
+"use strict";
 
 /*
   Base class for all modules that can be attached to actors
@@ -9,7 +12,7 @@ var ActorModule = (function ActorModule() {
     this.type = '';
     this.actor = null;
     this.isActive = false;
-    this.disableControllerWhenActive = false;
+    this.disableController = false;
     this.activation = '';
     this.useDir = '';
     this.useOffset = {
@@ -31,7 +34,7 @@ var ActorModule = (function ActorModule() {
     this.type = options.type;
     this.actor = options.actor;
     this.activation = options.activation;
-    this.disableControllerWhenActive = Boolean(options.disableControllerWhenActive);
+    this.disableController = Boolean(options.disableController);
     this.useDir = options.useDir || '';
     this.useOffset = options.useOffset || {
       'x': 0,
@@ -79,7 +82,7 @@ var ActorModule = (function ActorModule() {
   ActorModule.prototype.stop = function stop() {
     this.isActive = false;
     
-    if (this.disableControllerWhenActive) {
+    if (this.disableController) {
       this.actor.game.playerController.enable();
     }
     
@@ -97,7 +100,7 @@ var ActorModule = (function ActorModule() {
   ActorModule.prototype.activate = function activate() {
     this.isActive = true;
     
-    if (this.disableControllerWhenActive) {
+    if (this.disableController) {
       this.actor.game.playerController.disable();
     }
     
@@ -129,9 +132,9 @@ var ModuleTexture = (function ModuleTexture() {
     this.dirClips = {};
     this.actorDirection = '';
     
-    if (!options.hasOwnProperty('activation')) {
-      options.activation = ActorModule.prototype.ACTIVATIONS.AUTOMATIC;
-    }
+    utils.setDefaults(options, {
+      'activation': ActorModule.prototype.ACTIVATIONS.AUTOMATIC
+    });
     
     this.init(options);
   }
@@ -186,15 +189,12 @@ var ModuleDialog = (function ModuleDialog() {
     this.height = 0;
     this.padding = 0;
     this.actorImageSize = 0;
-    this.lineSpacing = 0;
     
-    if (!options.hasOwnProperty('activation')) {
-      options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
-    }
-    if (!options.hasOwnProperty('disableControllerWhenActive')) {
-      options.disableControllerWhenActive = true;
-    }
-
+    utils.setDefaults(options, {
+      'activation': ActorModule.prototype.ACTIVATIONS.INTERACT,
+      'disableController': true
+    });
+    
     ActorModule.call(this, options);
   }
   
@@ -224,14 +224,6 @@ var ModuleDialog = (function ModuleDialog() {
       this.dialog = {};
       console.warn('Cant find requested dialog', this);
     }
-    
-    var defaultDialogSettings = this.actor.game.config.dialogs;
-    this.font = this.dialog.font || defaultDialogSettings.font;
-    this.width = this.dialog.width || defaultDialogSettings.width;
-    this.height = this.dialog.height || defaultDialogSettings.height;
-    this.padding = this.dialog.padding || defaultDialogSettings.padding;
-    this.actorImageSize = this.dialog.actorImageSize || defaultDialogSettings.actorImageSize;
-    this.lineSpacing = this.dialog.lineSpacing || defaultDialogSettings.lineSpacing;
   };
   
   ModuleDialog.prototype.activate = function activate(e) {
@@ -243,22 +235,23 @@ var ModuleDialog = (function ModuleDialog() {
     this.texture.setImage(null);
     this.nextLine();
     
-    InputManager.on('pressed', 'activate', this.nextLine_bound);
-    InputManager.on('pressed', 'moveTo', this.nextLine_bound);
+    InputManager.on('pressed', 'interact', this.nextLine_bound);
   };
   
   ModuleDialog.prototype.stop = function stop(e) {
     ActorModule.prototype.stop.apply(this, arguments);
-    
+    console.warn('stop and hide')
     this.currentLineIndex = -1;
     this.currentLine = null;
     this.currentActor = null;
+    this.actor.game.getHUD().hideTextBox('dialog-box');
     
-    InputManager.off('pressed', 'activate', this.nextLine_bound);
-    InputManager.off('pressed', 'moveTo', this.nextLine_bound);
+    InputManager.off('pressed', 'interact', this.nextLine_bound);
   };
   
   ModuleDialog.prototype.nextLine = function nextLine() {
+    console.warn('next line')
+    
     var newIndex = this.currentLineIndex + 1;
     if (newIndex === 0) {
       newIndex = this.getLineIndexById(this.startingLineId);
@@ -269,94 +262,28 @@ var ModuleDialog = (function ModuleDialog() {
       }
     }
     
-    
     if (newIndex < this.lines.length) {
+      var hud = this.actor.game.getHUD();
       this.currentLineIndex = newIndex;
       this.currentLine = this.lines[this.currentLineIndex];
       this.currentActor = this.getLineActor(this.currentLine);
-      this.createTexture();
+      
+      var texture = this.currentActor.getTexture();
+      var avatarImage = null;
+      if (texture) {
+        avatarImage = texture.getImage();
+      }
+      
+      hud.showTextBox('dialog-box', {
+        'content': '<div class="image" style="background-image: url(\'\')"></div>' +
+                   '<div class="content">' + this.currentLine.text + '</div>',
+        'position': hud.POSITION.SCREEN_BOTTOM
+      });
     } else {
       this.stop();
     }
   };
-  
-  ModuleDialog.prototype.createTexture = function createTexture() {
-    var canvas = document.createElement('canvas');
-    var context = canvas.getContext('2d');
-    var x = 0;
-    var y = 0;
-    var padding = this.padding;
-    var imageSize = this.actorImageSize;
-    
-    canvas.width = this.width;
-    canvas.height = this.height;
 
-    context.font = this.font;
-    context.textBaseline = 'top';
-    
-    // background
-    context.fillStyle = 'rgba(30, 30, 30, 1)';
-    context.fillRect(x, y, this.width, this.height);
-    
-    if (this.currentActor) {
-      var texture = this.currentActor.getTexture();
-      if (texture) {
-        var avatarImage = texture.getImage();
-        
-        // avatar frame
-        context.fillStyle = 'rgba(255, 255, 255, .15)';
-        context.strokeStyle = 'rgba(255, 255, 255, .2)';
-        context.fillRect(x + padding, y + padding, imageSize, imageSize);
-        context.strokeRect(x + padding, y + padding, imageSize, imageSize);
-        
-        // avatar
-        var textureWidth = Math.min(texture.width, imageSize);
-        var textureHeight = Math.min(texture.height, imageSize);
-        var clip = texture.defaultClip || texture.clip;
-        
-        context.drawImage(avatarImage,
-                          
-                          clip.x,
-                          clip.y,
-                          texture.width,
-                          texture.height,
-                          
-                          x + padding + (imageSize - textureWidth) / 2,
-                          y + padding + (imageSize - textureHeight) / 2,
-                          textureWidth,
-                          textureHeight);
-      }
-    }
-    
-    context.fillStyle = 'rgba(255, 255, 255, 1)';
-    
-    this.actor.game.drawText(context,
-                              this.currentLine.text,
-                              x + padding * 2 + imageSize,
-                              y + padding,
-                              this.font,
-                              this.lineSpacing);
-    
-    // Create an image from the canvas and assign it to the texture
-    var image = new Image();
-    image.addEventListener('load', function onLoad(image) {
-      this.texture.setImage(image);
-    }.bind(this, image));
-    image.src = canvas.toDataURL();
-    
-    console.log('[Dialog] Create dialog texture', this.currentLine);
-  };
-
-  ModuleDialog.prototype.drawMethod = function drawMethod() {
-    var game = this.actor.game;
-    var hud = game.getHUD();
-    var context = hud.context;
-    var x = (game.width - this.width) / 2;
-    var y = game.height - this.height;
-    
-    this.texture.draw(context, x, y);
-  };
-  
   ModuleDialog.prototype.getLineIndexById = function getLineIndexById(id) {
     var lines = this.lines;
     var index = -1;
@@ -410,10 +337,11 @@ var ModuleWebPage = (function ModuleWebPage() {
     this.minHeight = 0;
     
     this.elPopupMessage = null;
-    
-    if (!options.hasOwnProperty('activation')) {
-      options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
-    }
+
+    utils.setDefaults(options, {
+      'activation': ActorModule.prototype.ACTIVATIONS.INTERACT,
+      'disableController': true
+    });
     
     ActorModule.call(this, options);
   }
@@ -496,9 +424,10 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
     this.selector = '';
     this.el = null;
     
-    if (!options.hasOwnProperty('activation')) {
-      options.activation = ActorModule.prototype.ACTIVATIONS.INTERACT;
-    }
+    utils.setDefaults(options, {
+      'activation': ActorModule.prototype.ACTIVATIONS.INTERACT,
+      'disableController': true
+    });
     
     ActorModule.call(this, options);
   }
@@ -541,11 +470,11 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
 /* Spawn particles. AUTOMATIC by default */
 var ModuleParticles = (function ModuleParticles() {
   function ModuleParticles(options) {
-    this.offset = [0, 0];
+    this.offset = null;
     
-    if (!options.hasOwnProperty('activation')) {
-      options.activation = ActorModule.prototype.ACTIVATIONS.AUTOMATIC;
-    }
+    utils.setDefaults(options, {
+      'activation': ActorModule.prototype.ACTIVATIONS.AUTOMATIC
+    });
     
     ActorModule.call(this, options);
   }

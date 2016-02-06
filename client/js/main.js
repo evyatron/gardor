@@ -5,6 +5,7 @@
 /* global PlayerController */
 /* global Camera */
 /* global NavMesh */
+"use strict";
 
 /* Main game class, magic happens here */
 var Game = (function Game() {
@@ -28,6 +29,10 @@ var Game = (function Game() {
       'y': 0
     };
     this.offset = {
+      'x': 0,
+      'y': 0
+    };
+    this.followPadding = {
       'x': 0,
       'y': 0
     };
@@ -192,6 +197,7 @@ var Game = (function Game() {
     
     this.clickTexture = this.config.clickTexture;
     this.timeToShowClickTexture = this.config.timeToShowClickTexture || 1;
+    this.followPadding = this.config.followPadding || 0;
     
     this.setTiles(this.config.tiles);
 
@@ -638,6 +644,7 @@ var Game = (function Game() {
       layer.onResize();
       console.log(layer.id, ':', layer.width, ',', layer.height);
     }
+    
     console.groupEnd('Resize');
     
     this.camera.onResize();

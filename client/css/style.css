@@ -1,6 +1,7 @@
 body, canvas, div, h1, h2, h3, h4, p, ul, ol, li {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 html,
@@ -134,17 +135,13 @@ body {
       text-align: center;
     }
 
-.actors-tooltip {
+.text-box {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 5px 10px;
-  max-width: 400px;
+  color: #fff;
   background: #342f27;
   border-radius: 4px;
-  font-size: 13px;
-  color: #fff;
-  text-align: center;
   border: 3px solid transparent;
   border-color: #9a7b45 #836634 #836634 #9a7b45;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .3) inset,
@@ -153,6 +150,35 @@ body {
   opacity: 0;
   transition: opacity 120ms ease-in;
 }
-.actors-tooltip.visible {
+.text-box.visible {
   opacity: 1;
 }
+.text-box.position-screen-bottom {
+  top: auto;
+  bottom: 0;
+  left: 50%;
+}
+
+.actors-tooltip {
+  padding: 5px 10px;
+  max-width: 400px;
+  font-size: 13px;
+  text-align: center;
+}
+.dialog-box {
+  width: 600px;
+  height: 200px;
+  margin: 0 0 32px -300px;
+  padding: 10px 10px 10px 100px;
+  font-size: 19px;
+  line-height: 1.5;
+  border-width: 6px;
+}
+  .dialog-box .image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, .2);
+  }

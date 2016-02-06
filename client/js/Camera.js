@@ -1,3 +1,6 @@
+/* global utils */
+"use strict";
+
 /*
   Can be focused on an actor to follow it
   Game drawing will be clipped to centre around the camera position
@@ -30,12 +33,22 @@ var Camera = (function Camera() {
     this.focusOnActor();
   };
   
+  Camera.prototype.getActorPosition = function getActorPosition() {
+    var game = this.game;
+    var actorPosition = this.actorToFollow.position;
+    var padding = game.followPadding;
+    
+    return {
+      'x': utils.clamp(-game.width / 2 + actorPosition.x, -padding, game.bleed.x + padding),
+      'y': utils.clamp(-game.height / 2 + actorPosition.y, -padding, game.bleed.y + padding)
+    };
+  };
+  
   Camera.prototype.focusOnActor = function focusOnActor() {
     if (this.actorToFollow) {
-      var game = this.game;
-      var position = this.actorToFollow.position;
-      this.x = utils.clamp(-game.width / 2 + position.x, 0, game.bleed.x);
-      this.y = utils.clamp(-game.height / 2 + position.y, 0, game.bleed.y);
+      var position = this.getActorPosition();
+      this.x = position.x;
+      this.y = position.y;
     }
   };
   
@@ -47,9 +60,7 @@ var Camera = (function Camera() {
     var game = this.game;
     
     if (this.actorToFollow) {
-      var position = this.actorToFollow.position;
-      this.targetPosition.x = utils.clamp(-game.width / 2 + position.x, 0, game.bleed.x);
-      this.targetPosition.y = utils.clamp(-game.height / 2 + position.y, 0, game.bleed.y);
+      this.targetPosition = this.getActorPosition();
     }
     
     var distX = this.targetPosition.x - this.x;

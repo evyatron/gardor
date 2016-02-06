@@ -3,315 +3,13 @@
   "startingMap": "main",
   "lerpAlpha": 1,
   "followPlayer": true,
+  "followPadding": 0,
   "defaultFont": "11pt 'Share Tech Mono'",
   "timeToShowClickTexture": 0.3,
   "clickTexture": {
     "src": "hud/click.png"
   },
-  "tooltips": {
-    "font": "10pt 'Share Tech Mono'",
-    "padding": {
-      "x": 10,
-      "y": 5
-    },
-    "lineSpacing": 4
-  },
-  "dialogs": {
-    "font": "10pt 'Share Tech Mono'",
-    "width": 480,
-    "height": 150,
-    "padding": 12,
-    "actorImageSize": 64,
-    "lineSpacing": 7
-  },
   "tiles": [
-    {
-      "id": "land",
-      "isBlocking": false,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "width": 64,
-        "height": 64,
-        "scale": 1,
-        "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "clip": {
-          "x": 704,
-          "y": 0
-        },
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 0
-    },
-    {
-      "id": "water",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 704,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 1
-    },
-    {
-      "id": "path",
-      "isBlocking": false,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 374,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 2
-    },
-    {
-      "id": "water-r-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 640,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 3
-    },
-    {
-      "id": "water-t-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 704,
-          "y": 128
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 4
-    },
-    {
-      "id": "water-tl-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 832,
-          "y": 0
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 5
-    },
-    {
-      "id": "water-tr-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 896,
-          "y": 0
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 6
-    },
-    {
-      "id": "water-l-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 768,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 7
-    },
-    {
-      "id": "water-b-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 704,
-          "y": 0
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 8
-    },
-    {
-      "id": "water-bl-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 768,
-          "y": 0
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 9
-    },
-    {
-      "id": "water-bl2-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 832,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 10
-    },
-    {
-      "id": "water-br-land",
-      "isBlocking": true,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 640,
-          "y": 0
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 11
-    },
-    {
-      "id": "land-l-path",
-      "isBlocking": false,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 320,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 12
-    },
-    {
-      "id": "land-r-path",
-      "isBlocking": false,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 448,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 13
-    },
-    {
-      "id": "default_1454189647696",
-      "isBlocking": false,
-      "texture": {
-        "src": "RPGpack_sheet.png",
-        "clip": {
-          "x": 896,
-          "y": 64
-        },
-        "width": 64,
-        "height": 64,
-        "origin": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      "index": 14
-    },
     {
       "id": "default_1454537582202",
       "isBlocking": false,
@@ -345,7 +43,7 @@
           "y": 0
         }
       },
-      "index": 15
+      "index": 0
     },
     {
       "id": "default_1454604440102",
@@ -380,7 +78,7 @@
           "y": 0
         }
       },
-      "index": 16
+      "index": 1
     },
     {
       "id": "default_1454604463328",
@@ -415,7 +113,7 @@
           "y": 0
         }
       },
-      "index": 17
+      "index": 2
     },
     {
       "id": "default_1454604476074",
@@ -450,7 +148,7 @@
           "y": 0
         }
       },
-      "index": 18
+      "index": 3
     },
     {
       "id": "default_1454604536217",
@@ -485,7 +183,7 @@
           "y": 0
         }
       },
-      "index": 19
+      "index": 4
     },
     {
       "id": "default_1454604546607",
@@ -520,7 +218,7 @@
           "y": 0
         }
       },
-      "index": 20
+      "index": 5
     },
     {
       "id": "default_1454604552845",
@@ -555,7 +253,7 @@
           "y": 0
         }
       },
-      "index": 21
+      "index": 6
     },
     {
       "id": "default_1454604560018",
@@ -590,7 +288,7 @@
           "y": 0
         }
       },
-      "index": 22
+      "index": 7
     },
     {
       "id": "default_1454604603178",
@@ -625,7 +323,7 @@
           "y": 0
         }
       },
-      "index": 23
+      "index": 8
     },
     {
       "id": "default_1454604605022",
@@ -660,7 +358,7 @@
           "y": 0
         }
       },
-      "index": 24
+      "index": 9
     },
     {
       "id": "default_1454604606167",
@@ -695,7 +393,7 @@
           "y": 0
         }
       },
-      "index": 25
+      "index": 10
     },
     {
       "id": "default_1454604778776",
@@ -730,7 +428,7 @@
           "y": 0
         }
       },
-      "index": 26
+      "index": 11
     },
     {
       "id": "default_1454604837618",
@@ -765,7 +463,7 @@
           "y": 0
         }
       },
-      "index": 27
+      "index": 12
     },
     {
       "id": "default_1454606380763",
@@ -800,7 +498,7 @@
           "y": 0
         }
       },
-      "index": 28
+      "index": 13
     },
     {
       "id": "default_1454606446005",
@@ -835,7 +533,7 @@
           "y": 0
         }
       },
-      "index": 29
+      "index": 14
     },
     {
       "id": "default_1454607629662",
@@ -870,7 +568,7 @@
           "y": 0
         }
       },
-      "index": 30
+      "index": 15
     },
     {
       "id": "default_1454611245028",
@@ -905,7 +603,392 @@
           "y": 0
         }
       },
-      "index": 31
+      "index": 16
+    },
+    {
+      "id": "default_1454713890487",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 128,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 17
+    },
+    {
+      "id": "default_1454713936433",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 128,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 18
+    },
+    {
+      "id": "default_1454713938323",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 0,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 19
+    },
+    {
+      "id": "default_1454713938493",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 64,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 20
+    },
+    {
+      "id": "default_1454713999202",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 0,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 21
+    },
+    {
+      "id": "default_1454713999780",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 64,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 22
+    },
+    {
+      "id": "default_1454714265497",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1088,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 23
+    },
+    {
+      "id": "default_1454714355490",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 320,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 24
+    },
+    {
+      "id": "default_1454714504309",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 256,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 25
+    },
+    {
+      "id": "default_1454714582881",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1216,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 26
+    },
+    {
+      "id": "default_1454714636485",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/atlas.png",
+        "clip": {
+          "x": 0,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 27
     }
   ]
 }

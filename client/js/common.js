@@ -1,3 +1,5 @@
+"use strict";
+
 /*
   Inherited class to provide objects with event capabilities
   object.on('event', callback);
@@ -81,6 +83,24 @@ var utils = {
       
       el = el.parentNode;
     }
+    return false;
+  },
+  
+  'setDefaults': function setDefaults(obj, properties) {
+    for (var propertyName in properties) {
+      if (!obj.hasOwnProperty(propertyName)) {
+        obj[propertyName] = properties[propertyName];
+      }
+    }
+  },
+  
+  'enumContains': function enumContains(obj, value) {
+    for (var propertyName in obj) {
+      if (obj[propertyName] === value) {
+        return propertyName;
+      }
+    }
+    
     return false;
   },
   

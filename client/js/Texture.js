@@ -1,4 +1,6 @@
 /* Used to draw an image on screen */
+"use strict";
+
 var Texture = (function Texture() {
   function Texture(options, onLoad) {
     this.game = null;

@@ -1,6 +1,8 @@
 /* global InputManager */
 /* global utils */
 /* Controls a given Actor */
+"use strict";
+
 var PlayerController = (function PlayerController() {
   function PlayerController(options) {
     this.game = null;

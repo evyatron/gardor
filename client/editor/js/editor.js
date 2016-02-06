@@ -1,7 +1,6 @@
 /* global utils */
 /* global Game */
 /* global EventDispatcher */
-/* global JSONForm */
 
 function init() {
   window.editor = new Editor();

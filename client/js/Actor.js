@@ -1,3 +1,5 @@
+"use strict";
+
 /* Base class for every Object and Character */
 var Actor = (function Actor() {
   function Actor(options) {
@@ -104,6 +106,10 @@ var Actor = (function Actor() {
     if (this.textureModule) {
       this.textureModule.texture.setAlpha(alpha);
     }
+  };
+  
+  Actor.prototype.getScreenPosition = function getScreenPosition() {
+    return this.game.getScreenPosition(this.game.getOffsetPosition(this));
   };
   
   Actor.prototype.onClick = function onClick(e) {

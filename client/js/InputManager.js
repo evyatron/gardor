@@ -1,3 +1,5 @@
+"use strict";
+
 /*
   Handles player input - used by the Player Controller to hook controls
 */

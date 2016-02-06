@@ -19,6 +19,11 @@
       "tooltip": "Should the camera follow the player. Recommended for large maps.",
       "default": true
     },
+    "followPadding": {
+      "type": "number",
+      "tooltip": "Padding around the screen in which the player can't be",
+      "default": 0
+    },
     "defaultFont": {
       "type": "text",
       "tooltip": "Default font to use in the game. Format is XXpt FONT_NAME",
@@ -28,66 +33,6 @@
       "type": "number",
       "tooltip": "Time (in seconds) to show the click texture",
       "default": 0.5
-    },
-    
-    "tooltips": {
-      "type": "object",
-      "properties": {
-        "font": {
-          "type": "text",
-          "tooltip": "Font to use for tooltips. Format is XXpt FONT_NAME",
-          "default": "11pt monospace"
-        },
-        "lineSpacing": {
-          "type": "number",
-          "tooltip": "Spacing between the lines",
-          "default": 4
-        },
-        "padding": {
-          "type": "vector",
-          "tooltip": "Padding",
-          "default": {
-            "x": 10,
-            "y": 5
-          }
-        }
-      }
-    },
-    
-    "dialogs": {
-      "type": "object",
-      "properties": {
-        "font": {
-          "type": "text",
-          "tooltip": "Font to use for dialogs. Format is XXpt FONT_NAME",
-          "default": "11pt monospace"
-        },
-        "width": {
-          "type": "number",
-          "tooltip": "Dialog box width",
-          "default": 500
-        },
-        "height": {
-          "type": "number",
-          "tooltip": "Dialog box height",
-          "default": 200
-        },
-        "padding": {
-          "type": "number",
-          "tooltip": "Dialog box padding around the edges",
-          "default": 10
-        },
-        "actorImageSize": {
-          "type": "number",
-          "tooltip": "Size to reserve for the player avatar",
-          "default": 64
-        },
-        "lineSpacing": {
-          "type": "number",
-          "tooltip": "Spacing between the lines",
-          "default": 8
-        }
-      }
     }
   },
   
