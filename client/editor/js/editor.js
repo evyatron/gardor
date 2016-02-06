@@ -1,6 +1,9 @@
 /* global utils */
 /* global Game */
 /* global EventDispatcher */
+/* global InputManager */
+
+"use strict";
 
 function init() {
   window.editor = new Editor();
@@ -59,11 +62,11 @@ Editor.prototype.init = function init(options) {
   this.elDebug.addEventListener('change', this.onDebugChange.bind(this));
   
   this.elPlayable = this.elContainer.querySelector('input#is-playable');
-  this.elPlayable.addEventListener('change', this.onPlayableChange.bind(this));
   
   this.elContainer.querySelector('.export-config').addEventListener('click', this.getData.bind(this));
   
   this.elContainer.addEventListener('mousedown', this.onMouseDown.bind(this));
+  this.elContainer.addEventListener('mousemove', this.onMouseMove.bind(this));
   window.addEventListener('keyup', this.onKeyUp.bind(this));
   
   this.applyUserSettings();
@@ -139,15 +142,44 @@ Editor.prototype.saveUserSettings = function saveUserSettings() {
 };
 
 Editor.prototype.onMouseDown = function onMouseDown(e) {
+  this.resizePanels(e);
+};
+
+Editor.prototype.onMouseMove = function onMouseMove(e) {
+  if (InputManager.KEYS_DOWN[InputManager.KEYS.SHIFT]) {
+    return;
+  }
+  
+  if (this.heldActor) {
+    var position = {
+      'x': e.pageX,
+      'y': e.pageY
+    };
+    
+    position = this.game.getPositionFromScreen(position);
+    position.x = utils.clamp(position.x, 0, this.game.mapWidth);
+    position.y = utils.clamp(position.y, 0, this.game.mapHeight);
+    
+    this.heldActor.updatePosition(position);
+  }
+};
+
+Editor.prototype.resizePanels = function resizePanels(e) {
   var self = this;
   var el = e.target;
   var toResize = el.dataset.resize;
+  
+  if (!toResize) {
+    return;
+  }
+  
   var settings = this.settings[toResize === 'game'? 'gamePane' : 'mapPane'];
   var elPane = toResize === 'game'? this.elGamePane : this.elMapPane;
   
   function onMouseMove(e) {
-    var x = e.pageX;
-    var width = (x / window.innerWidth * 100);
+    var width = (e.pageX / window.innerWidth * 100);
+    
+    e.preventDefault();
     
     if (elPane.classList.contains('right')) {
       width = (100 - width);
@@ -155,22 +187,23 @@ Editor.prototype.onMouseDown = function onMouseDown(e) {
     
     elPane.style.width = width + '%';
     settings.width = width;
+    
     window.dispatchEvent(new Event('resize'));
   }
   
   function onMouseUp(e) {
-    self.elContainer.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('mouseup', onMouseUp);
+    
     el.parentNode.classList.remove('resizing');
     self.saveUserSettings();
   }
   
-  if (toResize) {
-    this.elContainer.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-    el.parentNode.classList.add('resizing');
-  }
-}
+  window.addEventListener('mousemove', onMouseMove);
+  window.addEventListener('mouseup', onMouseUp);
+  
+  el.parentNode.classList.add('resizing');
+};
 
 Editor.prototype.onKeyUp = function onKeyUp(e) {
   if (e.keyCode === InputManager.KEYS.DELETE) {
@@ -213,7 +246,7 @@ Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
     this.game.addMap(mapConfig);
     callback && callback(mapConfig);
     
-    this.disablePlay();
+    this.game.playerController.disable();
   } else {
     utils.request('/api/game/' + this.gameId + '/map/' + mapId, function onGotMap(mapConfig) {
       this.config.map = mapConfig;
@@ -301,6 +334,8 @@ Editor.prototype.refreshGame = function refreshGame(isFromLoad) {
 Editor.prototype.onGameReady = function onGameReady() {
   this.tilesEditor.loadFromGame(this.config.game);
   this.game.createGameFromConfig(this.config.game);
+  
+  this.game.camera.setActorToFollow(null);
 };
 
 Editor.prototype.resizeGridByClick = function resizeGridByClick(data, isLeftButton) {
@@ -413,29 +448,22 @@ Editor.prototype.pickupActor = function pickupActor(actor) {
   }
 };
 
-Editor.prototype.dropHeldActor = function dropHeldActor(tile) {
+Editor.prototype.dropHeldActor = function dropHeldActor() {
   if (!this.heldActor) {
     return;
   }
+
+  this.placeActor(this.heldActor);
   
-  if (!tile) {
-    tile = this.heldActor.tile;
-  }
-  
-  this.placeActorOnTile(this.heldActor, tile);
   this.actorsEditor.removeHighlight();
 };
 
 Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) {
-  if (this.isPlayable) {
-    return;
-  }
-  
   var didChangeMap = false;
   
   // Place or pick up actors to move around
   if (this.heldActor) {
-    this.dropHeldActor(data.tile);
+    this.dropHeldActor();
   } else {
     var actorOnTile = data.actors[Object.keys(data.actors)[0]];
     if (actorOnTile) {
@@ -473,39 +501,41 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
 };
 
 Editor.prototype.onGamePointerTileChange = function onGamePointerTileChange(data) {
-  if (this.heldActor) {
+  if (this.heldActor && InputManager.KEYS_DOWN[InputManager.KEYS.SHIFT]) {
     this.heldActor.updateTile(data.tile);
   }
 };
 
-Editor.prototype.placeActorOnTile = function placeActorOnTile(actor, tile) {
-  this.heldActor.updateTile(tile);
+Editor.prototype.placeActor = function placeActor(actor) {
+  var tile = null;
+  var position = null;
+  
+  if (InputManager.KEYS_DOWN[InputManager.KEYS.SHIFT]) {
+    //this.heldActor.updateTile(tile);
+    tile = this.heldActor.tile;
+  } else {
+    position = this.heldActor.position;
+  }
+  
   this.heldActor.setAlpha();
   this.heldActor = null;
 
   var actors = this.config.map.actors;
   for (var i = 0, len = actors.length; i < len; i++) {
     if (actors[i].id === actor.id) {
-      actors[i].tile = tile;
+      if (tile) {
+        actors[i].tile = tile;
+        delete actors[i].position;
+      } else {
+        actors[i].position = position;
+        delete actors[i].tile;
+      }
+      
       break;
     }
   }
   
   this.refreshMap();
-};
-
-Editor.prototype.enablePlay = function enablePlay() {
-  this.isPlayable = true;
-  this.game.playerController.enable();
-  this.elPlayable.checked = true;
-  this.game.camera.setActorToFollow(this.game.playerController.controlledActor);
-};
-
-Editor.prototype.disablePlay = function disablePlay() {
-  this.isPlayable = false;
-  this.game.playerController.disable();
-  this.elPlayable.checked = false;
-  this.game.camera.setActorToFollow(null);
 };
 
 
@@ -534,14 +564,6 @@ Editor.prototype.onMapConfigChange = function onMapConfigChange(e) {
 Editor.prototype.onActorsChange = function onActorsChange(actors) {
   this.config.map.actors = actors;
   this.refreshMap();
-};
-
-Editor.prototype.onPlayableChange = function onPlayableChange() {
-  if (this.elPlayable.checked) {
-    this.enablePlay();
-  } else {
-    this.disablePlay();
-  }
 };
 
 Editor.prototype.onDebugChange = function onDebugChange(e) {

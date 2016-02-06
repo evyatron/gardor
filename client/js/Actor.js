@@ -176,6 +176,16 @@ var Actor = (function Actor() {
     }
   };
   
+  Actor.prototype.updatePosition = function updatePosition(position) {
+    this.position = position;
+    this.tile = this.game.getTileFromCoords(position);
+    this.layer.sortActors();
+    
+    if (this.isBlocking) {
+      this.game.navMesh.update();
+    }
+  };
+  
   Actor.prototype.update = function update(dt) {
     var game = this.game;
     

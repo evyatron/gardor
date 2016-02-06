@@ -317,10 +317,6 @@
   "actors": [
     {
       "id": "player",
-      "tile": {
-        "x": 8,
-        "y": 10
-      },
       "isBlocking": false,
       "speed": 130,
       "zIndex": 1,
@@ -337,7 +333,11 @@
           }
         }
       ],
-      "tooltip": ""
+      "tooltip": "",
+      "tile": {
+        "x": 8,
+        "y": 10
+      }
     },
     {
       "id": "social-github",
@@ -375,10 +375,6 @@
       "tooltip": "LinkedIn",
       "isBlocking": true,
       "zIndex": 1,
-      "tile": {
-        "x": 7,
-        "y": 9
-      },
       "modules": [
         {
           "type": "ModuleWebPage",
@@ -399,7 +395,11 @@
           },
           "scale": 0.75
         }
-      ]
+      ],
+      "tile": {
+        "x": 7,
+        "y": 8
+      }
     },
     {
       "id": "game-darkbounds",

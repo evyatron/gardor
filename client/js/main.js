@@ -484,6 +484,13 @@ var Game = (function Game() {
       'y': position.y + this.offset.y
     };
   };
+  
+  Game.prototype.getPositionFromScreen = function getPositionFromScreen(position) {
+    return {
+      'x': position.x - this.offset.x,
+      'y': position.y - this.offset.y
+    };
+  };
 
   Game.prototype.getHUD = function getHUD() {
     return this.layers.hud;
