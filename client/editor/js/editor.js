@@ -387,28 +387,62 @@ Editor.prototype.resizeGridByClick = function resizeGridByClick(data, isLeftButt
   return didResizeGrid;
 };
 
+Editor.prototype.pickupActor = function pickupActor(actor) {
+  var heldActorId = '';
+  
+  if (this.heldActor) {
+    heldActorId = this.heldActor.id;
+    this.dropHeldActor();
+  }
+  
+  if (typeof actor === 'string') {
+    actor = this.game.getActor(actor);
+  }
+  
+  if (!actor) {
+    return;
+  }
+  
+  if (heldActorId === actor.id) {
+    this.dropHeldActor();
+  } else {
+    this.heldActor = actor;
+    
+    this.actorsEditor.highlight(this.heldActor);
+    this.heldActor.setAlpha(0.5);
+  }
+};
+
+Editor.prototype.dropHeldActor = function dropHeldActor(tile) {
+  if (!this.heldActor) {
+    return;
+  }
+  
+  if (!tile) {
+    tile = this.heldActor.tile;
+  }
+  
+  this.placeActorOnTile(this.heldActor, tile);
+  this.actorsEditor.removeHighlight();
+};
+
 Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) {
   if (this.isPlayable) {
     return;
   }
   
-  var canResizeGrid = true;
   var didChangeMap = false;
   
   // Place or pick up actors to move around
   if (this.heldActor) {
-    canResizeGrid = false;
-    this.placeActorOnTile(this.heldActor, data.tile);
-    this.actorsEditor.removeHighlight();
+    this.dropHeldActor(data.tile);
   } else {
     var actorOnTile = data.actors[Object.keys(data.actors)[0]];
     if (actorOnTile) {
-      canResizeGrid = false;
       this.actorsEditor.highlight(actorOnTile);
       
       if (!isLeftButton) {
-        this.heldActor = actorOnTile;
-        this.heldActor.setAlpha(0.5);
+        this.pickupActor(actorOnTile);
       }
     } else {
       this.actorsEditor.removeHighlight();
@@ -417,7 +451,7 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
   
   // If nothing else happened - check for resizing the grid
   var didResizeGrid = false;
-  if (canResizeGrid) {
+  if (!this.heldActor) {
     didResizeGrid = this.resizeGridByClick(data, isLeftButton);
     if (didResizeGrid) {
       didChangeMap = true;
@@ -532,12 +566,10 @@ var Tooltip = (function Tooltip() {
   }
   
   Tooltip.prototype.TYPES = {
+    ACTOR: 'actor',
     TILE: 'tile'
   };
-  
-  Tooltip.prototype.TYPES_SCHEMAS = {};
-  Tooltip.prototype.TYPES_SCHEMAS[Tooltip.prototype.TYPES.TILE] = 'tile';
-  
+
   Tooltip.prototype.init = function init(options) {
     this.editor = options.editor;
     
@@ -554,7 +586,7 @@ var Tooltip = (function Tooltip() {
     if (type) {
       var id = dataset.tooltipId;
       var data = this['getData_' + type](id);
-      var schema = this.editor.schema[this.TYPES_SCHEMAS[type]];
+      var schema = this.editor.schema[type];
       var bounds = el.getBoundingClientRect();
       
       if (!data) {
@@ -605,11 +637,19 @@ var Tooltip = (function Tooltip() {
   };
   
   Tooltip.prototype.getData_tile = function getData_tile(id) {
-    return this.editor.tilesEditor.getTileTooltipData(id);
+    return this.editor.tilesEditor.getTooltipData(id);
   };
   
   Tooltip.prototype.change_tile = function change_tile(id, data) {
     return this.editor.tilesEditor.updateTile(id, data);
+  };
+  
+  Tooltip.prototype.getData_actor = function getData_actor(id) {
+    return this.editor.actorsEditor.getTooltipData(id);
+  };
+  
+  Tooltip.prototype.change_actor = function change_actor(id, data) {
+    return this.editor.actorsEditor.updateActor(id, data);
   };
   
   Tooltip.prototype.createHTML = function createHTML() {
@@ -644,17 +684,6 @@ var Actors = (function Actors() {
                               '<input type="text" readonly data-property="id" data-id="{{id}}" title="Actor\'s ID" id="actor_id[{{id}}]" value="{{id}}" />' +
                             '</div>' +
                           '</div>' +
-                          
-                          '<div class="input input-boolean">' +
-                            '<div class="pane-input-label">' +
-                              '<label for="">Is Blocking</label>' +
-                            '</div>' +
-                            '<div class="pane-input-field" title="If true player won\'t be able to pass through this">' +
-                              '<input type="checkbox" data-property="isBlocking" data-id="{{id}}" id="actor_isBlocking[{{id}}]" />' +
-                              '<label for="actor_isBlocking[{{id}}]">Blocking</label>' +
-                            '</div>' +
-                          '</div>' +
-                          
                           '<div class="input input-text input-tooltip">' +
                             '<div class="pane-input-label">' +
                               '<label for="actor_tooltip[{{id}}]">Tooltip</label>' +
@@ -663,17 +692,8 @@ var Actors = (function Actors() {
                               '<input type="text" data-property="tooltip" data-id="{{id}}" title="Actor\'s Tooltip" id="actor_tooltip[{{id}}]" value="{{tooltip}}" />' +
                             '</div>' +
                           '</div>' +
-                          
-                          '<div class="input input-number input-zIndex">' +
-                            '<div class="pane-input-label">' +
-                              '<label for="actor_zIndex[{{id}}]">Z-Index</label>' +
-                            '</div>' +
-                            '<div class="pane-input-field">' +
-                              '<input type="number" data-property="zIndex" data-id="{{id}}" title="Actor\'s z-index - higher is closer to camera" id="actor_zIndex[{{id}}]" value="{{zIndex}}" />' +
-                            '</div>' +
-                          '</div>' +
-                          
                         '</div>' +
+                        '<div class="editor-button move-actor" data-id="{{id}}" title="Move Actor">&lt;</div>' +
                         '<div class="actor-modules"></div>';
   
   function Actors(options) {
@@ -698,7 +718,6 @@ var Actors = (function Actors() {
     this.createHTML();
     
     this.el.addEventListener('click', this.onClick.bind(this));
-    this.el.addEventListener('change', this.onActorsChange.bind(this));
     this.el.querySelector('.create-new').addEventListener('click', this.createNew.bind(this));
   };
   
@@ -708,7 +727,15 @@ var Actors = (function Actors() {
     var el = this.getActorEl(actor);
     if (el) {
       el.classList.add('highlight');
-      this.elList.scrollTop = el.offsetTop - 10;
+      
+      var top = el.offsetTop;
+      
+      if (top < this.elList.scrollTop ||
+          top > this.elList.scrollTop + this.elList.offsetHeight) {
+        this.elList.scrollTop = top - 10;
+        
+      } else {
+      }
     }
   };
   
@@ -727,9 +754,6 @@ var Actors = (function Actors() {
     if (!actor.tooltip) {
       actor.tooltip = '';
     }
-    if (!actor.zIndex) {
-      actor.zIndex = 0;
-    }
     
     this.actors.push(actor);
     
@@ -738,9 +762,9 @@ var Actors = (function Actors() {
     
     el.innerHTML = TEMPLATE_ACTOR.format(actor);
     
+    el.querySelector('.main-info').addEventListener('change', this.onActorsChange.bind(this));
+    
     this.createActorModules(actor, el);
-
-    el.querySelector('[data-property = "isBlocking"]').checked = actor.isBlocking;
 
     this.elList.appendChild(el);
   };
@@ -785,6 +809,12 @@ var Actors = (function Actors() {
       
       elModules.appendChild(actorModule.el);
     }
+
+    var elTexture = el.querySelector('.texture canvas');
+    if (elTexture) {
+      elTexture.dataset.tooltipId = actor.id;
+      elTexture.dataset.tooltipType = Tooltip.TYPES.ACTOR;
+    }
   };
   
   Actors.prototype.onActorModuleChange = function onActorModuleChange(actor, index, data) {
@@ -798,15 +828,48 @@ var Actors = (function Actors() {
   Actors.prototype.onTextureChange = function onTextureChange(id) {
     var actor = this.getActor(id);
     var texture = this.textures[id];
-    console.warn(id, texture.data)
+    
     actor.texture = JSON.parse(JSON.stringify(texture.data));
     
     this.onChange(this.actorss);
   };
   
+  Actors.prototype.updateActor = function updateActor(id, data) {
+    var actor = this.getActor(id);
+    if (actor) {
+      for (var k in data) {
+        if (actor.hasOwnProperty(k)) {
+          actor[k] = data[k];
+        }
+      }
+      
+      this.onChange(this.actors);
+    }
+  };
+  
+  Actors.prototype.getTooltipData = function getTooltipData(id) {
+    var actor = this.getActor(id);
+    var data = null;
+    
+    if (actor) {
+      data = {
+        'isBlocking': actor.isBlocking,
+        'zIndex': actor.zIndex
+      };
+    }
+    
+    return data;
+  };
+  
   Actors.prototype.createNew = function createNew() {
-    var actor = JSON.parse(JSON.stringify(this.actors[this.actors.length - 1]));
-    actor.id = prompt('enter id');
+    var actor = {
+      'id': 'actor_' + utils.randomId(),
+      'modules': [
+        utils.getSchemaDefault(this.editor.schema.texture, {
+          'type': 'ModuleTexture'
+        })
+      ]
+    };
 
     this.addActor(actor);
     
@@ -828,7 +891,10 @@ var Actors = (function Actors() {
   };
 
   Actors.prototype.onClick = function onClick(e) {
-    
+    var el = e.target;
+    if (el.classList.contains('move-actor')) {
+      this.editor.pickupActor(el.dataset.id);
+    }
   };
   
   Actors.prototype.onActorsChange = function onActorsChange(e) {
@@ -847,12 +913,8 @@ var Actors = (function Actors() {
     }
     
     var elTooltip = elActor.querySelector('[data-property = "tooltip"]');
-    var elBlocking = elActor.querySelector('[data-property = "isBlocking"]');
-    var elZIndex = elActor.querySelector('[data-property = "zIndex"]');
     
-    actor.isBlocking = elBlocking.checked;
     actor.tooltip = elTooltip.value || '';
-    actor.zIndex = elZIndex.value || 0;
 
     this.onChange(this.actors);
   };
@@ -1043,7 +1105,7 @@ var Tiles = (function Tiles() {
     this.elList.appendChild(el);
   };
   
-  Tiles.prototype.getTileTooltipData = function getTileTooltipData(tileId) {
+  Tiles.prototype.getTooltipData = function getTooltipData(tileId) {
     var tile = this.getTile(tileId);
     var data = null;
     

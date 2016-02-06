@@ -316,13 +316,15 @@ div, p, input, textarea {
   .actors-list {
     position: relative;
     max-height: 650px;
-    margin: 0 2px;
     overflow: auto;
   }
   .actors-editor .actor {
     position: relative;
-    border-bottom: 6px solid rgba(0, 0, 0, .7);
-    margin: 0 1px 0 0;
+    min-height: 95px;
+    padding-bottom: 20px;
+  }
+  .actors-editor .actor:hover {
+    background: rgba(255, 255, 255, .2);
   }
   .actors-editor .actor.highlight {
     background: rgba(128, 128, 32, .4);
@@ -331,30 +333,50 @@ div, p, input, textarea {
     background: red;
   }
   .actor .main-info {
+    padding-left: 37px;
   }
-  .actor .input-id {
-    min-height: 32px;
+  .actor .input-id,
+  .actor .input-id:hover {
+    margin-left: -37px;
+    margin-bottom: 0px;
+    padding: 2px;
+    background: rgba(255, 255, 255, .3);
+    border-width: 1px 0;
+    border-bottom-color: rgba(255, 255, 255, .3);
+    border-top-color: rgba(0, 0, 0, .3);
   }
     .actor .input-id .pane-input-label {
       display: none;
     }
     .actor .input-id .pane-input-field {
       width: 100%;
-      margin-left: 34px;
     }
     .actor .input-id input {
-      background: rgba(255, 255, 178, 1);
+      border: none;
+      background: transparent;
     }
   .actor-modules {
     background: rgba(255, 255, 255, .1);
+    margin-top: 5px;
+    margin-left: 37px;
+  }
+  .actor-modules .title {
+    background: transparent;
   }
   .actor-module {
     position: relative;
   }
   .ModuleTexture {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 23px;
+    left: 2px;
+  }
+  .move-actor {
+    position: absolute;
+    top: 60px;
+    left: 2px;
+    width: 32px;
+    padding: 4px 0;
   }
 
 .tiles-editor {

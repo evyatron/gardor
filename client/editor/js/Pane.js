@@ -543,14 +543,14 @@ var Input_vector = (function Input_vector() {
   
   for (var i = 1, len = id.length; i < len; i++) {
     var char = id[i];
-    var prevChar = id[i - 1];
-    var nextChar = id[i + 1];
+    var prevChar = id[i - 1] || '';
     
-    var isUpperCase = char === char.toUpperCase();
-    var isPrevUpperCase = prevChar && prevChar === prevChar.toUpperCase();
-    var isNextUpperCase = nextChar && nextChar === nextChar.toUpperCase();
+    var currentCase = char === char.toUpperCase()? 'upper' : 'lower';
+    var previousCase = prevChar === prevChar.toUpperCase()? 'upper' : 'lower';
     
-    if (isUpperCase) {
+    !prevChar && (previousCase = '');
+
+    if (currentCase === 'upper' && previousCase === 'lower') {
       formattedId += ' ';
     }
     

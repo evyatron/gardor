@@ -86,6 +86,50 @@ var utils = {
     return false;
   },
   
+  'randomId': function randomId(length) {
+    !length && (length = 8);
+    
+    var id = '';
+    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (var i = 0; i < length; i++) {
+      id += chars[Math.floor(Math.random() * chars.length)];
+    }
+    
+    return id;
+  },
+  
+  'getSchemaDefault': function getSchemaDefault(schema, properties) {
+    var obj = {};
+    
+    for (var k in schema) {
+      var property = schema[k];
+      var value = property.default;
+      
+      if (value === undefined) {
+        if (property.type === 'text') {
+          value = '';
+        } else if (property.type === 'boolean') {
+          value = false;
+        } else if (property.type === 'number') {
+          value = 0;
+        } else if (property.type === 'vector') {
+          value = {
+            'x': 0,
+            'y': 0
+          };
+        }
+      }
+      
+      obj[k] = value;
+    }
+    
+    for (var k in properties) {
+      obj[k] = properties[k];
+    }
+    
+    return obj;
+  },
+  
   'setDefaults': function setDefaults(obj, properties) {
     for (var propertyName in properties) {
       if (!obj.hasOwnProperty(propertyName)) {

@@ -50,12 +50,19 @@ var Actor = (function Actor() {
     this.zIndex = options.zIndex || 0;
     this.isBlocking = 'isBlocking' in options? options.isBlocking : false;
     this.direction = options.direction || 'top';
-    this.tile = options.tile || {
-      'x': 0,
-      'y': 0
-    };
     
-    this.position = this.game.getCoordsFromTile(this.tile);
+    if (options.position) {
+      this.position = options.position;
+      this.tile = this.game.getTileFromCoords(this.position);
+    } else {
+      this.tile = options.tile || {
+        'x': 0,
+        'y': 0
+      };
+      
+      this.position = this.game.getCoordsFromTile(this.tile);
+    }
+    
     this.drawPosition = this.game.getOffsetPosition(this.position);
 
     this.initModules(options.modules || []);

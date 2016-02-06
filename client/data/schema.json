@@ -227,5 +227,18 @@
       "tooltip": "True - player can't walk over this tile",
       "default": false
     }
+  },
+  
+  "actor": {
+    "isBlocking": {
+      "type": "boolean",
+      "tooltip": "True - player can't walk over this",
+      "default": false
+    },
+    "zIndex": {
+      "type": "number",
+      "tooltip": "Drawing order - higher means closer to camera",
+      "default": true
+    }
   }
 }

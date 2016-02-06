@@ -46,7 +46,7 @@
     [
       "default_1454713890487",
       "default_1454537582202",
-      "default_1454714265497",
+      "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
@@ -345,7 +345,7 @@
       "isBlocking": true,
       "zIndex": 1,
       "tile": {
-        "x": 7,
+        "x": 8,
         "y": 8
       },
       "modules": [
@@ -376,8 +376,8 @@
       "isBlocking": true,
       "zIndex": 1,
       "tile": {
-        "x": 8,
-        "y": 8
+        "x": 7,
+        "y": 9
       },
       "modules": [
         {
@@ -587,7 +587,7 @@
       "isBlocking": true,
       "tile": {
         "x": 14,
-        "y": 9
+        "y": 8
       },
       "modules": [
         {
@@ -1297,7 +1297,7 @@
           }
         }
       ],
-      "zIndex": "0"
+      "zIndex": 5
     },
     {
       "id": "door",
@@ -1348,7 +1348,7 @@
           }
         }
       ],
-      "zIndex": "0"
+      "zIndex": 5
     }
   ],
   "dialogs": [
