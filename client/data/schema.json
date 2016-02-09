@@ -226,6 +226,11 @@
       "type": "boolean",
       "tooltip": "True - player can't walk over this tile",
       "default": false
+    },
+    "walkCost": {
+      "type": "number",
+      "tooltip": "Cost to walk on this tile. Lower = faster",
+      "default": 1
     }
   },
   

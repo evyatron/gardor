@@ -1102,7 +1102,6 @@ var Tiles = (function Tiles() {
     
     el.className = 'tile';
     el.dataset.index = tile.index;
-    el.dataset.blocking = tile.isBlocking;
     el.dataset.id = tile.id;
     el.dataset.placing = false;
 
@@ -1133,7 +1132,8 @@ var Tiles = (function Tiles() {
     
     if (tile) {
       data = {
-        'isBlocking': tile.isBlocking
+        'isBlocking': tile.isBlocking,
+        'walkCost': tile.walkCost
       };
     }
     
@@ -1144,9 +1144,7 @@ var Tiles = (function Tiles() {
     var tile = this.getTile(tileId);
     if (tile) {
       for (var k in data) {
-        if (tile.hasOwnProperty(k)) {
-          tile[k] = data[k];
-        }
+        tile[k] = data[k];
       }
       
       this.onChange(this.tiles);
@@ -1171,6 +1169,7 @@ var Tiles = (function Tiles() {
     var tile = {
       'id': 'default_' + Date.now(),
       'isBlocking': false,
+      'walkCost': 1,
       'texture': JSON.parse(JSON.stringify(textureToDuplicate)),
     };
 

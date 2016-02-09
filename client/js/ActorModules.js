@@ -340,7 +340,7 @@ var ModuleWebPage = (function ModuleWebPage() {
 
     utils.setDefaults(options, {
       'activation': ActorModule.prototype.ACTIVATIONS.INTERACT,
-      'disableController': true
+      'disableController': options.isInFrame
     });
     
     ActorModule.call(this, options);

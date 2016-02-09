@@ -217,6 +217,7 @@ var Game = (function Game() {
     var tileSize = this.config.tileSize;
     for (var i = 0, len = tiles.length; i < len; i++) {
       var tile = JSON.parse(JSON.stringify(tiles[i]));
+      tile.walkCost = tile.walkCost || 1;
       tile.texture.width = tileSize;
       tile.texture.height = tileSize;
       tile.texture.origin = {

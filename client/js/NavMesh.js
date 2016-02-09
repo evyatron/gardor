@@ -18,7 +18,6 @@ var NavMesh = (function NavMesh() {
   NavMesh.prototype.init = function init(options) {
     this.game = options.game;
     this.pathFinding = new EasyStar.js();
-    this.pathFinding.setAcceptableTiles([true]);
   };
   
   NavMesh.prototype.isBlocked = function isBlocked(tile) {
@@ -57,6 +56,7 @@ var NavMesh = (function NavMesh() {
     var grid = map.grid;
     var tilesMap = this.game.tiles;
     var defaultTile = map.defaultTile;
+    var acceptable = [];
     
     this.mesh = [];
     
@@ -71,26 +71,28 @@ var NavMesh = (function NavMesh() {
           if (tile.isBlocking) {
             meshRow.push(false);
           } else {
+            var areActorsBlocking = false;
             var actors = game.getActorsOnTile({
               'x': j,
               'y': i
             });
             
-            if (actors.length === 0) {
-              meshRow.push(true);
-            } else {
-              var isBlocking = false;
-              
-              for (var iActor = 0, len = actors.length; iActor < len; iActor++) {
-                var actor = actors[iActor];
-                
-                if (actor.isBlocking) {
-                  isBlocking = true;
-                  break;
-                }
+            for (var iActor = 0, len = actors.length; iActor < len; iActor++) {
+              if (actors[iActor].isBlocking) {
+                areActorsBlocking = true;
+                break;
               }
+            }
+            
+            if (areActorsBlocking) {
+              meshRow.push(false);
+            } else {
+              meshRow.push(tile.walkCost);
               
-              meshRow.push(!isBlocking);
+              if (acceptable.indexOf(tile.walkCost) === -1) {
+                this.pathFinding.setTileCost(tile.walkCost, tile.walkCost);
+                acceptable.push(tile.walkCost);
+              }
             }
           }
         }
@@ -99,6 +101,7 @@ var NavMesh = (function NavMesh() {
       this.mesh.push(meshRow);
     }
     
+    this.pathFinding.setAcceptableTiles(acceptable);
     this.pathFinding.setGrid(this.mesh);
     
     return true;
