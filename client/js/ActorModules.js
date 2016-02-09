@@ -440,11 +440,16 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
     
     this.selector = options.selector;
     this.el = document.querySelector(this.selector);
+    this.elClose = this.el.querySelector('.close-html-module');
     
     if (this.isActive) {
       this.activate();
     } else {
       this.stop();
+    }
+    
+    if (this.elClose) {
+      this.elClose.addEventListener('click', this.stop.bind(this));
     }
   };
   

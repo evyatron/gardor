@@ -10,6 +10,10 @@ body {
   overflow: hidden;
 }
 
+::selection {
+  background: #C19393;
+}
+
 body {
   font: normal 1em 'Share Tech Mono';
 }
@@ -74,14 +78,27 @@ body {
 .game-module.visible {
   display: block;
 }
-.game-module p {
-  margin: 15px 0;
-  line-height: 1.4;
-}
-.game-module em {
-  font-style: normal;
-  text-decoration: underline;
-}
+  .close-html-module {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    margin: -22px -22px 0 0;
+    border-radius: 50%;
+    background: #aaa;
+  }
+  .close-html-module:hover {
+    background: #ccc;
+  }
+  .game-module p {
+    margin: 15px 0;
+    line-height: 1.4;
+  }
+  .game-module em {
+    font-style: normal;
+    text-decoration: underline;
+  }
 
 .button {
   display: inline-block;
@@ -146,7 +163,6 @@ body {
   border-color: #9a7b45 #836634 #836634 #9a7b45;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .3) inset,
               0 0 0 1px rgba(0, 0, 0, .3);
-  pointer-events: none;
   opacity: 0;
   transition: opacity 120ms ease-in;
 }
@@ -164,6 +180,7 @@ body {
   max-width: 400px;
   font-size: 13px;
   text-align: center;
+  pointer-events: none;
 }
 .dialog-box {
   width: 600px;
@@ -173,6 +190,7 @@ body {
   font-size: 19px;
   line-height: 1.5;
   border-width: 6px;
+  pointer-events: none;
 }
   .dialog-box .image {
     position: absolute;
