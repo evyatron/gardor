@@ -31,6 +31,7 @@ var Layer = (function Layer() {
     
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
+    this.canvas.className = 'game-layer';
     this.game.el.appendChild(this.canvas);
     
     this.onResize();
@@ -512,6 +513,8 @@ var HUDLayer = (function HUDLayer() {
     }
       
     el.classList.add('visible');
+    
+    return el;
   };
   
   HUDLayer.prototype.hideTextBox = function hideTextBox(id) {

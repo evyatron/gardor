@@ -240,7 +240,7 @@ var ModuleDialog = (function ModuleDialog() {
   
   ModuleDialog.prototype.stop = function stop(e) {
     ActorModule.prototype.stop.apply(this, arguments);
-    console.warn('stop and hide')
+    
     this.currentLineIndex = -1;
     this.currentLine = null;
     this.currentActor = null;
@@ -250,8 +250,6 @@ var ModuleDialog = (function ModuleDialog() {
   };
   
   ModuleDialog.prototype.nextLine = function nextLine() {
-    console.warn('next line')
-    
     var newIndex = this.currentLineIndex + 1;
     if (newIndex === 0) {
       newIndex = this.getLineIndexById(this.startingLineId);
@@ -264,21 +262,23 @@ var ModuleDialog = (function ModuleDialog() {
     
     if (newIndex < this.lines.length) {
       var hud = this.actor.game.getHUD();
+      
       this.currentLineIndex = newIndex;
       this.currentLine = this.lines[this.currentLineIndex];
       this.currentActor = this.getLineActor(this.currentLine);
       
-      var texture = this.currentActor.getTexture();
-      var avatarImage = null;
-      if (texture) {
-        avatarImage = texture.getImage();
-      }
-      
-      hud.showTextBox('dialog-box', {
-        'content': '<div class="image" style="background-image: url(\'\')"></div>' +
+      var elTextBox = hud.showTextBox('dialog-box', {
+        'content': '<canvas class="image"></canvas>' +
                    '<div class="content">' + this.currentLine.text + '</div>',
         'position': hud.POSITION.SCREEN_BOTTOM
       });
+      
+      var elImage = elTextBox.querySelector('canvas');
+      var texture = this.currentActor.getTexture();
+      elImage.width = elImage.offsetWidth;
+      elImage.height = elImage.offsetHeight;
+      
+      texture.draw(elImage.getContext('2d'), elImage.width / 2, elImage.height / 2);
     } else {
       this.stop();
     }
@@ -445,12 +445,18 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
       return;
     }
     
-    var game = this.actor.game;
-    var httpRequest = new XMLHttpRequest();
-    
-    httpRequest.open('GET', game.getAssetPath(this.page, game.ASSET_TYPE.PAGE), true);
-    httpRequest.onload = this.onGotPageContent.bind(this);
-    httpRequest.send();
+    var elContent = document.querySelector('.module-content[data-module-id = "' + this.page + '"]');
+    if (elContent) {
+      this.createHTML(elContent.innerHTML);
+      elContent.parentNode.removeChild(elContent);
+    } else {
+      var game = this.actor.game;
+      var httpRequest = new XMLHttpRequest();
+      
+      httpRequest.open('GET', game.getAssetPath(this.page, game.ASSET_TYPE.PAGE), true);
+      httpRequest.onload = this.onGotPageContent.bind(this);
+      httpRequest.send();
+    }
   };
   
   ModuleHTMLElement.prototype.onGotPageContent = function onGotPageContent(e) {
@@ -466,7 +472,7 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
                           '<b class="close-html-module text-box"></b>' +
                         '</div>';
                         
-    document.body.appendChild(this.el);
+    this.actor.game.el.appendChild(this.el);
     
     var elClose = this.el.querySelector('.close-html-module');
     elClose.addEventListener('click', this.stop.bind(this));

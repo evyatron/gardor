@@ -86,21 +86,6 @@ var Pane = (function Pane() {
       } catch (ex) {
         //console.warn('No value found in JSON', id, cleanId, ex);
       }
-      
-      /*
-      var cleanId = id.replace(this.id + '_', '').replace(/_/g, '.');
-      var value = undefined;
-      
-      try {
-        value = eval('json.' + cleanId);
-        var input = this.inputs[id];
-        if (input && value !== undefined) {
-          input.setValue(value, true);
-        }
-      } catch (ex) {
-        //console.warn('No value found in JSON', id, cleanId, ex);
-      }
-      */
     }
   };
   
@@ -479,7 +464,7 @@ var Input = (function Input() {
               'type="' + inputType + '" ' +
               'id="' + this.id + '" ' +
               'name="' + this.id + '" ' +
-              'value="' + this.schema.default + '" />';
+              'value="' + ('' + this.schema.default).replace(/"/g, '&quot;') + '" />';
   };
   
   return Input;

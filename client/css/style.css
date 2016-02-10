@@ -27,24 +27,21 @@ body {
 }
 #game {
   position: absolute;
-  /*
-  top: 0;
-  left: 0;
-              */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /*
-  box-shadow: 0 0 0 2px #fff,
-              0 0 0 4px #000;
-              */
 }
-  #game canvas {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    pointer-events: none;
-  }
+.game-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+}
+
+em {
+  font-style: normal;
+  color: gold;
+}
   
 .text-box {
   position: absolute;
@@ -80,6 +77,10 @@ body {
   transform: translate(-50%, -50%);
 }
 
+/* Hide since the actual module will grab its content and then remove it */
+.module-content {
+  opacity: 0;
+}
 
 .game-module {
   position: absolute;
@@ -110,13 +111,13 @@ body {
                 0 0 0 1px rgba(0, 0, 0, .3),
                 0 0 0 5px rgba(0, 0, 0, .3);
     opacity: 0;
-    transform: rotate(2deg);
+    transform: scale(.95);
     transition: transform 120ms ease-in,
                 opacity 120ms ease-in;
   }
   .game-module.visible .game-module-content {
     opacity: 1;
-    transform: rotate(0deg);
+    transform: scale(1);
   }
   .close-html-module {
     position: absolute;
@@ -142,10 +143,6 @@ body {
   .game-module p {
     margin: 15px 0;
     line-height: 1.4;
-  }
-  .game-module em {
-    font-style: normal;
-    text-decoration: underline;
   }
 
 .button {
@@ -203,10 +200,17 @@ body {
 .actors-tooltip {
   padding: 5px 10px;
   max-width: 400px;
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
   pointer-events: none;
 }
+  .actors-tooltip h1 {
+    font-weight: normal;
+    font-size: 1.1em;
+    color: gold;
+    margin: 4px 0;
+  }
+  
 .dialog-box {
   width: 600px;
   height: 200px;
