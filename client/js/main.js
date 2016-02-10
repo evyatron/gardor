@@ -81,7 +81,8 @@ var Game = (function Game() {
     this.ASSET_TYPE = {
       AUDIO: 0,
       IMAGE: 1,
-      MAP: 2
+      MAP: 2,
+      PAGE: 3
     };
     
     this.SCRIPTS = [
@@ -133,6 +134,8 @@ var Game = (function Game() {
       src = base + 'audio/' + src;
     } else if (type === this.ASSET_TYPE.MAP) {
       src = base + 'maps/' + src + '.json';
+    } else if (type === this.ASSET_TYPE.PAGE) {
+      src = base + 'pages/' + src + '.html';
     } else {
       src = base + src;
     }

@@ -421,7 +421,7 @@ var ModuleWebPage = (function ModuleWebPage() {
 /* Shows an HTML element. INTERACT by default */
 var ModuleHTMLElement = (function ModuleHTMLElement() {
   function ModuleHTMLElement(options) {
-    this.selector = '';
+    this.page = '';
     this.el = null;
     
     utils.setDefaults(options, {
@@ -438,19 +438,38 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
   ModuleHTMLElement.prototype.init = function init(options) {
     ActorModule.prototype.init.apply(this, arguments);
     
-    this.selector = options.selector;
-    this.el = document.querySelector(this.selector);
-    this.elClose = this.el.querySelector('.close-html-module');
+    this.page = options.page;
     
-    if (this.isActive) {
-      this.activate();
-    } else {
-      this.stop();
+    if (!this.page) {
+      console.warn('Trying to create an HTML module without a page!', this);
+      return;
     }
     
-    if (this.elClose) {
-      this.elClose.addEventListener('click', this.stop.bind(this));
-    }
+    var game = this.actor.game;
+    var httpRequest = new XMLHttpRequest();
+    
+    httpRequest.open('GET', game.getAssetPath(this.page, game.ASSET_TYPE.PAGE), true);
+    httpRequest.onload = this.onGotPageContent.bind(this);
+    httpRequest.send();
+  };
+  
+  ModuleHTMLElement.prototype.onGotPageContent = function onGotPageContent(e) {
+    this.createHTML(e.target.response);
+  };
+  
+  ModuleHTMLElement.prototype.createHTML = function createHTML(html) {
+    this.el = document.createElement('div');
+    this.el.className = 'game-module game-module-' + this.page;
+    
+    this.el.innerHTML = '<div class="game-module-content text-box">' +
+                          html +
+                          '<b class="close-html-module text-box"></b>' +
+                        '</div>';
+                        
+    document.body.appendChild(this.el);
+    
+    var elClose = this.el.querySelector('.close-html-module');
+    elClose.addEventListener('click', this.stop.bind(this));
   };
   
   ModuleHTMLElement.prototype.activate = function activate(e) {

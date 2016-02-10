@@ -87,22 +87,37 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  margin: auto;
-  width: 680px;
-  height: 360px;
-  padding: 20px;
-  font-size: 1.2em;
-  border-radius: 6px;
-  color: #fff;
-  display: none;
-  background: #241f17;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .3) inset,
-              0 0 0 1px rgba(0, 0, 0, .3),
-              0 0 0 5px rgba(0, 0, 0, .3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 100%;
+  pointer-events: none;
 }
 .game-module.visible {
-  display: block;
+  pointer-events: inherit;
 }
+  .game-module-content {
+    position: relative;
+    width: 680px;
+    min-height: 360px;
+    padding: 20px;
+    font-size: 1.2em;
+    border-radius: 6px;
+    background: #241f17;
+    color: #fff;
+    opacity: 1;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .3) inset,
+                0 0 0 1px rgba(0, 0, 0, .3),
+                0 0 0 5px rgba(0, 0, 0, .3);
+    opacity: 0;
+    transform: rotate(2deg);
+    transition: transform 120ms ease-in,
+                opacity 120ms ease-in;
+  }
+  .game-module.visible .game-module-content {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
   .close-html-module {
     position: absolute;
     top: 0;

@@ -1190,7 +1190,7 @@
       "modules": [
         {
           "type": "ModuleHTMLElement",
-          "selector": ".game-module-contact",
+          "page": "contact",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -1225,7 +1225,7 @@
       "modules": [
         {
           "type": "ModuleHTMLElement",
-          "selector": ".game-module-about",
+          "page": "about",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -1257,14 +1257,6 @@
       },
       "isBlocking": false,
       "modules": [
-        {
-          "type": "ModuleHTMLElement",
-          "selector": ".game-module-about",
-          "useOffset": {
-            "x": 0,
-            "y": 1
-          }
-        },
         {
           "type": "ModuleTexture",
           "src": "tiles/shooter-ka2.png",
@@ -1308,14 +1300,6 @@
       },
       "isBlocking": false,
       "modules": [
-        {
-          "type": "ModuleHTMLElement",
-          "selector": ".game-module-about",
-          "useOffset": {
-            "x": 0,
-            "y": 1
-          }
-        },
         {
           "type": "ModuleTexture",
           "src": "tiles/shooter-ka2.png",
