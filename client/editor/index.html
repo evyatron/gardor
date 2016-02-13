@@ -13,7 +13,6 @@
         <span class="resizer" data-resize="game"></span>
         <div class="editor-title">
           Game Settings
-          <b class="editor-button export-config">JSON</b>
           <div class="editor-debug-flags">
             <input type="checkbox" id="config-debug" name="config-debug" checked title="Toggle Game Debug" />
             <input type="checkbox" id="config-debug-navmesh" name="config-debug-navmesh" title="Toggle Navigation Mesh Debug" />
@@ -27,7 +26,10 @@
 
       <div class="editor-container vertical map-pane right">
         <span class="resizer" data-resize="map"></span>
-        <div class="editor-title">Map</div>
+        <div class="editor-title">
+          Map
+          <select id="map-selector"></select>
+        </div>
       </div>
     </div>
     

@@ -5,6 +5,10 @@
 /* global PlayerController */
 /* global Camera */
 /* global NavMesh */
+/* global TilesetLayer */
+/* global HUDLayer */
+/* global Layer */
+
 "use strict";
 
 /* Main game class, magic happens here */
@@ -18,6 +22,7 @@ var Game = (function Game() {
     this.isReady = false;
     this.layers = {};
     
+    this.autoGoToMap = false;
     this.width = 0;
     this.height = 0;
     this.mapWidth = 0;
@@ -114,6 +119,7 @@ var Game = (function Game() {
     
     this.el = options.el || document.body;
     this.configDir = options.configDir;
+    this.autoGoToMap = Boolean(options.autoGoToMap);
     
     utils.loadScripts(this.SCRIPTS, this.onScriptsLoaded.bind(this));
     
@@ -204,8 +210,8 @@ var Game = (function Game() {
     
     this.setTiles(this.config.tiles);
 
-    if (this.config.startingMap) {
-      this.goToMap(this.config.startingMap);
+    if (this.autoGoToMap) {
+      this.goToFirstMap();
     }
     
     this.isReady = true;
@@ -239,9 +245,27 @@ var Game = (function Game() {
     this.navMesh.update();
   };
   
+  Game.prototype.goToFirstMap = function goToFirstMap() {
+    var mapId = this.config.startingMap;
+    var mapFromUrl = window.location.search.match(/map=([^\&]+)/i);
+    
+    if (mapFromUrl) {
+      mapFromUrl = mapFromUrl[1];
+    }
+    
+    if (this.config.maps.indexOf(mapFromUrl) !== -1) {
+      mapId = mapFromUrl;
+    }
+    
+    if (mapId) {
+      this.goToMap(mapId);
+    }
+  };
+  
   Game.prototype.goToMap = function goToMap(mapId) {
     var map = this.maps[mapId];
     
+    // If map isn't loaded yet - load it and then come back here
     if (!map) {
       this.loadMap(mapId, this.goToMap.bind(this, mapId));
       return this.GOTO_MAP_RESULT.NOT_LOADED;
@@ -250,11 +274,18 @@ var Game = (function Game() {
     if (map === true) {
       return this.GOTO_MAP_RESULT.LOADING;
     }
-    
-    if (!map.grid || map.grid.length === 0) {
-      console.warn('Got map without grid!', map);
-      return this.GOTO_MAP_RESULT.ERROR;
+
+    /*
+    if (window.history) {
+      var url = window.location.pathname;
+      
+      if (mapId !== this.config.startingMap) {
+        url = '?map=' + encodeURIComponent(mapId);
+      }
+      
+      window.history.pushState('', '', url);
     }
+    */
     
     this.currentMap = map;
     
@@ -263,39 +294,19 @@ var Game = (function Game() {
 
     this.onResize();
     
-    if (!this.layers.background) {
-      this.layers.background = new TilesetLayer({
-        'id': 'background',
-        'game': this
-      });
-    }
-    if (!this.layers.actors) {
-      this.layers.actors = new Layer({
-        'id': 'actors',
-        'game': this
-      });
-    }
-    if (!this.layers.hud) {
-      this.layers.hud = new HUDLayer({
-        'id': 'hud',
-        'game': this
-      });
-    }
+    this.createDefaultLayers();
 
     for (var id in this.layers) {
       this.layers[id].setMap(map);
     }
     
-    var controlledActorId = map.playerActor;
-    if (controlledActorId) {
-      var actor = this.layers.actors.actorsMap[controlledActorId];
-      if (actor) {
-        this.playerController.setControlledActor(actor);
-        
-        if (this.config.followPlayer) {
-          this.camera.setActorToFollow(this.playerController.controlledActor);
-        }
-      }
+    var controlledActor = this.layers.actors.actorsMap[map.playerActor];
+    if (controlledActor) {
+      this.playerController.setControlledActor(controlledActor);
+    }
+    
+    if (this.config.followPlayer) {
+      this.camera.setActorToFollow(this.playerController.controlledActor);
     }
     
     this.navMesh.update();
@@ -305,6 +316,31 @@ var Game = (function Game() {
     this.dispatch(this.EVENTS.MAP_CREATE, this);
     
     console.info('Finished loading map', this.currentMap);
+  };
+  
+  Game.prototype.createDefaultLayers = function createDefaultLayers() {
+    var layers = this.layers;
+    
+    if (!layers.background) {
+      layers.background = new TilesetLayer({
+        'id': 'background',
+        'game': this
+      });
+    }
+    
+    if (!layers.actors) {
+      layers.actors = new Layer({
+        'id': 'actors',
+        'game': this
+      });
+    }
+    
+    if (!layers.hud) {
+      layers.hud = new HUDLayer({
+        'id': 'hud',
+        'game': this
+      });
+    }
   };
   
   Game.prototype.getModuleConfig = function getModuleConfig(moduleId) {

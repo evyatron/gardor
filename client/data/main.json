@@ -3,183 +3,295 @@
   "name": "Main Map",
   "playerActor": "player",
   "padding": 0,
-  "defaultTile": "water",
+  "defaultTile": "default_1454537582202",
   "fillColor": "black",
-  "fillTile": "water",
+  "fillTile": "default_1454537582202",
   "grid": [
     [
-      "water-tl-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-t-land",
-      "water-tr-land"
+      "default_1454713938323",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713938493"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454714265497",
+      "default_1454714265497",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454713890487"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454604560018",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604603178",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714265497",
+      "default_1454713890487"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454604463328",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604463328",
+      "default_1454714265497",
+      "",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454713890487"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454604463328",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604463328",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714265497",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454714265497",
+      "default_1454713890487"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454604463328",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454606380763",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604603178",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454714265497",
+      "default_1454713890487"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454604463328",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604778776",
+      "default_1454604463328",
+      "default_1454611245028",
+      "default_1454611245028",
+      "default_1454604463328",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454713890487"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454604606167",
+      "default_1454604440102",
+      "default_1454604476074",
+      "default_1454604778776",
+      "default_1454604546607",
+      "default_1454604440102",
+      "default_1454606446005",
+      "default_1454604603178",
+      "default_1454611245028",
+      "default_1454604463328",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454713890487"
     ],
     [
-      "water-l-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "land",
-      "land",
-      "water-r-land"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454604536217",
+      "default_1454611245028",
+      "default_1454604536217",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454713890487"
     ],
     [
-      "water-bl2-land",
-      "water-b-land",
-      "water-b-land",
-      "water-bl-land",
-      "land",
-      "land",
-      "land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "water-br-land",
-      "water-b-land",
-      "default_1454189647696"
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454537582202",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714265497",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714504309",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714504309",
+      "default_1454537582202",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454714265497",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454714504309",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714504309",
+      "default_1454714504309",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714582881",
+      "default_1454714582881",
+      "default_1454714582881",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714265497",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714582881",
+      "default_1454714582881",
+      "default_1454714582881",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713999202",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713938493",
+      "",
+      "default_1454714355490",
+      "",
+      "default_1454713938323",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713999780"
     ],
     [
       "",
       "",
       "",
       "",
-      "water-b-land",
-      "water-b-land",
-      "water-bl-land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "water-r-land",
+      "",
+      "",
+      "default_1454713890487",
+      "",
+      "default_1454714355490",
+      "",
+      "default_1454713890487",
+      "",
+      "",
+      "",
       "",
       ""
     ],
@@ -190,12 +302,14 @@
       "",
       "",
       "",
-      "water-l-land",
-      "land",
-      "land-l-path",
-      "land-r-path",
-      "land",
-      "water-r-land",
+      "default_1454713890487",
+      "",
+      "default_1454714355490",
+      "",
+      "default_1454713890487",
+      "",
+      "",
+      "",
       "",
       ""
     ]
@@ -203,10 +317,6 @@
   "actors": [
     {
       "id": "player",
-      "tile": {
-        "y": 9,
-        "x": 8
-      },
       "isBlocking": false,
       "speed": 130,
       "zIndex": 1,
@@ -220,20 +330,40 @@
           "clip": {
             "x": 0,
             "y": 0
+          },
+          "origin": {
+            "x": 0.5,
+            "y": 0.75
+          },
+          "clipBottom": {
+            "x": 0,
+            "y": 0
+          },
+          "clipTop": {
+            "x": 0,
+            "y": 96
+          },
+          "clipRight": {
+            "x": 0,
+            "y": 64
+          },
+          "clipLeft": {
+            "x": 0,
+            "y": 32
           }
         }
       ],
-      "tooltip": ""
+      "tooltip": "",
+      "tile": {
+        "x": 8,
+        "y": 10
+      }
     },
     {
       "id": "social-github",
       "tooltip": "GitHub",
       "isBlocking": true,
       "zIndex": 1,
-      "tile": {
-        "y": 3,
-        "x": 3
-      },
       "modules": [
         {
           "type": "ModuleWebPage",
@@ -255,17 +385,17 @@
           },
           "scale": 0.75
         }
-      ]
+      ],
+      "tile": {
+        "x": 8,
+        "y": 8
+      }
     },
     {
       "id": "social-linkedin",
       "tooltip": "LinkedIn",
       "isBlocking": true,
       "zIndex": 1,
-      "tile": {
-        "y": 3,
-        "x": 4
-      },
       "modules": [
         {
           "type": "ModuleWebPage",
@@ -287,15 +417,19 @@
           },
           "scale": 0.75
         }
-      ]
+      ],
+      "tile": {
+        "x": 7,
+        "y": 8
+      }
     },
     {
       "id": "game-darkbounds",
-      "tooltip": "Dark Bounds\nTop-down spaceship multiplayer game\nCSS, JavaScript, WebSockets, Node.JS",
+      "tooltip": "<h1>Dark Bounds</h1>Top-down spaceship multiplayer game<br />CSS, JavaScript, WebSockets, Node.JS",
       "isBlocking": true,
       "tile": {
-        "x": 9,
-        "y": 5
+        "x": 7,
+        "y": 4
       },
       "modules": [
         {
@@ -304,8 +438,8 @@
           "url": "http://darkbounds.com/",
           "isInFrame": true,
           "useOffset": {
-            "x": 0,
-            "y": 1
+            "x": -1,
+            "y": 0
           }
         },
         {
@@ -328,12 +462,8 @@
     },
     {
       "id": "game-nanocraft",
-      "tooltip": "Nanocraft\nIsometric RTS/CookieClicker mashup\nCSS, JavaScript, Firebase as backend",
+      "tooltip": "<h1>Nanocraft</h1>Isometric RTS/CookieClicker mashup<br />CSS, JavaScript, Firebase as backend",
       "isBlocking": true,
-      "tile": {
-        "y": 5,
-        "x": 10
-      },
       "modules": [
         {
           "type": "ModuleWebPage",
@@ -341,8 +471,8 @@
           "url": "http://nanocraft.amitay.me/",
           "isInFrame": true,
           "useOffset": {
-            "x": 0,
-            "y": 1
+            "x": 1,
+            "y": 0
           }
         },
         {
@@ -361,16 +491,16 @@
           }
         }
       ],
-      "zIndex": 0
+      "zIndex": 0,
+      "tile": {
+        "x": 3,
+        "y": 5
+      }
     },
     {
       "id": "game-alice",
-      "tooltip": "[ALICE].\nSide scroller with changing gravity\nCSS and JavaScript",
+      "tooltip": "<h1>[ALICE].</h1>Side scroller with changing gravity<br />CSS and JavaScript",
       "isBlocking": true,
-      "tile": {
-        "y": 5,
-        "x": 11
-      },
       "modules": [
         {
           "type": "ModuleWebPage",
@@ -378,8 +508,8 @@
           "url": "http://evyatar.amitay.me/playground/alice/",
           "isInFrame": true,
           "useOffset": {
-            "x": 0,
-            "y": 1
+            "x": 1,
+            "y": 0
           }
         },
         {
@@ -398,16 +528,16 @@
           }
         }
       ],
-      "zIndex": 0
+      "zIndex": 0,
+      "tile": {
+        "x": 3,
+        "y": 3
+      }
     },
     {
       "id": "game-simon",
-      "tooltip": "Simon\nRecreation of the classic Simon game\nHTML5, WebAudioAPI and Responsive Design",
+      "tooltip": "<h1>Simon</h1>Recreation of the classic Simon game<br />HTML5, WebAudioAPI and Responsive Design",
       "isBlocking": true,
-      "tile": {
-        "y": 5,
-        "x": 12
-      },
       "modules": [
         {
           "type": "ModuleWebPage",
@@ -415,8 +545,8 @@
           "url": "http://evyatar.amitay.me/playground/simon/",
           "isInFrame": true,
           "useOffset": {
-            "x": 0,
-            "y": 1
+            "x": 1,
+            "y": 0
           }
         },
         {
@@ -425,7 +555,7 @@
           "scale": 0.6,
           "clip": {
             "x": 186,
-            "y": 0
+            "y": 64
           },
           "width": 62,
           "height": 64,
@@ -435,15 +565,19 @@
           }
         }
       ],
-      "zIndex": 0
+      "zIndex": 0,
+      "tile": {
+        "x": 3,
+        "y": 4
+      }
     },
     {
       "id": "game-supermoneyo",
-      "tooltip": "SuperMoney-O\nA political-satiric mario-clone game\nCSS and JavaScript",
+      "tooltip": "<h1>SuperMoney-O</h1>A political-satiric mario-clone game<br />CSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "y": 4,
-        "x": 9
+        "x": 7,
+        "y": 5
       },
       "modules": [
         {
@@ -452,8 +586,8 @@
           "url": "http://evyatar.amitay.me/playground/supermoneyo/",
           "isInFrame": true,
           "useOffset": {
-            "x": 0,
-            "y": 1
+            "x": -1,
+            "y": 0
           }
         },
         {
@@ -476,11 +610,11 @@
     },
     {
       "id": "game-candickrush",
-      "tooltip": "Can Dick Rush\nMaze-navigation, created following a certain copyright story\nCSS and JavaScript",
+      "tooltip": "<h1>Can Dick Rush</h1>Maze-navigation, created following a certain copyright story<br />CSS and JavaScript",
       "isBlocking": true,
       "tile": {
-        "y": 4,
-        "x": 10
+        "x": 7,
+        "y": 3
       },
       "modules": [
         {
@@ -489,8 +623,8 @@
           "url": "http://evyatar.amitay.me/playground/candickrush/",
           "isInFrame": true,
           "useOffset": {
-            "x": 0,
-            "y": 1
+            "x": -1,
+            "y": 0
           }
         },
         {
@@ -513,11 +647,11 @@
     },
     {
       "id": "js-particles",
-      "tooltip": "Particles\nHigh performance JavaScript canvas Particles object",
+      "tooltip": "Particles<br />High performance JavaScript canvas Particles object",
       "isBlocking": true,
       "tile": {
-        "y": 7,
-        "x": 6
+        "x": 3,
+        "y": 10
       },
       "modules": [
         {
@@ -550,11 +684,11 @@
     },
     {
       "id": "js-fantasia",
-      "tooltip": "Fantasia 2013\nA CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
+      "tooltip": "Fantasia 2013<br />A CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
       "isBlocking": true,
       "tile": {
-        "y": 8,
-        "x": 1
+        "x": 3,
+        "y": 11
       },
       "modules": [
         {
@@ -587,11 +721,11 @@
     },
     {
       "id": "js-timeforcoffee",
-      "tooltip": "Is It Time For Coffee?\nA webpage to let you know if it's time for coffee",
+      "tooltip": "Is It Time For Coffee?<br />A webpage to let you know if it's time for coffee",
       "isBlocking": true,
       "tile": {
-        "y": 8,
-        "x": 2
+        "x": 2,
+        "y": 12
       },
       "modules": [
         {
@@ -624,11 +758,11 @@
     },
     {
       "id": "js-wobbly",
-      "tooltip": "Wibbly Wobbly\nCSS Animations and wobbly movement using only CSS3's advanced selectors (for both the animation and the settings)",
+      "tooltip": "Wibbly Wobbly<br />CSS Animations and wobbly movement using only CSS3's advanced selectors (for both the animation and the settings)",
       "isBlocking": true,
       "tile": {
-        "y": 8,
-        "x": 3
+        "x": 4,
+        "y": 11
       },
       "modules": [
         {
@@ -661,11 +795,11 @@
     },
     {
       "id": "js-conjunctions",
-      "tooltip": "Conjunctions\nExploration of CSS3 transformation and transformation origins.",
+      "tooltip": "Conjunctions<br />Exploration of CSS3 transformation and transformation origins.",
       "isBlocking": true,
       "tile": {
         "x": 4,
-        "y": 8
+        "y": 10
       },
       "modules": [
         {
@@ -698,11 +832,11 @@
     },
     {
       "id": "js-circular",
-      "tooltip": "Circular Movements\nExploration of circular movement in CSS3",
+      "tooltip": "Circular Movements<br />Exploration of circular movement in CSS3",
       "isBlocking": true,
       "tile": {
-        "y": 8,
-        "x": 5
+        "x": 4,
+        "y": 12
       },
       "modules": [
         {
@@ -735,11 +869,11 @@
     },
     {
       "id": "js-p280",
-      "tooltip": "PC Case Designer\nA page that lets you design a 3D PC case (Antec P280 specifically) using JavaScript and 3D CSS3",
+      "tooltip": "PC Case Designer<br />A page that lets you design a 3D PC case (Antec P280 specifically) using JavaScript and 3D CSS3",
       "isBlocking": true,
       "tile": {
-        "y": 8,
-        "x": 6
+        "x": 2,
+        "y": 9
       },
       "modules": [
         {
@@ -772,11 +906,11 @@
     },
     {
       "id": "js-bounce",
-      "tooltip": "3D Bounce\nExperiments with 3D CSS3 and animations",
+      "tooltip": "3D Bounce<br />Experiments with 3D CSS3 and animations",
       "isBlocking": true,
       "tile": {
-        "y": 7,
-        "x": 1
+        "x": 4,
+        "y": 9
       },
       "modules": [
         {
@@ -809,11 +943,11 @@
     },
     {
       "id": "js-404",
-      "tooltip": "404 Page\nMy 404 page, messing around with Canvas - control with Keyboard Arrows and mouse",
+      "tooltip": "404 Page<br />My 404 page, messing around with Canvas - control with Keyboard Arrows and mouse",
       "isBlocking": true,
       "tile": {
-        "y": 7,
-        "x": 2
+        "x": 3,
+        "y": 9
       },
       "modules": [
         {
@@ -846,11 +980,11 @@
     },
     {
       "id": "js-dott",
-      "tooltip": "Day of the Tentacle\nCSS3 representation of Purple from Day of the Tentacle",
+      "tooltip": "Day of the Tentacle<br />CSS3 representation of Purple from Day of the Tentacle",
       "isBlocking": true,
       "tile": {
-        "x": 3,
-        "y": 7
+        "x": 2,
+        "y": 11
       },
       "modules": [
         {
@@ -883,11 +1017,11 @@
     },
     {
       "id": "js-inverter",
-      "tooltip": "Image Inverter\nA simple utility page for inverting images without Server Side code (using HTML5 File API)",
+      "tooltip": "Image Inverter<br />A simple utility page for inverting images without Server Side code (using HTML5 File API)",
       "isBlocking": true,
       "tile": {
-        "x": 4,
-        "y": 7
+        "x": 2,
+        "y": 10
       },
       "modules": [
         {
@@ -920,11 +1054,11 @@
     },
     {
       "id": "js-d3api",
-      "tooltip": "Diablo 3 API Client Library\nAn API Client Library for Diablo 3 built in JavaScript",
+      "tooltip": "Diablo 3 API Client Library<br />An API Client Library for Diablo 3 built in JavaScript",
       "isBlocking": true,
       "tile": {
-        "y": 7,
-        "x": 5
+        "x": 3,
+        "y": 12
       },
       "modules": [
         {
@@ -956,369 +1090,11 @@
       "zIndex": 0
     },
     {
-      "id": "room-tl",
-      "tile": {
-        "y": 2,
-        "x": 2
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 448,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-t1",
-      "tile": {
-        "y": 2,
-        "x": 3
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 480,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-t2",
-      "tile": {
-        "y": 2,
-        "x": 4
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 480,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-t3",
-      "tile": {
-        "y": 2,
-        "x": 5
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 480,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-tr",
-      "tile": {
-        "y": 2,
-        "x": 6
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 512,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-l1",
-      "tile": {
-        "y": 3,
-        "x": 2
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 448,
-            "y": 320
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-l2",
-      "tile": {
-        "y": 4,
-        "x": 2
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 448,
-            "y": 320
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-r1",
-      "tile": {
-        "y": 3,
-        "x": 6
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 512,
-            "y": 320
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-r2",
-      "tile": {
-        "y": 4,
-        "x": 6
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 512,
-            "y": 320
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-bl",
-      "tile": {
-        "y": 5,
-        "x": 2
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 64,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-b1",
-      "tile": {
-        "y": 5,
-        "x": 3
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 0,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-b-door",
-      "tile": {
-        "x": 4,
-        "y": 5
-      },
-      "isBlocking": false,
-      "zIndex": 5,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 256,
-            "y": 320
-          }
-        },
-        {
-          "type": "ModuleParticles",
-          "offset": {
-            "x": -32,
-            "y": 0
-          },
-          "lifetime": [
-            0.2,
-            0.5
-          ],
-          "angle": [
-            -15,
-            15
-          ],
-          "speed": [
-            50,
-            100
-          ],
-          "size": [
-            1,
-            3
-          ],
-          "gravity": 200,
-          "colours": "fire"
-        },
-        {
-          "type": "ModuleParticles",
-          "offset": {
-            "x": 32,
-            "y": 0
-          },
-          "lifetime": [
-            0.2,
-            0.5
-          ],
-          "angle": [
-            -15,
-            15
-          ],
-          "speed": [
-            50,
-            100
-          ],
-          "size": [
-            1,
-            3
-          ],
-          "gravity": 200,
-          "colours": "fire"
-        }
-      ],
-      "tooltip": ""
-    },
-    {
-      "id": "room-b2",
-      "tile": {
-        "y": 5,
-        "x": 5
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 0,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
-      "id": "room-br",
-      "tile": {
-        "x": 6,
-        "y": 5
-      },
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "RPGpack_sheet.png",
-          "width": 64,
-          "height": 64,
-          "clip": {
-            "x": 192,
-            "y": 256
-          }
-        }
-      ],
-      "tooltip": "",
-      "zIndex": 0
-    },
-    {
       "id": "sign-about",
       "tooltip": "Welcome Centre",
       "tile": {
-        "y": 5,
-        "x": 5
+        "x": 8,
+        "y": 12
       },
       "zIndex": 1,
       "isBlocking": false,
@@ -1353,10 +1129,6 @@
     {
       "id": "sign-contact",
       "tooltip": "Post Office",
-      "tile": {
-        "x": 10,
-        "y": 7
-      },
       "isBlocking": false,
       "modules": [
         {
@@ -1385,21 +1157,26 @@
           }
         }
       ],
-      "zIndex": 0
+      "zIndex": 0,
+      "position": {
+        "x": 698.5,
+        "y": 582.5
+      }
     },
     {
       "id": "sign-games",
       "tooltip": "Video Game Arcade",
-      "tile": {
-        "y": 7,
-        "x": 11
-      },
       "isBlocking": false,
       "modules": [
         {
           "type": "ModuleDialog",
           "isActive": true,
-          "dialogId": "page-games"
+          "dialogId": "page-games",
+          "useDir": "",
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
         },
         {
           "type": "ModuleTexture",
@@ -1417,14 +1194,18 @@
           }
         }
       ],
-      "zIndex": 0
+      "zIndex": 0,
+      "position": {
+        "x": 391.5,
+        "y": 518.5
+      }
     },
     {
       "id": "sign-playground",
       "tooltip": "JavaScript Laboratory",
       "tile": {
-        "y": 7,
-        "x": 12
+        "x": 6,
+        "y": 12
       },
       "isBlocking": false,
       "modules": [
@@ -1451,14 +1232,15 @@
       "id": "page-contact",
       "tooltip": "Contact Me",
       "tile": {
-        "y": 2,
-        "x": 8
+        "x": 11,
+        "y": 12
       },
       "isBlocking": true,
       "modules": [
         {
           "type": "ModuleHTMLElement",
-          "selector": ".game-module-contact",
+          "isActive": true,
+          "page": "contact",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -1486,14 +1268,15 @@
       "id": "page-about",
       "tooltip": "About Me",
       "tile": {
-        "y": 2,
-        "x": 9
+        "x": 10,
+        "y": 12
       },
       "isBlocking": true,
       "modules": [
         {
           "type": "ModuleHTMLElement",
-          "selector": ".game-module-about",
+          "isActive": true,
+          "page": "about",
           "useOffset": {
             "x": 0,
             "y": 1
@@ -1515,6 +1298,101 @@
         }
       ],
       "zIndex": 0
+    },
+    {
+      "id": "test",
+      "tooltip": "",
+      "tile": {
+        "x": 5,
+        "y": 7
+      },
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleMapTravel",
+          "isActive": true,
+          "mapId": "games",
+          "useOffset": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "clip": {
+            "x": 448,
+            "y": 1088
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": 1,
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
+          }
+        }
+      ],
+      "zIndex": 5
+    },
+    {
+      "id": "door",
+      "tooltip": "",
+      "tile": {
+        "x": 10,
+        "y": 8
+      },
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "clip": {
+            "x": 448,
+            "y": 1088
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": 1,
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
+          }
+        }
+      ],
+      "zIndex": 5
     }
   ],
   "dialogs": [
@@ -1525,7 +1403,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Welcome Centre\nWhere welcoming's our job!"
+          "text": "Welcome to the Welcome Centre<br />Where welcoming's our job!"
         },
         {
           "id": "answer",
@@ -1540,7 +1418,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Post Office\nContact me for YOUR chance of a reply!"
+          "text": "Welcome to the Post Office<br />Contact me for YOUR chance of a reply!"
         }
       ]
     },
@@ -1550,7 +1428,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Video Game Arcade\nGLHF"
+          "text": "Welcome to the Video Game Arcade<br />GLHF"
         }
       ]
     },
@@ -1560,7 +1438,7 @@
         {
           "id": "welcome",
           "actor": "NPC",
-          "text": "Welcome to the Laboratory\nPlease don't feed the experiments"
+          "text": "Welcome to the Laboratory<br />Please don't feed the experiments"
         }
       ]
     },

@@ -1,3 +1,4 @@
+/* global EventDispatcher */
 "use strict";
 
 /* Base class for every Object and Character */
@@ -35,9 +36,16 @@ var Actor = (function Actor() {
     this.modules = [];
     
     this.isReady = false;
-    
+
     this.init(options);
   }
+  
+  Actor.prototype = Object.create(EventDispatcher.prototype);
+  Actor.prototype.constructor = Actor;
+  
+  Actor.prototype.EVENTS = {
+    REACH_TARGET: 'reachTarget'
+  };
   
   Actor.prototype.init = function init(options) {
     !options && (options = {});
@@ -213,6 +221,7 @@ var Actor = (function Actor() {
           this.pathToWalk = null;
   
           if (this.onReachTarget) {
+            this.dispatch(this.EVENTS.REACH_TARGET, this);
             this.onReachTarget(this);
           }
         }

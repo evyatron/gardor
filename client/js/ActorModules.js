@@ -873,3 +873,39 @@ var ModuleParticles = (function ModuleParticles() {
   
   return ModuleParticles;
 }());
+
+/* Shows an HTML element. INTERACT by default */
+var ModuleMapTravel = (function ModuleMapTravel() {
+  function ModuleMapTravel(options) {
+    this.mapId = '';
+    
+    utils.setDefaults(options, {
+      'activation': ActorModule.prototype.ACTIVATIONS.INTERACT
+    });
+    
+    ActorModule.call(this, options);
+  }
+  
+  ModuleMapTravel.prototype = Object.create(ActorModule.prototype);
+  ModuleMapTravel.prototype.constructor = ModuleMapTravel;
+  
+  ModuleMapTravel.prototype.init = function init(options) {
+    ActorModule.prototype.init.apply(this, arguments);
+    
+    this.mapId = options.mapId;
+    
+    if (!this.mapId) {
+      console.warn('Trying to create a Map Travel module without a map id!', this);
+    }
+  };
+
+  ModuleMapTravel.prototype.activate = function activate(e) {
+    ActorModule.prototype.activate.apply(this, arguments);
+    
+    if (this.mapId) {
+      this.actor.game.goToMap(this.mapId);
+    }
+  };
+  
+  return ModuleMapTravel;
+}());

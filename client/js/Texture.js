@@ -1,6 +1,7 @@
-/* Used to draw an image on screen */
+/* global EventDispatcher */
 "use strict";
 
+/* Used to draw an image on screen */
 var Texture = (function Texture() {
   function Texture(options, onLoad) {
     this.game = null;

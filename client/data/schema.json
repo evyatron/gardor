@@ -195,6 +195,26 @@
         }
       }
     },
+    "ModuleMapTravel": {
+      "type": "object",
+      "title": "Map Travel Element",
+      "tooltip": "Travel to a different map",
+      "properties": {
+        "isActive": {
+          "type": "boolean",
+          "tooltip": "Is this module active",
+          "default": false
+        },
+        "useOffset": {
+          "type": "vector",
+          "tooltip": "Where the player will be moved when moving to interact"
+        },
+        "mapId": {
+          "type": "text",
+          "tooltip": "The map id to which to travel"
+        }
+      }
+    },
     "ModuleParticles": {
       "type": "object",
       "title": "Particles",

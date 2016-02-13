@@ -1,0 +1,386 @@
+{
+  "id": "games",
+  "name": "Video Games Arcade",
+  "playerActor": "player",
+  "padding": 0,
+  "defaultTile": "",
+  "fillColor": "black",
+  "fillTile": "",
+  "grid": [
+    [
+      "default_1454604560018",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604603178"
+    ],
+    [
+      "default_1454604463328",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604463328",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604463328",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604606167",
+      "default_1454604603178",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454714636485",
+      "default_1454604560018",
+      "default_1454604605022"
+    ],
+    [
+      "",
+      "default_1454604606167",
+      "default_1454604476074",
+      "default_1454714636485",
+      "default_1454604546607",
+      "default_1454604605022",
+      ""
+    ]
+  ],
+  "actors": [
+    {
+      "id": "player",
+      "isBlocking": false,
+      "speed": 130,
+      "zIndex": 1,
+      "modules": [
+        {
+          "type": "ModuleTexture",
+          "src": "characters/player.png",
+          "width": 32,
+          "height": 32,
+          "scale": 1.5,
+          "clip": {
+            "x": 0,
+            "y": 64
+          },
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "clipBottom": {
+            "x": 0,
+            "y": 0
+          },
+          "clipTop": {
+            "x": 0,
+            "y": 96
+          },
+          "clipRight": {
+            "x": 0,
+            "y": 64
+          },
+          "clipLeft": {
+            "x": 0,
+            "y": 32
+          }
+        }
+      ],
+      "tooltip": "",
+      "tile": {
+        "x": 3,
+        "y": 5
+      }
+    },
+    {
+      "id": "game-darkbounds",
+      "tooltip": "<h1>Dark Bounds</h1>Top-down spaceship multiplayer game<br />CSS, JavaScript, WebSockets, Node.JS",
+      "isBlocking": true,
+      "zIndex": 0,
+      "tile": {
+        "x": 5,
+        "y": 1
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://darkbounds.com/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 0,
+            "y": 0
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.3,
+            "y": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "game-nanocraft",
+      "tooltip": "<h1>Nanocraft</h1>Isometric RTS/CookieClicker mashup<br />CSS, JavaScript, Firebase as backend",
+      "isBlocking": true,
+      "zIndex": 0,
+      "tile": {
+        "x": 1,
+        "y": 3
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://nanocraft.amitay.me/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 62,
+            "y": 0
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "game-alice",
+      "tooltip": "<h1>[ALICE].</h1>Side scroller with changing gravity<br />CSS and JavaScript",
+      "isBlocking": true,
+      "zIndex": 0,
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/alice/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 0
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "tile": {
+        "x": 1,
+        "y": 1
+      }
+    },
+    {
+      "id": "game-simon",
+      "tooltip": "<h1>Simon</h1>Recreation of the classic Simon game<br />HTML5, WebAudioAPI and Responsive Design",
+      "isBlocking": true,
+      "zIndex": 0,
+      "tile": {
+        "x": 1,
+        "y": 2
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/simon/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 186,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "game-supermoneyo",
+      "tooltip": "<h1>SuperMoney-O</h1>A political-satiric mario-clone game<br />CSS and JavaScript",
+      "isBlocking": true,
+      "zIndex": 0,
+      "tile": {
+        "x": 5,
+        "y": 3
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/supermoneyo/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 0,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "game-candickrush",
+      "tooltip": "<h1>Can Dick Rush</h1>Maze-navigation, created following a certain copyright story<br />CSS and JavaScript",
+      "isBlocking": true,
+      "zIndex": 0,
+      "tile": {
+        "x": 5,
+        "y": 2
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/candickrush/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 62,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "id": "exit",
+      "tooltip": "Go Outside",
+      "isBlocking": false,
+      "zIndex": 5,
+      "modules": [
+        {
+          "type": "ModuleMapTravel",
+          "isActive": true,
+          "mapId": "main",
+          "useOffset": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "scale": 1,
+          "clip": {
+            "x": 320,
+            "y": 1088
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
+          }
+        }
+      ],
+      "tile": {
+        "x": 3,
+        "y": 5
+      }
+    }
+  ],
+  "dialogs": []
+}

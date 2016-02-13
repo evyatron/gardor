@@ -61,6 +61,12 @@ div, p, input, textarea {
   border-right: 1px solid rgba(0, 0, 0, .7);
 }
 
+#map-selector {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+}
+
 .editor-title {
   position: relative;
   padding: 5px 2px;
@@ -153,7 +159,7 @@ div, p, input, textarea {
   }
   .actor-module .input[data-input-id = "isActive"] .pane-input-field {
     position: absolute;
-    top: -16px;
+    top: -18px;
     left: 3px;
     width: auto;
     display: block;

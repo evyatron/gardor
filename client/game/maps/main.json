@@ -46,13 +46,13 @@
     [
       "default_1454713890487",
       "default_1454537582202",
-      "default_1454604560018",
-      "default_1454604440102",
-      "default_1454604440102",
-      "default_1454604440102",
-      "default_1454604440102",
-      "default_1454604440102",
-      "default_1454604603178",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
       "default_1454537582202",
       "default_1454537582202",
       "default_1454537582202",
@@ -64,13 +64,13 @@
     [
       "default_1454713890487",
       "default_1454537582202",
-      "default_1454604463328",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604463328",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
       "default_1454714265497",
       "",
       "default_1454537582202",
@@ -82,13 +82,13 @@
     [
       "default_1454713890487",
       "default_1454537582202",
-      "default_1454604463328",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604463328",
+      "",
+      "default_1455376410484",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376433421",
+      "",
       "default_1454537582202",
       "default_1454537582202",
       "default_1454714265497",
@@ -100,13 +100,13 @@
     [
       "default_1454713890487",
       "default_1454537582202",
-      "default_1454604463328",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454606380763",
+      "",
+      "default_1455376365210",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455376342305",
+      "",
       "default_1454604440102",
       "default_1454604440102",
       "default_1454604603178",
@@ -118,13 +118,13 @@
     [
       "default_1454713890487",
       "default_1454537582202",
-      "default_1454604463328",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604778776",
-      "default_1454604463328",
+      "",
+      "default_1455376434272",
+      "default_1455376469361",
+      "default_1455374469152",
+      "default_1455376470335",
+      "default_1455376434771",
+      "",
       "default_1454611245028",
       "default_1454611245028",
       "default_1454604463328",
@@ -136,13 +136,13 @@
     [
       "default_1454713890487",
       "default_1454537582202",
-      "default_1454604606167",
-      "default_1454604440102",
-      "default_1454604476074",
-      "default_1454604778776",
-      "default_1454604546607",
-      "default_1454604440102",
-      "default_1454606446005",
+      "",
+      "",
+      "default_1455376434272",
+      "default_1455374469152",
+      "default_1455376434771",
+      "",
+      "",
       "default_1454604603178",
       "default_1454611245028",
       "default_1454604463328",
@@ -355,7 +355,7 @@
       ],
       "tooltip": "",
       "tile": {
-        "x": 8,
+        "x": 6,
         "y": 10
       }
     },
@@ -422,228 +422,6 @@
         "x": 7,
         "y": 8
       }
-    },
-    {
-      "id": "game-darkbounds",
-      "tooltip": "<h1>Dark Bounds</h1>Top-down spaceship multiplayer game<br />CSS, JavaScript, WebSockets, Node.JS",
-      "isBlocking": true,
-      "tile": {
-        "x": 7,
-        "y": 4
-      },
-      "modules": [
-        {
-          "type": "ModuleWebPage",
-          "isActive": true,
-          "url": "http://darkbounds.com/",
-          "isInFrame": true,
-          "useOffset": {
-            "x": -1,
-            "y": 0
-          }
-        },
-        {
-          "type": "ModuleTexture",
-          "src": "actors/trees.png",
-          "scale": 0.6,
-          "clip": {
-            "x": 0,
-            "y": 0
-          },
-          "width": 62,
-          "height": 64,
-          "origin": {
-            "x": 0.3,
-            "y": 0.8
-          }
-        }
-      ],
-      "zIndex": 0
-    },
-    {
-      "id": "game-nanocraft",
-      "tooltip": "<h1>Nanocraft</h1>Isometric RTS/CookieClicker mashup<br />CSS, JavaScript, Firebase as backend",
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleWebPage",
-          "isActive": true,
-          "url": "http://nanocraft.amitay.me/",
-          "isInFrame": true,
-          "useOffset": {
-            "x": 1,
-            "y": 0
-          }
-        },
-        {
-          "type": "ModuleTexture",
-          "src": "actors/trees.png",
-          "scale": 0.6,
-          "clip": {
-            "x": 62,
-            "y": 0
-          },
-          "width": 62,
-          "height": 64,
-          "origin": {
-            "x": 0.4,
-            "y": 0.8
-          }
-        }
-      ],
-      "zIndex": 0,
-      "tile": {
-        "x": 3,
-        "y": 5
-      }
-    },
-    {
-      "id": "game-alice",
-      "tooltip": "<h1>[ALICE].</h1>Side scroller with changing gravity<br />CSS and JavaScript",
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleWebPage",
-          "isActive": true,
-          "url": "http://evyatar.amitay.me/playground/alice/",
-          "isInFrame": true,
-          "useOffset": {
-            "x": 1,
-            "y": 0
-          }
-        },
-        {
-          "type": "ModuleTexture",
-          "src": "actors/trees.png",
-          "scale": 0.6,
-          "clip": {
-            "x": 124,
-            "y": 0
-          },
-          "width": 62,
-          "height": 64,
-          "origin": {
-            "x": 0.4,
-            "y": 0.8
-          }
-        }
-      ],
-      "zIndex": 0,
-      "tile": {
-        "x": 3,
-        "y": 3
-      }
-    },
-    {
-      "id": "game-simon",
-      "tooltip": "<h1>Simon</h1>Recreation of the classic Simon game<br />HTML5, WebAudioAPI and Responsive Design",
-      "isBlocking": true,
-      "modules": [
-        {
-          "type": "ModuleWebPage",
-          "isActive": true,
-          "url": "http://evyatar.amitay.me/playground/simon/",
-          "isInFrame": true,
-          "useOffset": {
-            "x": 1,
-            "y": 0
-          }
-        },
-        {
-          "type": "ModuleTexture",
-          "src": "actors/trees.png",
-          "scale": 0.6,
-          "clip": {
-            "x": 186,
-            "y": 64
-          },
-          "width": 62,
-          "height": 64,
-          "origin": {
-            "x": 0.4,
-            "y": 0.8
-          }
-        }
-      ],
-      "zIndex": 0,
-      "tile": {
-        "x": 3,
-        "y": 4
-      }
-    },
-    {
-      "id": "game-supermoneyo",
-      "tooltip": "<h1>SuperMoney-O</h1>A political-satiric mario-clone game<br />CSS and JavaScript",
-      "isBlocking": true,
-      "tile": {
-        "x": 7,
-        "y": 5
-      },
-      "modules": [
-        {
-          "type": "ModuleWebPage",
-          "isActive": true,
-          "url": "http://evyatar.amitay.me/playground/supermoneyo/",
-          "isInFrame": true,
-          "useOffset": {
-            "x": -1,
-            "y": 0
-          }
-        },
-        {
-          "type": "ModuleTexture",
-          "src": "actors/trees.png",
-          "scale": 0.6,
-          "clip": {
-            "x": 0,
-            "y": 64
-          },
-          "width": 62,
-          "height": 64,
-          "origin": {
-            "x": 0.4,
-            "y": 0.8
-          }
-        }
-      ],
-      "zIndex": 0
-    },
-    {
-      "id": "game-candickrush",
-      "tooltip": "<h1>Can Dick Rush</h1>Maze-navigation, created following a certain copyright story<br />CSS and JavaScript",
-      "isBlocking": true,
-      "tile": {
-        "x": 7,
-        "y": 3
-      },
-      "modules": [
-        {
-          "type": "ModuleWebPage",
-          "isActive": true,
-          "url": "http://evyatar.amitay.me/playground/candickrush/",
-          "isInFrame": true,
-          "useOffset": {
-            "x": -1,
-            "y": 0
-          }
-        },
-        {
-          "type": "ModuleTexture",
-          "src": "actors/trees.png",
-          "scale": 0.6,
-          "clip": {
-            "x": 62,
-            "y": 64
-          },
-          "width": 62,
-          "height": 64,
-          "origin": {
-            "x": 0.4,
-            "y": 0.8
-          }
-        }
-      ],
-      "zIndex": 0
     },
     {
       "id": "js-particles",
@@ -1301,7 +1079,7 @@
     },
     {
       "id": "test",
-      "tooltip": "",
+      "tooltip": "Enter the Arcade",
       "tile": {
         "x": 5,
         "y": 7
@@ -1309,11 +1087,20 @@
       "isBlocking": false,
       "modules": [
         {
+          "type": "ModuleMapTravel",
+          "isActive": true,
+          "mapId": "games",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
           "type": "ModuleTexture",
           "src": "tiles/shooter-ka2.png",
           "clip": {
-            "x": 448,
-            "y": 1088
+            "x": 64,
+            "y": 1216
           },
           "width": 64,
           "height": 64,

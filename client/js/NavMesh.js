@@ -95,6 +95,8 @@ var NavMesh = (function NavMesh() {
               }
             }
           }
+        } else {
+          meshRow.push(false);
         }
       }
       

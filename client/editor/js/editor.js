@@ -2,6 +2,7 @@
 /* global Game */
 /* global EventDispatcher */
 /* global InputManager */
+/* global Pane */
 
 "use strict";
 
@@ -21,11 +22,14 @@ var HTML_MAP_PANE  =  '<div class="editor-title">Map Config</div>';
 function Editor(options) {
   this.elContainer = null;
   this.elDebug = null;
+  this.elMapSelector = null;
   this.game = null;
   
   this.gamePane = null;
   this.mapPane = null;
   this.tilesEditor = null;
+  
+  this.mapId = '';
   
   this.config = {
     game: null,
@@ -57,22 +61,20 @@ Editor.prototype.init = function init(options) {
   this.elContainer = options.elContainer || document.body;
   this.elGamePane = this.elContainer.querySelector('.details-pane');
   this.elMapPane = this.elContainer.querySelector('.map-pane');
+  this.elMapSelector = this.elContainer.querySelector('#map-selector');
 
   this.elDebug = this.elContainer.querySelector('.editor-debug-flags');
   this.elDebug.addEventListener('change', this.onDebugChange.bind(this));
   
   this.elPlayable = this.elContainer.querySelector('input#is-playable');
-  
-  this.elContainer.querySelector('.export-config').addEventListener('click', this.getData.bind(this));
+
+  this.elMapSelector.addEventListener('change', this.goToSelectedMap.bind(this));
   
   this.elContainer.addEventListener('mousedown', this.onMouseDown.bind(this));
   this.elContainer.addEventListener('mousemove', this.onMouseMove.bind(this));
   window.addEventListener('keyup', this.onKeyUp.bind(this));
   
   this.applyUserSettings();
-  Tooltip.init({
-    'editor': this
-  });
 
   utils.request('/data/schema.json', this.onGotSchema.bind(this));
 };
@@ -108,37 +110,86 @@ Editor.prototype.onGotSchema = function onGotSchema(schema) {
     'elContainer': this.elMapPane,
     'onChange': this.onActorsChange.bind(this)
   });
-  /*
-  TextureEditor.init({
+  
+  Tooltip.init({
     'editor': this
   });
-  */
 
-  this.loadGame();
+  utils.request('/api/game/' + this.gameId, this.onGotGameConfig.bind(this));
 };
 
-Editor.prototype.applyUserSettings = function applyUserSettings() {
-  var settings = localStorage.editorSettings;
-  if (settings) {
-    try {
-      settings = JSON.parse(settings);
-    } catch (ex) {
-      
-    }
-  }
+Editor.prototype.onGotGameConfig = function onGotGameConfig(gameConfig) {
+  this.config.game = gameConfig;
   
-  if (!settings) {
-    settings = this.settings;
-  }
+  gameConfig = JSON.parse(JSON.stringify(gameConfig));
   
-  this.settings = settings;
+  this.paneGame.updateFromJSON(gameConfig);
   
-  this.elGamePane.style.width = settings.gamePane.width + '%';
-  this.elMapPane.style.width = settings.mapPane.width + '%';
+  this.populateMapSelector();
+  
+  this.createGame();
 };
 
-Editor.prototype.saveUserSettings = function saveUserSettings() {
-  localStorage.editorSettings = JSON.stringify(this.settings);
+Editor.prototype.createGame = function createGame() {
+  console.info('Create Game');
+  
+  if (this.game) {
+    this.game.destroy();
+  }
+  
+  this.game = new Game({
+    'el': document.getElementById('game'),
+    'debug': this.elGamePane.querySelector('#config-debug').checked,
+    'debugNavmesh': this.elGamePane.querySelector('#config-debug-navmesh').checked
+  });
+  
+  this.game.configDir = '/' + this.gameId;
+  
+  this.game.loadMap = this.loadGameMapOverride.bind(this);
+  
+  this.game.on(this.game.EVENTS.READY, this.onGameReady.bind(this));
+  this.game.on(this.game.EVENTS.POINTER_TILE_CHANGE, this.onGamePointerTileChange.bind(this));
+  this.game.on(this.game.EVENTS.CLICK, function onGameClick(data) {
+    this.handleGameClick(data, true);
+  }.bind(this));
+  this.game.on(this.game.EVENTS.CLICK_SECONDARY, function onGameClickSecondary(data) {
+    this.handleGameClick(data, false);
+  }.bind(this));
+};
+
+Editor.prototype.onGameReady = function onGameReady() {
+  this.tilesEditor.loadFromGame(this.config.game);
+  this.game.createGameFromConfig(this.config.game);
+  
+  this.goToSelectedMap();
+  
+  this.game.camera.setActorToFollow(null);
+};
+
+Editor.prototype.goToSelectedMap = function goToSelectedMap(e) {
+  this.config.map = null;
+  this.game.goToMap(this.elMapSelector.value);
+};
+
+Editor.prototype.loadGameMapOverride = function loadGameMapOverride(mapId, callback) {
+  this.game.maps = {};
+  
+  var apiURL = '/api/game/' + this.gameId + '/map/' + mapId;
+  utils.request(apiURL, this.onGotMapConfig.bind(this));
+};
+
+Editor.prototype.onGotMapConfig = function onGotMapConfig(mapConfig) {
+  this.config.map = mapConfig;
+  
+  mapConfig = JSON.parse(JSON.stringify(mapConfig));
+  
+  this.paneMap.updateFromJSON(mapConfig);
+  this.actorsEditor.loadFromGame(mapConfig);
+  
+  this.game.addMap(mapConfig);
+  this.game.goToMap(this.config.map.id);
+  
+  this.game.playerController.disable();
 };
 
 Editor.prototype.onMouseDown = function onMouseDown(e) {
@@ -217,125 +268,13 @@ Editor.prototype.onKeyUp = function onKeyUp(e) {
   }
 };
 
-Editor.prototype.loadGame = function loadGame() {
-  var gameConfig = this.config.game;
-  
-  if (gameConfig) {
-    gameConfig = JSON.parse(JSON.stringify(gameConfig));
-    
-    this.paneGame.updateFromJSON(gameConfig);
-    
-    this.refreshGame(true);
-  } else {
-    utils.request('/api/game/' + this.gameId, function onGotGame(gameConfig) {
-      this.config.game = gameConfig;
-      this.loadGame();
-    }.bind(this));
-  }
-};
-
-Editor.prototype.loadGameMap = function loadGameMap(mapId, callback) {
-  var mapConfig = this.config.map;
-  
-  if (mapConfig) {
-    mapConfig = JSON.parse(JSON.stringify(mapConfig));
-    
-    this.paneMap.updateFromJSON(mapConfig);
-    this.actorsEditor.loadFromGame(mapConfig);
-    
-    this.game.addMap(mapConfig);
-    callback && callback(mapConfig);
-    
-    this.game.playerController.disable();
-  } else {
-    utils.request('/api/game/' + this.gameId + '/map/' + mapId, function onGotMap(mapConfig) {
-      this.config.map = mapConfig;
-      this.loadGameMap(mapId, callback);
-    }.bind(this));
-  }
-};
-
-Editor.prototype.getData = function getData() {
-  var w = window.open('__blank', 'about:blank', '');
-  w.document.write('<body>' +
-                      '<style>' +
-                        '* { padding: 0; margin: 0; }' +
-                        'body { background: #eee; margin: 0; padding: 0; }' +
-                        'h1 { padding: 5px 10px; cursor: pointer; }' +
-                        'h1:hover { background: rgba(0, 0, 0, .2); }' +
-                        '.pane { width: 50%; float: left; }' +
-                        '.json { padding: 5px; border: 1px solid #000; background: #fff; }' +
-                      '</style>' +
-                      '<script>' +
-                        'function selectJSON(el) {' +
-                          'window.getSelection().removeAllRanges();' +
-                          'var range = document.createRange();' +
-                          'range.selectNode(el);' +
-                          'window.getSelection().addRange(range);' +
-                        '}' +
-                      '</script>' +
-                      '<div class="pane">' +
-                        '<h1 onclick="selectJSON(this.nextSibling);">Game</h1>' +
-                        '<pre class="json">' + JSON.stringify(this.config.game, null, 2) + '</pre>' +
-                      '</div>' +
-                      '<div class="pane">' +
-                        '<h1 onclick="selectJSON(this.nextSibling);">Map</h1>' +
-                        '<pre class="json">' + JSON.stringify(this.config.map, null, 2) + '</pre>' +
-                      '</div>' +
-                    '</body>');
-  /*
-  console.group('JSON');
-  console.log("Game:\n" + JSON.stringify(this.config.game));
-  console.log("Map:\n" + JSON.stringify(this.config.map));
-  console.groupEnd();
-  */
-};
-
 Editor.prototype.refreshMap = function refreshMap() {
   console.warn('Refresh map');
   
-  utils.post('/api/game/' + this.gameId + '/map/' + this.config.map.id, JSON.stringify(this.config.map));
+  var apiURL = '/api/game/' + this.gameId + '/map/' + this.config.map.id;
+  utils.post(apiURL, JSON.stringify(this.config.map));
   
-  delete this.game.maps[this.config.map.id];
-  this.game.goToMap(this.config.map.id);
-};
-
-Editor.prototype.refreshGame = function refreshGame(isFromLoad) {
-  console.info('Refresh game');
-  
-  if (!isFromLoad) {
-    this.saveGameConfig();
-  }
-  
-  if (this.game) {
-    this.game.destroy();
-  }
-  
-  this.game = new Game({
-    'el': document.getElementById('game'),
-    'debug': this.elGamePane.querySelector('#config-debug').checked,
-    'debugNavmesh': this.elGamePane.querySelector('#config-debug-navmesh').checked
-  });
-  
-  this.game.configDir = '/' + this.gameId;
-  
-  this.game.loadMap = this.loadGameMap.bind(this);
-  
-  this.game.on(this.game.EVENTS.READY, this.onGameReady.bind(this));
-  this.game.on(this.game.EVENTS.POINTER_TILE_CHANGE, this.onGamePointerTileChange.bind(this));
-  this.game.on(this.game.EVENTS.CLICK, function onGameClick(data) {
-    this.handleGameClick(data, true);
-  }.bind(this));
-  this.game.on(this.game.EVENTS.CLICK_SECONDARY, function onGameClickSecondary(data) {
-    this.handleGameClick(data, false);
-  }.bind(this));
-};
-
-Editor.prototype.onGameReady = function onGameReady() {
-  this.tilesEditor.loadFromGame(this.config.game);
-  this.game.createGameFromConfig(this.config.game);
-  
-  this.game.camera.setActorToFollow(null);
+  this.onGotMapConfig(this.config.map);
 };
 
 Editor.prototype.resizeGridByClick = function resizeGridByClick(data, isLeftButton) {
@@ -407,6 +346,10 @@ Editor.prototype.resizeGridByClick = function resizeGridByClick(data, isLeftButt
     var actors = this.config.map.actors;
     
     for (var i = 0, len = actors.length; i < len; i++) {
+      if (!actors[i].tile) {
+        continue;
+      }
+      
       actors[i].tile.x += actorsOffset.x;
       actors[i].tile.y += actorsOffset.y;
       
@@ -539,10 +482,47 @@ Editor.prototype.placeActor = function placeActor(actor) {
 };
 
 
+Editor.prototype.populateMapSelector = function populateMapSelector() {
+  var html = '';
+  
+  for (var i = 0, len = this.config.game.maps.length; i < len; i++) {
+    var map = this.config.game.maps[i];
+    html += '<option value="' + map + '">' + map + '</option>';
+  }
+  
+  this.elMapSelector.innerHTML = html;
+};
+
+Editor.prototype.applyUserSettings = function applyUserSettings() {
+  var settings = localStorage.editorSettings;
+  if (settings) {
+    try {
+      settings = JSON.parse(settings);
+    } catch (ex) {
+      
+    }
+  }
+  
+  if (!settings) {
+    settings = this.settings;
+  }
+  
+  this.settings = settings;
+  
+  this.elGamePane.style.width = settings.gamePane.width + '%';
+  this.elMapPane.style.width = settings.mapPane.width + '%';
+};
+
+Editor.prototype.saveUserSettings = function saveUserSettings() {
+  localStorage.editorSettings = JSON.stringify(this.settings);
+};
+
+
 // Change events
 Editor.prototype.onGameConfigChange = function onGameConfigChange() {
   this.paneGame.updateJSON(this.config.game);
-  this.refreshGame();
+  this.saveGameConfig();
+  this.createGame();
 };
 
 Editor.prototype.onTilesChange = function onTilesChange(tiles) {
@@ -580,6 +560,7 @@ Editor.prototype.onDebugChange = function onDebugChange(e) {
 Editor.prototype.saveGameConfig = function saveGameConfig() {
   utils.post('/api/game/' + this.gameId, JSON.stringify(this.config.game));
 };
+
 
 var Tooltip = (function Tooltip() {
   function Tooltip() {
@@ -687,7 +668,6 @@ var Tooltip = (function Tooltip() {
   
   return new Tooltip();
 }());
-
 
 var Actors = (function Actors() {
   var TEMPLATE_ACTORS = '<div class="editor-title">' +
@@ -812,7 +792,7 @@ var Actors = (function Actors() {
       this.onChange(this.actors);
     }
   };
-  
+
   Actors.prototype.createActorModules = function createActorModules(actor, el) {
     var elModules = el.querySelector('.actor-modules');
     var modules = actor.modules || [];
@@ -899,9 +879,10 @@ var Actors = (function Actors() {
   };
   
   Actors.prototype.loadFromGame = function loadFromGame(mapConfig) {
-    if (this.actors.length > 0) {
-      return;
-    }
+    this.elList.innerHTML = '';
+    this.actors = [];
+    this.textures = {};
+    this.modules = {};
     
     var actors = mapConfig.actors;
     

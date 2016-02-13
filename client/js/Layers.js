@@ -295,8 +295,6 @@ var TilesetLayer = (function TilesetLayer() {
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.fillText(j + ',' + i, x + 4, y + 12);
           }
-        } else {
-          console.warn('Trying to draw invalid tile', rows[i][j], i, j);
         }
       }
     }
