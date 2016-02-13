@@ -84,6 +84,11 @@ var Actor = (function Actor() {
     for (var i = 0, len = modules.length; i < len; i++) {
       var moduleData = modules[i];
       var moduleClass = moduleData.type;
+      var isTexture = moduleClass === 'ModuleTexture';
+      
+      if (!isTexture && !moduleData.isActive) {
+        continue;
+      }
       
       if (!window[moduleClass]) {
         console.warn('No module found ', moduleData);
@@ -95,7 +100,7 @@ var Actor = (function Actor() {
       var module = new window[moduleClass](moduleData);
       this.modules.push(module);
       
-      if (module instanceof ModuleTexture) {
+      if (isTexture) {
         this.textureModule = module;
       }
     }

@@ -1,3 +1,8 @@
+/* global EventDispatcher */
+/* global utils */
+
+"use strict";
+
 var Pane = (function Pane() {
   function Pane(options) {
     this.id = '';
@@ -442,8 +447,8 @@ var Input = (function Input() {
     
     this.el = document.createElement('div');
     this.el.className = 'input input-' + this.schema.type;
+    this.el.dataset.inputId = this.id.split('_')[this.id.split('_').length - 1];
     this.el.setAttribute('title', this.schema.tooltip || 'NO TOOLTIP');
-    
     this.el.innerHTML = this.getHTML();
     
     this.setupInput();

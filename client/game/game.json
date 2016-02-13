@@ -960,9 +960,9 @@
       "id": "default_1454714636485",
       "isBlocking": false,
       "texture": {
-        "src": "tiles/atlas.png",
+        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 0,
+          "x": 704,
           "y": 0
         },
         "width": 64,

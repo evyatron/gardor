@@ -840,8 +840,6 @@ var Actors = (function Actors() {
   };
   
   Actors.prototype.onActorModuleChange = function onActorModuleChange(actor, index, data) {
-    console.warn('Module change', actor.id, index, data);
-    
     actor.modules[index] = data;
     
     this.onChange(this.actors);

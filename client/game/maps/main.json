@@ -330,6 +330,26 @@
           "clip": {
             "x": 0,
             "y": 0
+          },
+          "origin": {
+            "x": 0.5,
+            "y": 0.75
+          },
+          "clipBottom": {
+            "x": 0,
+            "y": 0
+          },
+          "clipTop": {
+            "x": 0,
+            "y": 96
+          },
+          "clipRight": {
+            "x": 0,
+            "y": 64
+          },
+          "clipLeft": {
+            "x": 0,
+            "y": 32
           }
         }
       ],
@@ -347,6 +367,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://github.com/evyatron",
           "isInFrame": false,
           "useOffset": {
@@ -378,6 +399,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "https://www.linkedin.com/in/evyataramitay",
           "isInFrame": false,
           "useOffset": {
@@ -412,6 +434,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://darkbounds.com/",
           "isInFrame": true,
           "useOffset": {
@@ -444,6 +467,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://nanocraft.amitay.me/",
           "isInFrame": true,
           "useOffset": {
@@ -480,6 +504,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/alice/",
           "isInFrame": true,
           "useOffset": {
@@ -516,6 +541,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/simon/",
           "isInFrame": true,
           "useOffset": {
@@ -556,6 +582,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/supermoneyo/",
           "isInFrame": true,
           "useOffset": {
@@ -592,6 +619,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/candickrush/",
           "isInFrame": true,
           "useOffset": {
@@ -628,6 +656,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/particles/",
           "isInFrame": true,
           "useOffset": {
@@ -664,6 +693,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/tasia/",
           "isInFrame": true,
           "useOffset": {
@@ -700,6 +730,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://www.isittimeforcoffee.com/",
           "isInFrame": true,
           "useOffset": {
@@ -736,6 +767,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/wobbly/",
           "isInFrame": true,
           "useOffset": {
@@ -772,6 +804,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/conj/",
           "isInFrame": true,
           "useOffset": {
@@ -808,6 +841,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/circular/",
           "isInFrame": true,
           "useOffset": {
@@ -844,6 +878,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/p280/",
           "isInFrame": true,
           "useOffset": {
@@ -880,6 +915,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/3dbounce/",
           "isInFrame": true,
           "useOffset": {
@@ -916,6 +952,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/404.html",
           "isInFrame": true,
           "useOffset": {
@@ -952,6 +989,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/dott/",
           "isInFrame": true,
           "useOffset": {
@@ -988,6 +1026,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/inverter/",
           "isInFrame": true,
           "useOffset": {
@@ -1024,6 +1063,7 @@
       "modules": [
         {
           "type": "ModuleWebPage",
+          "isActive": true,
           "url": "http://evyatar.amitay.me/playground/d3api/",
           "isInFrame": true,
           "useOffset": {
@@ -1061,6 +1101,7 @@
       "modules": [
         {
           "type": "ModuleDialog",
+          "isActive": true,
           "dialogId": "page-about",
           "useDir": "top",
           "useOffset": {
@@ -1092,6 +1133,7 @@
       "modules": [
         {
           "type": "ModuleDialog",
+          "isActive": true,
           "dialogId": "page-contact",
           "useDir": "",
           "useOffset": {
@@ -1128,6 +1170,7 @@
       "modules": [
         {
           "type": "ModuleDialog",
+          "isActive": true,
           "dialogId": "page-games",
           "useDir": "",
           "useOffset": {
@@ -1168,6 +1211,7 @@
       "modules": [
         {
           "type": "ModuleDialog",
+          "isActive": true,
           "dialogId": "page-playground"
         },
         {
@@ -1195,6 +1239,7 @@
       "modules": [
         {
           "type": "ModuleHTMLElement",
+          "isActive": true,
           "page": "contact",
           "useOffset": {
             "x": 0,
@@ -1230,6 +1275,7 @@
       "modules": [
         {
           "type": "ModuleHTMLElement",
+          "isActive": true,
           "page": "about",
           "useOffset": {
             "x": 0,
@@ -1277,20 +1323,20 @@
           },
           "scale": 1,
           "clipBottom": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           },
           "clipTop": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           },
           "clipRight": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           },
           "clipLeft": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           }
         }
       ],
@@ -1320,20 +1366,20 @@
           },
           "scale": 1,
           "clipBottom": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           },
           "clipTop": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           },
           "clipRight": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           },
           "clipLeft": {
-            "x": 0,
-            "y": 0
+            "x": -1,
+            "y": -1
           }
         }
       ],

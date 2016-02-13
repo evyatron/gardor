@@ -137,12 +137,26 @@ div, p, input, textarea {
     transform: translateY(-7.5px) scaleY(-1);
   }
   .pane-container-object .properties {
-    overflow: hidden;
-    height: auto;
-    transition: height 160ms ease-in-out;
+    position: relative;
+    z-index: 10;
   }
-  .expand-collapse:not(:checked) + .collapsible {
-    height: 0;
+  .expand-collapse:not(:checked) + .collapsible .input {
+    display: none;
+  }
+  
+  .actor-module .expand-collapse + .collapsible .input[data-input-id = "isActive"] {
+    display: block;
+    padding: 0;
+  }
+  .actor-module .input[data-input-id = "isActive"] .pane-input-label {
+    display: none;
+  }
+  .actor-module .input[data-input-id = "isActive"] .pane-input-field {
+    position: absolute;
+    top: -16px;
+    left: 3px;
+    width: auto;
+    display: block;
   }
   
   
@@ -304,8 +318,8 @@ div, p, input, textarea {
   }
   .actors-editor .actor {
     position: relative;
-    min-height: 95px;
-    padding-bottom: 20px;
+    min-height: 58px;
+    padding-bottom: 10px;
   }
   .actors-editor .actor:hover {
     background: rgba(255, 255, 255, .2);
@@ -338,6 +352,7 @@ div, p, input, textarea {
     .actor .input-id input {
       border: none;
       background: transparent;
+      margin-left: 35px;
     }
   .actor-modules {
     background: rgba(255, 255, 255, .1);
@@ -346,6 +361,7 @@ div, p, input, textarea {
   }
   .actor-modules .title {
     background: transparent;
+    padding-left: 18px;
   }
   .actor-module {
     position: relative;
@@ -357,10 +373,10 @@ div, p, input, textarea {
   }
   .move-actor {
     position: absolute;
-    top: 60px;
+    top: 2px;
     left: 2px;
     width: 32px;
-    padding: 4px 0;
+    padding: 1px 0 0 0;
   }
 
 .tiles-editor {

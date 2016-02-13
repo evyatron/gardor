@@ -35,22 +35,19 @@ var ActorModule = (function ActorModule() {
     this.actor = options.actor;
     this.activation = options.activation;
     this.disableController = Boolean(options.disableController);
-    this.useDir = options.useDir || '';
     this.useOffset = options.useOffset || {
       'x': 0,
       'y': 0
     };
     
-    if (!this.useDir) {
-      if (this.useOffset.x < 0) {
-        this.useDir = 'right';
-      } else if (this.useOffset.x > 0) {
-        this.useDir = 'left';
-      } else if (this.useOffset.y < 0) {
-        this.useDir = 'bottom';
-      } else if (this.useOffset.y > 0) {
-        this.useDir = 'top';
-      }
+    if (this.useOffset.x < 0) {
+      this.useDir = 'right';
+    } else if (this.useOffset.x > 0) {
+      this.useDir = 'left';
+    } else if (this.useOffset.y < 0) {
+      this.useDir = 'bottom';
+    } else if (this.useOffset.y > 0) {
+      this.useDir = 'top';
     }
     
     switch (this.activation) {
@@ -111,11 +108,9 @@ var ActorModule = (function ActorModule() {
       this.update = this.updateMethod;
     }
     
-    if (this.useDir) {
-      var player = this.actor.game.playerController.controlledActor;
-      if (player) {
-        player.setDirection(this.useDir);
-      }
+    var player = this.actor.game.playerController.controlledActor;
+    if (player) {
+      player.setDirection(this.useDir);
     }
   };
 
@@ -145,12 +140,24 @@ var ModuleTexture = (function ModuleTexture() {
   ModuleTexture.prototype.init = function init(options) {
     ActorModule.prototype.init.apply(this, arguments);
 
-    this.dirClips = options.dirClips || {};
+    this.setDirectionClips(options);
+    
     options.game = this.actor.game;
     this.texture = new Texture(options);
   };
   
-  ModuleTexture.prototype.drawMethod = function draw() {
+  ModuleTexture.prototype.setDirectionClips = function setDirectionClips(options) {
+    function validate(clip) {
+      return clip && clip.x !== -1 && clip.y !== -1;
+    }
+    
+    this.dirClips.top = validate(options.clipTop)? options.clipTop : this.clip;
+    this.dirClips.bottom = validate(options.clipBottom)? options.clipBottom : this.clip;
+    this.dirClips.left = validate(options.clipLeft)? options.clipLeft : this.clip;
+    this.dirClips.right = validate(options.clipRight)? options.clipRight : this.clip;
+  };
+  
+  ModuleTexture.prototype.drawMethod = function drawMethod() {
     var actor = this.actor;
     var game = actor.game;
     var drawPosition = game.getOffsetPosition(actor.position);

@@ -103,29 +103,29 @@
     "clipBottom": {
       "type": "vector",
       "default": {
-        "x": 0,
-        "y": 0
+        "x": -1,
+        "y": -1
       }
     },
     "clipTop": {
       "type": "vector",
       "default": {
-        "x": 0,
-        "y": 0
+        "x": -1,
+        "y": -1
       }
     },
     "clipRight": {
       "type": "vector",
       "default": {
-        "x": 0,
-        "y": 0
+        "x": -1,
+        "y": -1
       }
     },
     "clipLeft": {
       "type": "vector",
       "default": {
-        "x": 0,
-        "y": 0
+        "x": -1,
+        "y": -1
       }
     }
   },
@@ -136,6 +136,15 @@
       "title": "Web Page",
       "tooltip": "Open a web page, either in a frame or a new window",
       "properties": {
+        "isActive": {
+          "type": "boolean",
+          "tooltip": "Is this module active",
+          "default": false
+        },
+        "useOffset": {
+          "type": "vector",
+          "tooltip": "Where the player will be moved when moving to interact"
+        },
         "url": {
           "type": "text",
           "tooltip": "URL to show"
@@ -143,10 +152,6 @@
         "isInFrame": {
           "type": "boolean",
           "tooltip": "Whether this opens in an iframe or a new window"
-        },
-        "useOffset": {
-          "type": "vector",
-          "tooltip": "Where the player will be moved when moving to interact"
         }
       }
     },
@@ -155,17 +160,18 @@
       "title": "Dialog",
       "tooltip": "Start a dialogue using one of the map's dialogs",
       "properties": {
-        "dialogId": {
-          "type": "text",
-          "tooltip": "Which dialog to show"
-        },
-        "useDir": {
-          "type": "text",
-          "tooltip": "Direction the actor will face when interacting\ntop/bottom/left/right"
+        "isActive": {
+          "type": "boolean",
+          "tooltip": "Is this module active",
+          "default": false
         },
         "useOffset": {
           "type": "vector",
           "tooltip": "Where the player will be moved when moving to interact"
+        },
+        "dialogId": {
+          "type": "text",
+          "tooltip": "Which dialog to show"
         }
       }
     },
@@ -174,13 +180,18 @@
       "title": "HTML Element",
       "tooltip": "Toggle HTML element",
       "properties": {
-        "selector": {
-          "type": "text",
-          "tooltip": "Which HTML element to show"
+        "isActive": {
+          "type": "boolean",
+          "tooltip": "Is this module active",
+          "default": false
         },
         "useOffset": {
           "type": "vector",
           "tooltip": "Where the player will be moved when moving to interact"
+        },
+        "page": {
+          "type": "text",
+          "tooltip": "Which HTML element to show. If an element doesn't exist it will request it from the /pages/ folder"
         }
       }
     },
@@ -189,6 +200,11 @@
       "title": "Particles",
       "tooltip": "Spawn particles",
       "properties": {
+        "isActive": {
+          "type": "boolean",
+          "tooltip": "Is this module active",
+          "default": false
+        },
         "offset": {
           "type": "vector",
           "tooltip": "XY offset for the centre spawn of the particles"
