@@ -426,10 +426,6 @@
     {
       "id": "sign-about",
       "tooltip": "Welcome Centre",
-      "tile": {
-        "x": 8,
-        "y": 9
-      },
       "zIndex": 1,
       "isBlocking": false,
       "modules": [
@@ -446,19 +442,39 @@
         {
           "type": "ModuleTexture",
           "src": "actors/signs.png",
-          "scale": 0.6,
+          "scale": 1,
           "clip": {
-            "x": 0,
+            "x": 32,
             "y": 0
           },
           "width": 32,
           "height": 32,
           "origin": {
             "x": 0.5,
-            "y": 0
+            "y": 0.8
+          },
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
           }
         }
-      ]
+      ],
+      "tile": {
+        "x": 8,
+        "y": 8
+      }
     },
     {
       "id": "sign-contact",
@@ -472,7 +488,7 @@
           "useDir": "",
           "useOffset": {
             "x": 0,
-            "y": 0
+            "y": 1
           }
         },
         {
@@ -494,7 +510,7 @@
       "zIndex": 0,
       "tile": {
         "x": 7,
-        "y": 9
+        "y": 8
       }
     },
     {
@@ -537,16 +553,16 @@
     {
       "id": "sign-playground",
       "tooltip": "JavaScript Laboratory",
-      "tile": {
-        "x": 11,
-        "y": 9
-      },
       "isBlocking": false,
       "modules": [
         {
           "type": "ModuleDialog",
           "isActive": true,
-          "dialogId": "page-playground"
+          "dialogId": "page-playground",
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
         },
         {
           "type": "ModuleTexture",
@@ -560,7 +576,11 @@
           }
         }
       ],
-      "zIndex": 0
+      "zIndex": 0,
+      "position": {
+        "x": 783.5,
+        "y": 583.5
+      }
     },
     {
       "id": "page-contact",
