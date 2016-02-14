@@ -266,35 +266,35 @@ var TilesetLayer = (function TilesetLayer() {
       for (var j = 0, numberOfCols = rows[i].length; j < numberOfCols; j++) {
         var tile = tilesMap[rows[i][j]] || defaultTile;
         
+        x = j * size + offset.x;
+        y = i * size + offset.y;
+        
         if (tile) {
-          x = j * size + offset.x;
-          y = i * size + offset.y;
-          
           tile.texture.draw(context, x, y);
           tilesDrawn++;
+        }
+        
+        if (window.DEBUG) {
+          var thisTile = {
+            'x': j,
+            'y': i
+          };
           
-          if (window.DEBUG) {
-            var thisTile = {
-              'x': j,
-              'y': i
-            };
-            
-            if (window.DEBUG_NAVMESH) {
-              if (game.navMesh.isBlocked(thisTile)) {
-                context.fillStyle = 'rgba(255, 0, 0, .2)';
-              } else {
-                context.fillStyle = 'rgba(0, 255, 0, .2)';
-              }
-              
-              context.fillRect(x + 3, y + 3, size - 6, size - 6);
+          if (window.DEBUG_NAVMESH) {
+            if (game.navMesh.isBlocked(thisTile)) {
+              context.fillStyle = 'rgba(255, 0, 0, .2)';
+            } else {
+              context.fillStyle = 'rgba(0, 255, 0, .2)';
             }
-      
-            context.strokeStyle = 'rgba(255, 0, 0, .2)';
-            context.strokeRect(x, y, size, size);
             
-            context.fillStyle = 'rgba(0, 0, 0, 1)';
-            context.fillText(j + ',' + i, x + 4, y + 12);
+            context.fillRect(x + 3, y + 3, size - 6, size - 6);
           }
+    
+          context.strokeStyle = 'rgba(255, 0, 0, .2)';
+          context.strokeRect(x, y, size, size);
+          
+          context.fillStyle = 'rgba(0, 0, 0, 1)';
+          context.fillText(j + ',' + i, x + 4, y + 12);
         }
       }
     }
@@ -505,6 +505,10 @@ var HUDLayer = (function HUDLayer() {
           position.x = Math.round(position.x - bounds.width / 2);
           position.y = Math.round(position.y + this.game.config.tileSize / 2);
         }
+        
+        // Round to avoid blurry elements on Chrome (when translating to floating point)
+        position.x = Math.round(position.x);
+        position.y = Math.round(position.y);
         
         el.style.transform = 'translate(' + position.x + 'px, ' + position.y + 'px)';
       }
