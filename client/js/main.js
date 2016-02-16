@@ -519,9 +519,12 @@ var Game = (function Game() {
   };
   
   Game.prototype.getScreenPosition = function getScreenPosition(position) {
+    
+    var bounds = this.el.getBoundingClientRect();
+    
     return {
-      'x': position.x + this.offset.x,
-      'y': position.y + this.offset.y
+      'x': position.x + this.offset.x - bounds.left,
+      'y': position.y + this.offset.y - bounds.top
     };
   };
   
@@ -665,6 +668,7 @@ var Game = (function Game() {
     }
     
     console.log('Game: ', this.width, ',', this.height);
+    console.log('Map: ', this.mapWidth, ',', this.mapHeight);
     
     this.bleed.x = this.mapWidth - this.width;
     this.bleed.y = this.mapHeight - this.height;
@@ -696,6 +700,6 @@ var Game = (function Game() {
     
     this.camera.onResize();
   };
-
+  
   return Game;
 }());

@@ -419,6 +419,7 @@ var ModuleWebPage = (function ModuleWebPage() {
       if (!windowOpened) {
         this.showPopupMessage();
       }
+      this.actor.game.playerController.enable();
     }
   };
   
