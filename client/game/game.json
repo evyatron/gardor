@@ -1,11 +1,9 @@
 {
   "tileSize": 64,
   "startingMap": "main",
-  "lerpAlpha": 1,
+  "lerpAlpha": 0.2,
   "followPlayer": true,
-  "followPadding": 0,
-  "defaultFont": "11pt 'Share Tech Mono'",
-  "timeToShowClickTexture": 0.3,
+  "timeToShowClickTexture": 0.2,
   "clickTexture": {
     "src": "hud/click.png"
   },

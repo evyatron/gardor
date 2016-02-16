@@ -315,6 +315,8 @@ var Game = (function Game() {
     
     this.dispatch(this.EVENTS.MAP_CREATE, this);
     
+    this.playerController.enable();
+    
     window.requestAnimationFrame(this.runStartupScript.bind(this, 0));
     
     console.info('Finished loading map', this.currentMap);

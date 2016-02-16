@@ -6,6 +6,16 @@
   "defaultTile": "",
   "fillColor": "black",
   "fillTile": "",
+  "startScript": [
+    {
+      "action": "move",
+      "actorId": "player",
+      "target": {
+        "x": 4,
+        "y": 5
+      }
+    }
+  ],
   "grid": [
     [
       "default_1454604560018",

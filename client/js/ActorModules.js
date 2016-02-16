@@ -881,7 +881,8 @@ var ModuleMapTravel = (function ModuleMapTravel() {
     this.mapId = '';
     
     utils.setDefaults(options, {
-      'activation': ActorModule.prototype.ACTIVATIONS.INTERACT
+      'activation': ActorModule.prototype.ACTIVATIONS.INTERACT,
+      'disableController': true
     });
     
     ActorModule.call(this, options);
