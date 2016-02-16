@@ -6,6 +6,16 @@
   "defaultTile": "",
   "fillColor": "black",
   "fillTile": "",
+  "startScript": [
+    {
+      "action": "move",
+      "actorId": "player",
+      "target": {
+        "x": 3,
+        "y": 4
+      }
+    }
+  ],
   "grid": [
     [
       "default_1454604560018",
@@ -65,7 +75,12 @@
   "actors": [
     {
       "id": "player",
+      "tooltip": "",
       "isBlocking": false,
+      "tile": {
+        "x": 3,
+        "y": 5
+      },
       "speed": 130,
       "zIndex": 1,
       "modules": [
@@ -100,12 +115,7 @@
             "y": 32
           }
         }
-      ],
-      "tooltip": "",
-      "tile": {
-        "x": 3,
-        "y": 5
-      }
+      ]
     },
     {
       "id": "game-darkbounds",

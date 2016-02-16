@@ -315,7 +315,36 @@ var Game = (function Game() {
     
     this.dispatch(this.EVENTS.MAP_CREATE, this);
     
+    window.requestAnimationFrame(this.runStartupScript.bind(this, 0));
+    
     console.info('Finished loading map', this.currentMap);
+  };
+  
+  Game.prototype.runStartupScript = function runStartupScript(step) {
+    var script = (this.currentMap.startScript || [])[step];
+    
+    if (!script) {
+      console.info('Finished running startup script');
+      return;
+    }
+    
+    if (script.action === 'move') {
+      var actor = this.getActor(script.actorId);
+      var target = script.target;
+      
+      if (!actor) {
+        console.warn('Actor not found for startup script', script);
+        return;
+      }
+      if (!target) {
+        console.warn('Target not found for startup script', script);
+        return;
+      }
+      
+      actor.moveTo(target);
+    }
+    
+    this.runStartupScript(step + 1);
   };
   
   Game.prototype.createDefaultLayers = function createDefaultLayers() {

@@ -1,4 +1,5 @@
 /* global EventDispatcher */
+/* global utils */
 "use strict";
 
 /* Base class for every Object and Character */
