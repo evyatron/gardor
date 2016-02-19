@@ -232,7 +232,7 @@ em {
 .dialog-box {
   width: 600px;
   height: 200px;
-  margin: 0 0 32px -300px;
+  margin: 0 0 16px -300px;
   padding: 10px 10px 10px 100px;
   font-size: 19px;
   line-height: 1.5;

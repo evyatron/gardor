@@ -180,8 +180,8 @@ var TilesetLayer = (function TilesetLayer() {
     var context = this.context;
     
     this.texture.clip = {
-      'x': camera.x,
-      'y': camera.y
+      'x': camera.x + this.game.config.followPadding,
+      'y': camera.y + this.game.config.followPadding
     };
     
     this.texture.draw(context);
@@ -238,24 +238,24 @@ var TilesetLayer = (function TilesetLayer() {
     var padding = game.followPadding;
     var x, y;
     
-    canvas.width = this.texture.width + game.mapWidth;
-    canvas.height = this.texture.height + game.mapHeight;
+    canvas.width = this.texture.width + game.mapWidth + padding * 2;
+    canvas.height = this.texture.height + game.mapHeight + padding * 2;
     
-    // Fill default colour
+    // Fill default colour - 'red' here since it should NEVER be seen
     context.fillStyle = (color && !fillTile)? color : 'red';
     context.fillRect(0, 0, canvas.width, canvas.height);
     
     // Fill default tile
     if (fillTile) {
-      var offsetX = -(size - offset.x % size) - padding;
-      var offsetY = -(size - offset.y % size) - padding;
-      var width = Math.max(this.width, game.mapWidth) + padding;
-      var height = Math.max(this.height, game.mapHeight) + padding;
+      var offsetX = -(size - offset.x % size + padding);
+      var offsetY = -(size - offset.y % size + padding);
+      var width = Math.max(this.width, game.mapWidth) + padding * 2;
+      var height = Math.max(this.height, game.mapHeight) + padding * 2;
       
       for (x = offsetX; x < width; x += size) {
         for (y = offsetY; y < height; y += size) {
-          if (x < offset.x || x + size > offset.x + game.mapWidth ||
-              y < offset.y || y + size > offset.y + game.mapHeight) {
+          if (x < offset.x + padding || x + size > offset.x + game.mapWidth ||
+              y < offset.y + padding || y + size > offset.y + game.mapHeight) {
             fillTile.texture.draw(context, x, y);
           }
         }
@@ -266,8 +266,8 @@ var TilesetLayer = (function TilesetLayer() {
       for (var j = 0, numberOfCols = rows[i].length; j < numberOfCols; j++) {
         var tile = tilesMap[rows[i][j]] || defaultTile;
         
-        x = j * size + offset.x;
-        y = i * size + offset.y;
+        x = j * size + offset.x + padding;
+        y = i * size + offset.y + padding;
         
         if (tile) {
           tile.texture.draw(context, x, y);
