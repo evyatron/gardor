@@ -283,10 +283,7 @@ var Game = (function Game() {
       this.layers[id].setMap(map);
     }
     
-    var playerActorData = this.config.playerActor;
-    playerActorData.tile = map.playerTile;
-    var playerActor = this.layers.actors.addActor(playerActorData);
-    this.playerController.setControlledActor(playerActor);
+    this.createPlayerActor();
 
     if (this.config.followPlayer) {
       this.camera.setActorToFollow(this.playerController.controlledActor);
@@ -303,6 +300,13 @@ var Game = (function Game() {
     window.requestAnimationFrame(this.runStartupScript.bind(this, 0));
     
     console.info('Finished loading map', this.currentMap);
+  };
+  
+  Game.prototype.createPlayerActor = function createPlayerActor() {
+    var playerActorData = this.config.playerActor;
+    playerActorData.tile = this.currentMap.playerTile;
+    var playerActor = this.layers.actors.addActor(playerActorData);
+    this.playerController.setControlledActor(playerActor);
   };
   
   Game.prototype.runStartupScript = function runStartupScript(step) {

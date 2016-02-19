@@ -32,10 +32,10 @@ var PlayerController = (function PlayerController() {
 
     InputManager.bindAction('interact', InputManager.KEYS.LEFT_MOUSE_BUTTON);
     InputManager.bindAction('secondary', InputManager.KEYS.RIGHT_MOUSE_BUTTON);
-    InputManager.bindAction('up', InputManager.KEYS.W);
-    InputManager.bindAction('left', InputManager.KEYS.A);
-    InputManager.bindAction('down', InputManager.KEYS.S);
-    InputManager.bindAction('right', InputManager.KEYS.D);
+    InputManager.bindAction('up', [InputManager.KEYS.W, InputManager.KEYS.UP]);
+    InputManager.bindAction('left', [InputManager.KEYS.A, InputManager.KEYS.LEFT]);
+    InputManager.bindAction('down', [InputManager.KEYS.S, InputManager.KEYS.DOWN]);
+    InputManager.bindAction('right', [InputManager.KEYS.D, InputManager.KEYS.RIGHT]);
     
     InputManager.on('pressed', 'interact', this.game.handlePrimaryAction.bind(this.game));
     InputManager.on('pressed', 'secondary', this.game.handleSecondaryAction.bind(this.game));
