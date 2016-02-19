@@ -319,8 +319,8 @@ var TilesetLayer = (function TilesetLayer() {
       this.texture.height = Math.max(game.mapHeight, game.containerHeight);
     }
 
-    this.width = game.containerWidth + game.followPadding * 2;
-    this.height = game.containerHeight + game.followPadding * 2;
+    this.width = game.containerWidth;
+    this.height = game.containerHeight;
     
     this.offset = {
       'x': Math.max((this.width - game.mapWidth) / 2, 0),

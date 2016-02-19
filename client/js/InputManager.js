@@ -23,6 +23,7 @@ var InputManager = (function InputManager() {
     this.actionsActive = {};
 
     this.KEYS_DOWN = {};
+    this.ACTIONS_DOWN = {};
     this.justPressed = {};
 
     this.CODE_TO_KEY = {};
@@ -155,6 +156,8 @@ var InputManager = (function InputManager() {
     for (var i = 0, len = keys.length; i < len; i++) {
       this.keyToAction[keys[i]] = actionName;
     }
+    
+    console.info('[InputManager] Bind action "' + actionName + '" to keys ', keys);
   };
   
   InputManager.prototype.getBoundActions = function getBoundActions() {
@@ -247,17 +250,17 @@ var InputManager = (function InputManager() {
     this.setKeyStatus(e.keyCode, false, e);
   };
   
-  InputManager.prototype.setKeyStatus = function setKeyStatus(key, isDown, event) {
-    var isFirstPress = !this.KEYS_DOWN[key];
-    var actionName = this.keyToAction[key];
+  InputManager.prototype.setKeyStatus = function setKeyStatus(keyCode, isDown, event) {
+    var isFirstPress = !this.KEYS_DOWN[keyCode];
+    var actionName = this.keyToAction[keyCode];
+    var keyName = this.CODE_TO_KEY[keyCode];
     
-    this.KEYS_DOWN[key] = isDown;
-    this[this.CODE_TO_KEY[key]] = isDown;
-    
-    
+    this.KEYS_DOWN[keyCode] = isDown;
+    this[keyName] = isDown;
+
     if (actionName) {
       if (isFirstPress) {
-        this.justPressed[key] = true;
+        this.justPressed[keyCode] = true;
       }
       
       this.actionsActive[actionName] = isDown;

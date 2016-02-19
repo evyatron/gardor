@@ -3,6 +3,7 @@
   "startingMap": "main",
   "lerpAlpha": 0.2,
   "followPlayer": true,
+  "followPadding": 200,
   "timeToShowClickTexture": 0.2,
   "clickTexture": {
     "src": "hud/click.png"

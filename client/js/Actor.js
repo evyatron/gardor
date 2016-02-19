@@ -16,6 +16,10 @@ var Actor = (function Actor() {
     this.targetTile = null;
     this.targetPosition = null;
     this.onReachTarget = null;
+    this.movementVector = {
+      'x': 0,
+      'y': 0
+    };
     
     this.isPointerOver = false;
     
@@ -152,6 +156,11 @@ var Actor = (function Actor() {
       return false;
     }
     
+    if (this.movementVector.x !== 0 || this.movementVector.y !== 0) {
+      console.info('Not moving actor since in manual movement');
+      return false;
+    }
+    
     if (utils.tilesEqual(targetTile, this.tile)) {
       onReach && onReach();
     } else {
@@ -164,6 +173,22 @@ var Actor = (function Actor() {
     return true;
   };
   
+  Actor.prototype.moveOnVector = function moveOnVector(direction) {
+    if ((direction.x !== 0 || direction.y !== 0) &&
+        (this.movementVector.x === 0 && this.movementVector.y === 0)) {
+      this.stopMoving();
+    }
+    
+    this.movementVector = direction;
+  };
+  
+  Actor.prototype.stopMoving = function stopMoving() {
+    this.pathToWalk = null;
+    this.targetTile = null;
+    this.targetPosition = null;
+    this.onReachTarget = null;
+  };
+  
   Actor.prototype.onGotPath = function onGotPath(path) {
     this.pathToWalk = path;
     
@@ -171,10 +196,7 @@ var Actor = (function Actor() {
       this.targetTile = path[0];
       this.targetPosition = this.game.getCoordsFromTile(path[0]);
     } else {
-      this.pathToWalk = null;
-      this.targetTile = null;
-      this.targetPosition = null;
-      this.onReachTarget = null;
+      this.stopMoving();
     }
   };
   
@@ -207,6 +229,11 @@ var Actor = (function Actor() {
     
     this.isPointerOver = game.actorsUnderPointer.hasOwnProperty(this.id);
     
+    var movementVector = {
+      'x': 0,
+      'y': 0
+    };
+    
     if (this.pathToWalk) {
       var speed = this.speed * dt;
       
@@ -217,42 +244,57 @@ var Actor = (function Actor() {
           this.targetTile = this.pathToWalk.splice(0, 1)[0];
           this.targetPosition = game.getCoordsFromTile(this.targetTile);
         } else {
-          this.targetTile = null;
-          this.targetPosition = null;
-          this.pathToWalk = null;
-  
           if (this.onReachTarget) {
             this.dispatch(this.EVENTS.REACH_TARGET, this);
             this.onReachTarget(this);
           }
+          
+          this.stopMoving();
         }
       } else {
         var distX = this.targetPosition.x - this.position.x;
         var distY = this.targetPosition.y - this.position.y;
         
         if (distX <= -speed) {
-          this.setDirection('left');
-          this.position.x -= speed;
+          movementVector.x = -1;
         } else if (distX >= speed) {
-          this.setDirection('right');
-          this.position.x += speed;
+          movementVector.x = 1;
         } else {
           if (this.position.x !== this.targetPosition.x) {
             this.position.x = this.targetPosition.x;
           }
             
           if (distY <= -speed) {
-            this.setDirection('top');
-            this.position.y -= speed;
+            movementVector.y -= 1;
           } else if (distY >= speed) {
-            this.setDirection('bottom');
-            this.position.y += speed;
+            movementVector.y = 1;
           }
         }
         
         this.tile = game.getTileFromCoords(this.position);
         this.layer.sortActors();
       }
+    } else {
+      movementVector.x = this.movementVector.x;
+      movementVector.y = this.movementVector.y;
+    }
+    
+    if (movementVector.x !== 0 || movementVector.y !== 0) {
+      if (movementVector.x < 0) {
+        this.setDirection('left');
+      } else if (movementVector.x > 0) {
+        this.setDirection('right');
+      } else if (movementVector.y < 0) {
+        this.setDirection('top');
+      } else if (movementVector.y > 0) {
+        this.setDirection('bottom');
+      }
+      
+      this.position.x += movementVector.x * this.speed * dt;
+      this.position.y += movementVector.y * this.speed * dt;
+      
+      this.tile = game.getTileFromCoords(this.position);
+      this.layer.sortActors();
     }
     
     this.drawPosition = game.getOffsetPosition(this.position);
