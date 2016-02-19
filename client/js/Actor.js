@@ -13,6 +13,7 @@ var Actor = (function Actor() {
     
     this.speed = 0;
     
+    this.isMoving = false;
     this.targetTile = null;
     this.targetPosition = null;
     this.onReachTarget = null;
@@ -177,8 +178,10 @@ var Actor = (function Actor() {
   };
   
   Actor.prototype.moveOnVector = function moveOnVector(direction) {
-    if ((direction.x !== 0 || direction.y !== 0) &&
-        (this.movementVector.x === 0 && this.movementVector.y === 0)) {
+    if (this.isMoving && 
+        ((direction.x !== 0 || direction.y !== 0) ||
+        (direction.x === 0 && direction.y === 0))
+        ){
       this.stopMoving();
     }
     
@@ -190,6 +193,7 @@ var Actor = (function Actor() {
     this.targetTile = null;
     this.targetPosition = null;
     this.onReachTarget = null;
+    this.isMoving = false;
   };
   
   Actor.prototype.onGotPath = function onGotPath(path) {
@@ -307,12 +311,11 @@ var Actor = (function Actor() {
       }
       
       if (canMove) {
+        this.isMoving = true;
         this.position = newPosition;
         this.tile = newTile;
         this.layer.sortActors();
       }
-      
-      
     }
     
     this.drawPosition = game.getOffsetPosition(this.position);

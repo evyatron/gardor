@@ -139,6 +139,7 @@ var ModuleTexture = (function ModuleTexture() {
     this.texture = null;
     this.dirClips = {};
     this.actorDirection = '';
+    this.isActorMoving;
     
     utils.setDefaults(options, {
       'activation': ActorModule.prototype.ACTIVATIONS.AUTOMATIC
@@ -170,24 +171,42 @@ var ModuleTexture = (function ModuleTexture() {
     this.dirClips.right = validate(options.clipRight)? options.clipRight : this.clip;
   };
   
-  ModuleTexture.prototype.drawMethod = function drawMethod() {
+  ModuleTexture.prototype.updateMethod = function updateMethod(dt) {
     var actor = this.actor;
-    var game = actor.game;
-    var drawPosition = game.getOffsetPosition(actor.position);
+    var didChangeDirections = false;
+    
+    this.texture.update(dt);
+    
     
     if (actor.direction !== this.actorDirection) {
       this.actorDirection = actor.direction;
-      
+      didChangeDirections = true;
+
       var clip = this.dirClips[this.actorDirection];
       if (clip) {
         this.texture.setClip(clip);
       }
     }
     
+    if (this.isActorMoving !== actor.isMoving || didChangeDirections) {
+      this.isActorMoving = actor.isMoving;
+      
+      if (actor.isMoving) {
+        this.texture.setDirectionAnimation(this.actorDirection);
+      } else {
+        this.texture.stopAnimation();
+      }
+    }
+  };
+  
+  ModuleTexture.prototype.drawMethod = function drawMethod() {
+    var actor = this.actor;
+    var drawPosition = actor.game.getOffsetPosition(actor.position);
+    
     this.texture.draw(actor.layer.context,
                       drawPosition.x,
                       drawPosition.y,
-                      game);
+                      actor.game);
   };
 
   return ModuleTexture;

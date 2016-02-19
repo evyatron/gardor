@@ -103,11 +103,13 @@ var PlayerController = (function PlayerController() {
         if (InputManager.actionsActive.down) {
           dir.y++;
         }
-        if (InputManager.actionsActive.left) {
-          dir.x--;
-        }
-        if (InputManager.actionsActive.right) {
-          dir.x++;
+        if (dir.y === 0) {
+          if (InputManager.actionsActive.left) {
+            dir.x--;
+          }
+          if (InputManager.actionsActive.right) {
+            dir.x++;
+          }
         }
         
         actor.moveOnVector(dir);

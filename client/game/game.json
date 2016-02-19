@@ -47,6 +47,40 @@
         "clipLeft": {
           "x": 0,
           "y": 32
+        },
+        "animations": {
+          "_top": {
+            "start": {
+              "x": 0,
+              "y": 96
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          },
+          "_bottom": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          },
+          "_right": {
+            "start": {
+              "x": 0,
+              "y": 64
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          },
+          "_left": {
+            "start": {
+              "x": 0,
+              "y": 32
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          }
         }
       }
     ]

@@ -23,7 +23,12 @@ var Texture = (function Texture() {
     this.height = 0;
     this.scale = 1;
     this.alpha = null;
+    this.animations = null;
     this.isReady = false;
+    
+    this.animationTime = 0;
+    this.currentAnimationId = '';
+    this.currentAnimation = null;
     
     this.init(options, onLoad);
   }
@@ -67,6 +72,25 @@ var Texture = (function Texture() {
     this.alpha = alpha;
   };
   
+  Texture.prototype.setDirectionAnimation = function setDirectionAnimation(direction) {
+    this.setAnimation('_' + direction);
+  };
+  
+  Texture.prototype.setAnimation = function setAnimation(animationId) {
+    var animation = this.animations && this.animations[animationId];
+    
+    if (animationId !== this.currentAnimationId) {
+      this.animationTime = 0;
+    }
+    
+    this.currentAnimationId = animationId;
+    this.currentAnimation = animation;
+  };
+  
+  Texture.prototype.stopAnimation = function stopAnimation() {
+    this.currentAnimation = null;
+  };
+  
   Texture.prototype.getImage = function getImage() {
     return Texture.prototype.textures[this.src];
   };
@@ -84,6 +108,11 @@ var Texture = (function Texture() {
       'y': 0
     };
     this.scale = data.scale || 1;
+    this.animations = data.animations || null;
+    
+    if (this.animations) {
+      this.setAnimation('_top');
+    }
 
     if (this.src) {
       this.isReady = false;
@@ -109,6 +138,12 @@ var Texture = (function Texture() {
 
         Texture.prototype.textures[this.src] = image;
       }
+    }
+  };
+  
+  Texture.prototype.update = function update(dt) {
+    if (this.currentAnimation) {
+      this.animationTime += dt;
     }
   };
   
@@ -150,10 +185,20 @@ var Texture = (function Texture() {
         context.globalAlpha = this.alpha;
       }
       
+      var originX = clip.x;
+      var originY = clip.y;
+      
+      if (this.currentAnimation) {
+        var animation = this.currentAnimation;
+        var frame = Math.floor(this.animationTime / animation.speed) % animation.numberOfFrames;
+        originX = animation.start.x + frame * width;
+        originY = animation.start.y;
+      }
+      
       context.drawImage(image,
                         // Draw this
-                        clip.x,
-                        clip.y,
+                        originX,
+                        originY,
                         width,
                         height,
                         // Here
