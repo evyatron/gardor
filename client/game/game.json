@@ -854,7 +854,8 @@
           "y": 0
         }
       },
-      "index": 23
+      "index": 23,
+      "walkCost": 2
     },
     {
       "id": "default_1454714355490",

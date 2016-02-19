@@ -275,19 +275,19 @@ var TilesetLayer = (function TilesetLayer() {
         }
         
         if (window.DEBUG) {
-          var thisTile = {
-            'x': j,
-            'y': i
-          };
-          
           if (window.DEBUG_NAVMESH) {
-            if (game.navMesh.isBlocked(thisTile)) {
-              context.fillStyle = 'rgba(255, 0, 0, .2)';
+            var navMeshTile = game.navMesh.mesh[i][j];
+            
+            if (navMeshTile === false) {
+              context.fillStyle = 'rgba(255, 0, 0, .3)';
             } else {
               context.fillStyle = 'rgba(0, 255, 0, .2)';
             }
             
             context.fillRect(x + 3, y + 3, size - 6, size - 6);
+            
+            context.fillStyle = 'rgba(0, 0, 0, 1)';
+            context.fillText(navMeshTile, x + 4, y + 21);
           }
     
           context.strokeStyle = 'rgba(255, 0, 0, .2)';
