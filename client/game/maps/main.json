@@ -2,7 +2,7 @@
   "id": "main",
   "name": "Main Map",
   "playerActor": "player",
-  "padding": 0,
+  "padding": 300,
   "defaultTile": "default_1454537582202",
   "fillColor": "black",
   "fillTile": "default_1454537582202",
@@ -318,7 +318,7 @@
     {
       "id": "player",
       "isBlocking": false,
-      "speed": 160,
+      "speed": 130,
       "zIndex": 1,
       "modules": [
         {

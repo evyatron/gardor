@@ -180,8 +180,8 @@ var TilesetLayer = (function TilesetLayer() {
     var context = this.context;
     
     this.texture.clip = {
-      'x': camera.x + this.game.config.followPadding,
-      'y': camera.y + this.game.config.followPadding
+      'x': camera.x + this.game.currentMap.padding,
+      'y': camera.y + this.game.currentMap.padding
     };
     
     this.texture.draw(context);
@@ -235,7 +235,7 @@ var TilesetLayer = (function TilesetLayer() {
     var fillTile = tilesMap[map.fillTile];
     var color = map.fillColor;
     var offset = this.offset;
-    var padding = game.followPadding;
+    var padding = map.padding;
     var x, y;
     
     canvas.width = this.texture.width + game.mapWidth + padding * 2;

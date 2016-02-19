@@ -36,7 +36,7 @@ var Camera = (function Camera() {
   Camera.prototype.getActorPosition = function getActorPosition() {
     var game = this.game;
     var actorPosition = this.actorToFollow.position;
-    var padding = game.followPadding;
+    var padding = game.currentMap.padding;
     
     return {
       'x': utils.clamp(-game.width / 2 + actorPosition.x, -padding, game.bleed.x + padding),

@@ -19,11 +19,6 @@
       "tooltip": "Should the camera follow the player. Recommended for large maps.",
       "default": true
     },
-    "followPadding": {
-      "type": "number",
-      "tooltip": "Padding around the screen in which the player can't be",
-      "default": 0
-    },
     "defaultFont": {
       "type": "text",
       "tooltip": "Default font to use in the game. Format is XXpt FONT_NAME",
@@ -53,7 +48,7 @@
     "padding": {
       "type": "number",
       "tooltip": "padding between the map and the edges of the container",
-      "default": 20
+      "default": 0
     },
     "defaultTile": {
       "type": "text",

@@ -37,10 +37,6 @@ var Game = (function Game() {
       'x': 0,
       'y': 0
     };
-    this.followPadding = {
-      'x': 0,
-      'y': 0
-    };
     
     this.currentMap = null;
     
@@ -206,7 +202,6 @@ var Game = (function Game() {
     
     this.clickTexture = this.config.clickTexture;
     this.timeToShowClickTexture = this.config.timeToShowClickTexture || 1;
-    this.followPadding = this.config.followPadding || 0;
     
     this.setTiles(this.config.tiles);
 
@@ -666,7 +661,6 @@ var Game = (function Game() {
     
     var bounds = this.el.getBoundingClientRect();
     var elParent = this.el.parentNode;
-    var padding = this.currentMap && this.currentMap.padding || 0;
     
     this.containerWidth = elParent.offsetWidth;
     this.containerHeight = elParent.offsetHeight;
@@ -681,11 +675,11 @@ var Game = (function Game() {
     console.log('Container: ', this.containerWidth, ',', this.containerHeight);
 
     if (this.currentMap && this.currentMap.width && this.currentMap.height) {
-      this.width = Math.min(this.currentMap.width, this.containerWidth - padding);
-      this.height = Math.min(this.currentMap.height, this.containerHeigh - padding);
+      this.width = Math.min(this.currentMap.width, this.containerWidth);
+      this.height = Math.min(this.currentMap.height, this.containerHeigh);
     } else {
-      this.width = elParent.offsetWidth - padding;
-      this.height = elParent.offsetHeight - padding;
+      this.width = elParent.offsetWidth;
+      this.height = elParent.offsetHeight;
     }
     
     this.width = Math.min(this.width, this.mapWidth);
