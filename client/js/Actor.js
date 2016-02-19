@@ -236,6 +236,7 @@ var Actor = (function Actor() {
       'x': 0,
       'y': 0
     };
+    var isManuallyMoving = false;
     
     if (this.pathToWalk) {
       var speed = this.speed * dt;
@@ -280,6 +281,7 @@ var Actor = (function Actor() {
     } else {
       movementVector.x = this.movementVector.x;
       movementVector.y = this.movementVector.y;
+      isManuallyMoving = movementVector.x !== 0 || movementVector.y !== 0;
     }
     
     if (movementVector.x !== 0 || movementVector.y !== 0) {
@@ -293,11 +295,24 @@ var Actor = (function Actor() {
         this.setDirection('bottom');
       }
       
-      this.position.x += movementVector.x * this.speed * dt;
-      this.position.y += movementVector.y * this.speed * dt;
+      var newPosition = {
+        'x': this.position.x + movementVector.x * this.speed * dt,
+        'y': this.position.y + movementVector.y * this.speed * dt
+      };
+      var newTile = game.getTileFromCoords(newPosition);
+      var canMove = true;
       
-      this.tile = game.getTileFromCoords(this.position);
-      this.layer.sortActors();
+      if (isManuallyMoving) {
+        canMove = !game.navMesh.isBlocked(newTile);
+      }
+      
+      if (canMove) {
+        this.position = newPosition;
+        this.tile = newTile;
+        this.layer.sortActors();
+      }
+      
+      
     }
     
     this.drawPosition = game.getOffsetPosition(this.position);
