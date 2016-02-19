@@ -1,7 +1,10 @@
 {
   "id": "jsstuff",
   "name": "JavaScript Experiments",
-  "playerActor": "player",
+  "playerTile": {
+    "x": 4,
+    "y": 7
+  },
   "padding": 0,
   "defaultTile": "",
   "fillColor": "black",
@@ -107,50 +110,6 @@
     ]
   ],
   "actors": [
-    {
-      "id": "player",
-      "isBlocking": false,
-      "tooltip": "",
-      "tile": {
-        "x": 4,
-        "y": 7
-      },
-      "speed": 130,
-      "zIndex": 1,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "characters/player.png",
-          "width": 32,
-          "height": 32,
-          "scale": 1.5,
-          "clip": {
-            "x": 0,
-            "y": 64
-          },
-          "origin": {
-            "x": 0.5,
-            "y": 0.5
-          },
-          "clipBottom": {
-            "x": 0,
-            "y": 0
-          },
-          "clipTop": {
-            "x": 0,
-            "y": 96
-          },
-          "clipRight": {
-            "x": 0,
-            "y": 64
-          },
-          "clipLeft": {
-            "x": 0,
-            "y": 32
-          }
-        }
-      ]
-    },
     {
       "id": "exit",
       "tooltip": "Go Outside",

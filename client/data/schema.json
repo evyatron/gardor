@@ -40,10 +40,9 @@
       "type": "text",
       "tooltip": "Map name"
     },
-    "playerActor": {
-      "type": "text",
-      "tooltip": "Id of the player controlled actor",
-      "default": "player"
+    "playerTile": {
+      "type": "vector",
+      "tooltip": "Starting position of the player actor"
     },
     "padding": {
       "type": "number",

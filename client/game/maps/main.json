@@ -1,11 +1,15 @@
 {
   "id": "main",
   "name": "Main Map",
-  "playerActor": "player",
+  "playerTile": {
+    "x": 8,
+    "y": 10
+  },
   "padding": 300,
   "defaultTile": "default_1454537582202",
   "fillColor": "black",
   "fillTile": "default_1454537582202",
+  "startScript": [],
   "grid": [
     [
       "default_1454713938323",
@@ -314,52 +318,7 @@
       ""
     ]
   ],
-  "actors": [
-    {
-      "id": "player",
-      "isBlocking": false,
-      "speed": 130,
-      "zIndex": 1,
-      "modules": [
-        {
-          "type": "ModuleTexture",
-          "src": "characters/player.png",
-          "width": 32,
-          "height": 32,
-          "scale": 1.5,
-          "clip": {
-            "x": 0,
-            "y": 0
-          },
-          "origin": {
-            "x": 0.5,
-            "y": 0.75
-          },
-          "clipBottom": {
-            "x": 0,
-            "y": 0
-          },
-          "clipTop": {
-            "x": 0,
-            "y": 96
-          },
-          "clipRight": {
-            "x": 0,
-            "y": 64
-          },
-          "clipLeft": {
-            "x": 0,
-            "y": 32
-          }
-        }
-      ],
-      "tooltip": "",
-      "tile": {
-        "x": 8,
-        "y": 10
-      }
-    },
-    {
+  "actors": [{
       "id": "social-github",
       "tooltip": "GitHub",
       "isBlocking": true,

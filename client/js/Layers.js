@@ -44,17 +44,23 @@ var Layer = (function Layer() {
     this.actorsMap = {};
     
     for (var i = 0, len = map.actors.length; i < len; i++) {
-      var actorData = map.actors[i];
-      actorData.layer = this;
-      
-      var actor = new Actor(actorData);
-      this.actors.push(actor);
-      this.actorsMap[actor.id] = actor;
+      this.addActor(map.actors[i]);
     }
     
     this.sortActors();
     
     return true;
+  };
+  
+  Layer.prototype.addActor = function addActor(data) {
+    data.layer = this;
+    
+    var actor = new Actor(data);
+    
+    this.actors.push(actor);
+    this.actorsMap[actor.id] = actor;
+    
+    return actor;
   };
   
   Layer.prototype.sortActors = function sortActors() {

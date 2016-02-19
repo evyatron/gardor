@@ -12,6 +12,45 @@
     "games",
     "jsstuff"
   ],
+  "playerActor": {
+    "id": "player",
+    "isBlocking": false,
+    "speed": 130,
+    "zIndex": 1,
+    "modules": [
+      {
+        "type": "ModuleTexture",
+        "src": "characters/player.png",
+        "width": 32,
+        "height": 32,
+        "scale": 1.5,
+        "clip": {
+          "x": 0,
+          "y": 0
+        },
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        },
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 96
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 64
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 32
+        }
+      }
+    ]
+  },
   "tiles": [
     {
       "id": "default_1454537582202",

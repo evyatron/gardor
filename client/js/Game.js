@@ -269,18 +269,6 @@ var Game = (function Game() {
     if (map === true) {
       return this.GOTO_MAP_RESULT.LOADING;
     }
-
-    /*
-    if (window.history) {
-      var url = window.location.pathname;
-      
-      if (mapId !== this.config.startingMap) {
-        url = '?map=' + encodeURIComponent(mapId);
-      }
-      
-      window.history.pushState('', '', url);
-    }
-    */
     
     this.currentMap = map;
     
@@ -295,11 +283,11 @@ var Game = (function Game() {
       this.layers[id].setMap(map);
     }
     
-    var controlledActor = this.layers.actors.actorsMap[map.playerActor];
-    if (controlledActor) {
-      this.playerController.setControlledActor(controlledActor);
-    }
-    
+    var playerActorData = this.config.playerActor;
+    playerActorData.tile = map.playerTile;
+    var playerActor = this.layers.actors.addActor(playerActorData);
+    this.playerController.setControlledActor(playerActor);
+
     if (this.config.followPlayer) {
       this.camera.setActorToFollow(this.playerController.controlledActor);
     }
@@ -438,12 +426,8 @@ var Game = (function Game() {
     this.startBenchmark('global', 'draw');
     
     var layers = this.layers;
-    var id;
-    
-    for (id in layers) {
+    for (var id in layers) {
       layers[id].clear();
-    }
-    for (id in layers) {
       layers[id].draw();
     }
     
