@@ -89,27 +89,29 @@ var PlayerController = (function PlayerController() {
       this.pointer.y = utils.clamp(this.pointer.y, 0, game.height + game.bleed.y - tileSize);
     }
     
-    var actor = this.controlledActor;
-    if (actor) {
-      var dir = {
-        'x': 0,
-        'y': 0
-      };
-      
-      if (InputManager.actionsActive.up) {
-        dir.y--;
+    if (this.isActive) {
+      var actor = this.controlledActor;
+      if (actor) {
+        var dir = {
+          'x': 0,
+          'y': 0
+        };
+        
+        if (InputManager.actionsActive.up) {
+          dir.y--;
+        }
+        if (InputManager.actionsActive.down) {
+          dir.y++;
+        }
+        if (InputManager.actionsActive.left) {
+          dir.x--;
+        }
+        if (InputManager.actionsActive.right) {
+          dir.x++;
+        }
+        
+        actor.moveOnVector(dir);
       }
-      if (InputManager.actionsActive.down) {
-        dir.y++;
-      }
-      if (InputManager.actionsActive.left) {
-        dir.x--;
-      }
-      if (InputManager.actionsActive.right) {
-        dir.x++;
-      }
-      
-      actor.moveOnVector(dir);
     }
     
     game.log('pointer: ' + this.pointer.x + ',' + this.pointer.y);

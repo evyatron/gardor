@@ -8,7 +8,21 @@
   </head>
   <body>
     <div id="game-wrapper">
-    <div id="game"></div>
+      <div id="game"></div>
+    </div>
+    
+    <div class="menu">
+      <h1>Evyatar Amitay</h1>
+      <ul class="menu-options">
+        <li class="menu-option"><a href="/?map=games" data-target="games-arcade-door">Games</a></li>
+        <li class="menu-option"><a href="/?map=jsstuff" data-target="js-experiments-door">JavaScript Experiments</a></li>
+        <li class="menu-option"><a href="/?page=about" data-target="page-about">About Me</a></li>
+        <li class="menu-option"><a href="/?page=contact" data-target="page-contact">Contact Me</a></li>
+      </ul>
+      <ul class="social-links">
+        <li class="social-link linkedin"><a href="https://www.linkedin.com/in/evyataramitay" target="_blank" data-target="social-github"><span>GitHub</span></a></li>
+        <li class="social-link github"><a href="http://github.com/evyatron" target="_blank" data-target="social-linkedin"><span>LinkedIn</span></a></li>
+      </ul>
     </div>
     
     <div class="module-content" data-module-id="about">
@@ -17,8 +31,10 @@
         I'm <em>Evyatar</em>, a <em>Game Developer</em> based in <em>London, UK</em>.
       </p>
       <p>
-        I have experience developing Gamesin <em>JavaScript</em> (evidently), <em>Unity (C#)</em> and <em>Unreal Engine</em>.
-        I also love creating unique and interactive experiences using various technologies such as <em>HTML5, CSS3 and Object Oriented JavaScript</em> and <em>VR</em>.
+        I develop games in <em>Unity (C#)</em>, <em>JavaScript</em> (evidently) and <em>Unreal Engine</em>.
+      </p>
+      <p>
+        I also love creating unique interactive experiences using cutting-edge web technologies such as <em>HTML5</em>, <em>CSS3</em> and <em>Object Oriented JavaScript</em> - and even <em>VR</em>!.
       </p>
     </div>
     <div class="module-content" data-module-id="contact">
@@ -75,13 +91,7 @@
     </div>
 
     <script src="/js/common.js"></script>
+    <script src="/js/Game.js"></script>
     <script src="/js/main.js"></script>
-    <script>
-      window.game = new Game({
-        'el': document.getElementById('game'),
-        'configDir': '/game',
-        'autoGoToMap': true
-      });
-    </script>
   </body>
 </html>

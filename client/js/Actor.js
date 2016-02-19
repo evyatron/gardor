@@ -49,7 +49,8 @@ var Actor = (function Actor() {
   Actor.prototype.constructor = Actor;
   
   Actor.prototype.EVENTS = {
-    REACH_TARGET: 'reachTarget'
+    REACH_TARGET: 'reachTarget',
+    CLICKED: 'clicked'
   };
   
   Actor.prototype.init = function init(options) {
@@ -146,6 +147,8 @@ var Actor = (function Actor() {
         wasClickHandled = true;
       }
     }
+    
+    this.dispatch(this.EVENTS.CLICKED);
     
     return wasClickHandled;
   };

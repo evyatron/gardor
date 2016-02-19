@@ -1,6 +1,7 @@
 /* global Texture */
 /* global utils */
 /* global InputManager */
+/* global EventDispatcher */
 "use strict";
 
 /*
@@ -23,11 +24,19 @@ var ActorModule = (function ActorModule() {
     this.init(options);
   }
   
+  ActorModule.prototype = Object.create(EventDispatcher.prototype);
+  ActorModule.prototype.constructor = ActorModule;
+  
   ActorModule.prototype.ACTIVATIONS = {
     AUTOMATIC: 'auto',
     INTERACT: 'interact',
     MANUAL: 'manual',
     PROXIMITY: 'proximity'
+  };
+  
+  ActorModule.prototype.EVENTS = {
+    ACTIVATE: 'activated',
+    STOP: 'stopped'
   };
   
   ActorModule.prototype.init = function init(options) {
@@ -92,6 +101,8 @@ var ActorModule = (function ActorModule() {
       this.updateMethod = this.update;
       delete this.update;
     }
+    
+    this.dispatch(this.EVENTS.STOP);
   };
   
   ActorModule.prototype.activate = function activate() {
@@ -112,6 +123,8 @@ var ActorModule = (function ActorModule() {
     if (player) {
       player.setDirection(this.useDir);
     }
+    
+    this.dispatch(this.EVENTS.ACTIVATE);
   };
 
   return ActorModule;
@@ -329,7 +342,8 @@ var ModuleWebPage = (function ModuleWebPage() {
                          '<div class="popup-block-title">Popup Blocked?? Noooooooo!</div>' +
                          '<div class="popup-block-message">' +
                             'Please allow popups to fully enjoy<br />' +
-                            'the wonder that is this link.' +
+                            'the wonder that is this link.<br /><br />' +
+                            '(Or just click it again)' +
                          '</div>' +
                          '<div class="popup-block-buttons">' +
                            '<div class="button">Okay</div>' +

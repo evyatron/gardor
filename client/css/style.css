@@ -16,7 +16,7 @@ body {
 
 body {
   font: normal 1em 'Share Tech Mono';
-  background: linear-gradient(to bottom, #fff, #ddd);
+  background: linear-gradient(to bottom, #eee, #ccc);
 }
 
 #game-wrapper {
@@ -27,6 +27,7 @@ body {
   height: 700px;
   margin: -350px 0 0 -500px;
   background: #000;
+  z-index: 20;
 }
   #game-wrapper:before {
     content: '';
@@ -95,9 +96,129 @@ em {
   transform: translate(-50%, -50%);
 }
 
+.menu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 250px;
+  padding: 8px;
+  background: #B1A99D;
+  border-right: 3px solid #836634;
+}
+  .menu a {
+    color: #000;
+  }
+  .menu h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 2px solid rgba(0, 0, 0, .7);
+  }
+.menu-options {
+  list-style-type: none;
+}
+  .menu-option {
+    margin-bottom: 5px;
+  }
+  .menu-option a {
+    position: relative;
+    display: block;
+    padding: 5px 5px 5px 15px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0);
+    transition: background 80ms ease-in-out;
+  }
+  .menu-option a:hover {
+    background: rgba(255, 255, 255, .2);
+  }
+  .menu-option a:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -2px;
+    width: 5px;
+    height: 5px;
+    margin-top: -6px;
+    border: 3px solid transparent;
+    border-color: #2D4E1C #2D4E1C transparent transparent;
+    transform: rotate(45deg);
+  }
+  .menu-option a:hover:before {
+    animation: menu-item 500ms ease-in-out alternate infinite;
+  }
+  @keyframes menu-item {
+    0% {
+      transform: translateX(0px) rotate(45deg);
+    }
+    100% {
+      transform: translateX(2px) rotate(45deg);
+    }
+  }
+.social-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  list-style-type: none;
+}
+  .social-link {
+    margin: 0 10px;
+  }
+    .social-link a {
+      position: relative;
+      display: block;
+      width: 48px;
+      height: 48px;
+    }
+      .social-link a span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        padding: 0 18px;
+        margin-top: 12px;
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        transition: opacity 120ms ease-in-out,
+                    transform 120ms ease-in-out;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%,
+                                              rgba(255, 255, 255, .5) 25%,
+                                              rgba(255, 255, 255, .5) 75%,
+                                              rgba(255, 255, 255, 0) 100%);
+      }
+      .social-link a:hover span {
+        opacity: 1;
+        transform: translate(-50%, 100%);
+      }
+      .social-link a:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        border-radius: 4px;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, .3),
+                    0 0 0 1px rgba(0, 0, 0, .3) inset;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        transition: box-shadow 120ms ease-in-out;
+      }
+      .social-link a:hover:before {
+        box-shadow: 0 0 0 2px rgba(20, 20, 20, .7),
+                    0 0 0 1px rgba(20, 20, 20, .7) inset;
+      }
+    .social-link.github a:before { background-image: url('/images/github.png'); }
+    .social-link.linkedin a:before { background-image: url('/images/linkedin.png'); }
+
 /* Hide since the actual module will grab its content and then remove it */
+/* Hopefully this doens't hurt SEO! */
 .module-content {
-  opacity: 0;
+  display: none;
 }
 
 .game-module {
@@ -151,6 +272,7 @@ em {
     border-radius: 50%;
     background: #000;
     color: #d11;
+    cursor: pointer;
   }
     .game-module .close-html-module:after {
       content: 'x';
