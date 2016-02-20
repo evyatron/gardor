@@ -21,6 +21,7 @@ var HTML_MAP_PANE  =  '<div class="editor-title">Map Config</div>';
 
 function Editor(options) {
   this.elContainer = null;
+  this.elGame = null;
   this.elDebug = null;
   this.elMapSelector = null;
   this.game = null;
@@ -28,8 +29,11 @@ function Editor(options) {
   this.gamePane = null;
   this.mapPane = null;
   this.tilesEditor = null;
+  
   this.isMouseDown = false;
   this.isLeftButton = false;
+  this.isRightButton = false;
+  this.isMiddleButton = false;
   
   this.mapId = '';
   
@@ -61,6 +65,7 @@ Editor.prototype.init = function init(options) {
   !options && (options = {});
   
   this.elContainer = options.elContainer || document.body;
+  this.elGame = this.elContainer.querySelector('#game');
   this.elGamePane = this.elContainer.querySelector('.details-pane');
   this.elMapPane = this.elContainer.querySelector('.map-pane');
   this.elMapSelector = this.elContainer.querySelector('#map-selector');
@@ -72,9 +77,13 @@ Editor.prototype.init = function init(options) {
 
   this.elMapSelector.addEventListener('change', this.goToSelectedMap.bind(this));
   
-  this.elContainer.addEventListener('mousedown', this.onMouseDown.bind(this));
-  this.elContainer.addEventListener('mousemove', this.onMouseMove.bind(this));
-  this.elContainer.addEventListener('mouseup', this.onMouseUp.bind(this));
+  this.elGamePane.addEventListener('mousedown', this.resizePanels.bind(this));
+  this.elMapPane.addEventListener('mousedown', this.resizePanels.bind(this));
+  
+  this.elGame.addEventListener('mousedown', this.onMouseDown.bind(this));
+  this.elGame.addEventListener('mousemove', this.onMouseMove.bind(this));
+  this.elGame.addEventListener('mouseup', this.onMouseUp.bind(this));
+  
   window.addEventListener('keyup', this.onKeyUp.bind(this));
   
   this.applyUserSettings();
@@ -165,8 +174,6 @@ Editor.prototype.onGameReady = function onGameReady() {
   this.game.createGameFromConfig(this.config.game);
   
   this.goToSelectedMap();
-  
-  this.game.camera.setActorToFollow(null);
 };
 
 Editor.prototype.goToSelectedMap = function goToSelectedMap(e) {
@@ -195,15 +202,19 @@ Editor.prototype.onGotMapConfig = function onGotMapConfig(mapConfig) {
   this.game.goToMap(this.config.map.id);
   
   this.game.playerController.disable();
-  this.game.camera.setActorToFollow(null);
   
-  this.game.camera.targetPosition.x = -this.game.width / 2 + this.game.mapWidth / 2;
-  this.game.camera.targetPosition.y = -this.game.height / 2 + this.game.mapHeight / 2;
+  var camera = this.game.camera;
+  var cameraPosition = {
+    'x': -(this.game.width - this.game.mapWidth) / 2,
+    'y': -(this.game.height - this.game.mapHeight) / 2
+  };
+  
+  camera.setActorToFollow(null);
+  camera.x = camera.targetPosition.x = cameraPosition.x;
+  camera.y = camera.targetPosition.y = cameraPosition.y;
 };
 
 Editor.prototype.onMouseDown = function onMouseDown(e) {
-  this.resizePanels(e);
-  
   this.pointerStart = {
     'x': e.pageX,
     'y': e.pageY
@@ -211,7 +222,10 @@ Editor.prototype.onMouseDown = function onMouseDown(e) {
   
   this.isMouseDown = true;
   this.isLeftButton = e.button === 0;
+  this.isRightButton = e.button === 2;
   this.isMiddleButton = e.button === 1;
+  
+  this.placeHeldTile();
 };
 
 Editor.prototype.onMouseMove = function onMouseMove(e) {
@@ -223,28 +237,20 @@ Editor.prototype.onMouseMove = function onMouseMove(e) {
     'x': e.pageX,
     'y': e.pageY
   };
-  var position = this.game.getPositionFromScreen(pointer);
-  var tile = this.game.getTileFromCoords(position);
   
   if (this.heldActor) {
+    var position = {
+      'x': this.game.playerController.pointer.x,
+      'y': this.game.playerController.pointer.y
+    };
+    
     position.x = utils.clamp(position.x, 0, this.game.mapWidth);
     position.y = utils.clamp(position.y, 0, this.game.mapHeight);
     
     this.heldActor.updatePosition(position);
   }
   
-  if (this.isMouseDown && this.tilesEditor.placingTile) {
-    e.preventDefault();
-    
-    var tileToPlace = this.isLeftButton? this.tilesEditor.placingTile.id : '';
-    var currentTile = this.config.map.grid[tile.y][tile.x];
-    
-    if (currentTile !== tileToPlace) {
-      this.config.map.grid[tile.y][tile.x] = tileToPlace;
-      this.game.currentMap.grid[tile.y][tile.x] = tileToPlace;
-      this.game.layers.background.isDirty = true;
-    }
-  }
+  this.placeHeldTile(e);
   
   if (this.isMouseDown && this.isMiddleButton) {
     var camera = this.game.camera;
@@ -267,6 +273,22 @@ Editor.prototype.onMouseUp = function onMouseUp(e) {
   
   if (this.tilesEditor.placingTile) {
     this.saveMap();
+  }
+};
+
+Editor.prototype.placeHeldTile = function placeHeldTile(e) {
+  if (this.tilesEditor.placingTile && (this.isLeftButton || this.isRightButton)) {
+    e && e.preventDefault();
+    
+    var pointerTile = this.game.getPointerTile();
+    var tileToPlace = this.isLeftButton? this.tilesEditor.placingTile.id : '';
+    var currentTile = this.config.map.grid[pointerTile.y][pointerTile.x];
+    
+    if (currentTile !== tileToPlace) {
+      this.config.map.grid[pointerTile.y][pointerTile.x] = tileToPlace;
+      this.game.currentMap.grid[pointerTile.y][pointerTile.x] = tileToPlace;
+      this.game.layers.background.isDirty = true;
+    }
   }
 };
 
@@ -324,8 +346,6 @@ Editor.prototype.onKeyUp = function onKeyUp(e) {
 };
 
 Editor.prototype.refreshMap = function refreshMap() {
-  console.warn('Refresh map');
-  
   this.saveMap();
   
   this.onGotMapConfig(this.config.map);
@@ -461,8 +481,6 @@ Editor.prototype.dropHeldActor = function dropHeldActor() {
 };
 
 Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) {
-  var didChangeMap = false;
-  
   // Place or pick up actors to move around
   if (this.heldActor) {
     this.dropHeldActor();
@@ -484,23 +502,8 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
   if (!this.heldActor && !this.tilesEditor.placingTile) {
     didResizeGrid = this.resizeGridByClick(data, isLeftButton);
     if (didResizeGrid) {
-      didChangeMap = true;
+      this.refreshMap();
     }
-  }
-
-  // Place tiles
-  /*
-  if (this.tilesEditor.placingTile) {
-    var tileToPlace = isLeftButton? this.tilesEditor.placingTile.id : '';
-    this.config.map.grid[data.tile.y][data.tile.x] = tileToPlace;
-    this.game.currentMap.grid[data.tile.y][data.tile.x] = tileToPlace;
-    this.game.layers.background.isDirty = true;
-    didChangeMap = true;
-  }
-  */
-  
-  if (didChangeMap) {
-    this.saveMap();
   }
 };
 
@@ -515,7 +518,6 @@ Editor.prototype.placeActor = function placeActor(actor) {
   var position = null;
   
   if (InputManager.KEYS_DOWN[InputManager.KEYS.SHIFT]) {
-    //this.heldActor.updateTile(tile);
     tile = this.heldActor.tile;
   } else {
     position = this.heldActor.position;
@@ -524,22 +526,25 @@ Editor.prototype.placeActor = function placeActor(actor) {
   this.heldActor.setAlpha();
   this.heldActor = null;
 
-  var actors = this.config.map.actors;
-  for (var i = 0, len = actors.length; i < len; i++) {
-    if (actors[i].id === actor.id) {
-      if (tile) {
-        actors[i].tile = tile;
-        delete actors[i].position;
-      } else {
-        actors[i].position = position;
-        delete actors[i].tile;
+  if (actor.id === this.config.game.playerActor.id) {
+    this.config.map.playerTile = tile;
+  } else {
+    var actors = this.config.map.actors;
+    for (var i = 0, len = actors.length; i < len; i++) {
+      if (actors[i].id === actor.id) {
+        if (tile) {
+          actors[i].tile = tile;
+          delete actors[i].position;
+        } else {
+          actors[i].position = position;
+          delete actors[i].tile;
+        }
+        break;
       }
-      
-      break;
     }
   }
-  
-  this.refreshMap();
+    
+  this.saveMap();
 };
 
 

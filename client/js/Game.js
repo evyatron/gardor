@@ -659,7 +659,6 @@ var Game = (function Game() {
     this.el.style.width = this.width + 'px';
     this.el.style.height = this.height + 'px';
     
-
     this.offset = {
       'x': bounds.left,
       'y': bounds.top
@@ -668,57 +667,6 @@ var Game = (function Game() {
     for (var id in this.layers) {
       this.layers[id].onResize();
     }
-
-    /*
-    console.log('Container: ', this.containerWidth, ',', this.containerHeight);
-
-    if (this.currentMap && this.currentMap.width && this.currentMap.height) {
-      this.width = Math.min(this.currentMap.width, this.containerWidth);
-      this.height = Math.min(this.currentMap.height, this.containerHeigh);
-    } else {
-      this.width = this.containerWidth;
-      this.height = this.containerHeight;
-    }
-    
-    this.width = Math.min(this.width, this.mapWidth);
-    this.height = Math.min(this.height, this.mapHeight);
-    
-    if (this.width % 2 === 1) {
-      this.width--;
-    }
-    if (this.height % 2 === 1) {
-      this.height--;
-    }
-    
-    console.log('Game: ', this.width, ',', this.height);
-    console.log('Map: ', this.mapWidth, ',', this.mapHeight);
-    
-    this.bleed.x = this.mapWidth - this.width;
-    this.bleed.y = this.mapHeight - this.height;
-    
-    if (this.bleed.x < 0) {
-      this.bleed.x = this.bleed.x / 2;
-    }
-    if (this.bleed.y < 0) {
-      this.bleed.y = this.bleed.y / 2;
-    }
-    
-    console.log('Bleed: ', this.bleed.x, ',', this.bleed.y);
-
-    this.el.style.width = this.containerWidth + 'px';
-    this.el.style.height = this.containerHeight + 'px';
-    
-    this.offset = {
-      'x': bounds.left + Math.max((this.containerWidth - this.width) / 2, 0),
-      'y': bounds.top + Math.max((this.containerHeight - this.height) / 2, 0)
-    };
-    
-    for (var id in this.layers) {
-      var layer = this.layers[id];
-      layer.onResize();
-      console.log(layer.id, ':', layer.width, ',', layer.height);
-    }
-    */
     
     console.groupEnd('Resize');
     

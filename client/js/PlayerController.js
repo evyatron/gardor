@@ -8,8 +8,6 @@ var PlayerController = (function PlayerController() {
     this.game = null;
     this.controlledActor = null;
     
-    this.boundToGame = true;
-    
     this.pointer = {
       'x': 0,
       'y': 0
@@ -27,8 +25,6 @@ var PlayerController = (function PlayerController() {
   
   PlayerController.prototype.init = function init(options) {
     this.game = options.game;
-    
-    this.boundToGame = typeof options.boundToGame === 'boolean'? options.boundToGame : true;
 
     InputManager.bindAction('interact', InputManager.KEYS.LEFT_MOUSE_BUTTON);
     InputManager.bindAction('secondary', InputManager.KEYS.RIGHT_MOUSE_BUTTON);
@@ -79,15 +75,8 @@ var PlayerController = (function PlayerController() {
     this.justPressed = InputManager.justPressed;
     InputManager.justPressed = {};
 
-    this.pointer.x = InputManager.pointerPosition.x + camera.x - game.offset.x;
-    this.pointer.y = InputManager.pointerPosition.y + camera.y - game.offset.y;
-
-    if (this.boundToGame) {
-      var tileSize = game.config.tileSize;
-      
-      this.pointer.x = utils.clamp(this.pointer.x, 0, game.width + tileSize);
-      this.pointer.y = utils.clamp(this.pointer.y, 0, game.height + tileSize);
-    }
+    this.pointer.x = InputManager.pointerPosition.x - game.offset.x + camera.x;
+    this.pointer.y = InputManager.pointerPosition.y - game.offset.y + camera.y;
     
     if (this.isActive) {
       var actor = this.controlledActor;
