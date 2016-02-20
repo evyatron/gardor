@@ -189,7 +189,18 @@ var utils = {
     httpRequest.responseType = 'json';
     
     httpRequest.onload = function onRequestDone(e) {
-      callback(e.target.response);
+      var response = e.target.response;
+      
+      if (typeof response === 'string') {
+        try {
+          response = JSON.parse(response);
+        } catch (ex) {
+          response = null;
+          console.error('Could not parse response:', response);
+        }
+      }
+      
+      callback(response);
     };
     
     httpRequest.send();

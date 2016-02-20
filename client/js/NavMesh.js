@@ -21,7 +21,16 @@ var NavMesh = (function NavMesh() {
   };
   
   NavMesh.prototype.isBlocked = function isBlocked(tile) {
-    return this.mesh[tile.y][tile.x] === false;
+    var row = this.mesh[tile.y];
+    if (!row) {
+      return true;
+    }
+    
+    if (row[tile.x] === undefined) {
+      return true;
+    }
+    
+    return row[tile.x] === false;
   };
   
   NavMesh.prototype.findPath = function findPath(from, to, callback) {
