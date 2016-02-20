@@ -487,9 +487,9 @@ var ModuleHTMLElement = (function ModuleHTMLElement() {
     }
     
     var elContent = document.querySelector('.module-content[data-module-id = "' + this.page + '"]');
+    
     if (elContent) {
       this.createHTML(elContent.innerHTML);
-      elContent.parentNode.removeChild(elContent);
     } else {
       var game = this.actor.game;
       var httpRequest = new XMLHttpRequest();
