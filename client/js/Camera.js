@@ -39,8 +39,8 @@ var Camera = (function Camera() {
     var padding = game.currentMap.padding;
     
     return {
-      'x': utils.clamp(-game.width / 2 + actorPosition.x, -padding, game.bleed.x + padding),
-      'y': utils.clamp(-game.height / 2 + actorPosition.y, -padding, game.bleed.y + padding)
+      'x': utils.clamp(-game.width / 2 + actorPosition.x, -padding, padding),
+      'y': utils.clamp(-game.height / 2 + actorPosition.y, -padding, padding)
     };
   };
   

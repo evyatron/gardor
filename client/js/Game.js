@@ -29,10 +29,6 @@ var Game = (function Game() {
     this.mapHeight = 0;
     this.containerWidth = 0;
     this.containerHeight = 0;
-    this.bleed = {
-      'x': 0,
-      'y': 0
-    };
     this.offset = {
       'x': 0,
       'y': 0
@@ -650,24 +646,38 @@ var Game = (function Game() {
     var bounds = this.el.getBoundingClientRect();
     var elParent = this.el.parentNode;
     
-    this.containerWidth = elParent.offsetWidth;
-    this.containerHeight = elParent.offsetHeight;
+    this.width = elParent.offsetWidth;
+    this.height = elParent.offsetHeight;
     
-    if (this.containerWidth % 2 === 1) {
-      this.containerWidth--;
+    if (this.width % 2 === 1) {
+      this.width++;
     }
-    if (this.containerHeight % 2 === 1) {
-      this.containerHeight--;
+    if (this.height % 2 === 1) {
+      this.height++;
     }
     
+    this.el.style.width = this.width + 'px';
+    this.el.style.height = this.height + 'px';
+    
+
+    this.offset = {
+      'x': bounds.left,
+      'y': bounds.top
+    };
+    
+    for (var id in this.layers) {
+      this.layers[id].onResize();
+    }
+
+    /*
     console.log('Container: ', this.containerWidth, ',', this.containerHeight);
 
     if (this.currentMap && this.currentMap.width && this.currentMap.height) {
       this.width = Math.min(this.currentMap.width, this.containerWidth);
       this.height = Math.min(this.currentMap.height, this.containerHeigh);
     } else {
-      this.width = elParent.offsetWidth;
-      this.height = elParent.offsetHeight;
+      this.width = this.containerWidth;
+      this.height = this.containerHeight;
     }
     
     this.width = Math.min(this.width, this.mapWidth);
@@ -708,6 +718,7 @@ var Game = (function Game() {
       layer.onResize();
       console.log(layer.id, ':', layer.width, ',', layer.height);
     }
+    */
     
     console.groupEnd('Resize');
     

@@ -1,0 +1,795 @@
+{
+  "id": "main",
+  "name": "Main Map",
+  "playerTile": {
+    "x": 8,
+    "y": 10
+  },
+  "padding": 300,
+  "defaultTile": "default_1454537582202",
+  "fillColor": "black",
+  "fillTile": "default_1454537582202",
+  "startScript": [],
+  "grid": [
+    [
+      "default_1454713938323",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713938493"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454714265497",
+      "default_1454714265497",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714265497",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "default_1455376410484",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376433421",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1455376410484",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376378590",
+      "default_1455376433421",
+      "",
+      "default_1455376365210",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455376342305",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1455376365210",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455376342305",
+      "",
+      "default_1455376365210",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455376342305",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1455376434272",
+      "default_1455376469361",
+      "default_1455374469152",
+      "default_1455441808096",
+      "default_1455376434771",
+      "",
+      "default_1455376365210",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455376342305",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "",
+      "default_1455376434272",
+      "default_1455376397839",
+      "default_1455376434771",
+      "",
+      "",
+      "default_1455376434272",
+      "default_1455376469361",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455374469152",
+      "default_1455376470335",
+      "default_1455376434771",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1455376434272",
+      "default_1455376397839",
+      "default_1455374469152",
+      "default_1455376397839",
+      "default_1455376434771",
+      "default_1454537582202",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454537582202",
+      "",
+      "default_1454537582202",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714355490",
+      "default_1454714504309",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454714265497",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714355490",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714582881",
+      "default_1454714582881",
+      "default_1454714582881",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713890487",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714265497",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714504309",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454537582202",
+      "default_1454714582881",
+      "default_1454714582881",
+      "default_1454714582881",
+      "",
+      "default_1454713890487"
+    ],
+    [
+      "default_1454713999202",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713938493",
+      "",
+      "default_1454714355490",
+      "",
+      "default_1454713938323",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713999780"
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "default_1454713890487",
+      "",
+      "default_1454714355490",
+      "",
+      "default_1454713890487",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "default_1454713999202",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713936433",
+      "default_1454713999780",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  ],
+  "actors": [
+    {
+      "id": "social-github",
+      "tooltip": "GitHub",
+      "isBlocking": true,
+      "zIndex": 1,
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://github.com/evyatron",
+          "isInFrame": false,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/github.png",
+          "src-hover": "actors/github-over.png",
+          "origin": {
+            "x": 0.5,
+            "y": 0.7
+          },
+          "scale": 0.75
+        }
+      ],
+      "tile": {
+        "x": 5,
+        "y": 11
+      }
+    },
+    {
+      "id": "social-linkedin",
+      "tooltip": "LinkedIn",
+      "isBlocking": true,
+      "zIndex": 1,
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "https://www.linkedin.com/in/evyataramitay",
+          "isInFrame": false,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/linkedin.png",
+          "src-hover": "actors/linkedin-over.png",
+          "origin": {
+            "x": 0.5,
+            "y": 0.7
+          },
+          "scale": 0.75
+        }
+      ],
+      "tile": {
+        "x": 6,
+        "y": 11
+      }
+    },
+    {
+      "id": "sign-about",
+      "tooltip": "Welcome Centre",
+      "zIndex": 1,
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleDialog",
+          "isActive": true,
+          "dialogId": "page-about",
+          "useDir": "top",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/signs.png",
+          "scale": 1,
+          "clip": {
+            "x": 32,
+            "y": 0
+          },
+          "width": 32,
+          "height": 32,
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          },
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
+          }
+        }
+      ],
+      "tile": {
+        "x": 8,
+        "y": 8
+      }
+    },
+    {
+      "id": "sign-contact",
+      "tooltip": "Post Office",
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleDialog",
+          "isActive": true,
+          "dialogId": "page-contact",
+          "useDir": "",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/signs.png",
+          "scale": 0.75,
+          "clip": {
+            "x": 0,
+            "y": 0
+          },
+          "width": 32,
+          "height": 32,
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0,
+      "tile": {
+        "x": 7,
+        "y": 8
+      }
+    },
+    {
+      "id": "sign-games",
+      "tooltip": "Video Game Arcade",
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleDialog",
+          "isActive": true,
+          "dialogId": "page-games",
+          "useDir": "",
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/signs.png",
+          "scale": 0.75,
+          "clip": {
+            "x": 0,
+            "y": 0
+          },
+          "width": 32,
+          "height": 32,
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0,
+      "position": {
+        "x": 328.6666564941406,
+        "y": 520
+      }
+    },
+    {
+      "id": "sign-playground",
+      "tooltip": "JavaScript Laboratory",
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleDialog",
+          "isActive": true,
+          "dialogId": "page-playground",
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/signs.png",
+          "scale": 0.75,
+          "width": 32,
+          "height": 32,
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0,
+      "position": {
+        "x": 783.5,
+        "y": 583.5
+      }
+    },
+    {
+      "id": "page-contact",
+      "tooltip": "Contact Me",
+      "tile": {
+        "x": 9,
+        "y": 11
+      },
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "ModuleHTMLElement",
+          "isActive": true,
+          "page": "contact",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/rtp-objects.png",
+          "scale": 0.9,
+          "clip": {
+            "x": 288,
+            "y": 162
+          },
+          "width": 32,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "page-about",
+      "tooltip": "About Me",
+      "tile": {
+        "x": 7,
+        "y": 11
+      },
+      "isBlocking": true,
+      "modules": [
+        {
+          "type": "ModuleHTMLElement",
+          "isActive": true,
+          "page": "about",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/rtp-objects.png",
+          "clip": {
+            "x": 256,
+            "y": 162
+          },
+          "width": 32,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "games-arcade-door",
+      "tooltip": "Enter the Arcade",
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleMapTravel",
+          "isActive": true,
+          "mapId": "games",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "clip": {
+            "x": 64,
+            "y": 1216
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": 1,
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
+          }
+        }
+      ],
+      "zIndex": 5,
+      "tile": {
+        "x": 4,
+        "y": 7
+      }
+    },
+    {
+      "id": "js-experiments-door",
+      "tooltip": "Enter the JavaScript Laboratory",
+      "isBlocking": false,
+      "modules": [
+        {
+          "type": "ModuleMapTravel",
+          "isActive": true,
+          "mapId": "jsstuff",
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "clip": {
+            "x": 704,
+            "y": 1088
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": 1,
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
+          }
+        }
+      ],
+      "zIndex": 5,
+      "tile": {
+        "x": 11,
+        "y": 8
+      }
+    }
+  ],
+  "dialogs": [
+    {
+      "id": "page-about",
+      "startingLine": "welcome",
+      "lines": [
+        {
+          "id": "welcome",
+          "actor": "NPC",
+          "text": "Welcome to the Welcome Centre<br />Where welcoming's our job!"
+        },
+        {
+          "id": "answer",
+          "actor": "PC",
+          "text": ""
+        }
+      ]
+    },
+    {
+      "id": "page-contact",
+      "lines": [
+        {
+          "id": "welcome",
+          "actor": "NPC",
+          "text": "Welcome to the Post Office<br />Contact me for YOUR chance of a reply!"
+        }
+      ]
+    },
+    {
+      "id": "page-games",
+      "lines": [
+        {
+          "id": "welcome",
+          "actor": "NPC",
+          "text": "Welcome to the Video Game Arcade<br />GLHF"
+        }
+      ]
+    },
+    {
+      "id": "page-playground",
+      "lines": [
+        {
+          "id": "welcome",
+          "actor": "NPC",
+          "text": "Welcome to the Laboratory<br />Please don't feed the experiments"
+        }
+      ]
+    },
+    {
+      "id": "boat",
+      "lines": [
+        {
+          "actor": "PC",
+          "text": "I guess I won't be getting out of here anytime soon"
+        }
+      ]
+    }
+  ]
+}

@@ -14,8 +14,6 @@ var Layer = (function Layer() {
     this.game;
     this.canvas;
     this.context;
-    this.width = 0;
-    this.height = 0;
     
     this.actors = [];
     this.actorsMap = {};
@@ -91,7 +89,8 @@ var Layer = (function Layer() {
   };
   
   Layer.prototype.clear = function clear() {
-    this.context.clearRect(0, 0, this.width, this.height);
+    var game = this.game;
+    this.context.clearRect(0, 0, game.width, game.height);
   };
   
   Layer.prototype.draw = function draw() {
@@ -108,19 +107,10 @@ var Layer = (function Layer() {
   };
   
   Layer.prototype.onResize = function onResize() {
-    this.width = this.game.width;
-    this.height = this.game.height;
+    var game = this.game;
     
-    this.updateSize();
-    
-    return true;
-  };
-  
-  Layer.prototype.updateSize = function updateSize() {
-    this.canvas.width = this.width;
-    this.canvas.height = this.height;
-    this.canvas.style.marginLeft = -this.width / 2 + 'px';
-    this.canvas.style.marginTop = -this.height / 2 + 'px';
+    this.canvas.width = game.width;
+    this.canvas.height = game.height;
     
     this.isDirty = true;
     
@@ -184,33 +174,36 @@ var TilesetLayer = (function TilesetLayer() {
     this.game.startBenchmark('draw', 'grid');
     
     // move the Clip point according to the camera offset and draw the texture
-    var camera = this.game.camera;
+    var game = this.game;
+    var map = game.currentMap;
+    var camera = game.camera;
     var context = this.context;
+    var texture = this.texture;
     
-    this.texture.clip = {
-      'x': camera.x + this.game.currentMap.padding,
-      'y': camera.y + this.game.currentMap.padding
+    texture.clip = {
+      'x': camera.x + map.padding,
+      'y': camera.y + map.padding
     };
     
-    this.texture.draw(context);
+    texture.draw(context, 0, 0);
   
     if (window.DEBUG) {
-      var pointerTile = this.game.getPointerTile();
+      var pointerTile = game.getPointerTile();
       
       if (pointerTile) {
-        var size = this.game.config.tileSize;
+        var size = game.config.tileSize;
         
         context.fillStyle = 'rgba(255, 255, 255, .3)';
         context.beginPath();
-        context.fillRect(pointerTile.x * size - camera.x + this.offset.x,
-                         pointerTile.y * size - camera.y + this.offset.y,
+        context.fillRect(pointerTile.x * size - camera.x,
+                         pointerTile.y * size - camera.y,
                          size, size);
                          
-        this.game.log('pointer tile: ' + pointerTile.x + ',' + pointerTile.y);
+        game.log('pointer tile: ' + pointerTile.x + ',' + pointerTile.y);
       }
     }
     
-    this.game.endBenchmark('draw', 'grid');
+    game.endBenchmark('draw', 'grid');
 
     return true;
   };
@@ -218,9 +211,15 @@ var TilesetLayer = (function TilesetLayer() {
   TilesetLayer.prototype.createTexture = function createTexture() {
     var game = this.game;
     var map = game.currentMap;
+    var texture = this.texture;
     var tilesMap = this.game.tiles;
     var size = this.game.config.tileSize;
     var rows = map.grid;
+    
+    if (!texture) {
+      console.warn('[TilesetLayer] No texture');
+      return false;
+    }
     
     if (!map) {
       console.warn('[TilesetLayer] createTexture: No map loaded');
@@ -242,40 +241,40 @@ var TilesetLayer = (function TilesetLayer() {
     var defaultTile = tilesMap[map.defaultTile];
     var fillTile = tilesMap[map.fillTile];
     var color = map.fillColor;
-    var offset = this.offset;
     var padding = map.padding;
+    var totalWidth = Math.max(game.mapWidth, game.width) + padding * 2;
+    var totalHeight = Math.max(game.mapHeight, game.height) + padding * 2;
     var x, y;
     
-    canvas.width = this.texture.width + game.mapWidth + padding * 2;
-    canvas.height = this.texture.height + game.mapHeight + padding * 2;
-    
+    canvas.width = this.texture.width = totalWidth;
+    canvas.height = this.texture.height = totalHeight;
+
     // Fill default colour - 'red' here since it should NEVER be seen
     context.fillStyle = (color && !fillTile)? color : 'red';
     context.fillRect(0, 0, canvas.width, canvas.height);
     
     // Fill default tile
     if (fillTile) {
-      var offsetX = -(size - offset.x % size + padding);
-      var offsetY = -(size - offset.y % size + padding);
-      var width = Math.max(this.width, game.mapWidth) + padding * 2;
-      var height = Math.max(this.height, game.mapHeight) + padding * 2;
+      var startX = -padding - size / 2;
+      var startY = -padding - size / 2;
       
-      for (x = offsetX; x < width; x += size) {
-        for (y = offsetY; y < height; y += size) {
-          if (x < offset.x + padding || x + size > offset.x + game.mapWidth ||
-              y < offset.y + padding || y + size > offset.y + game.mapHeight) {
+      for (x = startX; x < totalWidth; x += size) {
+        for (y = startY; y < totalHeight; y += size) {
+          if (x < padding || x + size > game.mapWidth ||
+              y < padding || y + size > game.mapHeight) {
             fillTile.texture.draw(context, x, y);
           }
         }
       }
     }
 
+    // Draw map tiles
     for (var i = 0, numberOfRows = rows.length; i < numberOfRows; i++) {
       for (var j = 0, numberOfCols = rows[i].length; j < numberOfCols; j++) {
         var tile = tilesMap[rows[i][j]] || defaultTile;
         
-        x = j * size + offset.x + padding;
-        y = i * size + offset.y + padding;
+        x = j * size + padding;
+        y = i * size + padding;
         
         if (tile) {
           tile.texture.draw(context, x, y);
@@ -315,32 +314,6 @@ var TilesetLayer = (function TilesetLayer() {
     this.game.log('create tileset: ' + tilesDrawn + ' tiles');
     
     this.isDirty = false;
-  };
-  
-  TilesetLayer.prototype.onResize = function onResize() {
-    var game = this.game;
-    this.width = Math.min(game.mapWidth, game.containerWidth);
-    this.height = Math.min(game.mapHeight, game.containerHeight);
-    
-    if (this.texture) {
-      this.texture.width = Math.max(game.mapWidth, game.containerWidth);
-      this.texture.height = Math.max(game.mapHeight, game.containerHeight);
-    }
-
-    this.width = game.containerWidth;
-    this.height = game.containerHeight;
-    
-    this.offset = {
-      'x': Math.max((this.width - game.mapWidth) / 2, 0),
-      'y': Math.max((this.height - game.mapHeight) / 2, 0)
-    };
-    
-    if (this.texture) {
-      this.texture.width = this.width;
-      this.texture.height = this.height;
-    }
-    
-    this.updateSize();
   };
   
   return TilesetLayer;

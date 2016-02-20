@@ -1,0 +1,611 @@
+{
+  "id": "jsstuff",
+  "name": "JavaScript Experiments",
+  "playerTile": {
+    "x": 4,
+    "y": 7
+  },
+  "padding": 0,
+  "defaultTile": "",
+  "fillColor": "black",
+  "fillTile": "",
+  "startScript": [
+    {
+      "action": "move",
+      "actorId": "player",
+      "target": {
+        "x": 4,
+        "y": 5
+      }
+    }
+  ],
+  "grid": [
+    [
+      "default_1454604560018",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604440102",
+      "default_1454604603178"
+    ],
+    [
+      "default_1454604463328",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604463328",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604463328",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604463328",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604463328",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1454604463328"
+    ],
+    [
+      "default_1454604606167",
+      "default_1454604440102",
+      "default_1454604603178",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1455442391349",
+      "default_1454604560018",
+      "default_1454604440102",
+      "default_1454604605022"
+    ],
+    [
+      "",
+      "",
+      "default_1454604606167",
+      "default_1454604476074",
+      "default_1455442391349",
+      "default_1454604546607",
+      "default_1454604605022",
+      "",
+      ""
+    ]
+  ],
+  "actors": [
+    {
+      "id": "exit",
+      "tooltip": "Go Outside",
+      "isBlocking": false,
+      "tile": {
+        "x": 4,
+        "y": 7
+      },
+      "zIndex": 5,
+      "modules": [
+        {
+          "type": "ModuleMapTravel",
+          "isActive": true,
+          "mapId": "main",
+          "useOffset": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "tiles/shooter-ka2.png",
+          "scale": 1,
+          "clip": {
+            "x": 320,
+            "y": 1088
+          },
+          "width": 64,
+          "height": 64,
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "clipBottom": {
+            "x": -1,
+            "y": -1
+          },
+          "clipTop": {
+            "x": -1,
+            "y": -1
+          },
+          "clipRight": {
+            "x": -1,
+            "y": -1
+          },
+          "clipLeft": {
+            "x": -1,
+            "y": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "js-particles",
+      "tooltip": "Particles<br />High performance JavaScript canvas Particles object",
+      "isBlocking": true,
+      "tile": {
+        "x": 6,
+        "y": 1
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/particles/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-fantasia",
+      "tooltip": "Fantasia 2013<br />A CSS3 animation experiment inspired by Disney's Fantasia and 12 Monkeys",
+      "isBlocking": true,
+      "tile": {
+        "x": 2,
+        "y": 1
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/tasia/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-timeforcoffee",
+      "tooltip": "Is It Time For Coffee?<br />A webpage to let you know if it's time for coffee",
+      "isBlocking": true,
+      "tile": {
+        "x": 3,
+        "y": 1
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://www.isittimeforcoffee.com/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-wobbly",
+      "tooltip": "Wibbly Wobbly<br />CSS Animations and wobbly movement using only CSS3's advanced selectors (for both the animation and the settings)",
+      "isBlocking": true,
+      "tile": {
+        "x": 5,
+        "y": 1
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/wobbly/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-conjunctions",
+      "tooltip": "Conjunctions<br />Exploration of CSS3 transformation and transformation origins.",
+      "isBlocking": true,
+      "tile": {
+        "x": 7,
+        "y": 2
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/conj/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-circular",
+      "tooltip": "Circular Movements<br />Exploration of circular movement in CSS3",
+      "isBlocking": true,
+      "tile": {
+        "x": 7,
+        "y": 3
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/circular/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-p280",
+      "tooltip": "PC Case Designer<br />A page that lets you design a 3D PC case (Antec P280 specifically) using JavaScript and 3D CSS3",
+      "isBlocking": true,
+      "tile": {
+        "x": 5,
+        "y": 3
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/p280/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-bounce",
+      "tooltip": "3D Bounce<br />Experiments with 3D CSS3 and animations",
+      "isBlocking": true,
+      "tile": {
+        "x": 3,
+        "y": 3
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/3dbounce/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-404",
+      "tooltip": "404 Page<br />My 404 page, messing around with Canvas - control with Keyboard Arrows and mouse",
+      "isBlocking": true,
+      "tile": {
+        "x": 1,
+        "y": 2
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/404.html",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-dott",
+      "tooltip": "Day of the Tentacle<br />CSS3 representation of Purple from Day of the Tentacle",
+      "isBlocking": true,
+      "tile": {
+        "x": 1,
+        "y": 3
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/dott/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-inverter",
+      "tooltip": "Image Inverter<br />A simple utility page for inverting images without Server Side code (using HTML5 File API)",
+      "isBlocking": true,
+      "tile": {
+        "x": 1,
+        "y": 4
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/inverter/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    },
+    {
+      "id": "js-d3api",
+      "tooltip": "Diablo 3 API Client Library<br />An API Client Library for Diablo 3 built in JavaScript",
+      "isBlocking": true,
+      "tile": {
+        "x": 7,
+        "y": 4
+      },
+      "modules": [
+        {
+          "type": "ModuleWebPage",
+          "isActive": true,
+          "url": "http://evyatar.amitay.me/playground/d3api/",
+          "isInFrame": true,
+          "useOffset": {
+            "x": -1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ModuleTexture",
+          "src": "actors/trees.png",
+          "scale": 0.6,
+          "clip": {
+            "x": 124,
+            "y": 64
+          },
+          "width": 62,
+          "height": 64,
+          "origin": {
+            "x": 0.4,
+            "y": 0.8
+          }
+        }
+      ],
+      "zIndex": 0
+    }
+  ],
+  "dialogs": []
+}

@@ -195,13 +195,23 @@ Editor.prototype.onGotMapConfig = function onGotMapConfig(mapConfig) {
   this.game.goToMap(this.config.map.id);
   
   this.game.playerController.disable();
+  this.game.camera.setActorToFollow(null);
+  
+  this.game.camera.targetPosition.x = -this.game.width / 2 + this.game.mapWidth / 2;
+  this.game.camera.targetPosition.y = -this.game.height / 2 + this.game.mapHeight / 2;
 };
 
 Editor.prototype.onMouseDown = function onMouseDown(e) {
   this.resizePanels(e);
   
+  this.pointerStart = {
+    'x': e.pageX,
+    'y': e.pageY
+  };
+  
   this.isMouseDown = true;
   this.isLeftButton = e.button === 0;
+  this.isMiddleButton = e.button === 1;
 };
 
 Editor.prototype.onMouseMove = function onMouseMove(e) {
@@ -209,10 +219,11 @@ Editor.prototype.onMouseMove = function onMouseMove(e) {
     return;
   }
 
-  var position = this.game.getPositionFromScreen({
+  var pointer = {
     'x': e.pageX,
     'y': e.pageY
-  });
+  };
+  var position = this.game.getPositionFromScreen(pointer);
   var tile = this.game.getTileFromCoords(position);
   
   if (this.heldActor) {
@@ -234,10 +245,25 @@ Editor.prototype.onMouseMove = function onMouseMove(e) {
       this.game.layers.background.isDirty = true;
     }
   }
+  
+  if (this.isMouseDown && this.isMiddleButton) {
+    var camera = this.game.camera;
+    
+    if (!this.cameraStartPosition) {
+      this.cameraStartPosition = {
+        'x': camera.targetPosition.x,
+        'y': camera.targetPosition.y
+      };
+    }
+    
+    camera.targetPosition.x = this.cameraStartPosition.x - (pointer.x - this.pointerStart.x);
+    camera.targetPosition.y = this.cameraStartPosition.y - (pointer.y - this.pointerStart.y);
+  }
 };
 
 Editor.prototype.onMouseUp = function onMouseUp(e) {
   this.isMouseDown = false;
+  this.cameraStartPosition = null;
   
   if (this.tilesEditor.placingTile) {
     this.saveMap();

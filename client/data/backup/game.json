@@ -1,0 +1,1829 @@
+{
+  "tileSize": 64,
+  "startingMap": "main",
+  "lerpAlpha": 0.2,
+  "followPlayer": true,
+  "timeToShowClickTexture": 0.2,
+  "clickTexture": {
+    "src": "hud/click.png"
+  },
+  "maps": [
+    "main",
+    "games",
+    "jsstuff"
+  ],
+  "playerActor": {
+    "id": "player",
+    "isBlocking": false,
+    "speed": 130,
+    "zIndex": 1,
+    "modules": [
+      {
+        "type": "ModuleTexture",
+        "src": "characters/player.png",
+        "width": 32,
+        "height": 32,
+        "scale": 1.5,
+        "clip": {
+          "x": 0,
+          "y": 0
+        },
+        "origin": {
+          "x": 0.5,
+          "y": 0.75
+        },
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 96
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 64
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 32
+        },
+        "animations": {
+          "_top": {
+            "start": {
+              "x": 0,
+              "y": 96
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          },
+          "_bottom": {
+            "start": {
+              "x": 0,
+              "y": 0
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          },
+          "_right": {
+            "start": {
+              "x": 0,
+              "y": 64
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          },
+          "_left": {
+            "start": {
+              "x": 0,
+              "y": 32
+            },
+            "numberOfFrames": 3,
+            "speed": 0.15
+          }
+        }
+      }
+    ]
+  },
+  "tiles": [
+    {
+      "id": "default_1454537582202",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1024,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 0,
+      "walkCost": 2
+    },
+    {
+      "id": "default_1454604440102",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 704,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 1
+    },
+    {
+      "id": "default_1454604463328",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 704,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 2
+    },
+    {
+      "id": "default_1454604476074",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 896,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 3,
+      "walkCost": 1
+    },
+    {
+      "id": "default_1454604536217",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 960,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 4
+    },
+    {
+      "id": "default_1454604546607",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 960,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 5
+    },
+    {
+      "id": "default_1454604552845",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 896,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 6
+    },
+    {
+      "id": "default_1454604560018",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 576,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 7
+    },
+    {
+      "id": "default_1454604603178",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 640,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 8
+    },
+    {
+      "id": "default_1454604605022",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 640,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 9
+    },
+    {
+      "id": "default_1454604606167",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 576,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 10
+    },
+    {
+      "id": "default_1454604778776",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1152,
+          "y": 192
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 11
+    },
+    {
+      "id": "default_1454604837618",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1024,
+          "y": 768
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 12
+    },
+    {
+      "id": "default_1454606380763",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 768,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 13
+    },
+    {
+      "id": "default_1454606446005",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 832,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 14
+    },
+    {
+      "id": "default_1454607629662",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1152,
+          "y": 64
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 15
+    },
+    {
+      "id": "default_1454611245028",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1152,
+          "y": 128
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 16
+    },
+    {
+      "id": "default_1454713890487",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 128,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 17
+    },
+    {
+      "id": "default_1454713936433",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 128,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 18
+    },
+    {
+      "id": "default_1454713938323",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 0,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 19
+    },
+    {
+      "id": "default_1454713938493",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 64,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 20
+    },
+    {
+      "id": "default_1454713999202",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 0,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 21
+    },
+    {
+      "id": "default_1454713999780",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 64,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 22
+    },
+    {
+      "id": "default_1454714265497",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1088,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 23,
+      "walkCost": 2
+    },
+    {
+      "id": "default_1454714355490",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 320,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 24
+    },
+    {
+      "id": "default_1454714504309",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 256,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 25
+    },
+    {
+      "id": "default_1454714582881",
+      "isBlocking": true,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1216,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 26
+    },
+    {
+      "id": "default_1454714636485",
+      "isBlocking": false,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 512,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 27
+    },
+    {
+      "id": "default_1455374469152",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 704,
+          "y": 192
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 28
+    },
+    {
+      "id": "default_1455376342305",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 896,
+          "y": 768
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 29
+    },
+    {
+      "id": "default_1455376365210",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 832,
+          "y": 768
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 30
+    },
+    {
+      "id": "default_1455376378590",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 832,
+          "y": 832
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 31
+    },
+    {
+      "id": "default_1455376397839",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 896,
+          "y": 832
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 32
+    },
+    {
+      "id": "default_1455376410484",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1024,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 33
+    },
+    {
+      "id": "default_1455376433421",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1088,
+          "y": 640
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 34
+    },
+    {
+      "id": "default_1455376434272",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1024,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 35
+    },
+    {
+      "id": "default_1455376434771",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 1088,
+          "y": 704
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 36
+    },
+    {
+      "id": "default_1455376469361",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 640,
+          "y": 768
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 37
+    },
+    {
+      "id": "default_1455376470335",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 576,
+          "y": 768
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 38
+    },
+    {
+      "id": "default_1455441808096",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 576,
+          "y": 768
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 39
+    },
+    {
+      "id": "default_1455442278085",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 576,
+          "y": 256
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 40
+    },
+    {
+      "id": "default_1455442307392",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 640,
+          "y": 256
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 41
+    },
+    {
+      "id": "default_1455442311555",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 640,
+          "y": 320
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 42
+    },
+    {
+      "id": "default_1455442315463",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 576,
+          "y": 320
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 43
+    },
+    {
+      "id": "default_1455442321267",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 704,
+          "y": 256
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 44
+    },
+    {
+      "id": "default_1455442327375",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 704,
+          "y": 320
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 45
+    },
+    {
+      "id": "default_1455442336592",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 896,
+          "y": 256
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 46
+    },
+    {
+      "id": "default_1455442343941",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 960,
+          "y": 320
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 47
+    },
+    {
+      "id": "default_1455442391349",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "src": "tiles/shooter-ka2.png",
+        "clip": {
+          "x": 768,
+          "y": 0
+        },
+        "width": 64,
+        "height": 64,
+        "origin": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1,
+        "clipBottom": {
+          "x": 0,
+          "y": 0
+        },
+        "clipTop": {
+          "x": 0,
+          "y": 0
+        },
+        "clipRight": {
+          "x": 0,
+          "y": 0
+        },
+        "clipLeft": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 48
+    }
+  ]
+}
