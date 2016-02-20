@@ -407,6 +407,21 @@ div, p, input, textarea {
   .tiles-editor .tile[data-placing = "true"] {
     background: red;
   }
+  .tiles-editor .tile[data-blocking = "true"]:after {
+    content: 'X';
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 4px;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    text-align: center;
+    font-size: 9px;
+    pointer-events: none;
+    color: #fff;
+    background: rgba(255, 0, 0, .4);
+  }
   .tiles-editor .tile .texture-container {
     display: inline-block;
     vertical-align: middle;

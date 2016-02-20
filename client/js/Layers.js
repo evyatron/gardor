@@ -69,6 +69,8 @@ var Layer = (function Layer() {
              a.tile.y < b.tile.y? -1 :
              a.zIndex > b.zIndex? 1 :
              a.zIndex < b.zIndex? -1 :
+             a.id > b.id? 1 :
+             a.id < b.id? -1 :
              0;
     });
   };

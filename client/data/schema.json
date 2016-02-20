@@ -252,6 +252,10 @@
   },
   
   "tile": {
+    "id": {
+      "type": "text",
+      "tooltip": "Tile ID"
+    },
     "isBlocking": {
       "type": "boolean",
       "tooltip": "True - player can't walk over this tile",

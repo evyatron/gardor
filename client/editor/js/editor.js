@@ -28,6 +28,8 @@ function Editor(options) {
   this.gamePane = null;
   this.mapPane = null;
   this.tilesEditor = null;
+  this.isMouseDown = false;
+  this.isLeftButton = false;
   
   this.mapId = '';
   
@@ -72,6 +74,7 @@ Editor.prototype.init = function init(options) {
   
   this.elContainer.addEventListener('mousedown', this.onMouseDown.bind(this));
   this.elContainer.addEventListener('mousemove', this.onMouseMove.bind(this));
+  this.elContainer.addEventListener('mouseup', this.onMouseUp.bind(this));
   window.addEventListener('keyup', this.onKeyUp.bind(this));
   
   this.applyUserSettings();
@@ -186,6 +189,8 @@ Editor.prototype.onGotMapConfig = function onGotMapConfig(mapConfig) {
   this.paneMap.updateFromJSON(mapConfig);
   this.actorsEditor.loadFromGame(mapConfig);
   
+  mapConfig.padding = 0;
+  
   this.game.addMap(mapConfig);
   this.game.goToMap(this.config.map.id);
   
@@ -194,24 +199,48 @@ Editor.prototype.onGotMapConfig = function onGotMapConfig(mapConfig) {
 
 Editor.prototype.onMouseDown = function onMouseDown(e) {
   this.resizePanels(e);
+  
+  this.isMouseDown = true;
+  this.isLeftButton = e.button === 0;
 };
 
 Editor.prototype.onMouseMove = function onMouseMove(e) {
-  if (InputManager.KEYS_DOWN[InputManager.KEYS.SHIFT]) {
+  if (window.InputManager && InputManager.KEYS_DOWN[InputManager.KEYS.SHIFT]) {
     return;
   }
+
+  var position = this.game.getPositionFromScreen({
+    'x': e.pageX,
+    'y': e.pageY
+  });
+  var tile = this.game.getTileFromCoords(position);
   
   if (this.heldActor) {
-    var position = {
-      'x': e.pageX,
-      'y': e.pageY
-    };
-    
-    position = this.game.getPositionFromScreen(position);
     position.x = utils.clamp(position.x, 0, this.game.mapWidth);
     position.y = utils.clamp(position.y, 0, this.game.mapHeight);
     
     this.heldActor.updatePosition(position);
+  }
+  
+  if (this.isMouseDown && this.tilesEditor.placingTile) {
+    e.preventDefault();
+    
+    var tileToPlace = this.isLeftButton? this.tilesEditor.placingTile.id : '';
+    var currentTile = this.config.map.grid[tile.y][tile.x];
+    
+    if (currentTile !== tileToPlace) {
+      this.config.map.grid[tile.y][tile.x] = tileToPlace;
+      this.game.currentMap.grid[tile.y][tile.x] = tileToPlace;
+      this.game.layers.background.isDirty = true;
+    }
+  }
+};
+
+Editor.prototype.onMouseUp = function onMouseUp(e) {
+  this.isMouseDown = false;
+  
+  if (this.tilesEditor.placingTile) {
+    this.saveMap();
   }
 };
 
@@ -271,10 +300,14 @@ Editor.prototype.onKeyUp = function onKeyUp(e) {
 Editor.prototype.refreshMap = function refreshMap() {
   console.warn('Refresh map');
   
-  var apiURL = '/api/game/' + this.gameId + '/map/' + this.config.map.id;
-  utils.post(apiURL, JSON.stringify(this.config.map));
+  this.saveMap();
   
   this.onGotMapConfig(this.config.map);
+};
+
+Editor.prototype.saveMap = function saveMap() {
+  var apiURL = '/api/game/' + this.gameId + '/map/' + this.config.map.id;
+  utils.post(apiURL, JSON.stringify(this.config.map));
 };
 
 Editor.prototype.resizeGridByClick = function resizeGridByClick(data, isLeftButton) {
@@ -420,26 +453,28 @@ Editor.prototype.handleGameClick = function handleGameClick(data, isLeftButton) 
     }
   }
   
-  // If nothing else happened - check for resizing the grid
+  // Resize the grid if not holding an actor or a tile
   var didResizeGrid = false;
-  if (!this.heldActor) {
+  if (!this.heldActor && !this.tilesEditor.placingTile) {
     didResizeGrid = this.resizeGridByClick(data, isLeftButton);
     if (didResizeGrid) {
       didChangeMap = true;
     }
   }
 
-  // Change tiles
-  if (!didResizeGrid) {
-    if (this.tilesEditor.placingTile) {
-      var tileToPlace = isLeftButton? this.tilesEditor.placingTile.id : '';
-      this.config.map.grid[data.tile.y][data.tile.x] = tileToPlace;
-      didChangeMap = true;
-    }
+  // Place tiles
+  /*
+  if (this.tilesEditor.placingTile) {
+    var tileToPlace = isLeftButton? this.tilesEditor.placingTile.id : '';
+    this.config.map.grid[data.tile.y][data.tile.x] = tileToPlace;
+    this.game.currentMap.grid[data.tile.y][data.tile.x] = tileToPlace;
+    this.game.layers.background.isDirty = true;
+    didChangeMap = true;
   }
+  */
   
   if (didChangeMap) {
-    this.refreshMap();
+    this.saveMap();
   }
 };
 
@@ -601,8 +636,8 @@ var Tooltip = (function Tooltip() {
         return;
       }
       
-      var x = bounds.left + bounds.width / 2;
-      var y = bounds.top + bounds.height / 2;
+      var x = bounds.left + bounds.width * 0.75;
+      var y = bounds.top + bounds.height * 0.75;
       this.el.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
       
       this.createTooltip(type, id, schema, data);
@@ -1082,6 +1117,7 @@ var Tiles = (function Tiles() {
     el.className = 'tile';
     el.dataset.index = tile.index;
     el.dataset.id = tile.id;
+    el.dataset.blocking = tile.isBlocking;
     el.dataset.placing = false;
 
     el.innerHTML = TEMPLATE_TILE.format(tile);
@@ -1111,6 +1147,7 @@ var Tiles = (function Tiles() {
     
     if (tile) {
       data = {
+        'id': tile.id,
         'isBlocking': tile.isBlocking,
         'walkCost': tile.walkCost
       };
@@ -1124,6 +1161,11 @@ var Tiles = (function Tiles() {
     if (tile) {
       for (var k in data) {
         tile[k] = data[k];
+      }
+      
+      var el = this.elList.querySelector('[data-id = "' + data.id + '"]');
+      if (el) {
+        el.dataset.blocking = tile.isBlocking;
       }
       
       this.onChange(this.tiles);
@@ -1142,14 +1184,20 @@ var Tiles = (function Tiles() {
   };
   
   Tiles.prototype.createNew = function createNew() {
-    var textureToDuplicate = this.tiles[this.tiles.length - 1].texture;
-    delete textureToDuplicate.game;
+    var textureToDuplicate = {};
+    
+    if (this.tiles.length > 0) {
+      textureToDuplicate = this.tiles[this.tiles.length - 1].texture;
+      delete textureToDuplicate.game;
+      textureToDuplicate = JSON.parse(JSON.stringify(textureToDuplicate));
+    }
+    
     
     var tile = {
       'id': 'default_' + Date.now(),
       'isBlocking': false,
       'walkCost': 1,
-      'texture': JSON.parse(JSON.stringify(textureToDuplicate)),
+      'texture': textureToDuplicate,
     };
 
     this.addTile(tile);

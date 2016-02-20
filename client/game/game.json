@@ -1,8 +1,9 @@
 {
-  "tileSize": 64,
+  "tileSize": 32,
   "startingMap": "main",
   "lerpAlpha": 0.2,
   "followPlayer": true,
+  "defaultFont": "11pt monospace",
   "timeToShowClickTexture": 0.2,
   "clickTexture": {
     "src": "hud/click.png"
@@ -23,7 +24,7 @@
         "src": "characters/player.png",
         "width": 32,
         "height": 32,
-        "scale": 1.5,
+        "scale": 1,
         "clip": {
           "x": 0,
           "y": 0
@@ -87,70 +88,37 @@
   },
   "tiles": [
     {
-      "id": "default_1454537582202",
+      "id": "default_68323",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1024,
-          "y": 0
+          "x": 0,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
       },
-      "index": 0,
-      "walkCost": 2
+      "index": 0
     },
     {
-      "id": "default_1454604440102",
-      "isBlocking": true,
+      "id": "default_97985",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 704,
-          "y": 640
+          "x": 32,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -158,34 +126,18 @@
       "index": 1
     },
     {
-      "id": "default_1454604463328",
-      "isBlocking": true,
+      "id": "default_66917",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 704,
-          "y": 704
+          "x": 64,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -193,70 +145,37 @@
       "index": 2
     },
     {
-      "id": "default_1454604476074",
-      "isBlocking": true,
+      "id": "default_31762",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 896,
-          "y": 640
+          "x": 96,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
       },
-      "index": 3,
-      "walkCost": 1
+      "index": 3
     },
     {
-      "id": "default_1454604536217",
-      "isBlocking": true,
+      "id": "default_38234",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 960,
-          "y": 640
+          "x": 128,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -264,34 +183,18 @@
       "index": 4
     },
     {
-      "id": "default_1454604546607",
-      "isBlocking": true,
+      "id": "default_28061",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 960,
-          "y": 704
+          "x": 160,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -299,34 +202,18 @@
       "index": 5
     },
     {
-      "id": "default_1454604552845",
-      "isBlocking": true,
+      "id": "default_81587",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 896,
-          "y": 704
+          "x": 192,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -334,34 +221,18 @@
       "index": 6
     },
     {
-      "id": "default_1454604560018",
-      "isBlocking": true,
+      "id": "default_74027",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 576,
-          "y": 640
+          "x": 224,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -369,34 +240,18 @@
       "index": 7
     },
     {
-      "id": "default_1454604603178",
-      "isBlocking": true,
+      "id": "default_43791",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 640,
-          "y": 640
+          "x": 256,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -404,34 +259,18 @@
       "index": 8
     },
     {
-      "id": "default_1454604605022",
-      "isBlocking": true,
+      "id": "default_45984",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 640,
-          "y": 704
+          "x": 288,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -439,34 +278,18 @@
       "index": 9
     },
     {
-      "id": "default_1454604606167",
-      "isBlocking": true,
+      "id": "default_85586",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 576,
-          "y": 704
+          "x": 320,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -474,34 +297,18 @@
       "index": 10
     },
     {
-      "id": "default_1454604778776",
+      "id": "default_83414",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1152,
-          "y": 192
+          "x": 352,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -509,34 +316,18 @@
       "index": 11
     },
     {
-      "id": "default_1454604837618",
-      "isBlocking": true,
+      "id": "default_17795",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1024,
-          "y": 768
+          "x": 384,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -544,34 +335,18 @@
       "index": 12
     },
     {
-      "id": "default_1454606380763",
-      "isBlocking": true,
+      "id": "default_77872",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 768,
-          "y": 704
+          "x": 416,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -579,34 +354,18 @@
       "index": 13
     },
     {
-      "id": "default_1454606446005",
-      "isBlocking": true,
+      "id": "default_85160",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 832,
-          "y": 640
+          "x": 448,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -614,34 +373,18 @@
       "index": 14
     },
     {
-      "id": "default_1454607629662",
+      "id": "default_92379",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1152,
-          "y": 64
+          "x": 480,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -649,34 +392,18 @@
       "index": 15
     },
     {
-      "id": "default_1454611245028",
+      "id": "default_64248",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1152,
-          "y": 128
+          "x": 512,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -684,34 +411,18 @@
       "index": 16
     },
     {
-      "id": "default_1454713890487",
-      "isBlocking": true,
+      "id": "default_8998",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 128,
-          "y": 704
+          "x": 544,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -719,34 +430,18 @@
       "index": 17
     },
     {
-      "id": "default_1454713936433",
-      "isBlocking": true,
+      "id": "default_52305",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 128,
-          "y": 640
+          "x": 576,
+          "y": 32
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -754,34 +449,18 @@
       "index": 18
     },
     {
-      "id": "default_1454713938323",
-      "isBlocking": true,
+      "id": "default_65620",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
           "x": 0,
-          "y": 640
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -789,34 +468,18 @@
       "index": 19
     },
     {
-      "id": "default_1454713938493",
-      "isBlocking": true,
+      "id": "default_58410",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 64,
-          "y": 640
+          "x": 32,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -824,34 +487,18 @@
       "index": 20
     },
     {
-      "id": "default_1454713999202",
-      "isBlocking": true,
+      "id": "default_53840",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 0,
-          "y": 704
+          "x": 64,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -859,34 +506,18 @@
       "index": 21
     },
     {
-      "id": "default_1454713999780",
-      "isBlocking": true,
+      "id": "default_42125",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 64,
-          "y": 704
+          "x": 96,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -894,70 +525,37 @@
       "index": 22
     },
     {
-      "id": "default_1454714265497",
+      "id": "default_85267",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1088,
-          "y": 0
+          "x": 128,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
       },
-      "index": 23,
-      "walkCost": 2
+      "index": 23
     },
     {
-      "id": "default_1454714355490",
+      "id": "default_28990",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 320,
-          "y": 0
+          "x": 160,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -965,34 +563,18 @@
       "index": 24
     },
     {
-      "id": "default_1454714504309",
+      "id": "default_31894",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 256,
-          "y": 0
+          "x": 192,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1000,34 +582,18 @@
       "index": 25
     },
     {
-      "id": "default_1454714582881",
-      "isBlocking": true,
+      "id": "default_14430",
+      "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1216,
-          "y": 0
+          "x": 224,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1035,34 +601,18 @@
       "index": 26
     },
     {
-      "id": "default_1454714636485",
+      "id": "default_4067",
       "isBlocking": false,
+      "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 512,
-          "y": 0
+          "x": 256,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1070,35 +620,18 @@
       "index": 27
     },
     {
-      "id": "default_1455374469152",
-      "isBlocking": true,
+      "id": "default_18936",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 704,
-          "y": 192
+          "x": 288,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1106,35 +639,18 @@
       "index": 28
     },
     {
-      "id": "default_1455376342305",
-      "isBlocking": true,
+      "id": "default_57534",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 896,
-          "y": 768
+          "x": 320,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1142,35 +658,18 @@
       "index": 29
     },
     {
-      "id": "default_1455376365210",
-      "isBlocking": true,
+      "id": "default_42462",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 832,
-          "y": 768
+          "x": 352,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1178,35 +677,18 @@
       "index": 30
     },
     {
-      "id": "default_1455376378590",
-      "isBlocking": true,
+      "id": "default_73224",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 832,
-          "y": 832
+          "x": 384,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1214,35 +696,18 @@
       "index": 31
     },
     {
-      "id": "default_1455376397839",
-      "isBlocking": true,
+      "id": "default_65367",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 896,
-          "y": 832
+          "x": 416,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1250,35 +715,18 @@
       "index": 32
     },
     {
-      "id": "default_1455376410484",
-      "isBlocking": true,
+      "id": "default_86924",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1024,
-          "y": 640
+          "x": 448,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1286,35 +734,18 @@
       "index": 33
     },
     {
-      "id": "default_1455376433421",
-      "isBlocking": true,
+      "id": "default_95783",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1088,
-          "y": 640
+          "x": 480,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1322,35 +753,18 @@
       "index": 34
     },
     {
-      "id": "default_1455376434272",
-      "isBlocking": true,
+      "id": "default_55605",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1024,
-          "y": 704
+          "x": 512,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1358,35 +772,18 @@
       "index": 35
     },
     {
-      "id": "default_1455376434771",
-      "isBlocking": true,
+      "id": "default_59251",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 1088,
-          "y": 704
+          "x": 544,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1394,35 +791,18 @@
       "index": 36
     },
     {
-      "id": "default_1455376469361",
-      "isBlocking": true,
+      "id": "default_13414",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 640,
-          "y": 768
+          "x": 576,
+          "y": 64
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1430,35 +810,18 @@
       "index": 37
     },
     {
-      "id": "default_1455376470335",
-      "isBlocking": true,
+      "id": "default_75114",
+      "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 576,
-          "y": 768
+          "x": 0,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1466,35 +829,18 @@
       "index": 38
     },
     {
-      "id": "default_1455441808096",
+      "id": "default_49865",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 576,
-          "y": 768
+          "x": 32,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1502,35 +848,18 @@
       "index": 39
     },
     {
-      "id": "default_1455442278085",
+      "id": "default_59633",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 576,
-          "y": 256
+          "x": 64,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1538,35 +867,18 @@
       "index": 40
     },
     {
-      "id": "default_1455442307392",
+      "id": "default_93173",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 640,
-          "y": 256
+          "x": 96,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1574,35 +886,18 @@
       "index": 41
     },
     {
-      "id": "default_1455442311555",
+      "id": "default_80450",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 640,
-          "y": 320
+          "x": 128,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1610,35 +905,18 @@
       "index": 42
     },
     {
-      "id": "default_1455442315463",
+      "id": "default_59228",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 576,
-          "y": 320
+          "x": 160,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1646,35 +924,18 @@
       "index": 43
     },
     {
-      "id": "default_1455442321267",
+      "id": "default_97258",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 704,
-          "y": 256
+          "x": 192,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1682,35 +943,18 @@
       "index": 44
     },
     {
-      "id": "default_1455442327375",
+      "id": "default_51700",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 704,
-          "y": 320
+          "x": 224,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1718,35 +962,18 @@
       "index": 45
     },
     {
-      "id": "default_1455442336592",
+      "id": "default_43725",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 896,
-          "y": 256
+          "x": 256,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1754,35 +981,18 @@
       "index": 46
     },
     {
-      "id": "default_1455442343941",
+      "id": "default_44343",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 960,
-          "y": 320
+          "x": 288,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
-          "x": 0,
-          "y": 0
-        },
-        "scale": 1,
-        "clipBottom": {
-          "x": 0,
-          "y": 0
-        },
-        "clipTop": {
-          "x": 0,
-          "y": 0
-        },
-        "clipRight": {
-          "x": 0,
-          "y": 0
-        },
-        "clipLeft": {
           "x": 0,
           "y": 0
         }
@@ -1790,40 +1000,5871 @@
       "index": 47
     },
     {
-      "id": "default_1455442391349",
+      "id": "default_93407",
       "isBlocking": false,
       "walkCost": 1,
       "texture": {
-        "src": "tiles/shooter-ka2.png",
         "clip": {
-          "x": 768,
-          "y": 0
+          "x": 320,
+          "y": 96
         },
-        "width": 64,
-        "height": 64,
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 48
+    },
+    {
+      "id": "default_2712",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 49
+    },
+    {
+      "id": "default_3488",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 50
+    },
+    {
+      "id": "default_92256",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 51
+    },
+    {
+      "id": "default_54606",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 52
+    },
+    {
+      "id": "default_55380",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 53
+    },
+    {
+      "id": "default_279",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 54
+    },
+    {
+      "id": "default_36102",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 55
+    },
+    {
+      "id": "default_86954",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 96
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 56
+    },
+    {
+      "id": "default_48281",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 57
+    },
+    {
+      "id": "default_88658",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 58
+    },
+    {
+      "id": "default_84268",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 59
+    },
+    {
+      "id": "default_11379",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 60
+    },
+    {
+      "id": "default_75904",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 61
+    },
+    {
+      "id": "default_313",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 62
+    },
+    {
+      "id": "default_36687",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 63
+    },
+    {
+      "id": "default_30783",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 64
+    },
+    {
+      "id": "default_65289",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 65
+    },
+    {
+      "id": "default_82473",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 66
+    },
+    {
+      "id": "default_47873",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 67
+    },
+    {
+      "id": "default_38390",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 68
+    },
+    {
+      "id": "default_48993",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 69
+    },
+    {
+      "id": "default_23213",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 70
+    },
+    {
+      "id": "default_71143",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 71
+    },
+    {
+      "id": "default_48009",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 72
+    },
+    {
+      "id": "default_87244",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 73
+    },
+    {
+      "id": "default_75321",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 74
+    },
+    {
+      "id": "default_84243",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 128
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 75
+    },
+    {
+      "id": "default_60646",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 76
+    },
+    {
+      "id": "default_63453",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 77
+    },
+    {
+      "id": "default_80482",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 78
+    },
+    {
+      "id": "default_42551",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 79
+    },
+    {
+      "id": "default_71771",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 80
+    },
+    {
+      "id": "default_70912",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 81
+    },
+    {
+      "id": "default_83044",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 82
+    },
+    {
+      "id": "default_49074",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 83
+    },
+    {
+      "id": "default_93613",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 84
+    },
+    {
+      "id": "default_14640",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 85
+    },
+    {
+      "id": "default_93574",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 86
+    },
+    {
+      "id": "default_13938",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 87
+    },
+    {
+      "id": "default_34790",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 88
+    },
+    {
+      "id": "default_23861",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 89
+    },
+    {
+      "id": "default_52786",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 90
+    },
+    {
+      "id": "default_39301",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 91
+    },
+    {
+      "id": "default_74768",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 92
+    },
+    {
+      "id": "default_95916",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 93
+    },
+    {
+      "id": "default_52648",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 160
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 94
+    },
+    {
+      "id": "default_34936",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 95
+    },
+    {
+      "id": "default_51551",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 96
+    },
+    {
+      "id": "default_68271",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 97
+    },
+    {
+      "id": "default_59602",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 98
+    },
+    {
+      "id": "default_41127",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 99
+    },
+    {
+      "id": "default_90829",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 100
+    },
+    {
+      "id": "default_24424",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 101
+    },
+    {
+      "id": "default_99349",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 102
+    },
+    {
+      "id": "default_53645",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 103
+    },
+    {
+      "id": "default_28464",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 104
+    },
+    {
+      "id": "default_62644",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 105
+    },
+    {
+      "id": "default_799",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 106
+    },
+    {
+      "id": "default_5800",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 107
+    },
+    {
+      "id": "default_64921",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 108
+    },
+    {
+      "id": "default_48744",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 109
+    },
+    {
+      "id": "default_35805",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 110
+    },
+    {
+      "id": "default_28648",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 111
+    },
+    {
+      "id": "default_79761",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 112
+    },
+    {
+      "id": "default_47502",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 192
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 113
+    },
+    {
+      "id": "default_52326",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 114
+    },
+    {
+      "id": "default_40742",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 115
+    },
+    {
+      "id": "default_52466",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 116
+    },
+    {
+      "id": "default_63071",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 117
+    },
+    {
+      "id": "default_96894",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 118
+    },
+    {
+      "id": "default_77485",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 119
+    },
+    {
+      "id": "default_8658",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 120
+    },
+    {
+      "id": "default_24300",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 121
+    },
+    {
+      "id": "default_68937",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 122
+    },
+    {
+      "id": "default_73417",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 123
+    },
+    {
+      "id": "default_45989",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 124
+    },
+    {
+      "id": "default_76272",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 125
+    },
+    {
+      "id": "default_26373",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 126
+    },
+    {
+      "id": "default_64226",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 127
+    },
+    {
+      "id": "default_15994",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 128
+    },
+    {
+      "id": "default_91714",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 129
+    },
+    {
+      "id": "default_84552",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 130
+    },
+    {
+      "id": "default_39694",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 131
+    },
+    {
+      "id": "default_50548",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 224
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 132
+    },
+    {
+      "id": "default_84145",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 133
+    },
+    {
+      "id": "default_89650",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 134
+    },
+    {
+      "id": "default_59478",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 135
+    },
+    {
+      "id": "default_94496",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 136
+    },
+    {
+      "id": "default_55778",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 137
+    },
+    {
+      "id": "default_81463",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 138
+    },
+    {
+      "id": "default_49774",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 139
+    },
+    {
+      "id": "default_17562",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 140
+    },
+    {
+      "id": "default_66221",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 141
+    },
+    {
+      "id": "default_88421",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 142
+    },
+    {
+      "id": "default_7711",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 143
+    },
+    {
+      "id": "default_46046",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 144
+    },
+    {
+      "id": "default_197",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 145
+    },
+    {
+      "id": "default_44469",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 146
+    },
+    {
+      "id": "default_68333",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 147
+    },
+    {
+      "id": "default_68435",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 148
+    },
+    {
+      "id": "default_1082",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 149
+    },
+    {
+      "id": "default_10794",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 150
+    },
+    {
+      "id": "default_22955",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 256
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 151
+    },
+    {
+      "id": "default_11174",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 152
+    },
+    {
+      "id": "default_82799",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 153
+    },
+    {
+      "id": "default_23906",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 154
+    },
+    {
+      "id": "default_60392",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 155
+    },
+    {
+      "id": "default_76489",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 156
+    },
+    {
+      "id": "default_50738",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 157
+    },
+    {
+      "id": "default_12584",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 158
+    },
+    {
+      "id": "default_6463",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 159
+    },
+    {
+      "id": "default_41330",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 160
+    },
+    {
+      "id": "default_49008",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 161
+    },
+    {
+      "id": "default_99138",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 162
+    },
+    {
+      "id": "default_43175",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 163
+    },
+    {
+      "id": "default_18830",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 164
+    },
+    {
+      "id": "default_39042",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 165
+    },
+    {
+      "id": "default_5649",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 166
+    },
+    {
+      "id": "default_48355",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 167
+    },
+    {
+      "id": "default_31553",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 168
+    },
+    {
+      "id": "default_60599",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 169
+    },
+    {
+      "id": "default_20170",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 288
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 170
+    },
+    {
+      "id": "default_5896",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 171
+    },
+    {
+      "id": "default_42",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 172
+    },
+    {
+      "id": "default_54752",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 173
+    },
+    {
+      "id": "default_78001",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 174
+    },
+    {
+      "id": "default_16618",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 175
+    },
+    {
+      "id": "default_47747",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 176
+    },
+    {
+      "id": "default_71199",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 177
+    },
+    {
+      "id": "default_62371",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 178
+    },
+    {
+      "id": "default_58285",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 179
+    },
+    {
+      "id": "default_434",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 180
+    },
+    {
+      "id": "default_32768",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 181
+    },
+    {
+      "id": "default_63841",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 182
+    },
+    {
+      "id": "default_84831",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 183
+    },
+    {
+      "id": "default_56331",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 184
+    },
+    {
+      "id": "default_53941",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 185
+    },
+    {
+      "id": "default_60757",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 186
+    },
+    {
+      "id": "default_60024",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 187
+    },
+    {
+      "id": "default_46016",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 188
+    },
+    {
+      "id": "default_54040",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 320
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 189
+    },
+    {
+      "id": "default_39295",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 190
+    },
+    {
+      "id": "default_65066",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 191
+    },
+    {
+      "id": "default_64683",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 192
+    },
+    {
+      "id": "default_52606",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 193
+    },
+    {
+      "id": "default_86969",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 194
+    },
+    {
+      "id": "default_7303",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 195
+    },
+    {
+      "id": "default_93172",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 196
+    },
+    {
+      "id": "default_72931",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 197
+    },
+    {
+      "id": "default_83335",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 198
+    },
+    {
+      "id": "default_906",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 199
+    },
+    {
+      "id": "default_26987",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 200
+    },
+    {
+      "id": "default_23787",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 201
+    },
+    {
+      "id": "default_16327",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 202
+    },
+    {
+      "id": "default_5629",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 203
+    },
+    {
+      "id": "default_84455",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 204
+    },
+    {
+      "id": "default_89657",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 205
+    },
+    {
+      "id": "default_97121",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 206
+    },
+    {
+      "id": "default_80588",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 207
+    },
+    {
+      "id": "default_60431",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 352
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 208
+    },
+    {
+      "id": "default_79873",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 209
+    },
+    {
+      "id": "default_68032",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 210
+    },
+    {
+      "id": "default_34318",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 211
+    },
+    {
+      "id": "default_10148",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 212
+    },
+    {
+      "id": "default_80937",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 213
+    },
+    {
+      "id": "default_46976",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 214
+    },
+    {
+      "id": "default_57710",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 215
+    },
+    {
+      "id": "default_20888",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 216
+    },
+    {
+      "id": "default_49307",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 217
+    },
+    {
+      "id": "default_92665",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 218
+    },
+    {
+      "id": "default_23125",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 219
+    },
+    {
+      "id": "default_84046",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 220
+    },
+    {
+      "id": "default_21363",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 221
+    },
+    {
+      "id": "default_12659",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 222
+    },
+    {
+      "id": "default_70522",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 223
+    },
+    {
+      "id": "default_54763",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 224
+    },
+    {
+      "id": "default_83095",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 225
+    },
+    {
+      "id": "default_66270",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 226
+    },
+    {
+      "id": "default_69627",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 384
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 227
+    },
+    {
+      "id": "default_6449",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 228
+    },
+    {
+      "id": "default_95663",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 229
+    },
+    {
+      "id": "default_91000",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 230
+    },
+    {
+      "id": "default_93",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 231
+    },
+    {
+      "id": "default_72292",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 232
+    },
+    {
+      "id": "default_68197",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 233
+    },
+    {
+      "id": "default_20679",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 234
+    },
+    {
+      "id": "default_83104",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 235
+    },
+    {
+      "id": "default_18523",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 236
+    },
+    {
+      "id": "default_818",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 237
+    },
+    {
+      "id": "default_54751",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 238
+    },
+    {
+      "id": "default_57581",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 239
+    },
+    {
+      "id": "default_5175",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 240
+    },
+    {
+      "id": "default_7666",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 241
+    },
+    {
+      "id": "default_28747",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 242
+    },
+    {
+      "id": "default_49957",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 243
+    },
+    {
+      "id": "default_7889",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 244
+    },
+    {
+      "id": "default_54321",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 245
+    },
+    {
+      "id": "default_4695",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 416
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 246
+    },
+    {
+      "id": "default_57811",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 247
+    },
+    {
+      "id": "default_38777",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 248
+    },
+    {
+      "id": "default_29355",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 249
+    },
+    {
+      "id": "default_25326",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 250
+    },
+    {
+      "id": "default_81802",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 251
+    },
+    {
+      "id": "default_52410",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 252
+    },
+    {
+      "id": "default_49560",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 253
+    },
+    {
+      "id": "default_61384",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 254
+    },
+    {
+      "id": "default_69524",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 255
+    },
+    {
+      "id": "default_54950",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 256
+    },
+    {
+      "id": "default_56430",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 257
+    },
+    {
+      "id": "default_44291",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 258
+    },
+    {
+      "id": "default_61508",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 259
+    },
+    {
+      "id": "default_99953",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 260
+    },
+    {
+      "id": "default_34368",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 261
+    },
+    {
+      "id": "default_9618",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 262
+    },
+    {
+      "id": "default_24110",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 263
+    },
+    {
+      "id": "default_40568",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 264
+    },
+    {
+      "id": "default_22137",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 448
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 265
+    },
+    {
+      "id": "default_69711",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 266
+    },
+    {
+      "id": "default_24640",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 267
+    },
+    {
+      "id": "default_3625",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 268
+    },
+    {
+      "id": "default_57138",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 269
+    },
+    {
+      "id": "default_9308",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 270
+    },
+    {
+      "id": "default_28326",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 271
+    },
+    {
+      "id": "default_60647",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 272
+    },
+    {
+      "id": "default_72142",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 273
+    },
+    {
+      "id": "default_54331",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 274
+    },
+    {
+      "id": "default_80564",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 275
+    },
+    {
+      "id": "default_18790",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 276
+    },
+    {
+      "id": "default_16832",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 277
+    },
+    {
+      "id": "default_10592",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 278
+    },
+    {
+      "id": "default_92318",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 279
+    },
+    {
+      "id": "default_70781",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 280
+    },
+    {
+      "id": "default_12383",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 281
+    },
+    {
+      "id": "default_74824",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 282
+    },
+    {
+      "id": "default_16756",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 283
+    },
+    {
+      "id": "default_40112",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 480
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 284
+    },
+    {
+      "id": "default_87269",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 285
+    },
+    {
+      "id": "default_16773",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 286
+    },
+    {
+      "id": "default_35846",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 287
+    },
+    {
+      "id": "default_66105",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 288
+    },
+    {
+      "id": "default_92253",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 289
+    },
+    {
+      "id": "default_99615",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 290
+    },
+    {
+      "id": "default_52446",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 291
+    },
+    {
+      "id": "default_7862",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 292
+    },
+    {
+      "id": "default_56358",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 293
+    },
+    {
+      "id": "default_48608",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 294
+    },
+    {
+      "id": "default_95234",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 295
+    },
+    {
+      "id": "default_58084",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 296
+    },
+    {
+      "id": "default_64189",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 297
+    },
+    {
+      "id": "default_54123",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 298
+    },
+    {
+      "id": "default_29921",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 299
+    },
+    {
+      "id": "default_26033",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 300
+    },
+    {
+      "id": "default_33583",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 301
+    },
+    {
+      "id": "default_58638",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 302
+    },
+    {
+      "id": "default_51132",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 512
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 303
+    },
+    {
+      "id": "default_12542",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 304
+    },
+    {
+      "id": "default_60319",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 305
+    },
+    {
+      "id": "default_70001",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 306
+    },
+    {
+      "id": "default_55470",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 307
+    },
+    {
+      "id": "default_31138",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 308
+    },
+    {
+      "id": "default_63464",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 309
+    },
+    {
+      "id": "default_75262",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 310
+    },
+    {
+      "id": "default_21943",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 311
+    },
+    {
+      "id": "default_68088",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 312
+    },
+    {
+      "id": "default_53504",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 313
+    },
+    {
+      "id": "default_75041",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 314
+    },
+    {
+      "id": "default_43777",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 315
+    },
+    {
+      "id": "default_88342",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 316
+    },
+    {
+      "id": "default_84689",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 317
+    },
+    {
+      "id": "default_11371",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 318
+    },
+    {
+      "id": "default_24706",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 319
+    },
+    {
+      "id": "default_91207",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 320
+    },
+    {
+      "id": "default_35904",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 321
+    },
+    {
+      "id": "default_18268",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 544
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 322
+    },
+    {
+      "id": "default_89957",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 323
+    },
+    {
+      "id": "default_9013",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 324
+    },
+    {
+      "id": "default_20739",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 325
+    },
+    {
+      "id": "default_56968",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 326
+    },
+    {
+      "id": "default_46473",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 327
+    },
+    {
+      "id": "default_92922",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 328
+    },
+    {
+      "id": "default_64927",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 329
+    },
+    {
+      "id": "default_65564",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 330
+    },
+    {
+      "id": "default_47393",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 331
+    },
+    {
+      "id": "default_81341",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 332
+    },
+    {
+      "id": "default_43101",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 333
+    },
+    {
+      "id": "default_79621",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 352,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 334
+    },
+    {
+      "id": "default_20411",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 384,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 335
+    },
+    {
+      "id": "default_54522",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 416,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 336
+    },
+    {
+      "id": "default_36232",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 448,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 337
+    },
+    {
+      "id": "default_30046",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 338
+    },
+    {
+      "id": "default_83940",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 512,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 339
+    },
+    {
+      "id": "default_7772",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 544,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 340
+    },
+    {
+      "id": "default_45277",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 576,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 341
+    },
+    {
+      "id": "default_37808",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 0,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 342
+    },
+    {
+      "id": "default_45726",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 32,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 343
+    },
+    {
+      "id": "default_34480",
+      "isBlocking": false,
+      "walkCost": 2,
+      "texture": {
+        "clip": {
+          "x": 64,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 344
+    },
+    {
+      "id": "default_40874",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 96,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 345
+    },
+    {
+      "id": "default_41065",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 128,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 346
+    },
+    {
+      "id": "default_81774",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 160,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 347
+    },
+    {
+      "id": "default_47775",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 192,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 348
+    },
+    {
+      "id": "default_77456",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 224,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 349
+    },
+    {
+      "id": "default_75864",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 256,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 350
+    },
+    {
+      "id": "default_75678",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 288,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 351
+    },
+    {
+      "id": "default_29142",
+      "isBlocking": false,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 320,
+          "y": 608
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "index": 352
+    },
+    {
+      "id": "default_1455979527157",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 480,
+          "y": 576
+        },
+        "src": "tiles/wc2-trim.png",
+        "width": 32,
+        "height": 32,
         "origin": {
           "x": 0,
           "y": 0
         },
         "scale": 1,
         "clipBottom": {
-          "x": 0,
-          "y": 0
+          "x": -1,
+          "y": -1
         },
         "clipTop": {
-          "x": 0,
-          "y": 0
+          "x": -1,
+          "y": -1
         },
         "clipRight": {
+          "x": -1,
+          "y": -1
+        },
+        "clipLeft": {
+          "x": -1,
+          "y": -1
+        }
+      },
+      "index": 353
+    },
+    {
+      "id": "default_1455979722998",
+      "isBlocking": true,
+      "walkCost": 1,
+      "texture": {
+        "clip": {
+          "x": 12,
+          "y": 11
+        },
+        "src": "small-tiles/PC Computer - Warcraft 2 - Misc.png",
+        "width": 32,
+        "height": 32,
+        "origin": {
           "x": 0,
           "y": 0
         },
+        "scale": 1,
+        "clipBottom": {
+          "x": -1,
+          "y": -1
+        },
+        "clipTop": {
+          "x": -1,
+          "y": -1
+        },
+        "clipRight": {
+          "x": -1,
+          "y": -1
+        },
         "clipLeft": {
-          "x": 0,
-          "y": 0
+          "x": -1,
+          "y": -1
         }
       },
-      "index": 48
+      "index": 354
     }
   ]
 }
