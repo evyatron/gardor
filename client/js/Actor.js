@@ -135,6 +135,10 @@ var Actor = (function Actor() {
     }
   };
   
+  Actor.prototype.setSpeed = function setSpeed(speed) {
+    this.speed = speed;
+  };
+  
   Actor.prototype.getScreenPosition = function getScreenPosition() {
     return this.game.getScreenPosition(this.game.getOffsetPosition(this));
   };
@@ -154,7 +158,16 @@ var Actor = (function Actor() {
     return wasClickHandled;
   };
   
-  Actor.prototype.moveTo = function moveTo(targetTile, onReach) {
+  Actor.prototype.moveTo = function moveTo(targetTile, speed, onReach) {
+    if (speed instanceof Function) {
+      onReach = speed;
+      speed = null;
+    }
+    
+    if (speed !== null && speed !== undefined) {
+      this.setSpeed(speed);
+    }
+    
     if (this.speed === 0) {
       console.warn('Trying to move an actor with no speed', targetTile, this);
       return false;
