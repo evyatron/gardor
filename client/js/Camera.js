@@ -81,6 +81,10 @@ var Camera = (function Camera() {
       }
     }
     
+    // Round to avoid half-pixel artefacts with tiles not aligning perfectly
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    
     game.log('camera: ' + this.x + ',' + this.y);
   };
   

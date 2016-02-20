@@ -178,10 +178,10 @@ var Actor = (function Actor() {
   };
   
   Actor.prototype.moveOnVector = function moveOnVector(direction) {
-    if (this.isMoving && 
-        ((direction.x !== 0 || direction.y !== 0) ||
-        (direction.x === 0 && direction.y === 0))
-        ){
+    var isStopping = direction.x === 0 && direction.y === 0;
+    var isManuallyMoving = this.movementVector.x !== 0 || this.movementVector.y !== 0;
+    
+    if (isManuallyMoving && isStopping) {
       this.stopMoving();
     }
     

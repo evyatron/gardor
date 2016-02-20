@@ -10,6 +10,8 @@
       'autoGoToMap': true
     });
     
+    window.game = game;
+    
     game.on(game.EVENTS.MAP_CREATE, onStartedPlaying);
     
     document.querySelector('.menu').addEventListener('click', onMenuClick);
