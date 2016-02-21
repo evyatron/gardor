@@ -21,7 +21,7 @@
     "modules": [
       {
         "type": "ModuleTexture",
-        "src": "characters/player.png",
+        "src": "characters/peasant.png",
         "width": 32,
         "height": 32,
         "scale": 1,
@@ -33,54 +33,54 @@
           "x": 0.5,
           "y": 0.75
         },
-        "clipBottom": {
+        "clipTop": {
           "x": 0,
           "y": 0
         },
-        "clipTop": {
+        "clipBottom": {
           "x": 0,
-          "y": 96
+          "y": 97
         },
         "clipRight": {
           "x": 0,
-          "y": 64
+          "y": 33
         },
         "clipLeft": {
           "x": 0,
-          "y": 32
+          "y": 65
         },
         "animations": {
           "_top": {
             "start": {
-              "x": 0,
-              "y": 96
+              "x": 32,
+              "y": 0
             },
-            "numberOfFrames": 3,
-            "speed": 0.15
+            "numberOfFrames": 4,
+            "speed": 0.1
           },
           "_bottom": {
             "start": {
-              "x": 0,
-              "y": 0
+              "x": 32,
+              "y": 97
             },
-            "numberOfFrames": 3,
-            "speed": 0.15
+            "numberOfFrames": 4,
+            "speed": 0.1
           },
           "_right": {
             "start": {
               "x": 0,
-              "y": 64
+              "y": 33
             },
-            "numberOfFrames": 3,
-            "speed": 0.15
+            "numberOfFrames": 5,
+            "speed": 0.1
           },
           "_left": {
             "start": {
               "x": 0,
-              "y": 32
+              "y": 65
             },
-            "numberOfFrames": 3,
-            "speed": 0.15
+            "numberOfFrames": 5,
+            "speed": 0.1
           }
         }
       }
