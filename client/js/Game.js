@@ -365,6 +365,8 @@ var Game = (function Game() {
     var now = Date.now();
     
     this.dt = (now - this.lastUpdate) / 1000 * this.timeDialation;
+    // Limit framerate to 60FPS
+    this.dt = Math.min(this.dt, 60 / 1000);
     
     this.log('dt: ' + this.dt);
     

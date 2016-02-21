@@ -38,9 +38,12 @@ var Camera = (function Camera() {
     var actorPosition = this.actorToFollow.position;
     var padding = game.currentMap.padding;
     
+    var maxX = padding + (game.mapWidth - game.width);
+    var maxY = padding + (game.mapHeight - game.height);
+    
     return {
-      'x': utils.clamp(-game.width / 2 + actorPosition.x, -padding, padding),
-      'y': utils.clamp(-game.height / 2 + actorPosition.y, -padding, padding)
+      'x': utils.clamp(-game.width / 2 + actorPosition.x, -padding, maxX),
+      'y': utils.clamp(-game.height / 2 + actorPosition.y, -padding, maxY)
     };
   };
   
@@ -67,14 +70,14 @@ var Camera = (function Camera() {
     var distY = this.targetPosition.y - this.y;
     
     if (distX) {
-      this.x += distX * this.lerpAlpha;
+      this.x += distX * this.lerpAlpha * dt;
       
       if (Math.abs(distX) < 1) {
         this.x = this.targetPosition.x;
       }
     }
     if (distY) {
-      this.y += distY * this.lerpAlpha;
+      this.y += distY * this.lerpAlpha * dt;
       
       if (Math.abs(distY) < 1) {
         this.y = this.targetPosition.y;

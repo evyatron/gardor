@@ -269,6 +269,9 @@ Editor.prototype.onMouseMove = function onMouseMove(e) {
 
 Editor.prototype.onMouseUp = function onMouseUp(e) {
   this.isMouseDown = false;
+  this.isLeftButton = false;
+  this.isRightButton = false;
+  this.isMiddleButton = false;
   this.cameraStartPosition = null;
   
   if (this.tilesEditor.placingTile) {
