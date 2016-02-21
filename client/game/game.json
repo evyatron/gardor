@@ -84,11 +84,7 @@
           }
         }
       }
-    ],
-    "tile": {
-      "x": 16,
-      "y": 11
-    }
+    ]
   },
   "tiles": [
     {
@@ -6497,7 +6493,7 @@
     {
       "id": "default_36232",
       "isBlocking": false,
-      "walkCost": 2,
+      "walkCost": 1,
       "texture": {
         "clip": {
           "x": 448,
@@ -6516,7 +6512,7 @@
     {
       "id": "default_30046",
       "isBlocking": false,
-      "walkCost": 2,
+      "walkCost": 1,
       "texture": {
         "clip": {
           "x": 480,
@@ -6535,7 +6531,7 @@
     {
       "id": "default_83940",
       "isBlocking": false,
-      "walkCost": 2,
+      "walkCost": 1,
       "texture": {
         "clip": {
           "x": 512,
@@ -6573,7 +6569,7 @@
     {
       "id": "default_45277",
       "isBlocking": false,
-      "walkCost": 2,
+      "walkCost": 1,
       "texture": {
         "clip": {
           "x": 576,
@@ -6592,7 +6588,7 @@
     {
       "id": "default_37808",
       "isBlocking": false,
-      "walkCost": 2,
+      "walkCost": 1,
       "texture": {
         "clip": {
           "x": 0,
@@ -6630,7 +6626,7 @@
     {
       "id": "default_34480",
       "isBlocking": false,
-      "walkCost": 2,
+      "walkCost": 1,
       "texture": {
         "clip": {
           "x": 64,
@@ -6801,7 +6797,7 @@
     {
       "id": "default_1455979527157",
       "isBlocking": true,
-      "walkCost": 1,
+      "walkCost": 10,
       "texture": {
         "clip": {
           "x": 480,

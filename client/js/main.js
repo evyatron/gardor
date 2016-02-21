@@ -1,7 +1,7 @@
 /* global Game */
 (function main() {
   var game = null;
-  var MENU_CLICK_TIME_DIALTION = 3;
+  var MENU_CLICK_TIME_DIALTION = 4;
   
   function init() {
     game = new Game({

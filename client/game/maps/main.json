@@ -2,16 +2,122 @@
   "id": "main",
   "name": "Main Map",
   "playerTile": {
-    "x": 14,
-    "y": 21
+    "x": 17,
+    "y": 13
   },
-  "padding": 100,
+  "padding": 0,
   "defaultTile": "default_75041",
   "fillColor": "black",
   "fillTile": "default_75041",
   "startScript": [],
   "grid": [
     [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
       "default_12383",
       "default_26987",
       "default_52606",
@@ -37,9 +143,15 @@
       "default_64683",
       "default_64683",
       "default_64683",
-      "default_60431"
+      "default_60431",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "default_26987",
       "default_60024",
       "default_43777",
@@ -65,9 +177,15 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_93172",
       "default_22137",
       "default_56430",
@@ -93,9 +211,15 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_72931",
       "default_34368",
       "default_36232",
@@ -121,9 +245,15 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_83335",
       "default_9618",
       "default_36232",
@@ -149,9 +279,15 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_72931",
       "default_99953",
       "default_36232",
@@ -177,9 +313,15 @@
       "default_54950",
       "default_72142",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_72931",
       "default_9618",
       "default_36232",
@@ -205,9 +347,15 @@
       "default_1455979527157",
       "default_60647",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_83335",
       "default_9618",
       "default_36232",
@@ -221,7 +369,7 @@
       "default_36232",
       "default_36232",
       "default_36232",
-      "default_30046",
+      "default_36232",
       "default_30046",
       "default_36232",
       "default_30046",
@@ -233,9 +381,15 @@
       "default_1455979527157",
       "default_28326",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_83335",
       "default_16832",
       "default_44291",
@@ -261,9 +415,15 @@
       "default_30046",
       "default_61384",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "default_99615",
       "default_46976",
       "default_86969",
       "default_16832",
@@ -285,14 +445,20 @@
       "default_30046",
       "default_30046",
       "default_30046",
-      "default_30046",
+      "default_7772",
       "default_30046",
       "default_30046",
       "default_28326",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
       "",
+      "",
+      "",
+      "default_55470",
+      "default_66105",
       "default_80937",
       "default_86969",
       "default_16832",
@@ -317,11 +483,17 @@
       "default_30046",
       "default_30046",
       "default_28326",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
       "",
       "",
+      "",
+      "",
+      "default_55470",
+      "default_66105",
       "default_72931",
       "default_43777",
       "default_43777",
@@ -342,17 +514,23 @@
       "default_30046",
       "default_30046",
       "default_30046",
-      "default_30046",
+      "default_7772",
       "default_30046",
       "default_28326",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "",
       "default_52446",
       "default_80937",
       "default_86969",
-      "default_43777",
+      "default_20739",
       "default_88342",
       "default_88342",
       "default_9618",
@@ -373,15 +551,21 @@
       "default_36232",
       "default_69711",
       "default_70781",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
       "",
       "",
       "",
+      "",
+      "",
+      "default_55470",
+      "default_66105",
       "default_93172",
       "default_43777",
-      "default_88342",
+      "default_84689",
       "default_88342",
       "default_16832",
       "default_54331",
@@ -401,9 +585,15 @@
       "default_36232",
       "default_28326",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "default_52446",
@@ -411,8 +601,8 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_43777",
-      "default_43777",
+      "default_5629",
+      "default_7303",
       "default_43777",
       "default_35904",
       "default_43777",
@@ -428,24 +618,30 @@
       "default_30046",
       "default_69711",
       "default_70781",
-      "default_43777",
-      "default_80588"
+      "default_89957",
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "default_7862",
       "default_72931",
       "default_43777",
+      "default_84689",
+      "default_43777",
+      "default_54040",
+      "default_46016",
       "default_43777",
       "default_43777",
-      "default_43777",
-      "default_43777",
-      "default_43777",
-      "default_43777",
-      "default_43777",
+      "default_88342",
       "default_9618",
-      "default_30046",
+      "default_45277",
       "default_30046",
       "default_7772",
       "default_45277",
@@ -457,21 +653,27 @@
       "default_70781",
       "default_43777",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "default_52446",
       "default_80937",
       "default_86969",
+      "default_11371",
       "default_43777",
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_43777",
-      "default_43777",
-      "default_43777",
+      "default_88342",
+      "default_88342",
       "default_9618",
       "default_30046",
       "default_30046",
@@ -485,13 +687,19 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
       "",
       "",
       "",
       "",
+      "",
+      "",
+      "",
+      "default_66105",
       "default_80937",
       "default_86969",
       "default_43777",
@@ -499,9 +707,9 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_43777",
-      "default_9618",
-      "default_36232",
+      "default_24706",
+      "default_10592",
+      "default_44291",
       "default_36232",
       "default_36232",
       "default_36232",
@@ -513,7 +721,9 @@
       "default_43777",
       "default_43777",
       "default_43777",
-      "default_80588"
+      "default_80588",
+      "",
+      ""
     ],
     [
       "",
@@ -521,6 +731,10 @@
       "",
       "",
       "",
+      "",
+      "",
+      "default_55470",
+      "default_92253",
       "default_80937",
       "default_10148",
       "default_34318",
@@ -528,8 +742,8 @@
       "default_34318",
       "default_34318",
       "default_86969",
+      "default_35904",
       "default_9618",
-      "default_36232",
       "default_36232",
       "default_36232",
       "default_36232",
@@ -541,7 +755,9 @@
       "default_10148",
       "default_10148",
       "default_10148",
-      "default_20888"
+      "default_20888",
+      "",
+      ""
     ],
     [
       "",
@@ -550,16 +766,20 @@
       "",
       "",
       "",
+      "default_31138",
+      "",
+      "default_55470",
+      "default_70001",
       "default_12542",
       "default_60319",
       "default_60319",
       "default_70001",
       "default_66105",
       "default_83335",
-      "default_9618",
+      "default_22137",
+      "default_81802",
       "default_36232",
-      "default_36232",
-      "default_36232",
+      "default_83940",
       "default_36232",
       "default_28326",
       "default_80588",
@@ -570,9 +790,15 @@
       "default_12542",
       "default_12542",
       "default_12542",
-      "default_56358"
+      "default_56358",
+      "",
+      ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -590,9 +816,11 @@
       "default_36232",
       "default_36232",
       "default_36232",
-      "default_28326",
+      "default_49560",
       "default_80588",
       "default_26033",
+      "",
+      "",
       "",
       "",
       "",
@@ -601,6 +829,10 @@
       ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -616,11 +848,13 @@
       "default_34368",
       "default_30046",
       "default_30046",
-      "default_30046",
-      "default_30046",
-      "default_28326",
+      "default_45726",
+      "default_36232",
+      "default_69711",
       "default_80588",
       "default_26033",
+      "",
+      "",
       "",
       "",
       "",
@@ -629,6 +863,10 @@
       ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -641,70 +879,16 @@
       "",
       "default_52446",
       "default_72931",
-      "default_16832",
-      "default_80564",
-      "default_80564",
-      "default_80564",
-      "default_80564",
-      "default_70781",
+      "default_9618",
+      "default_7772",
+      "default_36232",
+      "default_36232",
+      "default_36232",
+      "default_28326",
       "default_97121",
       "default_26033",
       "",
       "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "default_52446",
-      "default_80937",
-      "default_34318",
-      "default_34318",
-      "default_34318",
-      "default_34318",
-      "default_34318",
-      "default_34318",
-      "default_57710",
-      "default_26033",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "default_55470",
-      "default_12542",
-      "default_12542",
-      "default_12542",
-      "default_12542",
-      "default_12542",
-      "default_12542",
-      "default_12542",
-      "default_12542",
-      "default_48608",
       "",
       "",
       "",
@@ -742,8 +926,8 @@
         }
       ],
       "tile": {
-        "x": 9,
-        "y": 5
+        "x": 13,
+        "y": 8
       }
     },
     {
@@ -774,8 +958,8 @@
         }
       ],
       "tile": {
-        "x": 8,
-        "y": 5
+        "x": 12,
+        "y": 8
       }
     },
     {
@@ -827,8 +1011,8 @@
         }
       ],
       "tile": {
-        "x": 11,
-        "y": 5
+        "x": 15,
+        "y": 8
       }
     },
     {
@@ -864,8 +1048,8 @@
       ],
       "zIndex": 0,
       "tile": {
-        "x": 10,
-        "y": 5
+        "x": 14,
+        "y": 8
       }
     },
     {
@@ -901,8 +1085,8 @@
       ],
       "zIndex": 0,
       "tile": {
-        "x": 12,
-        "y": 5
+        "x": 16,
+        "y": 8
       }
     },
     {
@@ -933,8 +1117,8 @@
       ],
       "zIndex": 0,
       "tile": {
-        "x": 15,
-        "y": 5
+        "x": 19,
+        "y": 8
       }
     },
     {
@@ -969,8 +1153,8 @@
       ],
       "zIndex": 0,
       "tile": {
-        "x": 7,
-        "y": 5
+        "x": 11,
+        "y": 8
       }
     },
     {
@@ -1004,8 +1188,8 @@
       ],
       "zIndex": 0,
       "tile": {
-        "x": 6,
-        "y": 5
+        "x": 10,
+        "y": 8
       }
     },
     {
@@ -1056,8 +1240,8 @@
       ],
       "zIndex": 5,
       "tile": {
-        "x": 13,
-        "y": 5
+        "x": 17,
+        "y": 8
       }
     },
     {
@@ -1108,8 +1292,8 @@
       ],
       "zIndex": 5,
       "tile": {
-        "x": 14,
-        "y": 5
+        "x": 18,
+        "y": 8
       }
     },
     {
@@ -1149,8 +1333,8 @@
       ],
       "tooltip": "Cave",
       "tile": {
-        "x": 20,
-        "y": 7
+        "x": 24,
+        "y": 10
       }
     }
   ],
