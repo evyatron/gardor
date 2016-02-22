@@ -29,6 +29,14 @@ body {
   background: #000;
   z-index: 20;
 }
+@media all and (max-width: 1300px) {
+  #game-wrapper {
+    width: auto;
+    left: 250px;
+    right: 20px;
+    margin-left: 0;
+  }
+}
   #game-wrapper:before {
     content: '';
     position: absolute;
@@ -106,7 +114,7 @@ em {
 
 .menu {
   position: relative;
-  margin-top: 100px;
+  margin-top: 106px;
   margin-left: -6px;
   padding: 20px 6px 30px 12px;
   background: #B1A99D;
