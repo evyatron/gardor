@@ -301,7 +301,7 @@
       "default_83940",
       "default_30046",
       "default_36232",
-      "default_36232",
+      "default_30046",
       "default_36232",
       "default_83940",
       "default_36232",
@@ -1193,58 +1193,6 @@
       }
     },
     {
-      "id": "games-arcade-door",
-      "tooltip": "Enter the Arcade",
-      "isBlocking": false,
-      "modules": [
-        {
-          "type": "ModuleMapTravel",
-          "isActive": true,
-          "mapId": "games",
-          "useOffset": {
-            "x": 0,
-            "y": 1
-          }
-        },
-        {
-          "type": "ModuleTexture",
-          "src": "tiles/shooter-ka2.png",
-          "clip": {
-            "x": 64,
-            "y": 1216
-          },
-          "width": 64,
-          "height": 64,
-          "origin": {
-            "x": 0.5,
-            "y": 0.5
-          },
-          "scale": 1,
-          "clipBottom": {
-            "x": -1,
-            "y": -1
-          },
-          "clipTop": {
-            "x": -1,
-            "y": -1
-          },
-          "clipRight": {
-            "x": -1,
-            "y": -1
-          },
-          "clipLeft": {
-            "x": -1,
-            "y": -1
-          }
-        }
-      ],
-      "zIndex": 5,
-      "tile": {
-        "x": 17,
-        "y": 8
-      }
-    },
-    {
       "id": "js-experiments-door",
       "tooltip": "Enter the JavaScript Laboratory",
       "isBlocking": false,
@@ -1298,6 +1246,11 @@
     },
     {
       "id": "actor_mGOdCgNG",
+      "tooltip": "Enter the Arcade",
+      "tile": {
+        "x": 24,
+        "y": 10
+      },
       "modules": [
         {
           "src": "small-tiles/PC Computer - Warcraft 2 - Misc.png",
@@ -1329,13 +1282,17 @@
             "y": -1
           },
           "type": "ModuleTexture"
+        },
+        {
+          "type": "ModuleMapTravel",
+          "isActive": true,
+          "mapId": "games",
+          "useOffset": {
+            "x": -1,
+            "y": 1
+          }
         }
-      ],
-      "tooltip": "Cave",
-      "tile": {
-        "x": 24,
-        "y": 10
-      }
+      ]
     }
   ],
   "dialogs": [

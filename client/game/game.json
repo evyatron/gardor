@@ -2426,7 +2426,7 @@
     },
     {
       "id": "default_73417",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2445,7 +2445,7 @@
     },
     {
       "id": "default_45989",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2464,7 +2464,7 @@
     },
     {
       "id": "default_76272",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2483,7 +2483,7 @@
     },
     {
       "id": "default_26373",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2502,7 +2502,7 @@
     },
     {
       "id": "default_64226",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2521,7 +2521,7 @@
     },
     {
       "id": "default_15994",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2540,7 +2540,7 @@
     },
     {
       "id": "default_91714",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2559,7 +2559,7 @@
     },
     {
       "id": "default_84552",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2578,7 +2578,7 @@
     },
     {
       "id": "default_39694",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2597,7 +2597,7 @@
     },
     {
       "id": "default_50548",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2616,7 +2616,7 @@
     },
     {
       "id": "default_84145",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2635,7 +2635,7 @@
     },
     {
       "id": "default_89650",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2654,7 +2654,7 @@
     },
     {
       "id": "default_59478",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2673,7 +2673,7 @@
     },
     {
       "id": "default_94496",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2692,7 +2692,7 @@
     },
     {
       "id": "default_55778",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2711,7 +2711,7 @@
     },
     {
       "id": "default_81463",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2730,7 +2730,7 @@
     },
     {
       "id": "default_49774",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2749,7 +2749,7 @@
     },
     {
       "id": "default_17562",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2768,7 +2768,7 @@
     },
     {
       "id": "default_66221",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2787,7 +2787,7 @@
     },
     {
       "id": "default_88421",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2806,7 +2806,7 @@
     },
     {
       "id": "default_7711",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2825,7 +2825,7 @@
     },
     {
       "id": "default_46046",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2844,7 +2844,7 @@
     },
     {
       "id": "default_197",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2863,7 +2863,7 @@
     },
     {
       "id": "default_44469",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2901,7 +2901,7 @@
     },
     {
       "id": "default_68435",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2920,7 +2920,7 @@
     },
     {
       "id": "default_1082",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2939,7 +2939,7 @@
     },
     {
       "id": "default_10794",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2958,7 +2958,7 @@
     },
     {
       "id": "default_22955",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2977,7 +2977,7 @@
     },
     {
       "id": "default_11174",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -2996,7 +2996,7 @@
     },
     {
       "id": "default_82799",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -3015,7 +3015,7 @@
     },
     {
       "id": "default_23906",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -3034,7 +3034,7 @@
     },
     {
       "id": "default_60392",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -3053,7 +3053,7 @@
     },
     {
       "id": "default_76489",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -3072,7 +3072,7 @@
     },
     {
       "id": "default_50738",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -3091,7 +3091,7 @@
     },
     {
       "id": "default_12584",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -3110,7 +3110,7 @@
     },
     {
       "id": "default_6463",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
@@ -3129,7 +3129,7 @@
     },
     {
       "id": "default_41330",
-      "isBlocking": false,
+      "isBlocking": true,
       "walkCost": 1,
       "texture": {
         "clip": {
