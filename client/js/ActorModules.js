@@ -403,6 +403,9 @@ var ModuleWebPage = (function ModuleWebPage() {
     var width = this.actor.game.el.offsetWidth;
     var height = this.actor.game.el.offsetHeight;
     
+    width = document.body.offsetWidth;
+    height = document.body.offsetHeight;
+    
     return width >= this.minWidth && height >= this.minHeight;
   };
   
